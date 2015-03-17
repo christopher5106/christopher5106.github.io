@@ -26,7 +26,7 @@ Another useful case is when you have broken your instance by manipulating your i
 
 I hope my writing will spare you some time searching, reading, and testing. I believe it is true for any organization of any size, from the start-up to a big corporation which has many servers.
 
-**Simplicity, durability, portability and re-usability** are the key concepts to search for. Nothing complex will ever last. No specificity for one platform.
+**Simplicity, durability, portability and re-usability** are the key concepts to search for. Nothing complex will ever last. Nothing specific to one platform will be ever useful.
 
 
 

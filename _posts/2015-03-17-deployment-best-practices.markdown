@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Deploying for your organization - from your PC to your cloud or private servers in one clic"
+title:  "Deploying for your organization - from your PC to your cloud or any servers in one clic"
 date:   2015-03-17 23:00:51
 categories: continous deployment
 ---
@@ -20,7 +20,9 @@ Another useful case is when you have broken your instance by manipulating your i
 
 - it's portable, not dependent on your cloud provider, your server environment (PC, Mac, Linux, ...) and enables anybody in any situation to work on your code. No surprise when you launch your deployment on your production stack... if you've already tested it on your preproduction stack : this should work without bugs.
 
-**Automatization helps to improve stability and cooperation.**
+- it's scalable. You can add as many servers as you want under your loadbalancer. Believe, this is useful ! In particular during stress time, or when a migration has failed, or when an error occurs and you cannot find why...
+
+**Automatization helps to improve stability, human cooperation and scalability.**
 
 I hope my writing will spare you some time searching, reading, and testing. I believe it is true for any organization of any size, from the start-up to a big corporation which has many servers.
 

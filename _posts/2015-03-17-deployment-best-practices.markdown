@@ -22,7 +22,7 @@ And last, everybody has experienced this situation where a single machine in you
 - **you can restart from a clean machine**. Usually, when installing the required libraries for your code to work, you'll probably miss writing one step. It's usually difficult to find this missing step that breaks your install a few weeks later. It's better to test it right when you develop it, when you're working on it. Deployment scripts enable you to restart from a clean machine so that you can verify that you missed nothing, that your deployment really works.
 Another useful case is when you have broken your instance by manipulating your install, you can also restart your instance from a copy of your installation that's working. So no worry anymore to break your install. You can also launch instances for other developers to check some codes, let them break the install...
 
-- it's portable, not dependent on your cloud provider, your server environment (PC, Mac, Linux, ...) and enables anybody in any situation to work on your code. No surprise when you launch your deployment on your production stack... if you've already tested it on your preproduction stack : this should work without bugs. **Automatization helps you improve stability and human cooperation**.
+- it's portable, not dependent on your cloud provider, your server environment (PC, Mac, Linux, ...) and enables anybody in any situation to work on your code. No surprise when you launch your deployment on your production stack... if you've already tested it on your preproduction stack : the deployment will work in the exact same way on both stacks. **Automatization helps you improve stability and human cooperation**.
 
 - it's **scalable**. You can add as many servers as you want under your loadbalancer. Believe, this is useful ! In particular during stress time, or when a migration has failed, or when an error occurs and you cannot find why...
 
@@ -48,11 +48,11 @@ Standards are not only those created by standardization organizations such as W3
 
 In the case of deployment, we have chance because there is a technology, *Chef*, that meets all the criteria :
 
-- is an opensource technology, so benefits from the thousands of technical cases on Internet and a wide community, and is certainly the best one in term of power : your infrastructure becomes code.
+- is an **opensource** technology, so benefits from the thousands of technical cases on Internet and a wide community, and is certainly the best one in term of power : your infrastructure becomes code.
 
-- has been choosen by Amazon AWS, the key leader for the cloud industry. So you'll find plenty of other providers that will follow.
+- has been choosen by Amazon AWS, the **key leading proprietary platform** for the cloud industry. So you'll find plenty of other providers that will follow.
 
-- works also well with Vagrant, the technology for deploying on your PC. So you can have your application/site on your PC, Mac or Linux computer in the exact same configuration as on your production.
+- works also well with Vagrant, the technology for deploying **on your PC**. So you can have your application/site on your PC, Mac or Linux computer in the exact same configuration as on your production.
 
 **Be careful** : it would be a wrong reasoning to make your deployment strategy based on Amazon AWS choices only. Chef is the opensource technology that makes the picture larger than the proprietary scope of Amazon.
 

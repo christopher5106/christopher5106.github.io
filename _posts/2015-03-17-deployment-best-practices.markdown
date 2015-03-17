@@ -22,6 +22,8 @@ Another useful case is when you have broken your instance by manipulating your i
 
 - it's scalable. You can add as many servers as you want under your loadbalancer. Believe, this is useful ! In particular during stress time, or when a migration has failed, or when an error occurs and you cannot find why...
 
+- it's fun. Just press one button to deploy... everything is automatic.
+
 **Automatization helps to improve stability, human cooperation and scalability.**
 
 I hope my writing will spare you some time searching, reading, and testing. I believe it is true for any organization of any size, from the start-up to a big corporation which has many servers.

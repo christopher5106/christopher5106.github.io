@@ -50,11 +50,11 @@ In the case of deployment, we have chance because there is a technology, *Chef*,
 
 - is an opensource technology, so benefits from the thousands of technical cases on Internet and a wide community, and is certainly the best one in term of power : your infrastructure becomes code.
 
-- has been choosen by Amazon AWS, the key leader for the cloud industry. So you'll find plenty of other provider that will follow.
+- has been choosen by Amazon AWS, the key leader for the cloud industry. So you'll find plenty of other providers that will follow.
 
 - works also well with Vagrant, the technology for deploying on your PC. So you can have your application/site on your PC, Mac or Linux computer in the exact same configuration as on your production.
 
-
+**Be careful** : it would be a wrong reasoning to make your deployment strategy based on Amazon AWS choices only. Chef is the opensource technology that makes the picture larger than the proprietary scope of Amazon.
 
 
 #Chef, as our opensource standard

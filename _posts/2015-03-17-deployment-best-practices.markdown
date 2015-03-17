@@ -7,24 +7,26 @@ categories: continous deployment
 
 Keywords : continous deployment, AWS, Virtual machines, GIT
 
-You'd like to automatize your build, on any machine (your PC, your cloud servers or any server), with a very simple and clean way to do it ? Here are my best practices I developed using deployment technologies.
+You'd like to automatize your build, on any machine (your PC, your cloud servers or any server), with a very simple and clean way to do it ?
 
-Deployment scripts should be written from the start of a project. Creating them later can be a tedious task. Having a deployment script has the following benefits :
+Here are my best practices I developed using deployment technologies.
 
-- it's a kind of "documentation" for your installation. No need to write a big documentation since every information for installation will be in your code. And in precise detail : it's a working documentation !
+Deployment scripts should be written from the start of a project. Creating them later can be a tedious task.
+
+Having a deployment script has the following benefits :
+
+- **a deployment script is a kind of "documentation" for your installation**. No need to write a big documentation since every information for installation will be in your code. And in precise detail : it's a working documentation !
 It's no more a nightmare for the next CTO to take over when the former one leaves the company.
 And last, everybody has experienced this situation where a single machine in your organization holds a configuration that nobody knows about or does dare to touch... since the developers who developed on it are not there anymore.
 
-- you can restart from a clean machine. Usually, when installing the required libraries for your code to work, you'll probably miss writing one step. It's usually difficult to find this missing step that breaks your install a few weeks later. It's better to test it right when you develop it, when you're working on it. Deployment scripts enable you to restart from a clean machine so that you can verify that you missed nothing, that your deployment really works.
+- **you can restart from a clean machine**. Usually, when installing the required libraries for your code to work, you'll probably miss writing one step. It's usually difficult to find this missing step that breaks your install a few weeks later. It's better to test it right when you develop it, when you're working on it. Deployment scripts enable you to restart from a clean machine so that you can verify that you missed nothing, that your deployment really works.
 Another useful case is when you have broken your instance by manipulating your install, you can also restart your instance from a copy of your installation that's working. So no worry anymore to break your install. You can also launch instances for other developers to check some codes, let them break the install...
 
-- it's portable, not dependent on your cloud provider, your server environment (PC, Mac, Linux, ...) and enables anybody in any situation to work on your code. No surprise when you launch your deployment on your production stack... if you've already tested it on your preproduction stack : this should work without bugs.
+- it's portable, not dependent on your cloud provider, your server environment (PC, Mac, Linux, ...) and enables anybody in any situation to work on your code. No surprise when you launch your deployment on your production stack... if you've already tested it on your preproduction stack : this should work without bugs. **Automatization helps you improve stability and human cooperation**.
 
-- it's scalable. You can add as many servers as you want under your loadbalancer. Believe, this is useful ! In particular during stress time, or when a migration has failed, or when an error occurs and you cannot find why...
+- it's **scalable**. You can add as many servers as you want under your loadbalancer. Believe, this is useful ! In particular during stress time, or when a migration has failed, or when an error occurs and you cannot find why...
 
-- it's fun. Just press one button to deploy... everything is automatic.
-
-**Automatization helps you improve stability, human cooperation and scalability.**
+- it's fun. **Just press one button to deploy**... everything is automatic.
 
 I hope my writing will spare you some time searching, reading, and testing. I believe it is true for any organization of any size, from the start-up to a big corporation which has many servers.
 
@@ -42,9 +44,9 @@ When choosing a technology, it's good to think in terms of "standards" because t
 
 - support and technical cases on the technology
 
-Standards are not only those created by standardization organizations such as W3C, there are also "standards de facto", that is due to their world wide adoption, such as Microsoft Windows for softwares, or opensource technologies with their communities.
+Standards are not only those created by standardization organizations such as W3C, there are also **standards de facto**, technologies adopted world-wide, such as proprietary Microsoft Windows for softwares, or opensource technologies with their communities.
 
-In the case of deployment, we have chance because there is a technology, *Chef Solo*, that meets all the criteria :
+In the case of deployment, we have chance because there is a technology, *Chef*, that meets all the criteria :
 
 - is an opensource technology, so benefits from the thousands of technical cases on Internet and a wide community, and is certainly the best one in term of power : your infrastructure becomes code.
 
@@ -55,13 +57,13 @@ In the case of deployment, we have chance because there is a technology, *Chef S
 
 
 
-#Chef, the opensource standard
+#Chef, as our opensource standard
 
 Chef enables you to write "recipes" in Ruby to deploy your application/site. Recipes are like scripts to execute on the target machine.
 
 First, create a git repository named `chef-deployment` under which you'll write all your recipes and from which you will be able to deploy from anywhere (your PC, your cloud,...). Create a directory named `environements` to declare your environment variables, and a directory names `roles` to create lists of recipes to execute together.
 
-As we have seen before, the good thing is that Chef is supported by Vagrant and Opsworks
+As we have seen before, the good thing about Chef is that it is supported by Vagrant and Opsworks. More precisely, it's the standalone version, *Chef Solo*, that's been used by both.
 
 Vagrant enables you to deploy your application/site on a virtual machine on your PC or Macbook. Opsworks is the Amazon AWS web interface to deploy on the public cloud. In both cases, Vagrant and Opsworks will use
 
@@ -72,8 +74,8 @@ Vagrant enables you to deploy your application/site on a virtual machine on your
 There are two minor differences because Opsworks does not support Chef environments and Chef roles (so sad :( ).
 
 - the environment / stack difference.
-On Vagrant you'll use the environments to change the parameters : `environments/production.rb` and `environments/development.rb`
-On Opsworks, you'll create two stacks, "Production" and "Preproduction".
+On Vagrant you'll use the environments to change the parameters : `environments/production.rb` and `environments/development.rb`.
+On Opsworks, you'll create two stacks, *Production* and *Preproduction*.
 Here is an example of the paramaters, that usually contain the hostnames of the search cluster, the database cluster, the S3 bucket or the SES access :
 {% highlight json %}
 {
@@ -159,7 +161,7 @@ This instructs
 
 - to execute "ROLE-NAME", a list a recipes that will be found in `ROLE-NAME.rb` under the `roles` directory,
 
-- to use the "development environment", that will be found in `development.rb` under the directory `environments`.
+- to use the "development environment", that will be found in `development.rb` under the `environments` directory.
 
 Now, it will be quite easy to deploy your machine, just type the following command inside your chef repository :
 

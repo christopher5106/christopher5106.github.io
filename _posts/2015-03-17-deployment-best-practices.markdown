@@ -24,7 +24,7 @@ Another useful case is when you have broken your instance by manipulating your i
 
 - it's fun. Just press one button to deploy... everything is automatic.
 
-**Automatization helps to improve stability, human cooperation and scalability.**
+**Automatization helps you improve stability, human cooperation and scalability.**
 
 I hope my writing will spare you some time searching, reading, and testing. I believe it is true for any organization of any size, from the start-up to a big corporation which has many servers.
 
@@ -155,9 +155,9 @@ end
 This is the case where a server in your VM will be listening on port 80, such as Apache or NodeJS.
 This instructs
 
-- to execute "ROLE-NAME", a list a recipes that will be found under the `roles` directory,
+- to execute "ROLE-NAME", a list a recipes that will be found in `ROLE-NAME.rb` under the `roles` directory,
 
-- to use the "development environment", that will be found under the directory `environments`.
+- to use the "development environment", that will be found in `development.rb` under the directory `environments`.
 
 Now, it will be quite easy to deploy your machine, just type the following command inside your chef repository :
 

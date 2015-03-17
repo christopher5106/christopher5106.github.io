@@ -48,18 +48,20 @@ In the case of deployment, we have chance because there is a technology, *Chef S
 
 - is an opensource technology, so benefits from the thousands of technical cases on Internet and a wide community, and is certainly the best one in term of power : your infrastructure becomes code.
 
-- has been choosen by Amazon AWS, the key leader for the cloud industry.
+- has been choosen by Amazon AWS, the key leader for the cloud industry. So you'll find plenty of other provider that will follow.
 
 - works also well with Vagrant, the technology for deploying on your PC. So you can have your application/site on your PC, Mac or Linux computer in the exact same configuration as on your production.
 
 
 
 
-#Chef, Vagrant, Opsworks
+#Chef, the opensource standard
 
 Chef enables you to write "recipes" in Ruby to deploy your application/site. Recipes are like scripts to execute on the target machine.
 
 First, create a git repository named `chef-deployment` under which you'll write all your recipes and from which you will be able to deploy from anywhere (your PC, your cloud,...). Create a directory named `environements` to declare your environment variables, and a directory names `roles` to create lists of recipes to execute together.
+
+As we have seen before, the good thing is that Chef is supported by Vagrant and Opsworks
 
 Vagrant enables you to deploy your application/site on a virtual machine on your PC or Macbook. Opsworks is the Amazon AWS web interface to deploy on the public cloud. In both cases, Vagrant and Opsworks will use
 
@@ -117,7 +119,7 @@ We'll speak later about the good use of IAM roles for security.
 For Vagrant you can create **Chef roles**, a role is a list of recipes to execute, for example you could have a role "front web" to deploy your front servers, a role "database" to deploy your database, and a role "search" to deploy your search cluster. For Opsworks, you'll create some **layers** and assign the recipes as well.
 
 
-#Vagrant
+#Vagrant for deployment on your local machine
 
 First, install Vagrant, Chef-DK, VirtualBox on your PC/Macbook.
 
@@ -178,7 +180,7 @@ Or to replay the provisionning of your VM with Chef Solo + Bershelf :
 Quite easy !
 
 
-#Opsworks
+#Opsworks, for deployment on Amazon AWS cloud
 
 
 In your stack settings,

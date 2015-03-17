@@ -11,7 +11,7 @@ You'd like to automatize your build, on any machine (your PC, your cloud servers
 
 Here are my best practices I developed using deployment technologies.
 
-Deployment scripts should be written from the start of a project. Creating them later can be a tedious task.
+Deployment scripts should be written from the start of a project. Creating them later can be a tedious task, whereas if written from the beginning, they will save you some time and some repetitive tasks whenever you need a re-install.
 
 Having a deployment script has the following benefits :
 
@@ -26,7 +26,7 @@ Another useful case is when you have broken your instance by manipulating your i
 
 - it's **scalable**. You can add as many servers as you want under your loadbalancer. Believe, this is useful ! In particular during stress time, or when a migration has failed, or when an error occurs and you cannot find why...
 
-- it's fun. **Just press one button to deploy**... everything is automatic.
+- it's fun and it will save you to do a hundred times the same thing. **Just press one button to deploy**... everything is automatic.
 
 I hope my writing will spare you some time searching, reading, and testing. I believe it is true for any organization of any size, from the start-up to a big corporation which has many servers.
 

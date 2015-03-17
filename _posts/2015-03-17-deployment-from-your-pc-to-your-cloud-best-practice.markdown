@@ -24,13 +24,13 @@ Another useful case is when you have broken your instance by manipulating your i
 
 - it's portable, not dependent on your cloud provider, your server environment (PC, Mac, Linux, ...) and enables anybody in any situation to work on your code. No surprise when you launch your deployment on your production stack... if you've already tested it on your preproduction stack : the deployment will work in the exact same way on both stacks. **Automatization helps you improve stability and human cooperation**.
 
-- it's **scalable**. You can add as many servers as you want under your loadbalancer. Believe, this is useful ! In particular during stress time, or when a migration has failed, or when an error occurs and you cannot find why...
+- it's **scalable**. You can add as many servers as you want under your loadbalancer. Believe me, this is useful ! In particular during stress time, or when a migration has failed, or when an error occurs and you cannot find why...
 
 - it's **fun and a long term savings**. It will save you a hundred times doing the same repetitive thing. **Just press one button to deploy**... everything is automatic. It will offer you new ways to debug by launching new VMs and make tests.
 
-I hope my writing will spare you some time searching, reading, and testing. I believe it is true for any organization of any size, from the start-up to a big corporation which has many servers.
+I hope my writing will spare you some time searching, reading, and testing. I believe it is true for any organization of any size, from the start-up with one developer to the big corporation which has many servers.
 
-**Simplicity, durability, portability and re-usability** are the key concepts to search for. Nothing complex will ever last. Nothing specific to one platform will be ever useful.
+**Simplicity, durability, portability and re-usability** are the key concepts to search for. Nothing complex will ever last. Nothing specific to one platform will ever be useful.
 
 
 
@@ -40,11 +40,11 @@ When choosing a technology, it's good to think in terms of "standards" because t
 
 - available skills on the market
 
-- durability of the technology
+- durability, support and technical cases on the technology
 
-- support and technical cases on the technology
+- compatibility with other technologies and standards, and availability of connectors (no need to re-develop everything)
 
-Standards are not only those created by standardization organizations such as W3C, there are also **standards de facto**, technologies adopted world-wide, such as proprietary Microsoft Windows for softwares, or opensource technologies with their communities.
+Standards are not only those created by standardization organizations such as W3C, but there are also **standards de facto**, that is technologies adopted world-wide, such as proprietary Microsoft Windows for softwares, or opensource technologies with their huge communities.
 
 In the case of deployment, we have chance because there is a technology, *Chef*, that meets all the criteria :
 
@@ -61,9 +61,9 @@ In the case of deployment, we have chance because there is a technology, *Chef*,
 
 Chef enables you to write "recipes" in Ruby to deploy your application/site. Recipes are like scripts to execute on the target machine.
 
-First, create a git repository named `chef-deployment` under which you'll write all your recipes and from which you will be able to deploy from anywhere (your PC, your cloud,...). Create a directory named `environements` to declare your environment variables, and a directory names `roles` to create lists of recipes to execute together.
+First, create a git repository named `chef-deployment` under which you'll write all your recipes and from which you will be able to deploy from anywhere (your PC, your cloud,...). Create a directory named `environements` to declare your environment variables, and a directory named `roles` to create lists of recipes to execute together.
 
-As we have seen before, the good thing about Chef is that it is supported by Vagrant and Opsworks. More precisely, it's the standalone version, *Chef Solo*, that's been used by both.
+As we have seen before, the good thing about Chef is that it is supported by Vagrant and Opsworks. More precisely, it's the standalone version, *Chef Solo*, that is been used by both.
 
 Vagrant enables you to deploy your application/site on a virtual machine on your PC or Macbook. Opsworks is the Amazon AWS web interface to deploy on the public cloud. In both cases, Vagrant and Opsworks will use
 

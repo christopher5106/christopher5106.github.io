@@ -28,7 +28,7 @@ Another useful case is when you have broken your instance by manipulating your i
 
 - it's **fun and a long term savings**. It will save you a hundred times doing the same repetitive thing. **Just press one button to deploy**... everything is automatic. It will offer you new ways to debug by launching new VMs and make tests.
 
-- it's **continuous deployment**, the architectural pattern that deploying many times a day small upgrades reduces the risk of critical failure, usually the consequence of infrequent deployments of bigger upgrades.
+- it's **continuous deployment**, the architectural pattern that deploying many times a day minor releases reduces the risk of critical failure, usually the consequence of infrequent deployments of major releases.
 
 It is true for any organization of any size, from the start-up with one developer (usually when the product is presented to the TV show, the servers are down because of the traffic) to the big corporation which has many servers.
 

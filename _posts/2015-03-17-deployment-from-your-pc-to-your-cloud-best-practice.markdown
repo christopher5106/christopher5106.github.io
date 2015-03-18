@@ -30,7 +30,7 @@ Another useful case is when you have broken your instance by manipulating your i
 
 - it's **continuous deployment**, the architectural pattern that deploying many times a day small upgrades reduces the risk of critical failure, usually the consequence of infrequent deployments of bigger upgrades.
 
-I hope my writing will spare you some time searching, reading, and testing. I believe it is true for any organization of any size, from the start-up with one developer to the big corporation which has many servers.
+It is true for any organization of any size, from the start-up with one developer (usually when the product is presented to the TV show, the servers are down because of the traffic) to the big corporation which has many servers.
 
 **Simplicity, durability, portability and re-usability** are the key concepts to search for. Nothing complex will ever last. Nothing specific to one platform will ever be useful.
 

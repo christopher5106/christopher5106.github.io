@@ -65,6 +65,11 @@ Chef enables you to write "recipes" in Ruby to deploy your application/site. Rec
 
 First, create a git repository named `chef-deployment` under which you'll write all your recipes and from which you will be able to deploy from anywhere (your PC, your cloud,...). Create a directory named `environements` to declare your environment variables, and a directory named `roles` to create lists of recipes to execute together.
 
+    chef-deployment/
+    |--roles/
+    |--environments/
+
+
 As we have seen before, the good thing about Chef is that it is supported by Vagrant and Opsworks. More precisely, it's the standalone version, *Chef Solo*, that is been used by both.
 
 Vagrant enables you to deploy your application/site on a virtual machine on your PC or Macbook. Opsworks is the Amazon AWS web interface to deploy on the public cloud. In both cases, Vagrant and Opsworks will use
@@ -204,16 +209,17 @@ Not much more to say. To start an instance, click on the button !
 
 Oh, now it's time to write your first recipe.
 
-You'll add the following folder tree in your chef repository :
+You'll add the following folder `my-application-cookbooks` as well as a `Berksfile` in your chef repository :
 
-    my-cookbooks/
-    --recipes/
-    ----my-cookbook.rb
-    --attributes/
-    ----default.rb
-    --files/
-    --templates/
-    --metadata.rb
+    my-application-cookbooks/
+    |--recipes/
+       |--my-cookbook.rb
+    |--attributes/
+       |--default.rb
+    |--files/
+    |--templates/
+       |--default/
+    |--metadata.rb
     Berskfile
 
 The Berksfile enables you to include dependent recipes from the community : for example Apache, MySQL, Monit, ... Here is an example of Berksfile :

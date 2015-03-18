@@ -222,7 +222,7 @@ Add your cookbook folder `my-application-cookbooks` for deployment of your appli
     |--metadata.rb
     Berskfile
 
-The Berksfile enables you to include dependent recipes from the community : for example Apache, MySQL, Monit, ... Here is an example of Berksfile :
+The Berksfile enables you to include dependent recipes from the community : for example Apache, MySQL, Monit, ... Here is an example of dependency directives in Berksfile :
 
 {% highlight ruby %}
 

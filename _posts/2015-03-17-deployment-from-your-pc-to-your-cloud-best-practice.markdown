@@ -28,6 +28,8 @@ Another useful case is when you have broken your instance by manipulating your i
 
 - it's **fun and a long term savings**. It will save you a hundred times doing the same repetitive thing. **Just press one button to deploy**... everything is automatic. It will offer you new ways to debug by launching new VMs and make tests.
 
+- it's **continuous deployment**, the pattern that deploying many times a day small upgrades reduces the risk of critical outrage, usually the consequence of infrequent deployment of big upgrades.
+
 I hope my writing will spare you some time searching, reading, and testing. I believe it is true for any organization of any size, from the start-up with one developer to the big corporation which has many servers.
 
 **Simplicity, durability, portability and re-usability** are the key concepts to search for. Nothing complex will ever last. Nothing specific to one platform will ever be useful.
@@ -54,7 +56,7 @@ In the case of deployment, we have chance because there is a technology, *Chef*,
 
 - works also well with Vagrant, the technology for deploying **on your PC**. So you can have your application/site on your PC, Mac or Linux computer in the exact same configuration as on your production.
 
-**Be careful** : it would be a wrong reasoning to make your deployment strategy based on Amazon AWS choices only. Chef is the opensource technology that makes the picture larger than the proprietary scope of Amazon.
+**Be careful** : it would be a wrong reasoning to make your deployment strategy based on Amazon AWS choices only. Chef is the opensource technology that makes the picture larger than the proprietary scope of Amazon. Therefore, all you find on Internet on how to clone an Amazon AMI, how to install Opsworks Agent or how to simulate Opsworks settings in Chef, for the deployment on your local machine is not a good approach.
 
 
 #Chef, as our opensource standard

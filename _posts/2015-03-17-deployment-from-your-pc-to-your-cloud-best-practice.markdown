@@ -56,7 +56,15 @@ In the case of deployment, we have chance because there is a technology, *Chef*,
 
 - works also well with Vagrant, the technology for deploying **on your PC**. So you can have your application/site on your PC, Mac or Linux computer in the exact same configuration as on your production.
 
-**Be careful** : it would be a wrong reasoning to make your deployment strategy based on Amazon AWS choices only. Chef is the opensource technology that makes the picture larger than the proprietary scope of Amazon. Therefore, all you find on Internet on how to clone an Amazon AMI, how to install Opsworks Agent or how to simulate Opsworks settings in Chef, for the deployment on your local machine is not a good approach.
+**Be careful** : it would be a wrong reasoning to make your deployment strategy based on Amazon AWS choices only. Chef is the opensource technology that makes the picture larger than the proprietary scope of Amazon. Therefore,
+
+- all you find on Internet on how to clone an Amazon AMI, how to install Opsworks Agent or how to simulate Opsworks settings in Chef, for the deployment on your local machine is not a good approach thought they are very good articles.
+
+- at that time, I would recommend to use "custom layers" and not "application layers" in Opsworks, and not use the Apps section because it is specific to Amazon. This would be misleading. I'll write later more on how to use this.
+
+On the other way, using Vagrant to deploy on Amazon EC2 is not a good solution as well, because you'll not benefit from all the tools that Amazon provides you, such as CloudWatch, auto-healing, etc.
+
+Chef is the common denominator.
 
 
 #Chef, as our opensource standard

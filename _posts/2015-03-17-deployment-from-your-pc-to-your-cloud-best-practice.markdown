@@ -245,7 +245,7 @@ cookbook 'minitest-handler', git: 'git://github.com/btm/minitest-handler-cookboo
 
 {% endhighlight %}
 
-Here is an example recipe `my-cookbook.rb` :
+Here is an example recipe `my-cookbook.rb` with commented sections :
 
 {% highlight ruby %}
 

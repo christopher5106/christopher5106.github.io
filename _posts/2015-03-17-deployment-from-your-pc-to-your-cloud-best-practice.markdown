@@ -209,7 +209,7 @@ Not much more to say. To start an instance, click on the button !
 
 Oh, now it's time to write your first recipe.
 
-You'll add the following folder `my-application-cookbooks` as well as a `Berksfile` in your chef repository :
+Add your cookbook folder `my-application-cookbooks` for deployment of your application, as well as a `Berksfile` in your chef repository :
 
     my-application-cookbooks/
     |--recipes/

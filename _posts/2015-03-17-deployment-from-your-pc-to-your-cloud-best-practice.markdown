@@ -62,21 +62,21 @@ In the case of deployment, we have chance because there is a technology, *Chef*,
 
 - at that time, I would recommend to use "custom layers" and not "application layers" in Opsworks, and not use the Apps section because it is specific to Amazon. This would be misleading. I'll write later more on how to use this.
 
-On the other way, using Vagrant to deploy on Amazon EC2 is not a good solution as well, because you'll not benefit from all the tools that Amazon provides you, such as CloudWatch, auto-healing, etc.
+On the other way, using Vagrant to deploy on Amazon EC2 is not a good solution as well, because you won't benefit from all the tools that Amazon provides you, such as CloudWatch, auto-healing, etc.
 
 Chef is the common denominator. The same way to deploy everywhere, as shown in the following diagram (thanks [@buccolo](https://twitter.com/buccolo)):
 
 ![Chef Workflow]({{ site.url }}/img/opsworks-vagrant-diagram.png)
 
 
-**Note about Docker technology** : deploying with Docker requires to create a script for the Docker build (the `Dockerfile`), plus the [cookbook script to deploy the Docker](http://blogs.aws.amazon.com/application-management/post/Tx2FPK7NJS5AQC5/Running-Docker-on-AWS-OpsWorks), so it's two times more work, two scripts, much more complexity, and no good solution for parameter management (environments) and conf files (templates). In case you'd like to mutualise your cookbook and your Dockerfile, you can create a Bash script for the installation, that can be run by the [RUN command](https://docs.docker.com/reference/run/) in the Dockerfile, and by the [execute resource](https://docs.chef.io/resource_execute.html) in your cookbook.
+**Note about Docker technology** : deploying with Docker requires to create a script for the Docker build (the `Dockerfile`), plus the [cookbook script to deploy the Docker](http://blogs.aws.amazon.com/application-management/post/Tx2FPK7NJS5AQC5/Running-Docker-on-AWS-OpsWorks), so it's two times more work, two scripts, much more complexity, and no good solution for parameter management (environments/stacks) and conf files (templates). In case you'd like to mutualise your cookbook and your Dockerfile, you can create a Bash script for the installation, that can be run by the [RUN command](https://docs.docker.com/reference/run/) in the Dockerfile, and by the [execute resource](https://docs.chef.io/resource_execute.html) in your cookbook.
 This will be certainly different when leading cloud providers will provide us Docker deployment specific interfaces, with cost reductions.
 
 #Chef, as our opensource standard
 
 Chef enables you to write "recipes" in Ruby to deploy your application/site. Recipes are like scripts to execute on the target machine.
 
-First, create a git repository named `chef-deployment` under which you'll write all your recipes and from which you will be able to deploy from anywhere (your PC, your cloud,...). Create a directory named `environements` to declare your environment variables, and a directory named `roles` to create lists of recipes to execute together.
+First, create a git repository named `chef-deployment` under which you'll write all your recipes and from which you will be able to deploy from anywhere (your PC, your cloud,...). Create a directory named `environments` to declare your environment variables, and a directory named `roles` to create lists of recipes to execute together.
 
     chef-deployment/
     |--roles/
@@ -89,14 +89,14 @@ Vagrant enables you to deploy your application/site on a virtual machine on your
 
 - your Chef recipes to deploy your application
 
-- Berkshelf technology to deploy dependent recipes from the community.
+- Berkshelf technology to deploy dependencies (common recipes from the community).
 
-There are two minor differences because Opsworks does not support Chef environments and Chef roles (so sad :( ).
+There are two minor differences because Opsworks does not support Chef environments and Chef roles - so sad :( :
 
 - the environment / stack difference.
 On Vagrant you'll use the environments to change the parameters : `environments/production.rb` and `environments/development.rb`.
 On Opsworks, you'll create two stacks, *Production* and *Preproduction*.
-Here is an example of the paramaters, that usually contain the hostnames of the search cluster, the database cluster, the S3 bucket or the SES access :
+Here is an example of the parameters to configure, that usually contain the hostnames of the search cluster, the database cluster, the S3 bucket or the SES access :
 {% highlight json %}
 {
 "java": {
@@ -138,7 +138,9 @@ We'll speak later about the good use of IAM roles for security.
 
 
 - the role / layer difference.
-For Vagrant you can create **Chef roles**, a role is a list of recipes to execute, for example you could have a role "front web" to deploy your front servers, a role "database" to deploy your database, and a role "search" to deploy your search cluster. For Opsworks, you'll create some **layers** and assign the recipes as well.
+For Vagrant you can create **Chef roles**, a role is a list of recipes to execute, for example you could have a role "front web" to deploy your front servers, a role "database" to deploy your database, and a role "search" to deploy your search cluster. For Opsworks, you'll create some **layers** and assign the recipes in the layers as you did in the roles.
+
+These differences are still small.
 
 
 #Vagrant for deployment on your local machine
@@ -171,15 +173,22 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     chef.roles_path = "roles"
     chef.environments_path = "environments"
     chef.environment = "development"
-    chef.add_role("ROLE-NAME")
+    chef.add_role("my-role")
   end
 end
 {% endhighlight %}
 
-This is the case where a server in your VM will be listening on port 80, such as Apache or NodeJS.
-This instructs
+This will redirect port 80 to 8080, so for example in the case of a web server Apache or NodeJS, you'll access your site at `http://localhost:8080`.
 
-- to execute "ROLE-NAME", a list a recipes that will be found in `ROLE-NAME.rb` under the `roles` directory,
+This instructs also
+
+- to execute "my-role", a list a recipes that will be found in `my-role.rb` under the `roles` directory, for example to execute `git` and `my-application-cookbooks::my-cookbook` recipes
+
+{% highlight ruby %}
+name "my-role"
+description "The base role"
+run_list "recipe[git]","recipe[my-application-cookbooks::my-cookbook]"
+{% endhighlight %}
 
 - to use the "development environment", that will be found in `development.rb` under the `environments` directory.
 

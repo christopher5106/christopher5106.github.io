@@ -70,6 +70,7 @@ Chef is the common denominator. The same way to deploy everywhere, as shown in t
 
 
 **Note about Docker technology** : deploying with Docker requires to create a script for the Docker build (the `Dockerfile`), plus the [cookbook script to deploy the Docker](http://blogs.aws.amazon.com/application-management/post/Tx2FPK7NJS5AQC5/Running-Docker-on-AWS-OpsWorks), so it's two times more work, two scripts, much more complexity, and no good solution for parameter management (environments) and conf files (templates). In case you'd like to mutualise your cookbook and your Dockerfile, you can create a Bash script for the installation, that can be run by the [RUN command](https://docs.docker.com/reference/run/) in the Dockerfile, and by the [execute resource](https://docs.chef.io/resource_execute.html) in your cookbook.
+This will be certainly different when leading cloud providers will provide us Docker deployment specific interfaces, with cost reductions.
 
 #Chef, as our opensource standard
 

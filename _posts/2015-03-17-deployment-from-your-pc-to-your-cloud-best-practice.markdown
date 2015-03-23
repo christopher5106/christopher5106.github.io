@@ -5,7 +5,7 @@ date:   2015-03-17 23:00:51
 categories: continous deployment
 ---
 
-Keywords : continous deployment, AWS, Virtual machines, GIT
+Keywords : continous deployment, AWS, Virtual machines, GIT, IaaC (Infrastructure as a Code), DevOps
 
 You'd like to automatize your build, on any machine (your PC, your cloud servers or any server), with a very simple and clean way to do it ?
 

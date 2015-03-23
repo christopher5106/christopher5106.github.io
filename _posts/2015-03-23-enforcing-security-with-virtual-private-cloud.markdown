@@ -93,4 +93,8 @@ Security will be stronger : instances will have no IP, so it will not be possibl
     HTTPS | 443 | 0.0.0.0/0
 
 
+Here is the final diagram (thanks to @AWS)
+![Chef Workflow](http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/images/nat-instance-diagram.png)
+
+
 **Now you're ready to launch your loadbalancers, instances and create your stacks.**

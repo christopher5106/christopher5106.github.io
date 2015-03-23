@@ -7,9 +7,9 @@ categories: network
 
 Here is my practice.
 
-If you followed my [advice](continous/deployment/2015/03/17/deployment-from-your-pc-to-your-cloud-best-practice.html), you've created two stacks, `Production` and `Preproduction`. The production stack runs the machines for the production site, whereas the preproduction is the exact copy of the production in order to check that deployment works before deploying to production.
+If you want to follow my [advice](continous/deployment/2015/03/17/deployment-from-your-pc-to-your-cloud-best-practice.html), you will create two stacks, `Production` and `Preproduction`. The production stack runs the machines for the production site, whereas the preproduction is the exact copy of the production in order to check that deployment works before deploying to production.
 
-In order to enforce separation, I create two VPC with following networks :
+Before creating the stacks, in order to enforce separation, create two VPC with following networks :
 
 - Production `10.0.0.0/16`
 
@@ -47,7 +47,7 @@ having an IP address and the standard internet gateway in their route table. For
 
 ####Private subnets
 
-Security will be stronger : instances will have no IP, so it will not possible to access them directly from the Internet and also for them to access the Internet directly.
+Security will be stronger : instances will have no IP, so it will not be possible to access them directly from the Internet and also for them to access the Internet directly.
 
 - Set **Auto-assign Public IP** to false
 
@@ -91,3 +91,6 @@ Security will be stronger : instances will have no IP, so it will not possible t
     ------------- | ------------- | -------------
     HTTP | 80 | 0.0.0.0/0
     HTTPS | 443 | 0.0.0.0/0
+
+
+**Now you're ready to launch your loadbalancers, instances and create your stacks.**

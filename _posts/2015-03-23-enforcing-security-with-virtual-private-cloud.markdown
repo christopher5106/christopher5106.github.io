@@ -97,4 +97,4 @@ Here is the final diagram (thanks to @AWS)
 ![Chef Workflow](http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/images/nat-instance-diagram.png)
 
 
-**Now you're ready to launch your loadbalancers, instances and create your stacks.**
+**Now you're ready to create your stacks, with their respective loadbalancers, and launch your instances.**

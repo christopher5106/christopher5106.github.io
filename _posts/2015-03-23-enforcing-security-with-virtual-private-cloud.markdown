@@ -61,7 +61,7 @@ Security will be stronger : instances will have no IP, so it will not possible t
   10.0.0.0/16  | local
   0.0.0.0/0  | *nat instance*
 
-- Open some ports on the security group `NATSG` of the NAT instance that will filter the access of the private instance to web.
+- Open ports for some TCP connections on the security group `NATSG` of the NAT instance that will filter the access of the private instance to web.
 
     **Inbound ports**
 
@@ -85,9 +85,9 @@ Security will be stronger : instances will have no IP, so it will not possible t
 
     **Outbound ports**
 
+    For the connection to come back.
+
     Type | Port | Destination
     ------------- | ------------- | -------------
     HTTP | 80 | 0.0.0.0/0
     HTTPS | 443 | 0.0.0.0/0
-
-    **Note** : protocol is TCP for all of them.

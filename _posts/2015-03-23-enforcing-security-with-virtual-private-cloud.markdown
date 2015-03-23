@@ -22,7 +22,7 @@ Under each VPC, I create two private subnets and two public subnets, in two diff
 The two public subnets (`10.0.0.0/24` and `10.0.2.0/24` - with an even number for the third byte) will be used for the loadbalancers and the NAT instance that will be directly on the Internet.
 Loadbalancers require two public subnets in order to assure redundancy, in case one zone is not available due to failure.
 
-All other instances will be launched in the two private subnets (`10.0.1.0/24` and `10.0.3.0/24`  - with an odd number for the third byte), not accessible directly from the web, and with no direct access to the web either. This security will protect them from unintended accesses.
+All other instances will be launched in the two private subnets (`10.0.1.0/24` and `10.0.3.0/24`  - with an odd number for the third byte), not accessible directly from the web, and with no direct access to the web either. This security will protect them from unintended network activities.
 I create two private subnets because services, such as RDS instances, require two subnets in order to assure redundancy, in case one zone is not available due to failure.
 
 ####Public subnets

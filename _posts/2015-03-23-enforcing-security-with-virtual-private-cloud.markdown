@@ -7,7 +7,7 @@ categories: network
 
 Here is my practice.
 
-If you want to follow my [advice](continous/deployment/2015/03/17/deployment-from-your-pc-to-your-cloud-best-practice.html), you will create two stacks, `Production` and `Preproduction`. The production stack runs the machines for the production site, whereas the preproduction stack is the exact copy of the production stack in order to check that deployment works before deploying to production.
+If you want to follow my [advice]({{ site.url }}/continous/deployment/2015/03/17/deployment-from-your-pc-to-your-cloud-best-practice.html), you will create two stacks, `Production` and `Preproduction`. The production stack runs the machines for the production site, whereas the preproduction stack is the exact copy of the production stack in order to check that deployment works before deploying to production.
 
 Before creating the stacks, in order to enforce separation, create two VPC with for example the following network addresses :
 

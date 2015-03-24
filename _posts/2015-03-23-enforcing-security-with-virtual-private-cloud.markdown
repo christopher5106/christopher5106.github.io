@@ -51,7 +51,11 @@ Security will be stronger : instances will have no IP, so it will not be possibl
 
 - Set **Auto-assign Public IP** to false
 
-- Launch a NAT instance in the public subnet with a security group I'll name `NATSG`, and an IP address, that will enable filtered communications between private instances and the Internet.
+- Launch a NAT instance in the public subnet with
+
+  - a security group I name `NATSG`, that will enable to filter communications between private instances and the Internet.
+
+  - an **elastic** IP address, that will be the IP address of all outbound connections to the Internet from the private subnet.
 
 - Set the route table to
 

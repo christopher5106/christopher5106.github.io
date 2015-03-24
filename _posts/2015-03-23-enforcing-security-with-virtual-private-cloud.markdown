@@ -55,7 +55,7 @@ Security will be stronger : instances will have no IP, so it will not be possibl
 
   - a security group I name `NATSG`, that will enable to filter communications between private instances and the Internet.
 
-  - an **elastic** IP address, that will be the IP address of all outbound connections to the Internet from the private subnet, and that you will probably communicate to your partner (if they filter accesses on IP) or use in other services' security groups.
+  - an **elastic** IP address, that will be the IP address of all outbound connections to the Internet from the private subnet, and that you will probably communicate to your different partners (if they filter accesses on IP) or use in other services' security groups.
 
 - Set the route table to
 

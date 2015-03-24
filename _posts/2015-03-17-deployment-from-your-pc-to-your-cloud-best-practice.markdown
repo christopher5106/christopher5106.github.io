@@ -96,7 +96,7 @@ There are two minor differences because Opsworks does not support Chef environme
 - the environment / stack difference.
 On Vagrant you'll use the environments to change the parameters : `environments/production.rb` and `environments/development.rb`.
 On Opsworks, you'll create two stacks, *Production* and *Preproduction*.
-Here is an example of the parameters to configure, that usually contain the hostnames of the search cluster, the database cluster, the S3 bucket or the SES access :
+Here is an example of the parameters to configure, that usually contain the hostnames of the search cluster, the database cluster, the S3 bucket or the SES access, and the Git release or version to deploy :
 {% highlight json %}
 {
 "java": {
@@ -128,6 +128,9 @@ Here is an example of the parameters to configure, that usually contain the host
 "bucket":"xxxx",
 "access":"xxxx",
 "secret":"xxxx"
+},
+"my-application": {
+  "revision":"release"
 }
 }
 {% endhighlight %}

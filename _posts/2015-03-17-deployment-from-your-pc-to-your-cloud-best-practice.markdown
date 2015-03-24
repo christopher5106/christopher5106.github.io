@@ -100,34 +100,34 @@ Here is an example of the parameters to configure, that usually contain the host
 {% highlight json %}
 {
 "java": {
-"jdk_version":"7",
-"oracle":{"accept_oracle_download_terms":"true"},
-"accept_license_agreement":"true",
-"install_flavor":"oracle"
+  "jdk_version":"7",
+  "oracle":{"accept_oracle_download_terms":"true"},
+  "accept_license_agreement":"true",
+  "install_flavor":"oracle"
 },
 "elasticsearch":{
-"cluter":{"name":"preproduction-xxx"},
-"version":"1.0.1",
-"path":{"data":"/elasticsearch/data"},
-"dns":"xxx-elb"
+  "cluter":{"name":"preproduction-xxx"},
+  "version":"1.0.1",
+  "path":{"data":"/elasticsearch/data"},
+  "dns":"xxx-elb"
 },
 "sendmail_ses":{
-"username":"xxxx",
-"password":"xxxx",
-"domain":"xxxx",
-"test_user":"test",
-"test_email":"xxxx"
+  "username":"xxxx",
+  "password":"xxxx",
+  "domain":"xxxx",
+  "test_user":"test",
+  "test_email":"xxxx"
 },
 "mysql":{
-"dns":"xxxx",
-"database":"xxxx",
-"user":"xxxx",
-"password":"xxxx"
+  "dns":"xxxx",
+  "database":"xxxx",
+  "user":"xxxx",
+  "password":"xxxx"
 },
 "aws":{
-"bucket":"xxxx",
-"access":"xxxx",
-"secret":"xxxx"
+  "bucket":"xxxx",
+  "access":"xxxx",
+  "secret":"xxxx"
 },
 "my-application": {
   "revision":"release"

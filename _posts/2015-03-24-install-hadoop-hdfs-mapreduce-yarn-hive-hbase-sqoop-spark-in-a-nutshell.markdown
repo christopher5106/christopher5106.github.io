@@ -209,7 +209,7 @@ To start Spark master and slaves :
 Spark interface will be available at [http://localhost:8080/](http://localhost:8080/)
 
 
-**To concluse,** here is a nice classification of the different levels of interactions, from @Hortonworks :
+**To conclude,** here is a nice classification of the different levels of interactions, from @Hortonworks :
 
 
 ![Big data technologies]({{ site.url }}/img/data-plateform.png)

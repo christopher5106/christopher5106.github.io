@@ -214,7 +214,7 @@ Spark interface will be available at [http://localhost:8080/](http://localhost:8
 
 ![Big data technologies]({{ site.url }}/img/data-plateform.png)
 
-Don't forget to stop your process. List running processes with `jps` command and stop them with :
+Don't forget to stop the processes. List running processes with `jps` command and stop them with :
 
     stop-dfs.sh
     stop-mapred.sh

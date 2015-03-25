@@ -7,7 +7,7 @@ categories: bigdata
 
 #Hadoop in pseudodistributed mode
 
-Pseudodistributed mode is the mode that enables you to simulate a Hadoop cluster on your PC (a cluster of one machine = 1 node). Pseudodistributed mode is the step before going to the real distributed cluster.
+Pseudodistributed mode is the mode that enables you to create a Hadoop cluster of 1 node on your PC. Pseudodistributed mode is the step before going to the real distributed cluster.
 
 To install Hadoop 1.2.1 :
 
@@ -209,11 +209,12 @@ To start Spark master and slaves :
 Spark interface will be available at [http://localhost:8080/](http://localhost:8080/)
 
 
-#Stop
+**To concluse,** here is a nice classification of the different levels of interactions, from @Hortonworks :
 
-Verify your process are running with `jps` command.
 
-Stop with :
+![Big data technologies]({{ site.url }}/img/data-plateform.png)
+
+Don't forget to stop your process. List running processes with `jps` command and stop them with :
 
     stop-dfs.sh
     stop-mapred.sh

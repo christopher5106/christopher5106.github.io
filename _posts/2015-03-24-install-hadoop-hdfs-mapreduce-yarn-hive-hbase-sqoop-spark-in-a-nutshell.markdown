@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Installing big data technologies in a nutshell : Hadoop HDFS & Mapreduse, Yarn, Hive, Hbase, Sqoop and Spark"
+title:  "Installing big data technologies in a nutshell : Hadoop HDFS & Mapreduce, Yarn, Hive, Hbase, Sqoop and Spark"
 date:   2015-03-24 23:00:51
 categories: bigdata
 ---

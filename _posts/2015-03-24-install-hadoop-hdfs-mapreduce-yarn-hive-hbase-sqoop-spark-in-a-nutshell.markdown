@@ -13,7 +13,7 @@ To install Hadoop 1.2.1 :
 
     wget http://mirrors.ircam.fr/pub/apache/hadoop/common/hadoop-1.2.1/hadoop-1.2.1.tar.gz
     tar xvzf hadoop-1.2.1.tar.gz
-    export HADOOP_INSTALL=/Users/christopherbourez/hadoop-1.2.1
+    export HADOOP_INSTALL=~/hadoop-1.2.1
     export PATH=$PATH:$HADOOP_INSTALL/bin:$HADOOP_INSTALL/sbin
 
 To check Hadoop is correctly installed, type `hadoop version`.
@@ -127,7 +127,7 @@ To install Hive, you should have installed Hadoop before, and
 
     wget http://apache.crihan.fr/dist/hive/hive-1.1.0/apache-hive-1.1.0-bin.tar.gz
     tar xzf apache-hive-1.1.0-bin.tar.gz
-    export HIVE_INSTALL=/Users/christopherbourez/apache-hive-1.1.0-bin
+    export HIVE_INSTALL=~/apache-hive-1.1.0-bin
     export PATH=$PATH:$HIVE_INSTALL/bin
 
 To launch the Hive shell, type `hive`.
@@ -147,7 +147,7 @@ To install Hbase :
 
     wget http://mirrors.ircam.fr/pub/apache/hbase/hbase-1.0.0/hbase-1.0.0-bin.tar.gz
     tar xzf hbase-1.0.0-bin.tar.gz
-    export HBASE_HOME=/Users/christopherbourez/hbase-1.0.0
+    export HBASE_HOME=~/hbase-1.0.0
     export PATH=$PATH:$HBASE_HOME/bin
     export JAVA_HOME=/usr
 
@@ -189,10 +189,10 @@ Sqoop is a great connector to perform import / export between a database and HDF
 
     wget http://apache.crihan.fr/dist/sqoop/1.4.5/sqoop-1.4.5.bin__hadoop-1.0.0.tar.gz
     tar xzf sqoop-1.4.5.bin__hadoop-1.0.0.tar.gz
-    export HADOOP_COMMON_HOME=/Users/christopherbourez/hadoop-1.2.1
-    export HADOOP_MAPRED_HOME=/Users/christopherbourez/hadoop-1.2.1
-    export HCAT_HOME=/Users/christopherbourez/hive/hcatalog
-    export SCOOP_HOME=/Users/christopherbourez/sqoop-1.4.5.bin__hadoop-0.23
+    export HADOOP_COMMON_HOME=~/hadoop-1.2.1
+    export HADOOP_MAPRED_HOME=~/hadoop-1.2.1
+    export HCAT_HOME=~/hive/hcatalog
+    export SCOOP_HOME=~/sqoop-1.4.5.bin__hadoop-0.23
     export PATH=$PATH:$SCOOP_HOME/bin
 
 To check it works, type `sqoop help`.
@@ -204,7 +204,7 @@ To check it works, type `sqoop help`.
 
 To start Spark master and slaves :
 
-    /Users/christopherbourez/spark-1.3.0-bin-hadoop1/sbin/start-all.sh
+    ~/spark-1.3.0-bin-hadoop1/sbin/start-all.sh
 
 Spark interface will be available at [http://localhost:8080/](http://localhost:8080/)
 
@@ -219,4 +219,4 @@ Don't forget to stop the processes. List running processes with `jps` command an
     stop-dfs.sh
     stop-mapred.sh
     stop-hbase.sh
-    /Users/christopherbourez/spark-1.3.0-bin-hadoop1/sbin/stop-all.sh
+    ~/spark-1.3.0-bin-hadoop1/sbin/stop-all.sh

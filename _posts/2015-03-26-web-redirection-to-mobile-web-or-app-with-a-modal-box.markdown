@@ -113,17 +113,16 @@ that can be proposed under a "Download the app" button.
 - on iPhone, it's possible to do the same with : 
 
 {% highlight javascript %}
-		window.location = $("meta[property='al:ios:url']").attr("content");
+window.location = $("meta[property='al:ios:url']").attr("content");
 
-		setTimeout(function() {
+setTimeout(function() {
 
-        	// If the user is still here, open the App Store
-        	if (!document.webkitHidden) {
+	// If the user is still here, open the App Store
+	if (!document.webkitHidden) {
 
-          	// Replace the Apple ID following '/id'
-          	window.location = 'http://itunes.apple.com/app/id' + $("meta[property='al:ios:app_store_id']").attr("content") ;
-        	}
-		}, 25);
+    window.location = 'http://itunes.apple.com/app/id' + $("meta[property='al:ios:app_store_id']").attr("content") ;
+    }
+}, 25);
 {% endhighlight %}
 
 If the app is already installed (with its custom URI shemes), it's going to launch the app at the correct page. But if the app is not installed, the user will very shortly see an error popup, and redirected to the AppStore with the `setTimeout function`. Not very good, this popup, but we have no other choice. 

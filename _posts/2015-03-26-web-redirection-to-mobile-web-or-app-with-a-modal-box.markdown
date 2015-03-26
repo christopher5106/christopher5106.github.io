@@ -7,7 +7,9 @@ categories: mobile
 
 The idea is to open a modal box when the website (WWW) is viewed on the mobile phone or a tablet, to propose the user a redirection to the mobile app or the mobile website (M), which have a better experience on small devices.
 
-I won't explain in this article the advantages of keeping two separate WWW and M web site. I precise the technical constraints and possibilities for the different platforms, in particular Android and IOS. This article is particularly true when the mobile app and the mobile websites have the same ergonomy, for example in the case of hybrid apps.
+I won't explain in this article the advantages of keeping two separate WWW and M web site. I precise the technical constraints and possibilities for the different platforms, in particular Android and IOS. 
+
+This article is true when **the mobile app and the mobile website have the same ergonomy**, for example in the case of an hybrid apps.
 
 Here is my best practice.
 
@@ -144,6 +146,9 @@ The way to ask it can vary from one site to another :
 Here is my full script : 
 
 {% highlight javascript %}
+
+var MOBILE_BASE_URL = "http://m.my-domain.com"
+
 function getCookie(cname) {
   var name = cname + "=";
   var ca = document.cookie.split(';');
@@ -201,7 +206,7 @@ function open(has_appli) {
 
 $("#yes").click(function() { open(true); } );
 $("#no").click(function() { open(false); } );
-$("#mobile").click(function() { window.location = "http://m.selectionnist.com"+ $("meta[property='al:android:url']").attr("content").split(':/')[1]; } );
+$("#mobile").click(function() { window.location = MOBILE_BASE_URL + "/" + $("meta[property='al:android:url']").attr("content").split(':/')[1]; } );
 
 if( (typeof $("meta[property='al:android:url']").attr("content") != "undefined" || typeof $("meta[property='al:ios:url']").attr("content") != "undefined") && IS_MOBILE) {
   if(getCookie("appli")!="") open(true);

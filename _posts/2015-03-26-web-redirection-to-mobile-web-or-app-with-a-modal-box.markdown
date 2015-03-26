@@ -174,43 +174,39 @@ IS_ANDROID = !IS_IOS && navigator.userAgent.match(/android/i) != null,
 IS_MOBILE = IS_IOS || IS_ANDROID;
 
 function open(has_appli) {
-
   // If it's not an universal app, use IS_IPAD or IS_IPHONE
-
   setCookie("appli",true,1000);
 
   if (IS_IOS) {
     if(has_appli) {
-
       window.location = $("meta[property='al:ios:url']").attr("content");
 
       setTimeout(function() {
-
         // If the user is still here, open the App Store
         if (!document.webkitHidden) {
-
-          // Replace the Apple ID following '/id'
           window.location = 'http://itunes.apple.com/app/id' + $("meta[property='al:ios:app_store_id']").attr("content");
         }
       }, 25);
-
-
-    } else {console.log("fdk"); window.location = 'http://itunes.apple.com/app/id'+$("meta[property='al:ios:app_store_id']").attr("content");}
+    } else { 
+    	window.location = 'http://itunes.apple.com/app/id'+$("meta[property='al:ios:app_store_id']").attr("content");
+    }
 
   } else if (IS_ANDROID) {
-
-    // Instead of using the actual URL scheme, use 'intent://' for better UX
     window.location = 'intent:/'+$("meta[property='al:android:url']").attr("content").split(':/')[1]+'#Intent;package='+$("meta[property='al:android:package']").attr("content")+';scheme='+$("meta[property='al:android:url']").attr("content").split(':/')[0]+';launchFlags=268435456;end;';
   }
 }
 
 $("#yes").click(function() { open(true); } );
 $("#no").click(function() { open(false); } );
-$("#mobile").click(function() { window.location = MOBILE_BASE_URL + "/" + $("meta[property='al:android:url']").attr("content").split(':/')[1]; } );
+$("#mobile").click(function() { 
+	window.location = MOBILE_BASE_URL + "/" + $("meta[property='al:android:url']").attr("content").split(':/')[1]; 
+} );
 
 if( (typeof $("meta[property='al:android:url']").attr("content") != "undefined" || typeof $("meta[property='al:ios:url']").attr("content") != "undefined") && IS_MOBILE) {
-  if(getCookie("appli")!="") open(true);
-  else $('#ask_for_app').modal('show');
+  if(getCookie("appli")!="") 
+  	open(true);
+  else 
+  	$('#ask_for_app').modal('show');
 }
 
 {% endhighlight %}

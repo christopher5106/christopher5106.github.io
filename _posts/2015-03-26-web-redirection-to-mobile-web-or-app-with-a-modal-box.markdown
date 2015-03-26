@@ -179,7 +179,7 @@ function open(has_appli) {
 
   if (IS_IOS) {
     if(has_appli) {
-      window.location = $("meta[property='al:ios:url']").attr("content");
+      window.location = $("meta[property='al:ios:url']").attr("content") || $("meta[property='al:android:url']").attr("content");
 
       setTimeout(function() {
         // If the user is still here, open the App Store

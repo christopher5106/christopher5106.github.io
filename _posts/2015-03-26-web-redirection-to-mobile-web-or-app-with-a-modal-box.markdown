@@ -1,15 +1,19 @@
 ---
 layout: post
-title:  "Redirection to mobile website or mobile app with a modal box"
+title:  "Redirection to the mobile app or the mobile website with a modal box"
 date:   2015-03-26 23:00:51
 categories: mobile
 ---
 
-The idea is to show a modal box when the website www is called on the mobile phone or a tablet, to propose the mobile app or the mobile website (M) to the user, and offer her a better experience. 
+The idea is to open a modal box when the website (WWW) is viewed on the mobile phone or a tablet, to propose the user a redirection to the mobile app or the mobile website (M), which have a better experience on small devices.
 
-I won't explain in this article the advantages of keeping two separate www and M web site. I precise the constraints and possibilities of the different platforms, in particular Android and IOS.
+I won't explain in this article the advantages of keeping two separate WWW and M web site. I precise the technical constraints and possibilities for the different platforms, in particular Android and IOS. This article is particularly true when the mobile app and the mobile websites have the same ergonomy, for example in the case of hybrid apps.
 
-This can be done by a simple and standalone script in Javascript. First, the detection of the mobile device : 
+Here is my best practice.
+
+Such a redirection can be done by a simple and standalone script in Javascript. 
+
+First, detecting of the mobile device and setting the variables : 
 
 {% highlight javascript %}
 var IS_IPAD = navigator.userAgent.match(/iPad/i) != null,
@@ -20,21 +24,21 @@ IS_MOBILE = IS_IOS || IS_ANDROID;
 }
 {% endhighlight %}
 
-#Mapping between M web site and www web site
+#Mapping URL between WWW and M web sites
 
-No need to say that the main advantage of having two web sites, one for PC, and one for mobile, is to have different experiences and though different URL.
+No need to say that the main advantage of keeping two separate web sites, one for PC, and one for mobile, is to offer different but better experiences, and that will usually lead to different URL.
 
-In a perfect world, one could think only the domain name changes, and the rule could simply be that `http://www.domain.com +path` is equivalent to `http://m.domain.com + path`. Nevertheless it's quite utopic.
+In a perfect world, one could think only the domain name changes, and the rule could simply be that `http://www.domain.com + path` is equivalent to `http://m.domain.com + path`. Nevertheless it's quite utopic. And also more often, there are some pages for which there is no equivalent on mobile website and vice-versa.
 
-To make the mapping between M web site and www web site, I prefer to advise that in each HTML page or template of the www website, where the script will be inserted, a `path` parameter has to be inserted in the page for the redirection to proposed to the user, otherwise the redirection won't be proposed. This path parameter will enable to construct either : 
+To make the mapping between the WWW and M web sites, I prefer to advise that in each HTML page or template of the WWW website, where the script will be inserted, a `path` parameter has to be inserted in the page for the redirection to be proposed to the user, or not, and where to redirect. This path parameter will enable to construct either : 
 
 * the mobile website URL : `http://m.my-domain.com/ + path`
 
-* the mobile app URI scheme (usually called "custom URI scheme") : `my-app:// + path ` that can be used either to directly launch the app if the app is installed, or for the [smart banner](https://developer.apple.com/library/mac/documentation/AppleApplications/Reference/SafariWebContent/PromotingAppswithAppBanners/PromotingAppswithAppBanners.html) 
+* the mobile app URI scheme (usually called "custom URI scheme") : `my-app:// + path ` that can be used either to directly launch the app if the app is installed, or for the [smart banner](https://developer.apple.com/library/mac/documentation/AppleApplications/Reference/SafariWebContent/PromotingAppswithAppBanners/PromotingAppswithAppBanners.html).
 
 But do we really need to create a parameter ? 
 
-No, not really. We can combine it with the applink parameter. 
+No, not really. We can combine it with the Applink tag in the HTML page, and detect it :
 
 
 {% highlight javascript %}
@@ -44,7 +48,7 @@ if( (typeof $("meta[property='al:android:url']").attr("content") != "undefined" 
 }
 {% endhighlight %}
 
-**In conclusion, you just need to insert the JS script everywhere in the HTML headers. The presence of the applink will do the rest !**
+**In conclusion, you just need to insert the JS script in the HTML header of all pages, and add the Applink tag where a mobile redirection can be done. The presence of the Applink will decide if there is a redirection.**
 
 
 #Applinks
@@ -58,39 +62,41 @@ The other good thing about Applinks is that it is an open-source and cross-platf
 Here is an example of 
 
 {% highlight html %}
-    <meta property="al:ios:url" content="my-app://path" />
-    <meta property="al:android:url" content="my-app://path">
-    <meta property="al:ios:app_store_id" content="apple-app-id" />
-    <meta property="al:android:package" content="google-app-package">
-    <meta property="al:android:app_name" content="My App">
-    <meta property="al:ios:app_name" content="My App" />
-    <meta property="og:title" content="example page title" />
-    <meta property="og:type" content="website" />
+<meta property="al:ios:url" content="my-app://path" />
+<meta property="al:android:url" content="my-app://path">
+<meta property="al:ios:app_store_id" content="apple-app-id" />
+<meta property="al:android:package" content="google-app-package">
+<meta property="al:android:app_name" content="My App">
+<meta property="al:ios:app_name" content="My App" />
+<meta property="og:title" content="example page title" />
+<meta property="og:type" content="website" />
 {% endhighlight %}
 
 
 #Custom URI schemes
 
-The custom URI schemes is a URI with a "custom" protocol, for example `my-app://my-page`.
+The custom URI schemes are URI with a "custom" protocol, for example `my-app://my-page`.
 
 This protocol becomes active on the mobile phone when the user has installed the corresponding app.
 
-It enables to re-create a sort of "hyperlinks" for mobile apps, as on the web with hypertext. 
-
 It enables to target a precise page in the app. 
+
+Custom URI schemes re-create a sort of "hyperlinks" for mobile apps, as on the web with hypertext links. 
+
+
 
 
 #The script
 
 So, let's suppose the script has detected that 
 
-- the applink parameter is present
+- the Applink tag is present
 
 - the user is viewing the page on a mobile phone
 
 there is a potential redirection to propose to the user : the modal box is opened to the user.
 
-What are the next steps for him ?
+What are the "call to action" buttons to propose the user ?
 
 It is where it becomes tricky because : 
 
@@ -100,7 +106,7 @@ It is where it becomes tricky because :
 		window.location = 'intent:/'+$("meta[property='al:android:url']").attr("content").split(':/')[1]+'#Intent;package='+$("meta[property='al:android:package']").attr("content")+';scheme='+$("meta[property='al:android:url']").attr("content").split(':/')[0]+';launchFlags=268435456;end;';
 {% endhighlight %}
 
-that can be proposed under a "Download the app" button. But it's not a very fun button when the user has already installed the app !
+that can be proposed under a "Download the app" button. 
 
 - on iPhone, it's possible to do the same with : 
 
@@ -118,11 +124,14 @@ that can be proposed under a "Download the app" button. But it's not a very fun 
 		}, 25);
 {% endhighlight %}
 
-If the app is already installed (with its custom URI shemes), it's going to launch the app at the correct page. But if the app is not installed, the user will very shortly see an error popup, and redirected to the AppStore with the `setTimeout function`. Not very good, this popup, but we have no other choice. Same problem also with the "Download the app" button presented to users that have already installed the app.
+If the app is already installed (with its custom URI shemes), it's going to launch the app at the correct page. But if the app is not installed, the user will very shortly see an error popup, and redirected to the AppStore with the `setTimeout function`. Not very good, this popup, but we have no other choice. 
+
 
 #Download or open the app ?
 
-To avoid the problem of showing a "Download" button to users that have the app already installed, the mainstream solution is to ask the question at the first time and set a cookie then.
+The "Download the app" button is not very nice when the user has already installed the app ! In particular because this user might come many times to the WWW website on his phone. The same problem occurs on both IOS and Android devices. It is due to the fact it is not possible to know from a web page if an app has been installed, for security reasons.
+
+To avoid this situation, the mainstream solution is to ask a question at the first time and then set a cookie, not to ask it again.
 
 The way to ask it can vary from one site to another : 
 

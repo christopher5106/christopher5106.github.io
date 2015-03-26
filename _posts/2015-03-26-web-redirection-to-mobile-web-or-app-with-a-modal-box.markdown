@@ -45,8 +45,7 @@ No, not really. We can combine it with the Applink tag in the HTML page, and det
 
 {% highlight javascript %}
 if( (typeof $("meta[property='al:android:url']").attr("content") != "undefined" || typeof $("meta[property='al:ios:url']").attr("content") != "undefined") && IS_MOBILE) {
-  if(getCookie("appli")!="") open(true);
-  else $('#ask_for_app').modal('show');
+  // you can use $("meta[property='al:android:url']").attr("content").split(':/')[1] || $("meta[property='al:ios:url']").attr("content").split(':/')[1]
 }
 {% endhighlight %}
 
@@ -105,7 +104,7 @@ It is where it becomes tricky because :
 - on Android phones, it is possible to redirect the user to the mobile app, and if the mobile app is not installed, the user will be automatically redirected to Google Play. This can be done with a simple INTENT action: 
 
 {% highlight javascript %}
-		window.location = 'intent:/'+$("meta[property='al:android:url']").attr("content").split(':/')[1]+'#Intent;package='+$("meta[property='al:android:package']").attr("content")+';scheme='+$("meta[property='al:android:url']").attr("content").split(':/')[0]+';launchFlags=268435456;end;';
+window.location = 'intent:/'+$("meta[property='al:android:url']").attr("content").split(':/')[1]+'#Intent;package='+$("meta[property='al:android:package']").attr("content")+';scheme='+$("meta[property='al:android:url']").attr("content").split(':/')[0]+';launchFlags=268435456;end;';
 {% endhighlight %}
 
 that can be proposed under a "Download the app" button. 
@@ -116,10 +115,8 @@ that can be proposed under a "Download the app" button.
 window.location = $("meta[property='al:ios:url']").attr("content");
 
 setTimeout(function() {
-
 	// If the user is still here, open the App Store
 	if (!document.webkitHidden) {
-
     window.location = 'http://itunes.apple.com/app/id' + $("meta[property='al:ios:app_store_id']").attr("content") ;
     }
 }, 25);

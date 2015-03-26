@@ -125,7 +125,7 @@ setTimeout(function() {
 }, 25);
 {% endhighlight %}
 
-If the app is already installed (with its custom URI shemes), it's going to launch the app at the correct page. But if the app is not installed, the user will very shortly see an error popup, and redirected to the AppStore with the `setTimeout function`. Not very good, this popup, but we have no other choice. 
+If the app is already installed (with its custom URI shemes), it's going to launch the app at the correct page. But if the app is not installed, the user will very shortly see an error popup, and be redirected to the AppStore with the `setTimeout function`. Not very good, this popup, but we have no other choice. 
 
 
 #Download or open the app ?

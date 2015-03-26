@@ -9,7 +9,7 @@ The idea is to open a modal box when the website (WWW) is viewed on the mobile p
 
 I won't explain in this article the advantages of keeping two separate WWW and M web site. I precise the technical constraints and possibilities for the different platforms, in particular Android and IOS. 
 
-This article is true when **the mobile app and the mobile website have the same ergonomy**, for example in the case of an hybrid apps.
+This article is true when **the mobile app and the mobile website have the same ergonomy**, for example in the case of an hybrid app.
 
 Here is my best practice.
 
@@ -90,13 +90,13 @@ Custom URI schemes re-create a sort of "hyperlinks" for mobile apps, as on the w
 
 #The script
 
-So, let's suppose the script has detected that 
+So, let's assume the script has detected that 
 
 - the Applink tag is present
 
 - the user is viewing the page on a mobile phone
 
-there is a potential redirection to propose to the user : the modal box is opened to the user.
+there is a potential redirection to propose to the user by opening the modal box to the user.
 
 What are the "call to action" buttons to propose the user ?
 

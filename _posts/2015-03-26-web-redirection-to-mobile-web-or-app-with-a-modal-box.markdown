@@ -12,7 +12,7 @@ The purpose of this article is to present a best pratice about redirecting the u
 Such a redirection might be more tricky than it seems. I will precise in this paper the technical constraints and possibilities for the different platforms, in particular Android and IOS. This article is true when **the mobile app and the mobile website have the same ergonomy**, for example in the case of an hybrid app.
 
 
-#The question to ask : Download or open the app ?
+#The question to ask : download or open the app ?
 
 For a user that has already installed the app, it's quite annoying to ask her to download the app... a button "open the app" will suit better her situation.
 

@@ -12,7 +12,7 @@ The purpose of this article is to present a best pratice about redirecting the u
 Such a redirection might be more tricky than it seems. I will precise in this paper the technical constraints and possibilities for the different platforms, in particular Android and IOS. This article is true when **the mobile app and the mobile website have the same ergonomy**, for example in the case of an hybrid app.
 
 
-#The question to ask : download or open the app ?
+#Asking the question : download or open the app ?
 
 For a user that has already installed the app, it's quite annoying to ask her to download the app... a button "open the app" will suit better her situation.
 
@@ -68,7 +68,7 @@ But do we really need to define a parameter ?
 No, not really. We can combine it with the Applink tag in the HTML page.
 
 
-#Applinks
+#Defining redirection parameters with Applinks
 
 [Applinks](http://applinks.org/) allow a page, when shared on a social network, and seen in the feed of the social networks, to directly open the app if the app is installed, instead of the browser.
 
@@ -110,7 +110,7 @@ In conclusion, just insert the JS script in the HTML header of all the WWWW page
 
 **It's a re-use of the "Applink standard" in our JS to decide if there has to be a redirection, and where to redirect in such a case.**
 
-#App detection and launch with custom URI schemes
+#Detecting and launching the app with custom URI schemes
 
 Custom URI schemes are the last step, to be able to open the right page inside the app (in the case of opening the app), but also to launch the app. 
 

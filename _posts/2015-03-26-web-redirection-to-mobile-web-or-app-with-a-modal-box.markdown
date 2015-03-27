@@ -5,11 +5,11 @@ date:   2015-03-26 23:00:51
 categories: mobile
 ---
 
-In many cases, the classic website (WWW) does not offer a great experience on the mobile phone or a tablet, that's why a mobile website (M) is usually created. I won't explain in this article the advantages of keeping two separate WWW and M web site.
+In many cases, the classic website (WWW) does not offer a great and tailored experience on the mobile phone or a tablet, that's why an mobile application or mobile website (M) are usually created. 
 
 The purpose of this article is to present a best pratice about redirecting the user to the mobile app or the mobile website (M), which have a better experience on small devices. This redirection is usually done by opening a modal box asking the user if she'd like to be use the app on her phone.
 
-Such a redirection might be more tricky than it seems. I will precise in this paper the technical constraints and possibilities for the different platforms, in particular Android and IOS. This article is true when **the mobile app and the mobile website have the same ergonomy**, for example in the case of an hybrid app.
+Such a redirection might be more tricky than it seems. I will precise in this paper the technical constraints and possibilities for the different platforms, in particular Android and IOS.
 
 
 #Asking the question : install or open the app ?
@@ -69,7 +69,7 @@ To make the mapping between the WWW and M web sites, I prefer to advise that in 
 
 But do we really need to define a parameter ?
 
-No, not really. We can combine it with the Applink tag in the HTML page.
+No, not really. We can combine it with the Applink tag in the HTML page, in the case **the mobile app and the mobile website have the same ergonomy**, for example in the case of an hybrid app.
 
 
 #Defining redirection parameters with Applinks

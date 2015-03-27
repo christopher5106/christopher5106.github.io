@@ -5,9 +5,9 @@ date:   2015-03-26 23:00:51
 categories: mobile
 ---
 
-In many cases, the classic website (WWW) does not offer a great and tailored experience on the mobile phone or a tablet, that's why an mobile application or mobile website (M) are usually created. 
+In many cases, the classic website (WWW) does not offer a great and tailored experience on the mobile phone or a tablet, that's why an mobile application or mobile website (M) are usually created.
 
-The purpose of this article is to present a best pratice about redirecting the user to the mobile app or the mobile website (M), which have a better experience on small devices. This redirection is usually done by opening a modal box asking the user if she'd like to be use the app on her phone.
+The purpose of this article is to present a best pratice about redirecting the user from the WWW web site to the mobile app or the mobile website (M), which have a better experience on small devices. This redirection is usually done by opening a modal box asking the user if she'd like to be use the app on her phone.
 
 Such a redirection might be more tricky than it seems. I will precise in this paper the technical constraints and possibilities for the different platforms, in particular Android and IOS.
 

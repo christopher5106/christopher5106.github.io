@@ -28,7 +28,7 @@ The way to ask it can vary from one site to another :
 
 - ...
 
-Here is an example from the Testflight app website : 
+Once the user has clicked on a choice, its choice is saved into the cookie.
 
 <img src="{{ site.url }}/img/modal-redirection.png" alt="alt text" style="width:100%"> | <img src="{{ site.url }}/img/modal_redirection2.png" alt="alt text" style="width:100%">
 
@@ -211,9 +211,6 @@ $("#mobile").click(function() {
 } );
 
 if( (typeof $("meta[property='al:android:url']").attr("content") != "undefined" || typeof $("meta[property='al:ios:url']").attr("content") != "undefined") && IS_MOBILE) {
-  if(getCookie("appli")!="") 
-  	open(true);
-  else 
   	$('#ask_for_app').modal('show');
 }
 

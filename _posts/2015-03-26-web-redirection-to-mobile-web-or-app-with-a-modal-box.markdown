@@ -106,7 +106,7 @@ if( (typeof $("meta[property='al:android:url']").attr("content") != "undefined" 
 {% endhighlight %}
 
 
-In conclusion, just insert the JS script in the HTML header of all the WWWW pages, and add the Applink tag where a mobile redirection can be done. 
+In conclusion, just insert the JS script in the HTML header of all the WWW pages, and add the Applink tag where a mobile redirection can be done. 
 
 **It's a re-use of the "Applink standard" in our JS to decide if there has to be a redirection, and where to redirect in such a case.**
 

@@ -32,7 +32,7 @@ Here is an example from the Testflight app website :
 
 ![Redirection question]({{ site.url }}/img/modal-redirection.png)
 
-
+<img src="{{ site.url }}/img/modal-redirection2.png" alt="alt text" style="width:whatever;height:whatever">
 
 #Detecting the mobile
 

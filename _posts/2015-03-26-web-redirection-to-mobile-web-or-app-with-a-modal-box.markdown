@@ -20,7 +20,7 @@ The problem comes from the fact **it is not possible to know from a web page if 
 
 To avoid this situation, the mainstream solution is to **ask a question at the first time and then set a cookie, not to ask it again**.
 
-The way to ask it can vary from one site to another : 
+The way to ask it can vary from one site to another :
 
 - "Already installed ?"
 
@@ -28,17 +28,21 @@ The way to ask it can vary from one site to another :
 
 - ...
 
-Once the user has clicked on a choice, its choice is saved into the cookie. Here are a few different examples : 
+Once the user has clicked on a choice, its choice is saved into the cookie. Here are a few different examples :
 
-<img src="{{ site.url }}/img/modal-redirection.png" alt="alt text" style="width:100%"> | <img src="{{ site.url }}/img/modal_redirection2.png" alt="alt text" style="width:100%">
+<img src="{{ site.url }}/img/modal-redirection.png" alt="Redirection mobile" style="width:100%"> | <img src="{{ site.url }}/img/modal_redirection2.png" alt="Redirection mobile" style="width:100%">
 
-![Chef Workflow]({{ site.url }}/img/modal-redirection3.png)
+![Redirection mobile]({{ site.url }}/img/modal-redirection3.png)
+
+The choice is saved, and the next times the button "Install the app" will not be shown again.
+
+In case the user has uninstalled the app or answered wrong, the 'open the app' action will not be that problematic as we'll see later : on Android it will just redirect to Google Play and on IOS a small error popup will appear shortly before redirecting also to the Appstore.
 
 #Detecting if the page is viewed by a mobile device
 
 Such a redirection can be simply done by a standalone script in Javascript, that will first detect if it's a mobile device.
 
-The variable can be set for later use : 
+The variable can be set for later use :
 
 {% highlight javascript %}
 var IS_IPAD = navigator.userAgent.match(/iPad/i) != null,
@@ -57,13 +61,13 @@ No need to say that the main advantage of keeping two separate web sites, one fo
 
 In a perfect world, one could think only the domain name changes, and the rule could simply be that `http://www.domain.com + path` is equivalent to `http://m.domain.com + path`. Nevertheless it's quite utopic. And also more often, there are some pages for which there is no equivalent on mobile website and vice-versa.
 
-To make the mapping between the WWW and M web sites, I prefer to advise that in each HTML page or template of the WWW website, where the script will be inserted, a `path` parameter has to be inserted in the page for the redirection to be proposed to the user, or not, and where to redirect. This path parameter will enable to construct either : 
+To make the mapping between the WWW and M web sites, I prefer to advise that in each HTML page or template of the WWW website, where the script will be inserted, a `path` parameter has to be inserted in the page for the redirection to be proposed to the user, or not, and where to redirect. This path parameter will enable to construct either :
 
 * the mobile website URL : `http://m.my-domain.com/ + path`
 
 * the mobile app URI scheme (usually called "custom URI scheme") : `my-app:// + path ` that can be used either to directly launch the app if the app is installed, or for the [smart banner](https://developer.apple.com/library/mac/documentation/AppleApplications/Reference/SafariWebContent/PromotingAppswithAppBanners/PromotingAppswithAppBanners.html).
 
-But do we really need to define a parameter ? 
+But do we really need to define a parameter ?
 
 No, not really. We can combine it with the Applink tag in the HTML page.
 
@@ -76,7 +80,7 @@ No, not really. We can combine it with the Applink tag in the HTML page.
 
 The other good thing about Applinks is that it is an open-source and cross-platform standard, that can be implemented in any app that deals with URL and webpages. [Applinks are in particular implemented by Facebook](https://developers.facebook.com/docs/applinks). There also exists a [Cordova plugin](https://github.com/francimedia/phonegap-applinks).
 
-Here is an example of 
+Here is an example of
 
 {% highlight html %}
 <meta property="al:ios:url" content="my-app://path" />
@@ -91,7 +95,7 @@ Here is an example of
 
 **If I already use an Applink tag to indicate Facebook to redirect to the app, the script can re-use this value for its purpose**.
 
-Our JS script can detect the presence and value of this tag. If the script has detected that 
+Our JS script can detect the presence and value of this tag. If the script has detected that
 
 - the Applink tag is present
 
@@ -106,13 +110,13 @@ if( (typeof $("meta[property='al:android:url']").attr("content") != "undefined" 
 {% endhighlight %}
 
 
-In conclusion, just insert the JS script in the HTML header of all the WWW pages, and add the Applink tag where a mobile redirection can be done. 
+In conclusion, just insert the JS script in the HTML header of all the WWW pages, and add the Applink tag where a mobile redirection can be done.
 
 **It's a re-use of the "Applink standard" in our JS to decide if there has to be a redirection, and where to redirect in such a case.**
 
 #Detecting and launching the app with custom URI schemes
 
-Custom URI schemes are the last step, to be able to open the right page inside the app (in the case of opening the app), but also to launch the app. 
+Custom URI schemes are the last step, to be able to open the right page inside the app (in the case of opening the app), but also to launch the app.
 
 The custom URI schemes are URI with a "custom" protocol, for example `my-app://my-page`.
 
@@ -120,19 +124,19 @@ This protocol becomes active on the mobile phone when the user has installed the
 
 Custom URI schemes have to be defined at the compilation of the mobile app.
 
-Custom URI schemes re-create a sort of "hyperlinks" for mobile apps, as on the web with hypertext links. 
+Custom URI schemes re-create a sort of "hyperlinks" for mobile apps, as on the web with hypertext links.
 
-But it becomes a bit more tricky : 
+But it becomes a bit more tricky :
 
-- on Android phones, it is possible to redirect the user to the mobile app, and if the mobile app is not installed, the user will be automatically redirected to Google Play. This can be done with a simple INTENT action: 
+- on Android phones, it is possible to redirect the user to the mobile app, and if the mobile app is not installed, the user will be automatically redirected to Google Play. This can be done with a simple INTENT action:
 
 {% highlight javascript %}
 window.location = 'intent:/'+$("meta[property='al:android:url']").attr("content").split(':/')[1]+'#Intent;package='+$("meta[property='al:android:package']").attr("content")+';scheme='+$("meta[property='al:android:url']").attr("content").split(':/')[0]+';launchFlags=268435456;end;';
 {% endhighlight %}
 
-that can be proposed under a "Download the app" button. 
+that can be proposed under a "Download the app" button.
 
-- on iPhone, it's possible to do the same with : 
+- on iPhone, it's possible to do the same with :
 
 {% highlight javascript %}
 window.location = $("meta[property='al:ios:url']").attr("content");
@@ -145,11 +149,11 @@ setTimeout(function() {
 }, 25);
 {% endhighlight %}
 
-If the app is already installed (with its custom URI shemes), it's going to launch the app at the correct page. But if the app is not installed, the user will very shortly see an error popup, and be redirected to the AppStore with the `setTimeout function`. Not very good, this popup, but we have no other choice. 
+If the app is already installed (with its custom URI shemes), it's going to launch the app at the correct page. But if the app is not installed, the user will very shortly see an error popup, and be redirected to the AppStore with the `setTimeout function`. Not very good, this popup, but we have no other choice.
 
 
 
-**The full script will be :** 
+**The full script will be :**
 
 {% highlight javascript %}
 
@@ -193,7 +197,7 @@ function open(has_appli) {
           window.location = 'http://itunes.apple.com/app/id' + $("meta[property='al:ios:app_store_id']").attr("content");
         }
       }, 25);
-    } else { 
+    } else {
     	window.location = 'http://itunes.apple.com/app/id'+$("meta[property='al:ios:app_store_id']").attr("content");
     }
 
@@ -204,8 +208,8 @@ function open(has_appli) {
 
 $("#yes").click(function() { open(true); } );
 $("#no").click(function() { open(false); } );
-$("#mobile").click(function() { 
-	window.location = MOBILE_BASE_URL + "/" + $("meta[property='al:android:url']").attr("content").split(':/')[1]; 
+$("#mobile").click(function() {
+	window.location = MOBILE_BASE_URL + "/" + $("meta[property='al:android:url']").attr("content").split(':/')[1];
 } );
 
 if( (typeof $("meta[property='al:android:url']").attr("content") != "undefined" || typeof $("meta[property='al:ios:url']").attr("content") != "undefined") && IS_MOBILE) {

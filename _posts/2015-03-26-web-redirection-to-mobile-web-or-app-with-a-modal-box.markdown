@@ -30,9 +30,7 @@ The way to ask it can vary from one site to another :
 
 Here is an example from the Testflight app website : 
 
-![Redirection question]({{ site.url }}/img/modal-redirection.png)
-
-<img src="{{ site.url }}/img/modal_redirection2.png" alt="alt text" style="width:whatever;height:whatever">
+<img src="{{ site.url }}/img/modal-redirection.png" alt="alt text" style="width:40%"><img src="{{ site.url }}/img/modal_redirection2.png" alt="alt text" style="width:40%">
 
 #Detecting the mobile
 

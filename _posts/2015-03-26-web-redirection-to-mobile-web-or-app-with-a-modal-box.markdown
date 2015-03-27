@@ -34,9 +34,9 @@ Once the user has clicked on a choice, its choice is saved into the cookie. Here
 
 ![Chef Workflow]({{ site.url }}/img/modal-redirection3.png)
 
-#Detecting the mobile
+#Detecting if the page is viewed by a mobile device
 
-Such a redirection can be done by a simple and standalone script in Javascript, by detecting if it's a mobile device.
+Such a redirection can be simply done by a standalone script in Javascript, that will first detect if it's a mobile device.
 
 The variable can be set for later use : 
 
@@ -48,6 +48,8 @@ IS_ANDROID = !IS_IOS && navigator.userAgent.match(/android/i) != null,
 IS_MOBILE = IS_IOS || IS_ANDROID;
 }
 {% endhighlight %}
+
+If the page is viewed under a mobile device, the script can take further actions.
 
 #Mapping URL between WWW and M web sites
 
@@ -70,7 +72,7 @@ No, not really. We can combine it with the Applink tag in the HTML page.
 
 [Applinks](http://applinks.org/) allow a page, when shared on a social network, and seen in the feed of the social networks, to directly open the app if the app is installed, instead of the browser.
 
-**It is not possible for a website to check if an app has been installed. But it's possible for a native app to check if the app is installed.**
+**It is not possible for a website to check if an app has been installed, but it's possible to do it from a native app.**
 
 The other good thing about Applinks is that it is an open-source and cross-platform standard, that can be implemented in any app that deals with URL and webpages. [Applinks are in particular implemented by Facebook](https://developers.facebook.com/docs/applinks). There also exists a [Cordova plugin](https://github.com/francimedia/phonegap-applinks).
 
@@ -89,7 +91,13 @@ Here is an example of
 
 **If I already use an Applink tag to indicate Facebook to redirect to the app, the script can re-use this value for its purpose**.
 
-Our JS script can detect the presence and value of this tag :
+Our JS script can detect the presence and value of this tag. If the script has detected that 
+
+- the Applink tag is present
+
+- the user is viewing the page on a mobile phone
+
+the script can propose the user to redirect him by opening the modal box.
 
 {% highlight javascript %}
 if( (typeof $("meta[property='al:android:url']").attr("content") != "undefined" || typeof $("meta[property='al:ios:url']").attr("content") != "undefined") && IS_MOBILE) {
@@ -97,12 +105,14 @@ if( (typeof $("meta[property='al:android:url']").attr("content") != "undefined" 
 }
 {% endhighlight %}
 
-**In conclusion, you just need to insert the JS script in the HTML header of all pages, and add the Applink tag where a mobile redirection can be done. The presence of the Applink will decide if there is a redirection.**
 
+In conclusion, just insert the JS script in the HTML header of all the WWWW pages, and add the Applink tag where a mobile redirection can be done. 
 
-#Custom URI schemes
+**It's a re-use of the "Applink standard" in our JS to decide if there has to be a redirection, and where to redirect in such a case.**
 
-They are the last step, to be able to open the right page inside the app (in the case of opening the app), but also to launch the app. 
+#App detection and launch with custom URI schemes
+
+Custom URI schemes are the last step, to be able to open the right page inside the app (in the case of opening the app), but also to launch the app. 
 
 The custom URI schemes are URI with a "custom" protocol, for example `my-app://my-page`.
 
@@ -110,21 +120,7 @@ This protocol becomes active on the mobile phone when the user has installed the
 
 Custom URI schemes re-create a sort of "hyperlinks" for mobile apps, as on the web with hypertext links. 
 
-
-
-#The script
-
-So, let's assume the script has detected that 
-
-- the Applink tag is present
-
-- the user is viewing the page on a mobile phone
-
-there is a potential redirection to propose to the user by opening the modal box to the user.
-
-What are the "call to action" buttons to propose the user ?
-
-It is where it becomes tricky because : 
+But it becomes a bit more tricky : 
 
 - on Android phones, it is possible to redirect the user to the mobile app, and if the mobile app is not installed, the user will be automatically redirected to Google Play. This can be done with a simple INTENT action: 
 
@@ -151,7 +147,7 @@ If the app is already installed (with its custom URI shemes), it's going to laun
 
 
 
-#The full script : 
+**The full script will be :** 
 
 {% highlight javascript %}
 

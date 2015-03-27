@@ -16,9 +16,9 @@ Such a redirection might be more tricky than it seems. I will precise in this pa
 
 For a user that has already installed the app, the case of best and engaged users, it's quite annoying to ask her to download the app... a button "open the app" will better suit her situation and be less aggressive.
 
-The difficulty comes from the fact that **it is not possible to know from a web page whether an app has been installed or not, for security reasons**. The same problem occurs on both IOS and Android devices.
+Problem : **it is not possible to know from a web page whether an app has been installed or not, for security reasons**. The same problem occurs on both IOS and Android devices.
 
-To avoid this situation, the mainstream solution is to **ask a question at the first time and then set a cookie, not to ask it again**.
+To avoid this, the mainstream solution is to **ask a question at the first time and then set a cookie, not to ask it again**.
 
 The way to ask it can vary from one site to another :
 

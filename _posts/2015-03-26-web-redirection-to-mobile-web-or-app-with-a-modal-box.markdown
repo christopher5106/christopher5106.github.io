@@ -34,7 +34,7 @@ Once the user has clicked on a choice, its choice is saved into the cookie. Here
 
 ![Redirection mobile]({{ site.url }}/img/modal-redirection3.png)
 
-The choice is saved, and the next times the button "Install the app" will not be shown again.
+The choice is saved, and **the next times the button "Install the app" will not be shown again**.
 
 In case the user has uninstalled the app or answered wrong, the 'open the app' action will not be that problematic as we'll see later : on Android it will just redirect to Google Play and on IOS a small error popup will appear shortly before redirecting also to the Appstore.
 

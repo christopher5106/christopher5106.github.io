@@ -28,7 +28,7 @@ The way to ask it can vary from one site to another :
 
 - ...
 
-Once the user has clicked on a choice, its choice is saved into the cookie.
+Once the user has clicked on a choice, its choice is saved into the cookie. Here are a few different examples : 
 
 <img src="{{ site.url }}/img/modal-redirection.png" alt="alt text" style="width:100%"> | <img src="{{ site.url }}/img/modal_redirection2.png" alt="alt text" style="width:100%">
 

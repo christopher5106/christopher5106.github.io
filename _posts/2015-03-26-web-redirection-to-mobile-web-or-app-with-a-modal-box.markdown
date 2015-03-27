@@ -5,13 +5,36 @@ date:   2015-03-26 23:00:51
 categories: mobile
 ---
 
-The idea is to open a modal box when the website (WWW) is viewed on the mobile phone or a tablet, to propose the user a redirection to the mobile app or the mobile website (M), which have a better experience on small devices.
+In many cases, the classic website (WWW) does not offer a great experience on the mobile phone or a tablet, that's why a mobile website (M) is usually created. I won't explain in this article the advantages of keeping two separate WWW and M web site.
 
-I won't explain in this article the advantages of keeping two separate WWW and M web site. I precise the technical constraints and possibilities for the different platforms, in particular Android and IOS. 
+The purpose of this article is to present a best pratice about redirecting the user to the mobile app or the mobile website (M), which have a better experience on small devices. This redirection is usually done by opening a modal box asking the user if she'd like to be use the app on her phone.
 
-This article is true when **the mobile app and the mobile website have the same ergonomy**, for example in the case of an hybrid app.
+Such a redirection might be more tricky than it seems. I will precise in this paper the technical constraints and possibilities for the different platforms, in particular Android and IOS. This article is true when **the mobile app and the mobile website have the same ergonomy**, for example in the case of an hybrid app.
 
-Here is my best practice.
+
+#The question to ask : Download or open the app ?
+
+For a user that has already installed the app, it's quite annoying to ask her to download the app... it's more "open the app".
+
+The problem comes from the fact **it is not possible to know from a web page if an app has been installed, for security reasons**. The same problem occurs on both IOS and Android devices.
+
+To avoid this situation, the mainstream solution is to **ask a question at the first time and then set a cookie, not to ask it again**.
+
+The way to ask it can vary from one site to another : 
+
+- "Already installed ?"
+
+- "Open the app" / "Download the app"
+
+- ...
+
+Here is an example from the Testflight app website : 
+
+![Redirection question]({{ site.url }}/img/modal-redirection.png)
+
+
+
+#Detecting the mobile
 
 Such a redirection can be done by a simple and standalone script in Javascript. 
 
@@ -124,19 +147,11 @@ setTimeout(function() {
 If the app is already installed (with its custom URI shemes), it's going to launch the app at the correct page. But if the app is not installed, the user will very shortly see an error popup, and be redirected to the AppStore with the `setTimeout function`. Not very good, this popup, but we have no other choice. 
 
 
-#Download or open the app ?
 
-The "Download the app" button is not very nice when the user has already installed the app ! In particular because this user might come many times to the WWW website on his phone. The same problem occurs on both IOS and Android devices. It is due to the fact it is not possible to know from a web page if an app has been installed, for security reasons.
 
-To avoid this situation, the mainstream solution is to ask a question at the first time and then set a cookie, not to ask it again.
 
-The way to ask it can vary from one site to another : 
+#To conclude
 
-- "Already installed ?"
-
-- "Open the app" / "Download the app"
-
-- ...
 
 Here is my full script : 
 

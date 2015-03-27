@@ -34,9 +34,9 @@ Once the user has clicked on a choice, its choice is saved into the cookie.
 
 #Detecting the mobile
 
-Such a redirection can be done by a simple and standalone script in Javascript. 
+Such a redirection can be done by a simple and standalone script in Javascript, by detecting if it's a mobile device.
 
-First, detecting of the mobile device and setting the variables : 
+The variable can be set for later use : 
 
 {% highlight javascript %}
 var IS_IPAD = navigator.userAgent.match(/iPad/i) != null,
@@ -61,15 +61,7 @@ To make the mapping between the WWW and M web sites, I prefer to advise that in 
 
 But do we really need to define a parameter ? 
 
-No, not really. We can combine it with the Applink tag in the HTML page, and our JS script can detect the presence and value of this tag. If I already use an Applink tag to indicate Facebook to redirect to the app, the script can re-use this value for its purpose :
-
-{% highlight javascript %}
-if( (typeof $("meta[property='al:android:url']").attr("content") != "undefined" || typeof $("meta[property='al:ios:url']").attr("content") != "undefined") && IS_MOBILE) {
-  // you can use $("meta[property='al:android:url']").attr("content").split(':/')[1] || $("meta[property='al:ios:url']").attr("content").split(':/')[1]
-}
-{% endhighlight %}
-
-**In conclusion, you just need to insert the JS script in the HTML header of all pages, and add the Applink tag where a mobile redirection can be done. The presence of the Applink will decide if there is a redirection.**
+No, not really. We can combine it with the Applink tag in the HTML page.
 
 
 #Applinks
@@ -93,17 +85,28 @@ Here is an example of
 <meta property="og:type" content="website" />
 {% endhighlight %}
 
+**If I already use an Applink tag to indicate Facebook to redirect to the app, the script can re-use this value for its purpose**.
+
+Our JS script can detect the presence and value of this tag :
+
+{% highlight javascript %}
+if( (typeof $("meta[property='al:android:url']").attr("content") != "undefined" || typeof $("meta[property='al:ios:url']").attr("content") != "undefined") && IS_MOBILE) {
+  // you can use $("meta[property='al:android:url']").attr("content").split(':/')[1] || $("meta[property='al:ios:url']").attr("content").split(':/')[1]
+}
+{% endhighlight %}
+
+**In conclusion, you just need to insert the JS script in the HTML header of all pages, and add the Applink tag where a mobile redirection can be done. The presence of the Applink will decide if there is a redirection.**
+
 
 #Custom URI schemes
+
+They are the last step, to be able to open the right page inside the app (in the case of opening the app), but also to launch the app. 
 
 The custom URI schemes are URI with a "custom" protocol, for example `my-app://my-page`.
 
 This protocol becomes active on the mobile phone when the user has installed the corresponding app.
 
-It enables to target a precise page in the app. 
-
 Custom URI schemes re-create a sort of "hyperlinks" for mobile apps, as on the web with hypertext links. 
-
 
 
 
@@ -146,12 +149,7 @@ If the app is already installed (with its custom URI shemes), it's going to laun
 
 
 
-
-
-#To conclude
-
-
-Here is my full script : 
+#The full script : 
 
 {% highlight javascript %}
 

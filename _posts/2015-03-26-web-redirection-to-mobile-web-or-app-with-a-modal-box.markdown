@@ -5,18 +5,18 @@ date:   2015-03-26 23:00:51
 categories: mobile
 ---
 
-In many cases, the classic website (WWW) does not offer a great and tailored experience on the mobile phone or a tablet, that's why an mobile application or mobile website (M) are usually created.
+In many cases, the classic website (WWW) does not offer a great and tailored experience on the mobile phone or a tablet, that's why a mobile application or a mobile website (M) are usually created.
 
-The purpose of this article is to present a best pratice about redirecting the user from the WWW web site to the mobile app or the mobile website (M), which have a better experience on small devices. This redirection is usually done by opening a modal box asking the user if she'd like to be use the app on her phone.
+The purpose of this article is to present my best pratice about redirecting the user from the WWW web site to the mobile app or the mobile website (M), which have a better experience on small devices. This redirection is usually done by opening a modal box asking the user if she'd like to use the app on her phone.
 
 Such a redirection might be more tricky than it seems. I will precise in this paper the technical constraints and possibilities for the different platforms, in particular Android and IOS.
 
 
 #Asking the question : install or open the app ?
 
-For a user that has already installed the app, it's quite annoying to ask her to download the app... a button "open the app" will suit better her situation.
+For a user that has already installed the app, the case of best and engaged users, it's quite annoying to ask her to download the app... a button "open the app" will better suit her situation and be less aggressive.
 
-The problem comes from the fact **it is not possible to know from a web page if an app has been installed, for security reasons**. The same problem occurs on both IOS and Android devices.
+The difficulty comes from the fact that **it is not possible to know from a web page whether an app has been installed or not, for security reasons**. The same problem occurs on both IOS and Android devices.
 
 To avoid this situation, the mainstream solution is to **ask a question at the first time and then set a cookie, not to ask it again**.
 
@@ -28,15 +28,17 @@ The way to ask it can vary from one site to another :
 
 - ...
 
-Once the user has clicked on a choice, its choice is saved into the cookie. Here are a few different examples :
+Once the user has clicked on a choice, its choice is saved into the cookie.
+
+Here are a few different examples :
 
 <img src="{{ site.url }}/img/modal-redirection.png" alt="Redirection mobile" style="width:100%"> | <img src="{{ site.url }}/img/modal_redirection2.png" alt="Redirection mobile" style="width:100%">
 
 ![Redirection mobile]({{ site.url }}/img/modal-redirection3.png)
 
-The choice is saved, and **the next times the button "Install the app" will not be shown again**.
+The choice is saved, and **the next times, the button "Install the app" will not be shown again**.
 
-In case the user has uninstalled the app or answered wrong, the 'open the app' action will not be that problematic as we'll see later : on Android it will just redirect to Google Play and on IOS a small error popup will appear shortly before redirecting also to the Appstore.
+In case the user has uninstalled the app or answered wrong, the 'open the app' action will not be that problematic as we'll see later : on Android it will just redirect to Google Play and on IOS a small error popup will appear shortly before redirecting to the Appstore also.
 
 #Detecting if the page is being viewed with a mobile device
 

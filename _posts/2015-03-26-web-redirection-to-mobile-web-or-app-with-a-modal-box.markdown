@@ -38,10 +38,9 @@ To make the mapping between the WWW and M web sites, I prefer to advise that in 
 
 * the mobile app URI scheme (usually called "custom URI scheme") : `my-app:// + path ` that can be used either to directly launch the app if the app is installed, or for the [smart banner](https://developer.apple.com/library/mac/documentation/AppleApplications/Reference/SafariWebContent/PromotingAppswithAppBanners/PromotingAppswithAppBanners.html).
 
-But do we really need to create a parameter ? 
+But do we really need to define a parameter ? 
 
-No, not really. We can combine it with the Applink tag in the HTML page, and detect it :
-
+No, not really. We can combine it with the Applink tag in the HTML page, and our JS script can detect the presence and value of this tag. If I already use an Applink tag to indicate Facebook to redirect to the app, the script can re-use this value for its purpose :
 
 {% highlight javascript %}
 if( (typeof $("meta[property='al:android:url']").attr("content") != "undefined" || typeof $("meta[property='al:ios:url']").attr("content") != "undefined") && IS_MOBILE) {

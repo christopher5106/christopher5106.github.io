@@ -14,7 +14,7 @@ Such a redirection might be more tricky than it seems. I will precise in this pa
 
 #The question to ask : Download or open the app ?
 
-For a user that has already installed the app, it's quite annoying to ask her to download the app... it's more "open the app".
+For a user that has already installed the app, it's quite annoying to ask her to download the app... a button "open the app" will suit better her situation.
 
 The problem comes from the fact **it is not possible to know from a web page if an app has been installed, for security reasons**. The same problem occurs on both IOS and Android devices.
 

@@ -118,6 +118,8 @@ The custom URI schemes are URI with a "custom" protocol, for example `my-app://m
 
 This protocol becomes active on the mobile phone when the user has installed the corresponding app.
 
+Custom URI schemes have to be defined at the compilation of the mobile app.
+
 Custom URI schemes re-create a sort of "hyperlinks" for mobile apps, as on the web with hypertext links. 
 
 But it becomes a bit more tricky : 

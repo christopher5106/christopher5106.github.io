@@ -38,7 +38,7 @@ The choice is saved, and **the next times the button "Install the app" will not 
 
 In case the user has uninstalled the app or answered wrong, the 'open the app' action will not be that problematic as we'll see later : on Android it will just redirect to Google Play and on IOS a small error popup will appear shortly before redirecting also to the Appstore.
 
-#Detecting if the page is viewed by a mobile device
+#Detecting if the page is being viewed with a mobile device
 
 Such a redirection can be simply done by a standalone script in Javascript, that will first detect if it's a mobile device.
 
@@ -112,7 +112,7 @@ if( (typeof $("meta[property='al:android:url']").attr("content") != "undefined" 
 
 In conclusion, just insert the JS script in the HTML header of all the WWW pages, and add the Applink tag where a mobile redirection can be done.
 
-**It's a re-use of the "Applink standard" in our JS to decide if there has to be a redirection, and where to redirect in such a case.**
+**It's a re-use of the "Applink standard" in our JS to decide if there has to be a redirection on mobile, and where to redirect in such a case.**
 
 #Detecting and launching the app with custom URI schemes
 
@@ -217,3 +217,5 @@ if( (typeof $("meta[property='al:android:url']").attr("content") != "undefined" 
 }
 
 {% endhighlight %}
+
+**Thanks a lot for your attention.**

@@ -114,10 +114,10 @@ that can be proposed under a "Download the app" button.
 window.location = $("meta[property='al:ios:url']").attr("content");
 
 setTimeout(function() {
-	// If the user is still here, open the App Store
-	if (!document.webkitHidden) {
+  // If the user is still here, open the App Store
+  if (!document.webkitHidden) {
     window.location = 'http://itunes.apple.com/app/id' + $("meta[property='al:ios:app_store_id']").attr("content") ;
-    }
+  }
 }, 25);
 {% endhighlight %}
 

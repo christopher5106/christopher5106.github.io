@@ -32,6 +32,8 @@ Once the user has clicked on a choice, its choice is saved into the cookie.
 
 <img src="{{ site.url }}/img/modal-redirection.png" alt="alt text" style="width:100%"> | <img src="{{ site.url }}/img/modal_redirection2.png" alt="alt text" style="width:100%">
 
+![Chef Workflow]({{ site.url }}/img/modal-redirection3.png)
+
 #Detecting the mobile
 
 Such a redirection can be done by a simple and standalone script in Javascript, by detecting if it's a mobile device.

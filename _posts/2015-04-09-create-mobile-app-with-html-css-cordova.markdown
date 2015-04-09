@@ -5,9 +5,9 @@ date:   2015-04-09 23:00:51
 categories: mobile
 ---
 
-#Create the app project folder
+#Create the app 
 		
-Create the app and add the platform IOS and Android 
+Create the app project folder and add the IOS and Android platforms
 
 	cordova create dir_name com.domain.my-app app_name
 	cd dir_name
@@ -17,7 +17,7 @@ Create the app and add the platform IOS and Android
 #Add the native plugins
 
 
-##Caméra 
+####Caméra 
 
 To launch the native camera :
 
@@ -30,14 +30,14 @@ If you want to use JPEG with GPS localization, comment the following lines :
 
 as described [here](http://stackoverflow.com/questions/17253139/how-to-remove-location-services-request-from-phonegap-ios-6-app)
 
-##Splashscreen
+####Splashscreen
 
 To manage the splashscreen
 
 		cordova plugin add org.apache.cordova.splashscreen
 
 
-##Google Analytics 
+####Google Analytics 
 
 I recommand this plugin : 
 
@@ -45,13 +45,13 @@ I recommand this plugin :
 
 danwilson/google-analytics-plugin has not been updated for a while.
 
-##Network informations
+####Network informations
 
 		cordova plugin add org.apache.cordova.network-information
 
 If trouble during iOS compilation, add 'SystemConfiguration.framework' in 'Build Phases > Link Binary With Libraries'.
 
-##Facebook
+####Facebook
 
 Due to a problem, you need to download a local copy
 
@@ -77,7 +77,7 @@ with password `android` and production key :
 
 Add both keys to the Facebook App Center.
 
-##Deep linking / custom URL schemes
+####Deep linking / custom URL schemes
 
 		cordova plugin add https://github.com/EddyVerbruggen/LaunchMyApp-PhoneGap-Plugin.git --variable URL_SCHEME=your_sheme
 
@@ -92,7 +92,7 @@ If you want to have it work with `http://my_domain.com/view` for example, add an
 			<data android:scheme="http" android:host="my_domain.com" android:path="/view" />
 		</intent-filter>
 
-##Notification Push
+####Notification Push
 
 You can use the standard plugin
 		cordova plugin add https://github.com/phonegap-build/PushPlugin.git
@@ -101,7 +101,7 @@ or I would recommend you the [Radium One Plugin](https://github.com/radiumone/r1
 
 		cordova plugin add https://github.com/radiumone/r1-connect-demo-phonegap
 
-##Other plugins : Clipboard, device, file, file-transfer, statusbar, inappbrowser
+####Other plugins : Clipboard, device, file, file-transfer, statusbar, inappbrowser
 
 		cordova plugins add com.verso.cordova.clipboard
 		cordova plugins add org.apache.cordova.device
@@ -119,11 +119,11 @@ or I would recommend you the [Radium One Plugin](https://github.com/radiumone/r1
 
 #Compile the app for release
 
-##Set the version
+####Set the version
 
 In config.xml
 
-##IOS
+####IOS
 
 Be careful to change “apns_sandbox” by “apns” in your Javascript code if you use Notification Push plugin, in order to use the Apple notification server for production apps.
 
@@ -137,7 +137,7 @@ In `General > App Icons & Launch Images`, verify images.
 
 Then select `Product > Archive` in the menu bar, and submit your app to Apple.
 
-##Android
+####Android
 
 In `platforms/android/AndroidManifest.xml` add
 

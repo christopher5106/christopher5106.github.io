@@ -64,7 +64,7 @@ Due to a problem, you need to download a local copy
 	cd dir_name
 	cordova plugins add ../../phonegap-facebook-plugin/ --variable APP_ID="xxx" --variable APP_NAME="yyy"
 
-In config.xml, add :
+In *config.xml*, add :
 
 	<gap:plugin name="com.phonegap.plugins.facebookconnect" version="0.9.0">
 		<param name="APP_ID" value="xxx" />
@@ -87,12 +87,12 @@ Add both keys to the Facebook App Center.
 
 Hence, `your_sheme://path` will launch your app on the mobile device if it has been installed.
 
-If you want to have it work with `http://my_domain.com/view` for example, add an INTENT action for the path `/view` by adding in the `<activity>` of config.xml :
+If you want to have it work with `http://my_domain.com/view` for example, add an INTENT action for the path `/view` by adding in the `<activity>` of *config.xml* :
 
 	<intent-filter>
 		<action android:name="android.intent.action.VIEW"/>
 		<category android:name="android.intent.category.DEFAULT"/>
-			<category android:name="android.intent.category.BROWSABLE"/>
+		<category android:name="android.intent.category.BROWSABLE"/>
 		<data android:scheme="http" android:host="my_domain.com" android:path="/view" />
 	</intent-filter>
 
@@ -126,7 +126,7 @@ or I would recommend you the [Radium One Plugin](https://github.com/radiumone/r1
 
 ####Set the version
 
-In config.xml
+In *config.xml*
 
 ####IOS
 
@@ -134,17 +134,17 @@ Be careful to change “apns_sandbox” by “apns” in your Javascript code if
 
 	cordova build ios	
 
-Launch `Selectionnist.xcodeproj` with XCODE.
+Launch *Selectionnist.xcodeproj* with XCODE.
 
-In `Build Settings > Code signing`, choose the right mobile provisionning (need to configure accounts in XCODE before).
+In *Build Settings > Code signing*, choose the right mobile provisionning (need to configure accounts in XCODE before).
 
-In `General > App Icons & Launch Images`, verify images.
+In *General > App Icons & Launch Images*, verify images.
 
-Then select `Product > Archive` in the menu bar, and submit your app to Apple.
+Then select *Product > Archive* in the menu bar, and submit your app to Apple.
 
 ####Android
 
-In `platforms/android/AndroidManifest.xml` add
+In *platforms/android/AndroidManifest.xml* add
 
 	<application `*`android:debuggable="false"`*` android:hardwareAccelerated="true" android:icon="@drawable/icon" android:label="@string/app_name">
 
@@ -156,10 +156,11 @@ Sign the APK
 
 	jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore ../../certificates-ADMIN/android/my-release-key.keystore  platforms/android/ant-build/CordovaApp-release-unsigned.apk alias_name
 
-Align : 
+Align 
+
 	zipalign -v 4 platforms/android/ant-build/CordovaApp-release-unsigned.apk platforms/android/ant-build/CordovaApp-release.apk
 
-Submit the CordovaApp-release.apk to Google Play Publish.
+Submit the *CordovaApp-release.apk* to Google Play Publish.
 
 **And here you're!**
 

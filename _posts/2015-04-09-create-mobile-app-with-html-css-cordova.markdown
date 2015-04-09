@@ -53,7 +53,7 @@ danwilson/google-analytics-plugin has not been updated for a while.
 
 	cordova plugin add org.apache.cordova.network-information
 
-If trouble during iOS compilation, add 'SystemConfiguration.framework' in 'Build Phases > Link Binary With Libraries'.
+If trouble during iOS compilation, add `SystemConfiguration.framework` in *Build Phases > Link Binary With Libraries*.
 
 ####Facebook
 

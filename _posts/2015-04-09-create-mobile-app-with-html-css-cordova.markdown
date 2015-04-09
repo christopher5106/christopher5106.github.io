@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Create a mobile app from HTML/CSS with Cordova framework"
+title:  "Create a mobile app from HTML/CSS code with Cordova framework"
 date:   2015-04-09 23:00:51
 categories: mobile
 ---

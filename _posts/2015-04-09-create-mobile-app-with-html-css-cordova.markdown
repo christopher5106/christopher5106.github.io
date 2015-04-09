@@ -87,7 +87,7 @@ Add both keys to the Facebook App Center.
 
 Hence, `your_sheme://path` will launch your app on the mobile device if it has been installed.
 
-If you want to have it work with `http://my_domain.com/view` for example, add an INTENT action for the path `/view` by adding in the `<activity>` of *config.xml* :
+If you want to have it work for `http://my_domain.com/view` for example, add an INTENT action for the path `/view` by adding in the `<activity>` of *config.xml* the following lines :
 
 	<intent-filter>
 		<action android:name="android.intent.action.VIEW"/>

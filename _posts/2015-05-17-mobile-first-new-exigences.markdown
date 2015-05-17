@@ -26,11 +26,11 @@ This kind of design pattern, that was also the case in hybrid apps, is not possi
 
 So, the only way to do that, is :
 
- **the server delivers the first data for the URL it is requested and the javascript will take over when loaded**.
+ **the server has to deliver the first data in the HTML for the URL it is requested, and the javascript, loaded asynchronously, will take over for navigation**.
 
-Eventually, we have to go one step further in the **full-stack full JS pattern** (1 language front and back) and the **hybrid apps patterns** (1 unique code for IOS, Android and web mobile).
+Eventually, it's time to go one step further in the **full-stack full JS** (a unique language for front-end and back-end development) and the **hybrid apps patterns** (a unique code to program downloalable apps - IOS, Android - and webmobile apps) with this last requirement :
 
-Now it is time for a last requirement : **1 unique code for server-side and client-side programming**.
+**a unique code for server-side and client-side programming**.
 
 Such technologies to fullfill this requirement are based on NodeJS :
 
@@ -42,7 +42,7 @@ Such technologies to fullfill this requirement are based on NodeJS :
 
 - and Facebook framework, [React](https://github.com/mhart/react-server-example)
 
-A first best practices required for that is :
+A first best practices required to enable this is :
 
 - **to stop using jQuery** because there is no DOM on server-side and jQuery code cannot be rendered on server-side.
 

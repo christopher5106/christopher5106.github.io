@@ -46,4 +46,7 @@ A first best practices required to enable this is :
 
 - **to stop using jQuery** because there is no DOM on server-side and jQuery code cannot be rendered on server-side.
 
+- **avoid localstorage and favor cookies**, because cookies are accessible from client and server codes 
+
+
 **We are impatient to see the next improvements in that field in the near future.**

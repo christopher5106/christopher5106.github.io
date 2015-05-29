@@ -200,11 +200,15 @@ val lemmatized = plainText.mapPartitions(iter => {
 
 val filtered = lemmatized.filter(_._2.size > 1)
 
-/*test the learning*/
+/*test the creation of the term-document matrix*/
 val (termDocMatrix, termIds, docIds, idfs) = termDocumentMatrix(filtered, stopWords, 100000, sc)
 termDocMatrix.cache()
+
+/*extract 100 concepts*/
+import org.apache.spark.mllib.linalg._
+import org.apache.spark.mllib.linalg.distributed.RowMatrix
 val mat = new RowMatrix(termDocMatrix)
-val svd = mat.computeSVD(k, computeU=true)
+val svd = mat.computeSVD(100, computeU=true)
 
 println("Singular values: " + svd.s)
 val topConceptTerms = topTermsInTopConcepts(svd, 10, 10, termIds)

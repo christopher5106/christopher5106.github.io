@@ -110,13 +110,13 @@ curl -s -L http://dumps.wikimedia.org/enwiki/20150304/enwiki-20150304-pages-arti
 {% endhighlight %}
 
 The FR database, of size 12.8GB, is divided into 103 blocks, replicated 3 times, using then 38.63GB of our 3.43 TB of total capacity for the cluster, hence around 10GB of each datanode of 826GB capacity.
-The EN database is using xxx GB.
+The EN database, of size 48.4GB, is divided into 388 blocks replicated 3 times. The data represents 7% of the cluster capacity, which is fine. 
 
 |  | FR wiki |  --    EN wiki    --  | Available |
 | ------------- | ------------- | ------------- | ------------- |
-| Size per Cluster  |     38.63GB | -- | 3.43 TB |
-| Size per Node  | 10GB  | --  | 826GB |
-| Number of Blocks | 103 | -- | -- |
+| Size per Cluster  |     38.63GB | 140GB | 3.43 TB |
+| Size per Node  | 10GB  | 35GB  | 826GB |
+| Number of Blocks | 103 | 388 | -- |
 
 
 Now it's time to [study our database](https://github.com/sryza/aas) and extract its principal concepts with MLlib singular value decomposition following ["Advanced Analytics with Spark" example](http://shop.oreilly.com/product/0636920035091.do) :

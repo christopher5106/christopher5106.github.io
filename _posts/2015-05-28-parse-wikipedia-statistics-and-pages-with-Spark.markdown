@@ -47,6 +47,8 @@ export AWS_SECRET_ACCESS_KEY=...
 
 To persist the data when you close the cluster, you can add for example an EBS of 30G to each instance with option `--ebs-vol-size=30`, if the data you need to persist will require less than 150GB (5 x 30). You'll also need to change the HDFS for persistent (see below).
 
+Spark web interface will be available on the master node on port `8080`.
+
 **You're now ready !**
 
 #Analyze the top ranking pages from October 2008 to February 2010 with Wikipedia statistics
@@ -95,7 +97,7 @@ Persistent HDFS give by default 31.5 GB of space which is small. If you have not
 
 Permanent HDFS web interface will be available on port `60070` by default.
 
-Depending your choice, export the path to ephermeral or persistent HDFS :
+Depending on your choice, export the path to ephermeral or persistent HDFS :
 
 {% highlight bash %}
 export PATH=$PATH:./ephemeral-hdfs/bin
@@ -163,7 +165,7 @@ vi aas/ch06-lsa/src/main/scala/com/cloudera/datascience/lsa/RunLSA.scala
 or test it step by step with the shell
 
 {% highlight bash %}
-#launch spark
+#launch spark shell
 ./spark/bin/spark-shell --jars aas/ch06-lsa/target/ch06-lsa-1.0.0-jar-with-dependencies.jar --conf "spark.serializer=org.apache.spark.serializer.KryoSerializer"
 {% endhighlight %}
 
@@ -184,7 +186,6 @@ val rawXmls = sc.newAPIHadoopFile("hdfs:///user/ds/wikidump.xml", classOf[XmlInp
 val allpages = rawXmls.map(p => p._2.toString)
 val pages = allpages.sample(false, 0.1, 11L)
 
-
 /*test the parsing*/
 import com.cloudera.datascience.lsa.ParseWikipedia._
 val plainText = pages.filter(_ != null).flatMap(wikiXmlToPlainText)
@@ -197,7 +198,6 @@ val lemmatized = plainText.mapPartitions(iter => {
   val pipeline = createNLPPipeline()
   iter.map{ case(title, contents) => (title, plainTextToLemmas(contents, stopWords, pipeline))}
 })
-
 val filtered = lemmatized.filter(_._2.size > 1)
 
 /*test the creation of the term-document matrix*/

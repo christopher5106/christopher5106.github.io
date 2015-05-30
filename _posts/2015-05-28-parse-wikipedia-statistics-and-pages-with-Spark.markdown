@@ -8,7 +8,7 @@ categories: bigdata
 ![RoadTeller App]({{ site.url }}/img/roadtellerapp.jpg)
 Let's see what's my backend work behind our **RoadTeller app** at Hackathon [CarConnectivity](http://mirrorlinkhackathon.com)
 
-#Launch Spark cluster on EC2
+#Launch of a Spark cluster on EC2
 
 Let's launch a cluster of 5 AWS EC2 instances (1 master and 4 slaves) of type m1.large with Spark.
 
@@ -21,7 +21,7 @@ wget http://apache.websitebeheerjd.nl/spark/spark-1.3.1/spark-1.3.1-bin-hadoop2.
 tar xvf spark-1.3.1-bin-hadoop2.6.tgz
 {% endhighlight %}
 
-- create an AWS account, and get your credentials
+- create an AWS account, and get your credentials, if you don't have one already
 
 - create an EC2 key pair named `sparkclusterkey`
 

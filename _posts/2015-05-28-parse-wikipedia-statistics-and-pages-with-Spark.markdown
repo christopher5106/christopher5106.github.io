@@ -1,9 +1,12 @@
 ---
 layout: post
-title:  "Wikipedia statistics and pages with Spark and ElasticSearch"
+title:  "Wikipedia statistics, principal components and geo retrieval with Spark and ElasticSearch [Hackathon CarConnectivity]"
 date:   2015-05-28 23:00:51
 categories: bigdata
 ---
+
+![RoadTeller App]({{ site.url }}/img/roadtellerapp.jpg)
+Let's see what's behind our **RoadTeller app** at Hackathon [CarConnectivity](http://mirrorlinkhackathon.com)
 
 #Launch your Spark cluster on EC2
 

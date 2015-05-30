@@ -228,6 +228,8 @@ for ((terms, docs) <- topConceptTerms.zip(topConceptDocs)) {
 
 #Index Wikipedia pages with Elasticsearch to search them geographically
 
+Let's launch an ElasticSearch Cluster with AWS Opsworks creating a [Chef repository](https://github.com/christopher5106/hackathon-carconnectivity) and a layer with `awscli` `apt` `ark` `elasticsearch` `java` `scala` `sbt-extras` as recipes.
+
 I'll begin with a minimal mapping, in particular to avoid dynamic mapping to match wrong types, `mapping.json` :
 
 {% highlight json %}

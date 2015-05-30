@@ -225,6 +225,25 @@ for ((terms, docs) <- topConceptTerms.zip(topConceptDocs)) {
 
 #Index Wikipedia pages with Elasticsearch
 
+I'll begin with a minimal mapping, in particular to avoid matching with wrong types
+
+{% highlight json %}
+{
+    "poi" : {
+      "properties": {
+        "infobox": {"type":"string"},
+        "category": {"type":"string"},
+        "name": {"type":"string"},
+        "image": {"type":"string"},
+        "description": {"type":"string"},
+        "CodeSkip": {"type":"string"},
+        "location": {"type":"geo_point"}
+      }
+    }
+}
+{% endhighlight %}
+
+
 Once Elasticsearch installed, let's create an index and an alias `map` so that we can create multiple index behind...
 
 {% highlight bash %}

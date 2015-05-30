@@ -305,6 +305,33 @@ pois.saveToEs("map1/poi", Map("es.nodes" -> "52.17.250.224","index.mapping.ignor
 {% endhighlight %}
 
 
+Let's see what kind of infobox we have and how many are geo localized :
+
+
+{% highlight bash %}
+curl -XGET 'http://52.17.250.224:9200/map/poi/_search?search_type=count&pretty' -d '{
+ "aggregations": {
+   "infoboxRepartition": {
+     "terms": {
+       "field": "infobox",
+       "order": {
+                "_count" : "desc"
+              }
+     }
+   },
+   "number_of_location": {
+     "value_count": {
+       "field":"location"
+     }
+   }
+ }
+}
+'
+{% endhighlight %}
+
+We can see that we have xxx communes, xxx france, ...
+
+
 
 #Stop, restart or destroy the cluster
 

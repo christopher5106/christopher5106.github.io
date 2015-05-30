@@ -223,7 +223,7 @@ for ((terms, docs) <- topConceptTerms.zip(topConceptDocs)) {
 
 {% endhighlight %}
 
-#Index Wikipedia pages with Elasticsearch
+#Index Wikipedia pages with Elasticsearch to search them geographically
 
 I'll begin with a minimal mapping, in particular to avoid dynamic mapping to match wrong types, `mapping.json` :
 

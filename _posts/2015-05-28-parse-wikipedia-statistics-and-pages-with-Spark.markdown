@@ -54,7 +54,7 @@ Spark master web interface will be available on the master node on port `8080`.
 
 Spark master web interface will be available on the master node on port `4040`.
 
-**You're now ready !**
+**We're now ready !**
 
 #Analyze the top ranking pages from October 2008 to February 2010 with Wikipedia statistics
 

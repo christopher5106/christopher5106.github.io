@@ -6,9 +6,9 @@ categories: bigdata
 ---
 
 ![RoadTeller App]({{ site.url }}/img/roadtellerapp.jpg)
-Let's see what's behind our **RoadTeller app** at Hackathon [CarConnectivity](http://mirrorlinkhackathon.com)
+Let's see what's my backend work behind our **RoadTeller app** at Hackathon [CarConnectivity](http://mirrorlinkhackathon.com)
 
-#Launch your Spark cluster on EC2
+#Launch Spark cluster on EC2
 
 Let's launch a cluster of 5 AWS EC2 instances (1 master and 4 slaves) of type m1.large with Spark.
 

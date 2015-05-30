@@ -269,7 +269,7 @@ Let's download a Wikipedia XML API and launch Spark Shell :
 wget
 http://central.maven.org/maven2/org/elasticsearch/elasticsearch-spark_2.10/2.1.0.Beta2/elasticsearch-spark_2.10-2.1.0.Beta2.jar
 
-./spark/bin/spark-shell --jars aas/ch06-lsa/target/ch06-lsa-1.0.0-jar-with-dependencies.jar,elasticsearch-spark_2.10-2.1.0.Beta2.jar --conf spark.es.nodes=52.17.250.224
+./spark/bin/spark-shell --jars aas/ch06-lsa/target/ch06-lsa-1.0.0-jar-with-dependencies.jar,elasticsearch-spark_2.10-2.1.0.Beta2.jar
 {% endhighlight %}
 
 and parse the data, filter pages with images and coordinates, and send to Elastichsearch for bulk indexation
@@ -375,7 +375,19 @@ We can see that we have xxx communes, xxx france, ...
 
 To find the relevant points of interest around Paris :
 
-
+{% highlight bash %}
+curl -XGET http://52.17.250.224:9200/map2/poi/_search -d '{
+  "query":{
+    "match_all":{}
+  },
+  "sort": [{
+    "_geo_distance": {
+      "location":"48.8567, 2.3508",
+      "unit":"km"
+    }
+  }]
+}'
+{% endhighlight %}
 
 
 #Stop, restart or destroy the cluster

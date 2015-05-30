@@ -374,7 +374,7 @@ curl -XGET 'http://52.17.250.224:9200/map2/poi/_search?search_type=count&pretty'
 '
 {% endhighlight %}
 
-We can see that we have xxx communes, xxx france, ...
+We can see that we have  10610 communes, 2148 railway stations, 2112 islands...
 
 To find the relevant points of interest around Paris :
 

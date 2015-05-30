@@ -255,7 +255,7 @@ http://central.maven.org/maven2/org/elasticsearch/elasticsearch-spark_2.10/2.1.0
 bliki-core-3.0.19.jar
 {% endhighlight %}
 
-and parse the data to Elastichsearch
+and parse the data, filter pages with images and coordinates, and send to Elastichsearch for bulk indexation
 
 {% highlight scala %}
 //let's open again
@@ -278,7 +278,7 @@ val pois = rawXmls.filter(_ != null).map(p => {
   val map = collection.mutable.Map[String, String]()
   var init = false;
   for(line <- splitArray) {
-    if(!init && ( line.startsWith("{{infobox") || line.startsWith("{{Infobox")) ) {
+    if(!init && ( line.startsWith("{infobox",1) || line.startsWith("{Infobox",1)) ) {
       map += ("infobox" -> line.span(_ != ' ')._2.trim.replace("\"", "").toLowerCase() )
       init = true ;
     }
@@ -293,6 +293,8 @@ val pois = rawXmls.filter(_ != null).map(p => {
               map += ("latitude" -> value )
           if( Seq("lon","lon1","longitude1", "long") contains key )
               map += ("longitude" -> value )
+          if( Seq("photo") contains key )
+            map += ("image" -> value)
         }
       }
       else if( init && line.startsWith("}}") )
@@ -302,25 +304,34 @@ val pois = rawXmls.filter(_ != null).map(p => {
   val plain = wikiXmlToPlainText(onepage)
   if(!plain.isEmpty)
     map += ("description" ->  plain.get._2.replace("\n", ""), "title" -> plain.get._1)
+  map
 })
 pois.cache()
-pois.take(1000).foreach(println)
+
+
+val filtered = pois.filter( map => map.contains("latitude") && map.contains("longitude") && map.contains("image"))
+
+val patR3 = """(-*\d*.\d*)""".r
+val filtered2 = filtered.filter( x => {
+  (x("latitude"),x("longitude")) match {  
+    case (patR3(i),patR3(j)) => true ;
+    case i => false
+  }
+})
+
+//get location
+val poisWithLocation = filtered2.map( map => map + ( "location" -> ( map("latitude") + ", " + map("longitude") ) ) )
 
 //let's index in Elasticsearch
 import org.elasticsearch.spark._
-pois.filter(_ != null).saveToEs("map2/poi", Map("es.nodes" -> "52.17.250.224","index.mapping.ignore_malformed" -> "true"))
+poisWithLocation.saveToEs("map2/poi", Map("es.nodes" -> "52.17.250.224","index.mapping.ignore_malformed" -> "true"))
+
 
 {% endhighlight %}
 
-val patR = """(.*)/(.*)/(.*)/.""".r
-val patR2 = """(.*)/(.*)/.""".r
-//      case (patR(i,j,k),patR(r,s,t)) => {
-//        map += ( "location" -> ( (i.toDouble + j.toDouble / 60 + k.toDouble / 3600).toString + ", " + (r.toDouble + s.toDouble / 60 + t.toDouble / 3600).toString ) )
-//        }
 
 
 Let's see what kind of infobox we have and how many are geo localized :
-
 
 {% highlight bash %}
 curl -XGET 'http://52.17.250.224:9200/map2/poi/_search?search_type=count&pretty' -d '{

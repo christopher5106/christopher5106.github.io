@@ -225,7 +225,7 @@ for ((terms, docs) <- topConceptTerms.zip(topConceptDocs)) {
 
 #Index Wikipedia pages with Elasticsearch
 
-I'll begin with a minimal mapping, in particular to avoid matching with wrong types
+I'll begin with a minimal mapping, in particular to avoid dynamic mapping to match wrong types, `mapping.json` :
 
 {% highlight json %}
 {

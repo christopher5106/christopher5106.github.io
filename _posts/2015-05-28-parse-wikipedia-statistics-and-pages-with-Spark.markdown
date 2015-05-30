@@ -227,28 +227,38 @@ for ((terms, docs) <- topConceptTerms.zip(topConceptDocs)) {
 
 Once Elasticsearch installed, let's create an index and an alias `map` so that we can create multiple index behind...
 
-curl -XPUT localhost:9200/map1 -d @mapping.json
-curl -XPOST 'http://localhost:9200/_aliases' -d '
+{% highlight bash %}
+curl -XPUT 52.17.250.224:9200/map1
+curl -XPUT 52.17.250.224:9200/map1/poi/_mapping -d @mapping.json
+curl -XPUT 52.17.250.224:9200/map2
+curl -XPUT 52.17.250.224:9200/map2/poi/_mapping -d @mapping.json
+curl -XPOST 'http://52.17.250.224:9200/_aliases' -d '
 {
     "actions" : [
         { "add" : { "index" : "map1", "alias" : "map" } }
     ]
 }'
+#check the aliases and mappings
+curl -XGET 'http://52.17.250.224:9200/_mapping'
+curl -XGET 'http://52.17.250.224:9200/_aliases'
+{% endhighlight %}
 
 Let's download a Wikipedia XML API and launch Spark Shell :
 
 {% highlight bash %}
-wget https://code.google.com/p/wikixmlj/downloads/detail?name=wikixmlj-r43.jar&can=2&q=
+
 wget
 http://central.maven.org/maven2/org/elasticsearch/elasticsearch-spark_2.10/2.1.0.Beta2/elasticsearch-spark_2.10-2.1.0.Beta2.jar
 
-./spark/bin/spark-shell --jars aas/ch06-lsa/target/ch06-lsa-1.0.0-jar-with-dependencies.jar,wikixmlj-r43.jar,elasticsearch-spark_2.10-2.1.0.Beta2.jar --conf spark.es.nodes=52.17.250.224
+./spark/bin/spark-shell --jars aas/ch06-lsa/target/ch06-lsa-1.0.0-jar-with-dependencies.jar,elasticsearch-spark_2.10-2.1.0.Beta2.jar --conf spark.es.nodes=52.17.250.224
 
 bliki-core-3.0.19.jar
 {% endhighlight %}
 
-{% highlight scala %}
+and parse the data to Elastichsearch
 
+{% highlight scala %}
+//let's open again
 import org.apache.hadoop.conf.Configuration
 import org.apache.hadoop.io._
 @transient val conf = new Configuration()
@@ -258,58 +268,62 @@ conf.set(XmlInputFormat.END_TAG_KEY, "</page>")
 import org.apache.hadoop.io.{LongWritable, Text}
 val rawXmls = sc.newAPIHadoopFile("hdfs:///user/ds/wikidump_fr.xml", classOf[XmlInputFormat],classOf[LongWritable],classOf[Text], conf)
 rawXmls.cache();
-//val onepage = rawXmls.map(p => p._2.toString).take(1)(0)
-//val onepage = rawXmls.map(p => p._2.toString).filter("latitude".contains).take(1)(0)
 
-import edu.jhu.nlp.util.FileUtil;
-import edu.jhu.nlp.wikipedia.InfoBox;
-import edu.jhu.nlp.wikipedia.WikiTextParser;
-//val wikiText = FileUtil.readFile("data/newton.xml");
-
-import org.elasticsearch.spark._
-
-val pois = rawXmls.map(p => {
+//let's parse the pages and infoboxes
+import com.cloudera.datascience.lsa.ParseWikipedia._
+val pois = rawXmls.filter(_ != null).map(p => {
   val onepage = p._2.toString
   val splitArray = onepage.split("\n");
+  // parse infobox
   val map = collection.mutable.Map[String, String]()
   var init = false;
   for(line <- splitArray) {
-    if(line.startsWith("{{Infobox")) {
-      map += ("infobox" -> line.span(_ != ' ')._2.trim)
+    if(!init && ( line.startsWith("{{infobox") || line.startsWith("{{Infobox")) ) {
+      map += ("infobox" -> line.span(_ != ' ')._2.trim.replace("\"", "").toLowerCase() )
       init = true ;
     }
     else
       if (init && line.startsWith("|") ) {
         val lineSplits = line.span(_ != '=');
-        val key = lineSplits._1.stripPrefix("|").trim
-        val value = lineSplits._2.stripPrefix("=").trim
-        map += (key -> value )
-        if( key == "latitude" )
-          map += ("location.lat" -> value)
-        if(key == "longitude")
-          map += ("location.lon" -> value )
+        val key = lineSplits._1.stripPrefix("|").trim.replace("\"", "").toLowerCase()
+        val value = lineSplits._2.stripPrefix("=").trim.replace("\"", "").toLowerCase()
+        if(value != "") {
+          map += (key -> value )
+          if( Seq("lat","lat1","latitude1") contains key )
+              map += ("latitude" -> value )
+          if( Seq("lon","lon1","longitude1", "long") contains key )
+              map += ("longitude" -> value )
+        }
       }
-      else if( init && line.contains("}}") )
+      else if( init && line.startsWith("}}") )
         init = false;
   }
+  //plain text
   val plain = wikiXmlToPlainText(onepage)
   if(!plain.isEmpty)
-    map += ("description" ->  plain.get._2, "title" -> plain.get._1)
-  map
+    map += ("description" ->  plain.get._2.replace("\n", ""), "title" -> plain.get._1)
 })
 pois.cache()
+pois.take(1000).foreach(println)
 
+//let's index in Elasticsearch
 import org.elasticsearch.spark._
-pois.saveToEs("map1/poi", Map("es.nodes" -> "52.17.250.224","index.mapping.ignore_malformed" -> "true"))
+pois.filter(_ != null).saveToEs("map2/poi", Map("es.nodes" -> "52.17.250.224","index.mapping.ignore_malformed" -> "true"))
 
 {% endhighlight %}
+
+val patR = """(.*)/(.*)/(.*)/.""".r
+val patR2 = """(.*)/(.*)/.""".r
+//      case (patR(i,j,k),patR(r,s,t)) => {
+//        map += ( "location" -> ( (i.toDouble + j.toDouble / 60 + k.toDouble / 3600).toString + ", " + (r.toDouble + s.toDouble / 60 + t.toDouble / 3600).toString ) )
+//        }
 
 
 Let's see what kind of infobox we have and how many are geo localized :
 
 
 {% highlight bash %}
-curl -XGET 'http://52.17.250.224:9200/map/poi/_search?search_type=count&pretty' -d '{
+curl -XGET 'http://52.17.250.224:9200/map2/poi/_search?search_type=count&pretty' -d '{
  "aggregations": {
    "infoboxRepartition": {
      "terms": {
@@ -330,6 +344,9 @@ curl -XGET 'http://52.17.250.224:9200/map/poi/_search?search_type=count&pretty' 
 {% endhighlight %}
 
 We can see that we have xxx communes, xxx france, ...
+
+To find the relevant points of interest around Paris :
+
 
 
 

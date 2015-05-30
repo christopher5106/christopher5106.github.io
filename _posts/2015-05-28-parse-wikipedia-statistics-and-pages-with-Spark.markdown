@@ -47,7 +47,9 @@ export AWS_SECRET_ACCESS_KEY=...
 
 To persist the data when you close the cluster, you can add for example an EBS of 30G to each instance with option `--ebs-vol-size=30`, if the data you need to persist will require less than 150GB (5 x 30). You'll also need to change the HDFS for persistent (see below).
 
-Spark web interface will be available on the master node on port `8080`.
+Spark master web interface will be available on the master node on port `8080`.
+
+Spark master web interface will be available on the master node on port `4040`.
 
 **You're now ready !**
 
@@ -112,7 +114,7 @@ curl -s -L http://dumps.wikimedia.org/enwiki/20150304/enwiki-20150304-pages-arti
 {% endhighlight %}
 
 The FR database, of size 12.8GB, is divided into 103 blocks, replicated 3 times, using then 38.63GB of our 3.43 TB of total capacity for the cluster, hence around 10GB of each datanode of 826GB capacity.
-The EN database, of size 48.4GB, is divided into 388 blocks replicated 3 times. The data represents 7% of the cluster capacity, which is fine. 
+The EN database, of size 48.4GB, is divided into 388 blocks replicated 3 times. The data represents 7% of the cluster capacity, which is fine.
 
 |  | FR wiki |  --    EN wiki    --  | Available |
 | ------------- | ------------- | ------------- | ------------- |
@@ -218,6 +220,87 @@ for ((terms, docs) <- topConceptTerms.zip(topConceptDocs)) {
   println("Concept docs: " + docs.map(_._1).mkString(", "))
   println()
 }
+
+{% endhighlight %}
+
+#Index Wikipedia pages with Elasticsearch
+
+Once Elasticsearch installed, let's create an index and an alias `map` so that we can create multiple index behind...
+
+curl -XPUT localhost:9200/map1 -d @mapping.json
+curl -XPOST 'http://localhost:9200/_aliases' -d '
+{
+    "actions" : [
+        { "add" : { "index" : "map1", "alias" : "map" } }
+    ]
+}'
+
+Let's download a Wikipedia XML API and launch Spark Shell :
+
+{% highlight bash %}
+wget https://code.google.com/p/wikixmlj/downloads/detail?name=wikixmlj-r43.jar&can=2&q=
+wget
+http://central.maven.org/maven2/org/elasticsearch/elasticsearch-spark_2.10/2.1.0.Beta2/elasticsearch-spark_2.10-2.1.0.Beta2.jar
+
+./spark/bin/spark-shell --jars aas/ch06-lsa/target/ch06-lsa-1.0.0-jar-with-dependencies.jar,wikixmlj-r43.jar,elasticsearch-spark_2.10-2.1.0.Beta2.jar --conf spark.es.nodes=52.17.250.224
+
+bliki-core-3.0.19.jar
+{% endhighlight %}
+
+{% highlight scala %}
+
+import org.apache.hadoop.conf.Configuration
+import org.apache.hadoop.io._
+@transient val conf = new Configuration()
+import com.cloudera.datascience.common.XmlInputFormat
+conf.set(XmlInputFormat.START_TAG_KEY, "<page>")
+conf.set(XmlInputFormat.END_TAG_KEY, "</page>")
+import org.apache.hadoop.io.{LongWritable, Text}
+val rawXmls = sc.newAPIHadoopFile("hdfs:///user/ds/wikidump_fr.xml", classOf[XmlInputFormat],classOf[LongWritable],classOf[Text], conf)
+rawXmls.cache();
+//val onepage = rawXmls.map(p => p._2.toString).take(1)(0)
+//val onepage = rawXmls.map(p => p._2.toString).filter("latitude".contains).take(1)(0)
+
+import edu.jhu.nlp.util.FileUtil;
+import edu.jhu.nlp.wikipedia.InfoBox;
+import edu.jhu.nlp.wikipedia.WikiTextParser;
+//val wikiText = FileUtil.readFile("data/newton.xml");
+
+import org.elasticsearch.spark._
+
+val pois = rawXmls.map(p => {
+  val onepage = p._2.toString
+  val splitArray = onepage.split("\n");
+  val map = collection.mutable.Map[String, String]()
+  var init = false;
+  for(line <- splitArray) {
+    if(line.startsWith("{{Infobox")) {
+      map += ("infobox" -> line.span(_ != ' ')._2.trim)
+      init = true ;
+    }
+    else
+      if (init && line.startsWith("|") ) {
+        val lineSplits = line.span(_ != '=');
+        val key = lineSplits._1.stripPrefix("|").trim
+        val value = lineSplits._2.stripPrefix("=").trim
+        map += (key -> value )
+        if( key == "latitude" )
+          map += ("location.lat" -> value)
+        if(key == "longitude")
+          map += ("location.lon" -> value )
+      }
+      else if( init && line.contains("}}") )
+        init = false;
+  }
+  val plain = wikiXmlToPlainText(onepage)
+  if(!plain.isEmpty)
+    map += ("description" ->  plain.get._2, "title" -> plain.get._1)
+  map
+})
+pois.cache()
+
+import org.elasticsearch.spark._
+pois.saveToEs("map1/poi", Map("es.nodes" -> "52.17.250.224","index.mapping.ignore_malformed" -> "true"))
 
 {% endhighlight %}
 

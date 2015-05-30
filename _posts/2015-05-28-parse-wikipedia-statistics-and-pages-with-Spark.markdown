@@ -168,7 +168,7 @@ or test it step by step with the shell
 
 {% highlight bash %}
 #launch spark shell
-./spark/bin/spark-shell --jars aas/ch06-lsa/target/ch06-lsa-1.0.0-jar-with-dependencies.jar --conf "spark.serializer=org.apache.spark.serializer.KryoSerializer"
+./spark/bin/spark-shell --jars aas/ch06-lsa/target/ch06-lsa-1.0.0-jar-with-dependencies.jar --driver-memory 6g
 {% endhighlight %}
 
 and check if everything works well, in particular reading the files
@@ -270,8 +270,6 @@ wget
 http://central.maven.org/maven2/org/elasticsearch/elasticsearch-spark_2.10/2.1.0.Beta2/elasticsearch-spark_2.10-2.1.0.Beta2.jar
 
 ./spark/bin/spark-shell --jars aas/ch06-lsa/target/ch06-lsa-1.0.0-jar-with-dependencies.jar,elasticsearch-spark_2.10-2.1.0.Beta2.jar --conf spark.es.nodes=52.17.250.224
-
-bliki-core-3.0.19.jar
 {% endhighlight %}
 
 and parse the data, filter pages with images and coordinates, and send to Elastichsearch for bulk indexation

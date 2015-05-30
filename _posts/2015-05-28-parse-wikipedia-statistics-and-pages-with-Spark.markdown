@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Parse Wikipedia statistics and pages with Spark"
+title:  "Wikipedia statistics and pages with Spark and ElasticSearch"
 date:   2015-05-28 23:00:51
 categories: bigdata
 ---

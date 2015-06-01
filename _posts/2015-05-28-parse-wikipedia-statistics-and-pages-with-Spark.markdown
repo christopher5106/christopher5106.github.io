@@ -228,10 +228,14 @@ for ((terms, docs) <- topConceptTerms.zip(topConceptDocs)) {
 {% endhighlight %}
 
 During first step, memory usage on each executor used 378.4 MB out of 3.1 GB, containing around 15 blocks of RDD data.
-At last step, it's 56 blocks for 609.6 MB per node. Here is an example concept we get :
+At last step, it's 56 blocks for 609.6 MB per node.
+The total computation has lasted **6.3h**, including 1.8h for the first mapping step, and 4.3h for the RowMatrix computation.
+
+Here is an example concept we get :
 
     Concept terms: commune, district, province, espace, powiat, voïvodie, bavière, situ?e, fran?aise, région
     Concept docs: Saint-Laurent-des-Bois, District autonome de Iamalo-Nenetsie, Saint-Aubin-sur-Mer, Bourbach, Saint-Cr?ac, Saint-Remimont, Pont-la-Ville, Saint-Amans, Lavau, Districts de l'île de Man
+
 
 #Index Wikipedia pages with Elasticsearch to search the points of interests by category around a position
 

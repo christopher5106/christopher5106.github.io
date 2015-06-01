@@ -112,7 +112,7 @@ curl -s -L http://dumps.wikimedia.org/enwiki/20150304/enwiki-20150304-pages-arti
 {% endhighlight %}
 
 The FR database, of size 12.8GB, is divided into 103 blocks, replicated 3 times, using then 38.63GB of our 3.43 TB of total capacity for the cluster, hence around 10GB of each datanode of 826GB capacity.
-The EN database, of size 48.4GB, is divided into 388 blocks replicated 3 times. The data represents 7% of the cluster capacity, which is fine. 
+The EN database, of size 48.4GB, is divided into 388 blocks replicated 3 times. The data represents 7% of the cluster capacity, which is fine.
 
 |  | FR wiki |  --    EN wiki    --  | Available |
 | ------------- | ------------- | ------------- | ------------- |
@@ -166,7 +166,7 @@ or test it step by step with the shell
 
 {% highlight bash %}
 #launch spark shell
-./spark/bin/spark-shell --jars aas/ch06-lsa/target/ch06-lsa-1.0.0-jar-with-dependencies.jar --conf "spark.serializer=org.apache.spark.serializer.KryoSerializer"
+./spark/bin/spark-shell --jars aas/ch06-lsa/target/ch06-lsa-1.0.0-jar-with-dependencies.jar --driver-memory 6G
 {% endhighlight %}
 
 and check if everything works well, in particular reading the files
@@ -221,6 +221,7 @@ for ((terms, docs) <- topConceptTerms.zip(topConceptDocs)) {
 
 {% endhighlight %}
 
+During first step, memory usage on each executor used 378.4 MB out of 3.1 GB, containing around 15 blocks of RDD data.
 
 
 #Stop, restart or destroy the cluster

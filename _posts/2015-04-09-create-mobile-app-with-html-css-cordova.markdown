@@ -5,8 +5,8 @@ date:   2015-04-09 23:00:51
 categories: mobile
 ---
 
-#Create the app 
-		
+#Create the app
+
 Create the app project folder and add the IOS and Android platforms
 
 	cordova create dir_name com.domain.my-app app_name
@@ -17,7 +17,7 @@ Create the app project folder and add the IOS and Android platforms
 #Add the native plugins you wish
 
 
-####Camera 
+####Camera
 
 To launch the native camera :
 
@@ -28,8 +28,8 @@ If you want to use JPEG with GPS localization, comment the following lines :
 
 	NSDictionary *controllerMetadata = [info objectForKey:@"UIImagePickerControllerMediaMetadata"];
 	if (controllerMetadata) { self.data = data; self.metadata = [[NSMutableDictionary alloc] init];
-	NSMutableDictionary *EXIFDictionary = [[controllerMetadata objectForKey:(NSString *)kCGImagePropertyExifDictionary]mutableCopy]; 
-	if (EXIFDictionary) [self.metadata setObject:EXIFDictionary forKey:(NSString *)kCGImagePropertyExifDictionary]; 
+	NSMutableDictionary *EXIFDictionary = [[controllerMetadata objectForKey:(NSString *)kCGImagePropertyExifDictionary]mutableCopy];
+	if (EXIFDictionary) [self.metadata setObject:EXIFDictionary forKey:(NSString *)kCGImagePropertyExifDictionary];
 	[[self locationManager] startUpdatingLocation]; return; }
 
 as described [in this article](http://stackoverflow.com/questions/17253139/how-to-remove-location-services-request-from-phonegap-ios-6-app).
@@ -41,9 +41,9 @@ To manage the splashscreen
 	cordova plugin add org.apache.cordova.splashscreen
 
 
-####Google Analytics 
+####Google Analytics
 
-I recommand this plugin : 
+I recommand this plugin :
 
 	cordova plugin add https://github.com/danwilson/google-analytics-plugin.git
 
@@ -71,11 +71,11 @@ In *config.xml*, add :
 		<param name="APP_NAME" value="yyy" />
 	</gap:plugin>
 
-The APP_ID is the ID provided by Facebook App Center. Create a development key : 
+The APP_ID is the ID provided by Facebook App Center. Create a development key :
 
-	keytool -exportcert -alias androiddebugkey -keystore ~/.android/debug.keystore | openssl sha1 -binary | openssl base64	
+	keytool -exportcert -alias androiddebugkey -keystore ~/.android/debug.keystore | openssl sha1 -binary | openssl base64
 
-with password `android` and production key : 
+with password `android` and production key :
 
 	keytool -exportcert -alias alias_name -keystore ../../certificates-ADMIN/android/my-release-key.keystore | openssl sha1 -binary | openssl base64
 
@@ -112,11 +112,11 @@ or I would recommend you the [Radium One Plugin](https://github.com/radiumone/r1
 	cordova plugins add org.apache.cordova.device
 	cordova plugins add org.apache.cordova.file
 	cordova plugins add org.apache.cordova.file-transfer
-	cordova plugins add org.apache.cordova.inappbrowser
+	cordova plugin add https://git-wip-us.apache.org/repos/asf/cordova-plugin-inappbrowser.git
 	cordova plugins add org.apache.cordova.statusbar
 
 
-#Run 
+#Run
 
 	cordova run android
 	cordova run ios
@@ -132,7 +132,7 @@ In *config.xml*
 
 Be careful to change “apns_sandbox” by “apns” in your Javascript code if you use Notification Push plugin, in order to use the Apple notification server for production apps.
 
-	cordova build ios	
+	cordova build ios
 
 Launch *Selectionnist.xcodeproj* with XCODE.
 
@@ -156,11 +156,10 @@ Sign the APK
 
 	jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore ../../certificates-ADMIN/android/my-release-key.keystore  platforms/android/ant-build/CordovaApp-release-unsigned.apk alias_name
 
-Align 
+Align
 
 	zipalign -v 4 platforms/android/ant-build/CordovaApp-release-unsigned.apk platforms/android/ant-build/CordovaApp-release.apk
 
 Submit the *CordovaApp-release.apk* to Google Play Publish.
 
 **And here you're!**
-

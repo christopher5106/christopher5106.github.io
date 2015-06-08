@@ -154,11 +154,11 @@ Compile
 
 Sign the APK
 
-	jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore ../../certificates-ADMIN/android/my-release-key.keystore  platforms/android/ant-build/CordovaApp-release-unsigned.apk alias_name
+	jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore ../../certificates-ADMIN/android/my-release-key.keystore  platforms/android/ant-build/MainActivity-release-unsigned.apk alias_name
 
 Align
 
-	zipalign -v 4 platforms/android/ant-build/CordovaApp-release-unsigned.apk platforms/android/ant-build/CordovaApp-release.apk
+	/Applications/adt-bundle-mac-x86_64-20140321/sdk/build-tools/22.0.1/zipalign  -v 4 platforms/android/ant-build/MainActivity-release-unsigned.apk platforms/android/ant-build/MainActivity-release-signed.apk 
 
 Submit the *CordovaApp-release.apk* to Google Play Publish.
 

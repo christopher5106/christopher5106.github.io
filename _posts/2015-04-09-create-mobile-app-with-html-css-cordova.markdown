@@ -160,6 +160,6 @@ Align
 
 	/Applications/adt-bundle-mac-x86_64-20140321/sdk/build-tools/22.0.1/zipalign  -v 4 platforms/android/ant-build/MainActivity-release-unsigned.apk platforms/android/ant-build/MainActivity-release-signed.apk 
 
-Submit the *CordovaApp-release.apk* to Google Play Publish.
+Submit the *MainActivity-release-signed.apk* to Google Play Publish.
 
 **And here you're!**

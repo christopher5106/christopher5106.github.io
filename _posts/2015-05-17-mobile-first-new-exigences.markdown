@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "New mobile exigences for web sites"
+title:  "Isomorphism : new mobile exigences for web sites"
 date:   2015-05-17 23:00:51
 categories: mobile
 ---
@@ -46,7 +46,8 @@ A first best practices required to enable this is :
 
 - **to stop using jQuery** because there is no DOM on server-side and jQuery code cannot be rendered on server-side.
 
-- **avoid to save data in localstorage and favor cookies** as much as possible, because cookies'data is accessible from client and server. 
+- **avoid to save data in localstorage and favor cookies** as much as possible, because cookies'data is accessible from client and server.
 
+This [website](http://isomorphic.net/libraries) references a few other libraries on the subject.
 
 **We are impatient to see the next improvements in that field in the near future.**

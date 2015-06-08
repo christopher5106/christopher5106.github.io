@@ -5,9 +5,9 @@ date:   2015-05-17 23:00:51
 categories: mobile
 ---
 
-Since Google has changed its rank computation to prioritize web sites designed for mobiles :
+Since [Google](https://developers.google.com/speed/pagespeed/insights/?url=m.selectionnist.com) has changed its rank computation to prioritize web sites designed for mobiles :
 
-[example of a 100% page speed for m.selectionnist.com](https://developers.google.com/speed/pagespeed/insights/?url=m.selectionnist.com)
+![example of a 100% page speed for m.selectionnist.com]({{ site.url }}/img/100.png)
 
 it's time to change the paradigm.
 

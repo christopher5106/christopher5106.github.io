@@ -1,11 +1,9 @@
 ---
 layout: post
-title:  "Zeppelin Notebook - big data analysis in Scala or Python in a notebook"
+title:  "Zeppelin Notebook - big data analysis in Scala or Python in a notebook, to Spark clusters"
 date:   2015-07-03 23:00:51
 categories: big data
 ---
-
-
 #Zeppelin notebook for big data analysis with Scala / Python on Spark
 
 ###Which notebooks for my computations ?

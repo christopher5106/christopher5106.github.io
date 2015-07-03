@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Zeppelin Notebook - big data analysis in Scala or Python in a notebook, to Spark clusters"
+title:  "Zeppelin Notebook - big data analysis in Scala or Python in a notebook, and connection to a Spark cluster on EC2"
 date:   2015-07-03 23:00:51
 categories: big data
 ---
@@ -41,7 +41,7 @@ rm spark-1.4.0-bin-hadoop2.6.tgz
 #export the AWS credentials
 export AWS_ACCESS_KEY_ID=...
 export AWS_SECRET_ACCESS_KEY=...
-#verify the mod of the keypair
+#verify the permissions of the keypair
 chmod 600 sparkclusterkey.pem
 #launch the cluster with --copy-aws-credentials option to enable S3 access.
 ./spark-1.4.0-bin-hadoop2.6/ec2/spark-ec2 -k sparkclusterkey -i sparkclusterkey.pem --region=eu-west-1 --copy-aws-credentials --instance-type=m1.large -s 4 --hadoop-major-version=2 launch spark-cluster
@@ -52,7 +52,7 @@ Your master cluster hostname should appear in the logs :
     Generating cluster's SSH key on master...
     Warning: Permanently added 'ec2-52-18-32-219.eu-west-1.compute.amazonaws.com,52.18.32.219' (RSA) to the list of known hosts.
 
-In order to access your cluster master from Zeppelin notebook, open port `7077` in the master security group (which is the name of the cluster with '-master' append, in our case `spark-cluster-master`) to be accessible from the instance where you will install your notebook (your IP if it's on your computer).
+In order to access your cluster's master from Zeppelin notebook, open port `7077` in the master's EC2 security group (which is the name of the cluster with '-master' appended, in our case `spark-cluster-master`) to be accessible from the instance where you will install your notebook (your IP if it's on your computer).
 
 ###Zeppelin install
 

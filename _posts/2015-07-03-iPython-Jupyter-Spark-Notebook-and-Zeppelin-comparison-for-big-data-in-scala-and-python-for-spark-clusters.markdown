@@ -61,8 +61,9 @@ In order to access your cluster's master from Zeppelin notebook, open port `7077
 git clone https://github.com/apache/incubator-zeppelin
 cd incubator-zeppelin
 mvn install -DskipTests -Dspark.version=1.4.0 -Dhadoop.version=2.6.0
+cd ..
 #launch Zeppelin web server
-bin/zeppelin-daemon.sh start
+incubator-zeppelin/bin/zeppelin-daemon.sh start
 {% endhighlight %}
 
 Now Zeppelin interface is available at `http://localhost:8080/`.
@@ -77,7 +78,7 @@ Go to the interpretor `http://localhost:8080/#/interpreter`.
 
 **Now you're ready for computation**
 
-###computations
+###Computations
 
 Create a new Note and open it.
 
@@ -102,3 +103,11 @@ Click on start.
 You can see your Zeppelin shell in the Spark Cluster at `http://ec2-52-18-32-219.eu-west-1.compute.amazonaws.com:8080/`.
 
 ![Zeppelin Shell Example]({{ site.url }}/img/zeppelin-shell.png)
+
+###Close
+{% highlight bash %}
+#destroy the cluster
+./spark-1.4.0-bin-hadoop2.6/ec2/spark-ec2 -k sparkclusterkey -i sparkclusterkey.pem --region=eu-west-1 destroy spark-cluster
+#stop zeppelin web server
+incubator-zeppelin/bin/zeppelin-daemon.sh stop
+{% endhighlight %}

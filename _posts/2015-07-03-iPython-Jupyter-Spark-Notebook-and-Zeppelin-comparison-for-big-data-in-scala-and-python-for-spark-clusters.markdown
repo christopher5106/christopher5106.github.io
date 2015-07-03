@@ -4,26 +4,28 @@ title:  "Zeppelin Notebook - big data analysis in Scala or Python in a notebook,
 date:   2015-07-03 23:00:51
 categories: big data
 ---
-#Zeppelin notebook for big data analysis with Scala / Python on Spark
 
 ###Which notebooks for my computations ?
 
-[iPython](http://ipython.org/notebook.html) was the first shell to introduce this great feature called "notebook", that enables a nice display of your computations :
+[iPython](http://ipython.org/notebook.html) was the first shell to introduce this great feature called "notebook", that enables a nice display of your computations in a web server instead of a standard shell :
 
 ![iPython Notebook](http://ipython.org/_images/9_home_fperez_prof_grants_1207-sloan-ipython_proposal_fig_ipython-notebook-specgram.png)
 
-Originaly for python programming, the iPython 2 modular architecture allowed plugins such as [IScala](https://github.com/mattpap/IScala) for Scala, or [ISpark](https://github.com/tribbloid/ISpark) for Spark.
+This allows you to **share your computations with others, that can understand, modify and adapt to their needs in live**.
 
-iPython 3 was competely redesigned and introduced [Jupyter](https://jupyter.org/), an independant web server. Plugins had to be redesigned as well for compatibility (such as [Jupyter-Scala](https://github.com/alexarchambault/jupyter-scala) for Scala).
+Originally designed for python programming, the iPython 2 followed with a modular architecture for language plugins, named "kernels", such as [IScala](https://github.com/mattpap/IScala) for Scala, or [ISpark](https://github.com/tribbloid/ISpark) for Spark.
+
+iPython 3 was competely re-architected and introduced [Jupyter](https://jupyter.org/), an independant web server. Plugins had to be redesigned as well for compatibility (such as [Jupyter-Scala](https://github.com/alexarchambault/jupyter-scala) for Scala).
 
 Some specific notebooks appeared for other languages, such as [Spark Notebook](https://github.com/andypetrella/spark-notebook).
 
-But the more promising one is [Zeppelin](http://zeppelin.incubator.apache.org/). Zeppelin presents many advantages :
+But the most promising one is [Zeppelin](http://zeppelin.incubator.apache.org/) from Apache Foundation. Zeppelin presents many advantages :
 
 - simplicity : for beginner or the marketer in the company, it's easier for him to manipulate the data. In particular thanks to queries in SparkSQL and a nice display widget
 
 - language-agnostic, with a real plugin architecture, named "interpretors". The "cluster" function of iPython or SparkNotebook is quite difficult to understand and customize. Scala and Python are the first 2 main languages available.
 
+![Zeppelin Tutorial Example]({{ site.url }}/img/zeppelin-tutorial.png)
 
 **Let's launch a Spark cluster on EC2 and do some computations in our Zeppelin notebook**
 
@@ -99,4 +101,4 @@ Click on start.
 
 You can see your Zeppelin shell in the Spark Cluster at `http://ec2-52-18-32-219.eu-west-1.compute.amazonaws.com:8080/`.
 
-![Chef Workflow]({{ site.url }}/img/zeppelin-shell.png)
+![Zeppelin Shell Example]({{ site.url }}/img/zeppelin-shell.png)

@@ -23,7 +23,7 @@ But the most promising one is [Zeppelin](http://zeppelin.incubator.apache.org/) 
 
 - simplicity : for beginner or the marketer in the company, it's easier for him to manipulate the data. In particular thanks to queries in SparkSQL and a nice display widget
 
-- language-agnostic, with a real plugin architecture, named "interpretors". The "cluster" function of iPython or SparkNotebook is quite difficult to understand and customize. Scala and Python are the first 2 main languages available.
+- language-agnostic, with a real plugin architecture, named "interpreters". The "cluster" function of iPython or SparkNotebook is quite difficult to understand and customize. Scala and Python are the first 2 main languages available.
 
 ![Zeppelin Tutorial Example]({{ site.url }}/img/zeppelin-tutorial.png)
 
@@ -33,18 +33,20 @@ But the most promising one is [Zeppelin](http://zeppelin.incubator.apache.org/) 
 
 You need a AWS account, with an EC2 key pair, and credentials with `AmazonEC2FullAccess` policy.
 
+*Note: Hadoop 2.6 does not include Hadoop-AWS package so sc.textfile() function in Spark does not work. We'll use Hadoop 2.4.*
+
 {% highlight bash %}
 #download last Spark version for Hadoop 2
-wget http://wwwftp.ciril.fr/pub/apache/spark/spark-1.4.0/spark-1.4.0-bin-hadoop2.6.tgz
-tar xvzf spark-1.4.0-bin-hadoop2.6.tgz
-rm spark-1.4.0-bin-hadoop2.6.tgz
+wget http://wwwftp.ciril.fr/pub/apache/spark/spark-1.4.0/spark-1.4.0-bin-hadoop2.4.tgz
+tar xvzf spark-1.4.0-bin-hadoop2.4.tgz
+rm spark-1.4.0-bin-hadoop2.4.tgz
 #export the AWS credentials
 export AWS_ACCESS_KEY_ID=...
 export AWS_SECRET_ACCESS_KEY=...
 #verify the permissions of the keypair
 chmod 600 sparkclusterkey.pem
 #launch the cluster with --copy-aws-credentials option to enable S3 access.
-./spark-1.4.0-bin-hadoop2.6/ec2/spark-ec2 -k sparkclusterkey -i sparkclusterkey.pem --region=eu-west-1 --copy-aws-credentials --instance-type=m1.large -s 4 --hadoop-major-version=2 launch spark-cluster
+./spark-1.4.0-bin-hadoop2.4/ec2/spark-ec2 -k sparkclusterkey -i sparkclusterkey.pem --region=eu-west-1 --copy-aws-credentials --instance-type=m1.large -s 4 --hadoop-major-version=2 launch spark-cluster
 {% endhighlight %}
 
 Your master cluster hostname should appear in the logs :
@@ -70,7 +72,9 @@ Now Zeppelin interface is available at `http://localhost:8080/`.
 
 ###Configure your EC2 Spark Cluster in Zeppelin
 
-Go to the interpretor `http://localhost:8080/#/interpreter`.
+Go to the interpreter `http://localhost:8080/#/interpreter`.
+
+![Zeppelin Spark Interpreter]({{ site.url }}/img/zeppelin-interpreter.png)
 
 - Edit your 'spark' interpreter
 - In master property, put (in the place of local[`*`]) your master hostname with spark:// at the beginning, and the port at the end, in our example this would be `spark://ec2-52-18-32-219.eu-west-1.compute.amazonaws.com:7077`.
@@ -81,13 +85,6 @@ Go to the interpretor `http://localhost:8080/#/interpreter`.
 ###Computations
 
 Create a new Note and open it.
-
-Zeppelin offers a great tool for loading dependencies from the shell :
-
-{% highlight scala %}
-%dep
-z.load("org.apache.hadoop:hadoop-aws:2.6.0")
-{% endhighlight %}
 
 Add a few lines
 
@@ -100,14 +97,14 @@ val sortedList = reducedList.map(x => (x._2, x._1)).sortByKey(false).take(50)
 
 Click on start.
 
-You can see your Zeppelin shell in the Spark Cluster at `http://ec2-52-18-32-219.eu-west-1.compute.amazonaws.com:8080/`.
+You can see your Zeppelin shell running as an application in the Spark cluster at `http://ec2-52-18-32-219.eu-west-1.compute.amazonaws.com:8080/`.
 
 ![Zeppelin Shell Example]({{ site.url }}/img/zeppelin-shell.png)
 
 ###Close
 {% highlight bash %}
 #destroy the cluster
-./spark-1.4.0-bin-hadoop2.6/ec2/spark-ec2 -k sparkclusterkey -i sparkclusterkey.pem --region=eu-west-1 destroy spark-cluster
+./spark-1.4.0-bin-hadoop2.4/ec2/spark-ec2 -k sparkclusterkey -i sparkclusterkey.pem --region=eu-west-1 destroy spark-cluster
 #stop zeppelin web server
 incubator-zeppelin/bin/zeppelin-daemon.sh stop
 {% endhighlight %}

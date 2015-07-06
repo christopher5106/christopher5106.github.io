@@ -33,8 +33,6 @@ But the most promising one is [Zeppelin](http://zeppelin.incubator.apache.org/) 
 
 You need a AWS account, with an EC2 key pair, and credentials with `AmazonEC2FullAccess` policy.
 
-*Note: Hadoop 2.6 does not include Hadoop-AWS package so sc.textfile() function in Spark does not work. We'll use Hadoop 2.4.*
-
 {% highlight bash %}
 #download last Spark version for Hadoop 2
 wget http://wwwftp.ciril.fr/pub/apache/spark/spark-1.4.0/spark-1.4.0-bin-hadoop2.4.tgz
@@ -89,7 +87,9 @@ Create a new Note and open it.
 Add a few lines
 
 {% highlight scala %}
-val file = sc.textFile("s3n://support.elasticmapreduce/bigdatademo/sample/wiki")
+sc.hadoopConfiguration.set("fs.s3n.awsAccessKeyId","YOUR_AWS_ACCESS_KEY_ID")
+sc.hadoopConfiguration.set("fs.s3n.awsSecretAccessKey","YOUR_AWS_SECRET_ACCESS_KEY")
+val file = sc.textFile("s3n://disrupting.fr/samples/")
 val reducedList = file.map(l => l.split(" ")).map(l => (l(1), l(2).toInt)).reduceByKey(_+_, 3)
 reducedList.cache
 val sortedList = reducedList.map(x => (x._2, x._1)).sortByKey(false).take(50)

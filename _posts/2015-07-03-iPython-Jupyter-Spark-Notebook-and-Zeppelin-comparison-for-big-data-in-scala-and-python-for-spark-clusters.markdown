@@ -35,16 +35,16 @@ You need a AWS account, with an EC2 key pair, and credentials with `AmazonEC2Ful
 
 {% highlight bash %}
 #download last Spark version for Hadoop 2
-wget http://wwwftp.ciril.fr/pub/apache/spark/spark-1.4.0/spark-1.4.0-bin-hadoop2.4.tgz
-tar xvzf spark-1.4.0-bin-hadoop2.4.tgz
-rm spark-1.4.0-bin-hadoop2.4.tgz
+wget http://wwwftp.ciril.fr/pub/apache/spark/spark-1.4.0/spark-1.4.0-bin-hadoop2.6.tgz
+tar xvzf spark-1.4.0-bin-hadoop2.6.tgz
+rm spark-1.4.0-bin-hadoop2.6.tgz
 #export the AWS credentials
 export AWS_ACCESS_KEY_ID=...
 export AWS_SECRET_ACCESS_KEY=...
 #verify the permissions of the keypair
 chmod 600 sparkclusterkey.pem
 #launch the cluster with --copy-aws-credentials option to enable S3 access.
-./spark-1.4.0-bin-hadoop2.4/ec2/spark-ec2 -k sparkclusterkey -i sparkclusterkey.pem --region=eu-west-1 --copy-aws-credentials --instance-type=m1.large -s 4 --hadoop-major-version=2 launch spark-cluster
+./spark-1.4.0-bin-hadoop2.6/ec2/spark-ec2 -k sparkclusterkey -i sparkclusterkey.pem --region=eu-west-1 --copy-aws-credentials --instance-type=m1.large -s 4 --hadoop-major-version=2 launch spark-cluster
 {% endhighlight %}
 
 Your master cluster hostname should appear in the logs :
@@ -104,7 +104,7 @@ You can see your Zeppelin shell running as an application in the Spark cluster a
 ###Close
 {% highlight bash %}
 #destroy the cluster
-./spark-1.4.0-bin-hadoop2.4/ec2/spark-ec2 -k sparkclusterkey -i sparkclusterkey.pem --region=eu-west-1 destroy spark-cluster
+./spark-1.4.0-bin-hadoop2.6/ec2/spark-ec2 -k sparkclusterkey -i sparkclusterkey.pem --region=eu-west-1 destroy spark-cluster
 #stop zeppelin web server
 incubator-zeppelin/bin/zeppelin-daemon.sh stop
 {% endhighlight %}

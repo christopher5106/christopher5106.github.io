@@ -17,6 +17,7 @@ categories: big data
 
 3. Install the package
 
+    brew install opencv
     brew install boost
     brew install snappy
     brew install lmdb

@@ -56,7 +56,7 @@ and edit the configuration
              $(ANACONDA_HOME)/lib/python2.7/site-packages/numpy/core/include \
 
     #PYTHON_LIB := /usr/lib
-   PYTHON_LIB := $(ANACONDA_HOME)/lib
+    PYTHON_LIB := $(ANACONDA_HOME)/lib
 
     WITH_PYTHON_LAYER := 1
 
@@ -66,9 +66,12 @@ and edit the configuration
 and build
 
     make all
+    make test
+    make runtest
+    make pycaffe
 
 
 6. Download DIGITS
 
-    tar xvzf digits-2.0.0-preview.gz
-    cd digits-2.0
+        tar xvzf digits-2.0.0-preview.gz
+        cd digits-2.0

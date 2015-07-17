@@ -44,7 +44,8 @@ On Mac OS 10.10.4, with NVIDIA GEFORCE GT 755M 1024 Mo
         cd caffe
         cp Makefile.config.example Makefile.config
 
-    and edit the configuration{% highlight makefile %}
+    and edit the configuration
+    {% highlight makefile %}
 ## Refer to http://caffe.berkeleyvision.org/installation.html
 # Contributions simplifying and improving our build system are welcome!
 
@@ -138,7 +139,7 @@ TEST_GPUID := 0
 
 # enable pretty build (comment to see full commands)
 Q ?= @
-{% endhighlight %}
+    {% endhighlight %}
 
 and build
 

@@ -152,7 +152,7 @@ and build
     export CAFFE_HOME=~/caffe
 
 
- 6. Download DIGITS
+ 6\. Download DIGITS
 
-        tar xvzf digits-2.0.0-preview.gz
-        cd digits-2.0
+    tar xvzf digits-2.0.0-preview.gz
+    cd digits-2.0

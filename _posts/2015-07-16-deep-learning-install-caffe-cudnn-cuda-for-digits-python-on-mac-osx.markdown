@@ -46,7 +46,6 @@ On Mac OS 10.10.4, with NVIDIA GEFORCE GT 755M 1024 Mo
 
     and edit the configuration
 
-
         ## Refer to http://caffe.berkeleyvision.org/installation.html
         # Contributions simplifying and improving our build system are welcome!
 

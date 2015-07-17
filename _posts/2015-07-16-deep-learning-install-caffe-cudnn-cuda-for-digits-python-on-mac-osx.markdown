@@ -141,18 +141,18 @@ TEST_GPUID := 0
 Q ?= @
 {% endhighlight %}]
 
-    and build
+and build
 
-        mkdir build
-        cd build
-        make all
-        make test
-        make runtest
-        make pycaffe
-        export CAFFE_HOME=~/caffe
+    mkdir build
+    cd build
+    make all
+    make test
+    make runtest
+    make pycaffe
+    export CAFFE_HOME=~/caffe
 
 
-6. Download DIGITS
+\6. Download DIGITS
 
         tar xvzf digits-2.0.0-preview.gz
         cd digits-2.0

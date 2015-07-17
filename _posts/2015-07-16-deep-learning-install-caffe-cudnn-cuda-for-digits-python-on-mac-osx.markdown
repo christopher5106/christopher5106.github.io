@@ -48,7 +48,7 @@ and edit the configuration
 
 
 
-```Makefile
+{% highlight makefile %}
 ## Refer to http://caffe.berkeleyvision.org/installation.html
 # Contributions simplifying and improving our build system are welcome!
 
@@ -142,7 +142,7 @@ TEST_GPUID := 0
 
 # enable pretty build (comment to see full commands)
 Q ?= @
-```
+{% endhighlight %}
 
 
 

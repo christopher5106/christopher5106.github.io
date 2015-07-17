@@ -142,15 +142,15 @@ TEST_GPUID := 0
 Q ?= @
 {% endhighlight %}
 
-and build
+    and build
 
-    mkdir build
-    cd build
-    make all
-    make test
-    make runtest
-    make pycaffe
-    export CAFFE_HOME=~/caffe
+        mkdir build
+        cd build
+        make all
+        make test
+        make runtest
+        make pycaffe
+        export CAFFE_HOME=~/caffe
 
 
 6. Download DIGITS

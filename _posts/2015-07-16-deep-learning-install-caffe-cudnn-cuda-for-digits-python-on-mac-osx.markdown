@@ -44,9 +44,7 @@ On Mac OS 10.10.4, with NVIDIA GEFORCE GT 755M 1024 Mo
         cd caffe
         cp Makefile.config.example Makefile.config
 
-and edit the configuration
-
-
+    and edit the configuration
 
 {% highlight makefile %}
 ## Refer to http://caffe.berkeleyvision.org/installation.html
@@ -144,11 +142,6 @@ TEST_GPUID := 0
 Q ?= @
 {% endhighlight %}
 
-
-
-
-
-
 and build
 
     mkdir build
@@ -157,9 +150,7 @@ and build
     make test
     make runtest
     make pycaffe
-
-
-    export CAFFE_HOME=/Users/christopherbourez/digits-2.0/caffe
+    export CAFFE_HOME=~/caffe
 
 
 6. Download DIGITS

@@ -6,9 +6,18 @@ categories: big data
 ---
 
 
-1. Install CUDA
+##iMac 27", Mac OS 10.10.4, NVIDIA GEFORCE GT 755M 1024 Mo
 
-2. Download CuDNN
+1\. Install CUDA 7
+
+    Check your version
+
+{% highlight makefile %}
+/usr/local/cuda/bin/nvcc --version
+# Cuda compilation tools, release 7.0, V7.0.27
+{% endhighlight %}
+
+2\. Download CuDNN
 
         tar xvzf cudnn-6.5-osx-v2.tgz
         rm cudnn-6.5-osx-v2.tgz
@@ -16,10 +25,10 @@ categories: big data
         sudo cp cudnn.h /usr/local/cuda/include/
         sudo cp lib* /usr/local/cuda/lib/
 
-3. Install the package
+3\. Install the packages
 
+        brew tap homebrew/science
         brew update
-        brew install opencv
         brew install boost
         brew install snappy
         brew install lmdb
@@ -31,58 +40,159 @@ categories: big data
         brew install cmake
         brew install boost-python
 
+4\. Download [OpenCV 3.0.0](http://opencv.org/downloads.html) and [install](http://docs.opencv.org/doc/tutorials/introduction/linux_install/linux_install.html#linux-installation)
 
-4. Install the python packages
+        wget https://github.com/Itseez/opencv/archive/3.0.0.zip
+        unzip 3.0.0.zip
+        opencv-3.0.0
+        mkdir release
+        cd release
+        cmake -D CMAKE_BUILD_TYPE=Release -D CMAKE_INSTALL_PREFIX=/usr/local -D BUILD_TIFF=ON -D BUILD_EXAMPLES=ON -D CUDA_GENERATION=Auto -D BUILD_NEW_PYTHON_SUPPORT=ON ..
+        sudo make install
 
+    *NB: I did not make it with `brew install opencv` or `brew install opencv3`.*
+
+5\. Download and install [Anaconda](http://continuum.io/downloads) which is a very great for managing python packages.
+
+        bash Anaconda-2.3.0-MacOSX-x86_64.sh
+
+    Install the python packages
+
+        conda install python
         conda install numpy
         conda install hdf5
-        conda install boost
+
+    You can verify the path :
+
+{% highlight bash %}
+which python
+#/Users/christopherbourez/anaconda/bin/python
+{% endhighlight %}
 
 
-5. Clone the caffe repository
+6\. Clone the caffe repository
 
         git clone https://github.com/BVLC/caffe.git
         cd caffe
         cp Makefile.config.example Makefile.config
 
+    edit the Makefile by adding **opencv_imgcodecs** to the libraries
 
-and edit the configuration
+        LIBRARIES += glog gflags protobuf leveldb snappy \
+        lmdb boost_system hdf5_hl hdf5 m \
+        opencv_core opencv_highgui opencv_imgproc **opencv_imgcodecs**
 
-    USE_CUDNN := 1
+    and edit the configuration
 
-    BLAS := open
+{% highlight makefile %}
+## Refer to http://caffe.berkeleyvision.org/installation.html
+# Contributions simplifying and improving our build system are welcome!
 
-    BLAS_INCLUDE := $(shell brew --prefix openblas)/include
-    BLAS_LIB := $(shell brew --prefix openblas)/lib
+# cuDNN acceleration switch (uncomment to build with cuDNN).
+USE_CUDNN := 1
 
-    ANACONDA_HOME := $(HOME)/anaconda
-    PYTHON_INCLUDE := $(ANACONDA_HOME)/include \
-             $(ANACONDA_HOME)/include/python2.7 \
-             $(ANACONDA_HOME)/lib/python2.7/site-packages/numpy/core/include \
+# CPU-only switch (uncomment to build without GPU support).
+# CPU_ONLY := 1
 
-    #PYTHON_LIB := /usr/lib
-    PYTHON_LIB := $(ANACONDA_HOME)/lib
+# To customize your choice of compiler, uncomment and set the following.
+# N.B. the default for Linux is g++ and the default for OSX is clang++
+# CUSTOM_CXX := g++
 
-    PYTHON_INCLUDE += $(dir $(shell python -c 'import numpy.core; print(numpy.core.__file__)'))/include
-    PYTHON_LIB += $(shell brew --prefix numpy)/lib
+# CUDA directory contains bin/ and lib/ directories that we need.
+CUDA_DIR := /usr/local/cuda
+# On Ubuntu 14.04, if cuda tools are installed via
+# "sudo apt-get install nvidia-cuda-toolkit" then use this instead:
+# CUDA_DIR := /usr
 
-    WITH_PYTHON_LAYER := 1
+# CUDA architecture setting: going with all of them.
+# For CUDA < 6.0, comment the *_50 lines for compatibility.
+CUDA_ARCH := -gencode arch=compute_20,code=sm_20 \
+		-gencode arch=compute_20,code=sm_21 \
+		-gencode arch=compute_30,code=sm_30 \
+		-gencode arch=compute_35,code=sm_35 \
+		-gencode arch=compute_50,code=sm_50 \
+		-gencode arch=compute_50,code=compute_50
 
+# BLAS choice:
+# atlas for ATLAS (default)
+# mkl for MKL
+# open for OpenBlas
+BLAS := atlas
+# Custom (MKL/ATLAS/OpenBLAS) include and lib directories.
+# Leave commented to accept the defaults for your choice of BLAS
+# (which should work)!
+# BLAS_INCLUDE := /path/to/your/blas
+# BLAS_LIB := /path/to/your/blas
 
+# Homebrew puts openblas in a directory that is not on the standard search path
+# BLAS_INCLUDE := $(shell brew --prefix openblas)/include
+# BLAS_LIB := $(shell brew --prefix openblas)/lib
 
+# This is required only if you will compile the matlab interface.
+# MATLAB directory should contain the mex binary in /bin.
+# MATLAB_DIR := /usr/local
+# MATLAB_DIR := /Applications/MATLAB_R2012b.app
+
+# NOTE: this is required only if you will compile the python interface.
+# We need to be able to find Python.h and numpy/arrayobject.h.
+#PYTHON_INCLUDE := /usr/include/python2.7 \
+#		/usr/lib/python2.7/dist-packages/numpy/core/include
+# Anaconda Python distribution is quite popular. Include path:
+# Verify anaconda location, sometimes it's in root.
+ANACONDA_HOME := $(HOME)/anaconda
+PYTHON_INCLUDE := $(ANACONDA_HOME)/include \
+		 $(ANACONDA_HOME)/include/python2.7 \
+		$(ANACONDA_HOME)/lib/python2.7/site-packages/numpy/core/include \
+
+# We need to be able to find libpythonX.X.so or .dylib.
+#PYTHON_LIB := /usr/lib
+PYTHON_LIB := $(ANACONDA_HOME)/lib
+
+# Homebrew installs numpy in a non standard path (keg only)
+# PYTHON_INCLUDE += $(dir $(shell python -c 'import numpy.core; print(numpy.core.__file__)'))/include
+# PYTHON_LIB += $(shell brew --prefix numpy)/lib
+
+# Uncomment to support layers written in Python (will link against Python libs)
+#WITH_PYTHON_LAYER := 1
+
+# Whatever else you find you need goes here.
+INCLUDE_DIRS := $(PYTHON_INCLUDE) /usr/local/include
+LIBRARY_DIRS := $(PYTHON_LIB) /usr/local/lib /usr/lib
+
+# If Homebrew is installed at a non standard location (for example your home directory) and you use it for general dependencies
+# INCLUDE_DIRS += $(shell brew --prefix)/include
+# LIBRARY_DIRS += $(shell brew --prefix)/lib
+
+# Uncomment to use `pkg-config` to specify OpenCV library paths.
+# (Usually not necessary -- OpenCV libraries are normally installed in one of the above $LIBRARY_DIRS.)
+#USE_PKG_CONFIG := 1
+
+BUILD_DIR := build
+DISTRIBUTE_DIR := distribute
+
+# Uncomment for debugging. Does not work on OSX due to https://github.com/BVLC/caffe/issues/171
+# DEBUG := 1
+
+# The ID of the GPU that 'make runtest' will use to run unit tests.
+TEST_GPUID := 0
+
+# enable pretty build (comment to see full commands)
+Q ?= @
+
+{% endhighlight %}
 
 and build
 
     mkdir build
     cd build
-    cmake ..
     make all
     make test
     make runtest
     make pycaffe
+    export CAFFE_HOME=~/caffe
 
 
-6. Download DIGITS
+ 7\. Download DIGITS
 
-        tar xvzf digits-2.0.0-preview.gz
-        cd digits-2.0
+    tar xvzf digits-2.0.0-preview.gz
+    cd digits-2.0

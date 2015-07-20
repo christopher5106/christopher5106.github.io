@@ -10,7 +10,7 @@ categories: big data
 
 1\. Install CUDA 7
 
-    Check your version
+Check your version
 
 {% highlight bash %}
 /usr/local/cuda/bin/nvcc --version
@@ -19,50 +19,50 @@ categories: big data
 
 2\. Download CuDNN
 
-        tar xvzf cudnn-6.5-osx-v2.tgz
-        rm cudnn-6.5-osx-v2.tgz
-        cd cudnn-6.5-osx-v2/
-        sudo cp cudnn.h /usr/local/cuda/include/
-        sudo cp lib* /usr/local/cuda/lib/
+    tar xvzf cudnn-6.5-osx-v2.tgz
+    rm cudnn-6.5-osx-v2.tgz
+    cd cudnn-6.5-osx-v2/
+    sudo cp cudnn.h /usr/local/cuda/include/
+    sudo cp lib* /usr/local/cuda/lib/
 
 3\. Install the packages
 
-        brew tap homebrew/science
-        brew update
-        brew install boost
-        brew install snappy
-        brew install lmdb
-        brew install hdf5
-        brew install leveldb
-        brew install openblas
-        brew install glog
-        brew install protobuf
-        brew install cmake
-        brew install boost-python
+    brew tap homebrew/science
+    brew update
+    brew install boost
+    brew install snappy
+    brew install lmdb
+    brew install hdf5
+    brew install leveldb
+    brew install openblas
+    brew install glog
+    brew install protobuf
+    brew install cmake
+    brew install boost-python
 
 4\. Download [OpenCV 3.0.0](http://opencv.org/downloads.html) and [install](http://docs.opencv.org/doc/tutorials/introduction/linux_install/linux_install.html#linux-installation)
 
-        wget https://github.com/Itseez/opencv/archive/3.0.0.zip
-        unzip 3.0.0.zip
-        opencv-3.0.0
-        mkdir release
-        cd release
-        cmake -D CMAKE_BUILD_TYPE=Release -D CMAKE_INSTALL_PREFIX=/usr/local -D BUILD_TIFF=ON -D BUILD_EXAMPLES=ON -D CUDA_GENERATION=Auto -D BUILD_NEW_PYTHON_SUPPORT=ON ..
-        sudo make install
+    wget https://github.com/Itseez/opencv/archive/3.0.0.zip
+    unzip 3.0.0.zip
+    opencv-3.0.0
+    mkdir release
+    cd release
+    cmake -D CMAKE_BUILD_TYPE=Release -D CMAKE_INSTALL_PREFIX=/usr/local -D BUILD_TIFF=ON -D BUILD_EXAMPLES=ON -D CUDA_GENERATION=Auto -D BUILD_NEW_PYTHON_SUPPORT=ON ..
+    sudo make install
 
-    *NB: I did not make it with `brew install opencv` or `brew install opencv3`.*
+*NB: I did not make it with `brew install opencv` or `brew install opencv3`.*
 
 5\. Download and install [Anaconda](http://continuum.io/downloads) which is a very great for managing python packages.
 
-        bash Anaconda-2.3.0-MacOSX-x86_64.sh
+    bash Anaconda-2.3.0-MacOSX-x86_64.sh
 
-    Install the python packages
+Install the python packages
 
-        conda install python
-        conda install numpy
-        conda install hdf5
+    conda install python
+    conda install numpy
+    conda install hdf5
 
-    You can verify the path :
+You can verify the path :
 
 {% highlight bash %}
 which python
@@ -72,17 +72,17 @@ which python
 
 6\. Clone the caffe repository
 
-        git clone https://github.com/BVLC/caffe.git
-        cd caffe
-        cp Makefile.config.example Makefile.config
+    git clone https://github.com/BVLC/caffe.git
+    cd caffe
+    cp Makefile.config.example Makefile.config
 
-    edit the Makefile by adding **opencv_imgcodecs** to the libraries
+edit the Makefile by adding **opencv_imgcodecs** to the libraries
 
-        LIBRARIES += glog gflags protobuf leveldb snappy \
-        lmdb boost_system hdf5_hl hdf5 m \
-        opencv_core opencv_highgui opencv_imgproc **opencv_imgcodecs**
+    LIBRARIES += glog gflags protobuf leveldb snappy \
+    lmdb boost_system hdf5_hl hdf5 m \
+    opencv_core opencv_highgui opencv_imgproc **opencv_imgcodecs**
 
-    and edit the configuration
+and edit the configuration
 
 {% highlight makefile %}
 ## Refer to http://caffe.berkeleyvision.org/installation.html

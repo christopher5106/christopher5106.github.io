@@ -8,7 +8,7 @@ categories: big data
 Install on a AWS g2 instance, with Ubuntu 14.04.
 
 {% highlight bash %}
-#install Cuda
+#Install Cuda
 wget http://developer.download.nvidia.com/compute/cuda/repos/ubuntu1404/x86_64/cuda-repo-ubuntu1404_7.0-28_amd64.deb
 sudo dpkg -i cuda-repo-ubuntu1404_7.0-28_amd64.deb
 sudo apt-get update
@@ -17,26 +17,25 @@ sudo apt-get install cuda
 /usr/local/cuda/bin/nvcc --version
 #> Cuda compilation tools, release 7.0, V7.0.27
 
-#install Anaconda
+#Install Anaconda
 wget https://3230d63b5fc54e62148e-c95ac804525aac4b6dba79b00b39d1d3.ssl.cf1.rackcdn.com/Anaconda-2.3.0-Linux-x86_64.sh
 bash Anaconda-2.3.0-Linux-x86_64.sh
 conda install python
 
-#install Cudnn
+#Install Cudnn
 tar xvzf cudnn-6.5-linux-x64-v2.tgz
 cd cudnn-6.5-linux-x64-v2/
 sudo cp cudnn.h /usr/local/cuda/include/
 sudo cp *.so* /usr/local/cuda/lib64/
 
-#install Caffe requirements
+#Install Caffe requirements
 sudo apt-get install libprotobuf-dev libleveldb-dev libsnappy-dev libopencv-dev libhdf5-serial-dev
 sudo apt-get install --no-install-recommends libboost-all-dev
 sudo apt-get install libgflags-dev libgoogle-glog-dev liblmdb-dev protobuf-compiler
 sudo apt-get install libatlas-base-dev
 sudo apt-get install libopenblas-dev (for theano)
 
-#download Digits
-
+#Download Digits
 tar xvzf digits-2.0.0-preview.gz
 cd digits-2.0/caffe
 
@@ -68,11 +67,12 @@ LIBRARY_DIRS := $(PYTHON_LIB) /usr/local/lib /usr/lib
 Compile :
 
 {% highlight bash %}
-#compile
+#Compile
 make all
 make test
 make runtest
 
+#Launch web server
 cd ../digits
 ./digits-devserver
 {% endhighlight %}

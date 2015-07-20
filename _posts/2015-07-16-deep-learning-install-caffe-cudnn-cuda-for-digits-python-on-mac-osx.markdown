@@ -31,12 +31,20 @@ On Mac OS 10.10.4, with NVIDIA GEFORCE GT 755M 1024 Mo
         brew install protobuf
 
 
-4. Install Anaconda and the python packages
+4. Download and install [Anaconda](http://continuum.io/downloads) which is a very great for managing python packages.
+
+        bash Anaconda-2.3.0-MacOSX-x86_64.sh
+
+    Install the python packages
 
         conda install python
         conda install numpy
         conda install hdf5
 
+    You can verify the path :
+
+        which python
+        #/Users/christopherbourez/anaconda/bin/python
 
 5. Clone the caffe repository
 
@@ -126,7 +134,7 @@ LIBRARY_DIRS := $(PYTHON_LIB) /usr/local/lib /usr/lib
 
 # Uncomment to use `pkg-config` to specify OpenCV library paths.
 # (Usually not necessary -- OpenCV libraries are normally installed in one of the above $LIBRARY_DIRS.)
-# USE_PKG_CONFIG := 1
+USE_PKG_CONFIG := 1
 
 BUILD_DIR := build
 DISTRIBUTE_DIR := distribute

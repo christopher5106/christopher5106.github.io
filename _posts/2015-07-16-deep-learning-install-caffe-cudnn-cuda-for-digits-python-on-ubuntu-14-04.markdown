@@ -84,6 +84,7 @@ The server will be running at [http://0.0.0.0:5000/](http://0.0.0.0:5000/)
 Have a look if everything is ok with Theano as well :
 
 {% highlight bash %}
+sudo apt-get install git
 git clone git://github.com/lisa-lab/DeepLearningTutorials.git
 #let's try a logistic regression (http://deeplearning.net/tutorial/logreg.html) on MNIST dataset
 python code/logistic_sgd.py

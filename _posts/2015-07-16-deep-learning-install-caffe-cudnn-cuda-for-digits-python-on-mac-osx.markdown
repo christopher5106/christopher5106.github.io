@@ -43,8 +43,10 @@ On Mac OS 10.10.4, with NVIDIA GEFORCE GT 755M 1024 Mo
 
     You can verify the path :
 
+    ```bash
         which python
         #/Users/christopherbourez/anaconda/bin/python
+    ```
 
 5. Clone the caffe repository
 

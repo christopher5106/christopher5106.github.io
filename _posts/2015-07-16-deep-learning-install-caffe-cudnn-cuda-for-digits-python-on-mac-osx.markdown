@@ -7,13 +7,13 @@ categories: big data
 
 ##iMac 27", Mac OS 10.10.4, NVIDIA GEFORCE GT 755M 1024 Mo
 
-1. Install CUDA 7
+1\. Install CUDA 7
 
     Check your version
 
 {% highlight makefile %}
 /usr/local/cuda/bin/nvcc --version
-> Cuda compilation tools, release 7.0, V7.0.27
+# Cuda compilation tools, release 7.0, V7.0.27
 {% endhighlight %}
 
 2\. Download CuDNN

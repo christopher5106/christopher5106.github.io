@@ -28,15 +28,19 @@ cd cudnn-6.5-linux-x64-v2/
 sudo cp cudnn.h /usr/local/cuda/include/
 sudo cp *.so* /usr/local/cuda/lib64/
 
-#install Caffe
-sudo apt-get install git
-git clone https://github.com/BVLC/caffe.git
+#install Caffe requirements
 sudo apt-get install libprotobuf-dev libleveldb-dev libsnappy-dev libopencv-dev libhdf5-serial-dev
 sudo apt-get install --no-install-recommends libboost-all-dev
 sudo apt-get install libgflags-dev libgoogle-glog-dev liblmdb-dev protobuf-compiler
 sudo apt-get install libatlas-base-dev
 sudo apt-get install libopenblas-dev (for theano)
-#create the Makefile
+
+#download Digits
+
+tar xvzf digits-2.0.0-preview.gz
+cd digits-2.0/caffe
+
+#Edit the Makefile
 vi Makefile.config
 {% endhighlight %}
 
@@ -69,10 +73,7 @@ make all
 make test
 make runtest
 
-#download Digits
-
-tar xvzf digits-2.0.0-preview.gz
-cd digits-2.0/digits
+cd ../digits
 ./digits-devserver
 {% endhighlight %}
 

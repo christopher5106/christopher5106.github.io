@@ -18,6 +18,7 @@ categories: big data
 
 3. Install the package
 
+        brew update
         brew install opencv
         brew install boost
         brew install snappy
@@ -27,12 +28,15 @@ categories: big data
         brew install openblas
         brew install glog
         brew install protobuf
+        brew install cmake
+        brew install boost-python
 
 
 4. Install the python packages
 
         conda install numpy
         conda install hdf5
+        conda install boost
 
 
 5. Clone the caffe repository
@@ -40,6 +44,7 @@ categories: big data
         git clone https://github.com/BVLC/caffe.git
         cd caffe
         cp Makefile.config.example Makefile.config
+
 
 and edit the configuration
 
@@ -58,6 +63,9 @@ and edit the configuration
     #PYTHON_LIB := /usr/lib
     PYTHON_LIB := $(ANACONDA_HOME)/lib
 
+    PYTHON_INCLUDE += $(dir $(shell python -c 'import numpy.core; print(numpy.core.__file__)'))/include
+    PYTHON_LIB += $(shell brew --prefix numpy)/lib
+
     WITH_PYTHON_LAYER := 1
 
 
@@ -65,6 +73,9 @@ and edit the configuration
 
 and build
 
+    mkdir build
+    cd build
+    cmake ..
     make all
     make test
     make runtest

@@ -43,19 +43,20 @@ On Mac OS 10.10.4, with NVIDIA GEFORCE GT 755M 1024 Mo
 
     You can verify the path :
 
-    {% highlight bash %}
-        which python
-        #/Users/christopherbourez/anaconda/bin/python
-    {% endhighlight %}
+{% highlight bash %}
+which python
+#/Users/christopherbourez/anaconda/bin/python
+{% endhighlight %}
 
-5. Clone the caffe repository
+5\. Clone the caffe repository
 
         git clone https://github.com/BVLC/caffe.git
         cd caffe
         cp Makefile.config.example Makefile.config
 
     and edit the configuration
-    {% highlight makefile %}
+
+{% highlight makefile %}
 ## Refer to http://caffe.berkeleyvision.org/installation.html
 # Contributions simplifying and improving our build system are welcome!
 
@@ -149,7 +150,8 @@ TEST_GPUID := 0
 
 # enable pretty build (comment to see full commands)
 Q ?= @
-    {% endhighlight %}
+
+{% endhighlight %}
 
 and build
 

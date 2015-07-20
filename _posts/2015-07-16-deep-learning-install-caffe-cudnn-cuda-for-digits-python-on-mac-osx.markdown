@@ -12,7 +12,7 @@ categories: big data
 
     Check your version
 
-{% highlight makefile %}
+{% highlight bash %}
 /usr/local/cuda/bin/nvcc --version
 # Cuda compilation tools, release 7.0, V7.0.27
 {% endhighlight %}

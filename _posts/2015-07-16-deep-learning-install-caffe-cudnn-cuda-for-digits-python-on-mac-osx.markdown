@@ -5,11 +5,18 @@ date:   2015-07-16 23:00:51
 categories: big data
 ---
 
-On Mac OS 10.10.4, with NVIDIA GEFORCE GT 755M 1024 Mo
+##iMac 27", Mac OS 10.10.4, NVIDIA GEFORCE GT 755M 1024 Mo
 
-1. Install CUDA
+1. Install CUDA 7
 
-2. Download CuDNN
+    Check your version
+
+{% highlight makefile %}
+/usr/local/cuda/bin/nvcc --version
+> Cuda compilation tools, release 7.0, V7.0.27
+{% endhighlight %}
+
+2\. Download CuDNN
 
         tar xvzf cudnn-6.5-osx-v2.tgz
         rm cudnn-6.5-osx-v2.tgz
@@ -17,10 +24,9 @@ On Mac OS 10.10.4, with NVIDIA GEFORCE GT 755M 1024 Mo
         sudo cp cudnn.h /usr/local/cuda/include/
         sudo cp lib* /usr/local/cuda/lib/
 
-3. Install the package
+3\. Install the packages
 
         brew tap homebrew/science
-        brew install opencv
         brew install boost
         brew install snappy
         brew install lmdb
@@ -30,8 +36,19 @@ On Mac OS 10.10.4, with NVIDIA GEFORCE GT 755M 1024 Mo
         brew install glog
         brew install protobuf
 
+4\. Download [OpenCV 3.0.0](http://opencv.org/downloads.html) and [install](http://docs.opencv.org/doc/tutorials/introduction/linux_install/linux_install.html#linux-installation)
 
-4. Download and install [Anaconda](http://continuum.io/downloads) which is a very great for managing python packages.
+        wget https://github.com/Itseez/opencv/archive/3.0.0.zip
+        unzip 3.0.0.zip
+        opencv-3.0.0
+        mkdir release
+        cd release
+        cmake -D CMAKE_BUILD_TYPE=Release -D CMAKE_INSTALL_PREFIX=/usr/local -D BUILD_TIFF=ON -D BUILD_EXAMPLES=ON -D CUDA_GENERATION=Auto -D BUILD_NEW_PYTHON_SUPPORT=ON ..
+        sudo make install
+
+    *NB: I did not make it with `brew install opencv` or `brew install opencv3`.*
+
+5\. Download and install [Anaconda](http://continuum.io/downloads) which is a very great for managing python packages.
 
         bash Anaconda-2.3.0-MacOSX-x86_64.sh
 
@@ -48,11 +65,17 @@ which python
 #/Users/christopherbourez/anaconda/bin/python
 {% endhighlight %}
 
-5\. Clone the caffe repository
+6\. Clone the caffe repository
 
         git clone https://github.com/BVLC/caffe.git
         cd caffe
         cp Makefile.config.example Makefile.config
+
+    edit the Makefile by adding **opencv_imgcodecs** to the libraries
+
+        LIBRARIES += glog gflags protobuf leveldb snappy \
+        lmdb boost_system hdf5_hl hdf5 m \
+        opencv_core opencv_highgui opencv_imgproc **opencv_imgcodecs**
 
     and edit the configuration
 
@@ -137,7 +160,7 @@ LIBRARY_DIRS := $(PYTHON_LIB) /usr/local/lib /usr/lib
 
 # Uncomment to use `pkg-config` to specify OpenCV library paths.
 # (Usually not necessary -- OpenCV libraries are normally installed in one of the above $LIBRARY_DIRS.)
-USE_PKG_CONFIG := 1
+#USE_PKG_CONFIG := 1
 
 BUILD_DIR := build
 DISTRIBUTE_DIR := distribute
@@ -164,7 +187,7 @@ and build
     export CAFFE_HOME=~/caffe
 
 
- 6\. Download DIGITS
+ 7\. Download DIGITS
 
     tar xvzf digits-2.0.0-preview.gz
     cd digits-2.0

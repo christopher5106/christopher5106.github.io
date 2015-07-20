@@ -5,6 +5,7 @@ date:   2015-07-16 23:00:51
 categories: big data
 ---
 
+
 ##iMac 27", Mac OS 10.10.4, NVIDIA GEFORCE GT 755M 1024 Mo
 
 1\. Install CUDA 7

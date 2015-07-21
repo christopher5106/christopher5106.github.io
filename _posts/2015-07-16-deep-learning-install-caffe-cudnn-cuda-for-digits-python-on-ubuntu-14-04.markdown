@@ -100,7 +100,7 @@ vi Makefile.config
 
 The `Makefile.config` is :
 
-{% highlight bash %}
+{% highlight makefile %}
 USE_CUDNN := 1
 CUDA_DIR := /usr/local/cuda
 CUDA_ARCH := -gencode arch=compute_20,code=sm_20 \

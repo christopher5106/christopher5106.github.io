@@ -78,7 +78,7 @@ Q ?= @
 LIBRARY_NAME_SUFFIX := -nv
 {% endhighlight %}
 
-All this is avaialable in my [Chef deployment recipe](https://github.com/christopher5106/digits-server-simple) that you can use on AWS Opsworks.
+All this is available in my [Chef deployment recipe](https://github.com/christopher5106/digits-server-simple) that you can use on AWS Opsworks.
 
 #Create dataset and classify
 

@@ -20,10 +20,11 @@ sudo apt-get -y install cuda
 #> Cuda compilation tools, release 7.0, V7.0.27
 
 #Install Cudnn
+wget https://s3-eu-west-1.amazonaws.com/christopherbourez/public/cudnn-6.5-osx-v2.tgz
 tar xvzf cudnn-6.5-linux-x64-v2.tgz
 cd cudnn-6.5-linux-x64-v2/
 sudo cp cudnn.h /usr/local/cuda/include/
-sudo cp *.so* /usr/local/cuda/lib64/
+sudo cp libcudnn* /usr/local/cuda/lib64/
 
 #Install Git
 sudo apt-get install git
@@ -32,12 +33,17 @@ sudo apt-get install git
 #Install Digits with Digits'Caffe...
 
 {% highlight bash %}
-tar xvzf digits-2.0.0-preview.gz
+git clone https://github.com/NVIDIA/DIGITS.git digits-2.0
 cd digits-2.0/
 ./install.sh
+cd caffe
 sudo apt-get install --no-install-recommends libboost-all-dev #missing
 make all --jobs=8
-cd digits/
+cd ../digits/
+export CUDA_HOME=/usr/local/cuda
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CUDA_HOME/lib
+sudo ln /dev/null /dev/raw1394
+sudo pip install -r requirements.txt
 ./digits-devserver
 {% endhighlight %}
 
@@ -84,7 +90,6 @@ sudo apt-get install libprotobuf-dev libleveldb-dev libsnappy-dev libopencv-dev 
 sudo apt-get install --no-install-recommends libboost-all-dev
 sudo apt-get install libgflags-dev libgoogle-glog-dev liblmdb-dev protobuf-compiler
 sudo apt-get install libatlas-base-dev
-sudo apt-get install libopenblas-dev (for theano)
 sudo apt-get remove libopenblas-base
 sudo ldconfig /usr/local/cuda/lib64
 sudo ln /dev/null /dev/raw1394
@@ -139,6 +144,7 @@ and specify `~/caffe` for Caffe path.
 Have a look if everything is ok with Theano as well :
 
 {% highlight bash %}
+sudo apt-get install libopenblas-dev
 git clone git://github.com/lisa-lab/DeepLearningTutorials.git
 #let's try a logistic regression (http://deeplearning.net/tutorial/logreg.html) on MNIST dataset
 python code/logistic_sgd.py

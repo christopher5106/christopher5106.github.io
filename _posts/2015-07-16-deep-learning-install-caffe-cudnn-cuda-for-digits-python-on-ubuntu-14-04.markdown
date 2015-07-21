@@ -111,7 +111,7 @@ and it will create the classification model.
 
 #The REST API
 
-[REST API](https://github.com/NVIDIA/DIGITS/blob/master/docs/API.md)
+The Digits classification server offers a great [REST API](https://github.com/NVIDIA/DIGITS/blob/master/docs/API.md) in order to integrate it in a process or among an IT system.
 
 ![Classification]({{ site.url }}/img/digits_rest.png)
 

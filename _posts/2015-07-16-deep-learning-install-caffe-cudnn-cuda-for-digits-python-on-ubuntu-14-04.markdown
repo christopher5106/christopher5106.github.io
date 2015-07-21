@@ -82,8 +82,15 @@ All this is avaialable in my [Chef deployment recipe](https://github.com/christo
 
 #Create dataset and classify
 
+Add dataset
 ![Add dataset]({{ site.url }}/img/dataset.png)
 
+and it will create it in the DB
+
 ![Classification]({{ site.url }}/img/classification.png)
+
+
+Create the model :
+![Classification]({{ site.url }}/img/create_model.png)
 
 **Well done!**

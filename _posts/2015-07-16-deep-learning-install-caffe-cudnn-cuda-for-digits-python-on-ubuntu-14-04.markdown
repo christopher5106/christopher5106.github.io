@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Deep learning with Cuda, CuDNN and Caffe for Digits and Python on Ubuntu 14.04"
+title:  "Deep learning with Cuda 7, CuDNN 2 and Caffe for Digits 2 and Python on Ubuntu 14.04"
 date:   2015-07-16 23:00:51
 categories: big data
 ---
@@ -144,6 +144,6 @@ git clone git://github.com/lisa-lab/DeepLearningTutorials.git
 python code/logistic_sgd.py
 {% endhighlight %}
 
-If GPU is correctly enabled, should be faster !
+If GPU is correctly enabled, should be 2 times faster !
 
 **Well done!**

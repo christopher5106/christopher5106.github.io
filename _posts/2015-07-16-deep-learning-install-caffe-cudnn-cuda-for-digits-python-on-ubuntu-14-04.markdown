@@ -45,12 +45,11 @@ export CUDA_HOME=/usr/local/cuda
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CUDA_HOME/lib64
 sudo ln /dev/null /dev/raw1394
 sudo pip install -r requirements.txt
-./digits-devserver
+export CAFE_HOME=../caffe
+./digits-server
 {% endhighlight %}
 
-and choose `../caffe` as Caffe path.
-
-Open Port 5000 on the instance. The server will be running at [http://0.0.0.0:5000/](http://0.0.0.0:5000/)
+Open Port 8080 on the instance. The server will be running at [http://0.0.0.0:8080/](http://0.0.0.0:8080/)
 
 Note : the `Makefile`
 

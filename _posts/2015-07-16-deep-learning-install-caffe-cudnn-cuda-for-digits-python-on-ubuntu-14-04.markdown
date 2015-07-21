@@ -34,6 +34,10 @@ sudo apt-get install --no-install-recommends libboost-all-dev
 sudo apt-get install libgflags-dev libgoogle-glog-dev liblmdb-dev protobuf-compiler
 sudo apt-get install libatlas-base-dev
 sudo apt-get install libopenblas-dev (for theano)
+sudo apt-get remove libopenblas-base
+sudo ldconfig /usr/local/cuda/lib64
+sudo ln /dev/null /dev/raw1394
+conda install protobuf  
 
 #Download Digits
 tar xvzf digits-2.0.0-preview.gz

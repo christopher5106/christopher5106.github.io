@@ -33,7 +33,7 @@ sudo apt-get -y install git
 #Install Digits with Digits'Caffe...
 
 {% highlight bash %}
-git clone https://github.com/NVIDIA/DIGITS.git digits-2.0
+wget https://s3-eu-west-1.amazonaws.com/christopherbourez/public/digits-2.0.0-preview.gz
 cd digits-2.0/
 ./install.sh
 cd caffe

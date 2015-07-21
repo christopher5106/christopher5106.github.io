@@ -105,7 +105,7 @@ and it will create the classification model.
 
 [REST API](https://github.com/NVIDIA/DIGITS/blob/master/docs/API.md)
 
-![Classification]({{ site.url }}/img/digits_rest_api.png)
+![Classification]({{ site.url }}/img/digits_rest.png)
 
 ![Classification]({{ site.url }}/img/digits_rest_classification.png)
 

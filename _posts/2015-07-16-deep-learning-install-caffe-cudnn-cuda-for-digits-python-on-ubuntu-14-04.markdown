@@ -49,7 +49,7 @@ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CUDA_HOME/lib64
 sudo ln /dev/null /dev/raw1394
 sudo pip install -r requirements.txt
 export CAFE_HOME=../caffe
-sudo ldconfig
+ldconfig
 mkdir /home/ubuntu/data/mnist -p
 python tools/download_data/main.py mnist ~/data/mnist
 apt-get install linux-image-extra-$(uname -r)

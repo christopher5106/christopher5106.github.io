@@ -1,14 +1,184 @@
 ---
 layout: post
-title:  "Deep learning with Cuda, CuDNN and Caffe for Digits and Python on Mac OS X"
+title:  "Deep learning with Cuda 7, CuDNN 2 and Caffe for Digits 2 and Python on Ubuntu 14.04"
 date:   2015-07-16 23:00:51
 categories: big data
 ---
 
 
-##iMac 27", Mac OS 10.10.4, NVIDIA GEFORCE GT 755M 1024 Mo
+#... or install your own Caffe with Ananconda
 
-1\. Install CUDA 7
+{% highlight bash %}
+#Install Anaconda
+wget https://3230d63b5fc54e62148e-c95ac804525aac4b6dba79b00b39d1d3.ssl.cf1.rackcdn.com/Anaconda-2.3.0-Linux-x86_64.sh
+bash Anaconda-2.3.0-Linux-x86_64.sh
+conda install python
+
+#Install Caffe requirements
+sudo apt-get install libprotobuf-dev libleveldb-dev libsnappy-dev libopencv-dev libhdf5-serial-dev
+sudo apt-get install --no-install-recommends libboost-all-dev
+sudo apt-get install libgflags-dev libgoogle-glog-dev liblmdb-dev protobuf-compiler
+sudo apt-get install libatlas-base-dev
+sudo apt-get remove libopenblas-base
+sudo ldconfig /usr/local/cuda/lib64
+sudo ln /dev/null /dev/raw1394
+conda install protobuf  
+
+#Download Digits
+tar xvzf digits-2.0.0-preview.gz
+cd digits-2.0/caffe
+
+#Edit the Makefile
+vi Makefile.config
+{% endhighlight %}
+
+The `Makefile.config` is :
+
+{% highlight makefile %}
+USE_CUDNN := 1
+CUDA_DIR := /usr/local/cuda
+CUDA_ARCH := -gencode arch=compute_20,code=sm_20 \
+                -gencode arch=compute_20,code=sm_21 \
+                -gencode arch=compute_30,code=sm_30 \
+                -gencode arch=compute_35,code=sm_35 \
+                -gencode arch=compute_50,code=sm_50 \
+                -gencode arch=compute_50,code=compute_50
+BLAS := atlas
+ANACONDA_HOME := $(HOME)/anaconda
+PYTHON_INCLUDE := $(ANACONDA_HOME)/include \
+                $(ANACONDA_HOME)/include/python2.7 \
+                $(ANACONDA_HOME)/lib/python2.7/site-packages/numpy/core/include \
+PYTHON_LIB := $(ANACONDA_HOME)/lib
+INCLUDE_DIRS := $(PYTHON_INCLUDE) /usr/local/include
+LIBRARY_DIRS := $(PYTHON_LIB) /usr/local/lib /usr/lib
+{% endhighlight %}
+
+Compile :
+
+{% highlight bash %}
+#Compile
+make all
+make test
+make runtest
+
+#Launch web server
+cd ../digits
+./digits-devserver
+{% endhighlight %}
+
+and specify `~/caffe` for Caffe path.
+
+#And Theano ?
+
+Have a look if everything is ok with Theano as well :
+
+{% highlight bash %}
+sudo apt-get install libopenblas-dev
+git clone git://github.com/lisa-lab/DeepLearningTutorials.git
+#let's try a logistic regression (http://deeplearning.net/tutorial/logreg.html) on MNIST dataset
+python code/logistic_sgd.py
+{% endhighlight %}
+
+If GPU is correctly enabled, should be 2 times faster !
+
+
+
+
+#Install on a AWS g2 instance, with Ubuntu 14.04.
+
+{% highlight bash %}
+#Install Cuda
+wget http://developer.download.nvidia.com/compute/cuda/repos/ubuntu1404/x86_64/cuda-repo-ubuntu1404_7.0-28_amd64.deb
+sudo dpkg -i cuda-repo-ubuntu1404_7.0-28_amd64.deb
+sudo apt-get update
+sudo apt-get -y install cuda
+export CUDA_HOME=/usr/local/cuda
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CUDA_HOME/lib64
+#check everything ok
+/usr/local/cuda/bin/nvcc --version
+#> Cuda compilation tools, release 7.0, V7.0.27
+
+#Install Cudnn
+wget https://s3-eu-west-1.amazonaws.com/christopherbourez/public/cudnn-6.5-linux-x64-v2.tgz
+tar xvzf cudnn-6.5-linux-x64-v2.tgz
+sudo cp cudnn-6.5-linux-x64-v2/cudnn.h /usr/local/cuda/include/
+sudo cp cudnn-6.5-linux-x64-v2/libcudnn* /usr/local/cuda/lib64/
+
+sudo cp cudnn-6.5-linux-x64-v2/cudnn.h /usr/local/cuda-7.0/include/
+sudo cp cudnn-6.5-linux-x64-v2/libcudnn* /usr/local/cuda-7.0/lib64/
+
+
+
+#Install Git
+sudo apt-get -y install git
+
+#Install Caffe
+git clone --branch caffe-0.13 https://github.com/NVIDIA/caffe.git
+export CAFFE_HOME=~/caffe
+cd $CAFFE_HOME
+
+
+sudo apt-get -y install $APT_FLAGS libprotobuf-dev libleveldb-dev libsnappy-dev libopencv-dev libhdf5-serial-dev libgflags-dev libgoogle-glog-dev liblmdb-dev protobuf-compiler libatlas-base-dev
+sudo apt-get install -y python-dev python-pip gfortran
+sudo apt-get install -y cython python-numpy python-scipy python-skimage python-matplotlib python-h5py python-leveldb python-networkx python-pandas python-dateutil python-protobuf python-gflags python-yaml python-pil
+sudo apt-get install -y graphviz
+sudo apt-get install -y python-six python-requests python-Flask python-gevent
+sudo apt-get -y install --no-install-recommends libboost-all-dev
+
+
+
+
+sudo apt-get -y install python-pip
+for req in $(cat python/requirements.txt); do pip install $req; done
+sudo pip install boost python-boost
+
+sudo apt-get -y install libprotobuf-dev libleveldb-dev libsnappy-dev libopencv-dev libhdf5-serial-dev libgflags-dev libgoogle-glog-dev liblmdb-dev protobuf-compiler libatlas-base-dev
+sudo apt-get -y install --no-install-recommends libboost-all-dev
+sudo apt-get -y install python-dev python-pip python-numpy gfortran
+for req in $(cat python/requirements.txt); do sudo pip install $req; done
+cp Makefile.config.example Makefile.config
+make all --jobs=8
+make py
+cd ..
+
+#Install Digits
+git clone https://github.com/NVIDIA/DIGITS.git digits-2.0
+export DIGITS_HOME=~/digits-2.0
+cd $DIGITS_HOME
+sudo pip install -r requirements.txt
+./digits-devserver
+{% endhighlight %}
+
+Note : the `Makefile`
+
+{% highlight makefile %}
+USE_CUDNN := 1
+CUDA_DIR := /usr/local/cuda
+CUDA_ARCH := -gencode arch=compute_20,code=sm_20 \
+                -gencode arch=compute_20,code=sm_21 \
+                -gencode arch=compute_30,code=sm_30 \
+                -gencode arch=compute_35,code=sm_35 \
+                -gencode arch=compute_50,code=sm_50 \
+                -gencode arch=compute_50,code=compute_50
+BLAS := atlas
+PYTHON_INCLUDE := /usr/include/python2.7 \
+                /usr/lib/python2.7/dist-packages/numpy/core/include \
+                /usr/local/lib/python2.7/dist-packages/numpy/core/include
+PYTHON_LIB := /usr/lib
+INCLUDE_DIRS := $(PYTHON_INCLUDE) /usr/local/include
+LIBRARY_DIRS := $(PYTHON_LIB) /usr/local/lib /usr/lib
+BUILD_DIR := build
+DISTRIBUTE_DIR := distribute
+TEST_GPUID := 0
+Q ?= @
+LIBRARY_NAME_SUFFIX := -nv
+{% endhighlight %}
+
+
+
+#Install on iMac 27", OS X 10.10.4, NVIDIA GeForce GT 755M 1024 Mo
+
+1\. Install Cuda 7
 
 Check your version
 
@@ -19,11 +189,12 @@ Check your version
 
 2\. Download CuDNN
 
+    wget https://s3-eu-west-1.amazonaws.com/christopherbourez/public/cudnn-6.5-osx-v2.tgz
     tar xvzf cudnn-6.5-osx-v2.tgz
     rm cudnn-6.5-osx-v2.tgz
     cd cudnn-6.5-osx-v2/
     sudo cp cudnn.h /usr/local/cuda/include/
-    sudo cp lib* /usr/local/cuda/lib/
+    sudo cp libcudnn* /usr/local/cuda/lib/
 
 3\. Install the packages
 
@@ -50,8 +221,6 @@ Check your version
     cmake -D CMAKE_BUILD_TYPE=Release -D CMAKE_INSTALL_PREFIX=/usr/local -D BUILD_TIFF=ON -D BUILD_EXAMPLES=ON -D CUDA_GENERATION=Auto -D BUILD_NEW_PYTHON_SUPPORT=ON ..
     sudo make install
 
-*NB: I did not make it with `brew install opencv` or `brew install opencv3`.*
-
 5\. Download and install [Anaconda](http://continuum.io/downloads) which is a very great for managing python packages.
 
     bash Anaconda-2.3.0-MacOSX-x86_64.sh
@@ -76,76 +245,22 @@ which python
     cd caffe
     cp Makefile.config.example Makefile.config
 
-edit the Makefile by adding **opencv_imgcodecs** to the libraries
-
-    LIBRARIES += glog gflags protobuf leveldb snappy \
-    lmdb boost_system hdf5_hl hdf5 m \
-    opencv_core opencv_highgui opencv_imgproc **opencv_imgcodecs**
-
 and edit the configuration
 
 {% highlight makefile %}
-## Refer to http://caffe.berkeleyvision.org/installation.html
-# Contributions simplifying and improving our build system are welcome!
-
-# cuDNN acceleration switch (uncomment to build with cuDNN).
 USE_CUDNN := 1
-
-# CPU-only switch (uncomment to build without GPU support).
-# CPU_ONLY := 1
-
-# To customize your choice of compiler, uncomment and set the following.
-# N.B. the default for Linux is g++ and the default for OSX is clang++
-# CUSTOM_CXX := g++
-
-# CUDA directory contains bin/ and lib/ directories that we need.
 CUDA_DIR := /usr/local/cuda
-# On Ubuntu 14.04, if cuda tools are installed via
-# "sudo apt-get install nvidia-cuda-toolkit" then use this instead:
-# CUDA_DIR := /usr
-
-# CUDA architecture setting: going with all of them.
-# For CUDA < 6.0, comment the *_50 lines for compatibility.
 CUDA_ARCH := -gencode arch=compute_20,code=sm_20 \
 		-gencode arch=compute_20,code=sm_21 \
 		-gencode arch=compute_30,code=sm_30 \
 		-gencode arch=compute_35,code=sm_35 \
 		-gencode arch=compute_50,code=sm_50 \
 		-gencode arch=compute_50,code=compute_50
-
-# BLAS choice:
-# atlas for ATLAS (default)
-# mkl for MKL
-# open for OpenBlas
 BLAS := atlas
-# Custom (MKL/ATLAS/OpenBLAS) include and lib directories.
-# Leave commented to accept the defaults for your choice of BLAS
-# (which should work)!
-# BLAS_INCLUDE := /path/to/your/blas
-# BLAS_LIB := /path/to/your/blas
-
-# Homebrew puts openblas in a directory that is not on the standard search path
-# BLAS_INCLUDE := $(shell brew --prefix openblas)/include
-# BLAS_LIB := $(shell brew --prefix openblas)/lib
-
-# This is required only if you will compile the matlab interface.
-# MATLAB directory should contain the mex binary in /bin.
-# MATLAB_DIR := /usr/local
-# MATLAB_DIR := /Applications/MATLAB_R2012b.app
-
-# NOTE: this is required only if you will compile the python interface.
-# We need to be able to find Python.h and numpy/arrayobject.h.
-#PYTHON_INCLUDE := /usr/include/python2.7 \
-#		/usr/lib/python2.7/dist-packages/numpy/core/include
-# Anaconda Python distribution is quite popular. Include path:
-# Verify anaconda location, sometimes it's in root.
 ANACONDA_HOME := $(HOME)/anaconda
 PYTHON_INCLUDE := $(ANACONDA_HOME)/include \
 		 $(ANACONDA_HOME)/include/python2.7 \
 		$(ANACONDA_HOME)/lib/python2.7/site-packages/numpy/core/include \
-
-# We need to be able to find libpythonX.X.so or .dylib.
-#PYTHON_LIB := /usr/lib
 PYTHON_LIB := $(ANACONDA_HOME)/lib
 
 # Homebrew installs numpy in a non standard path (keg only)
@@ -154,38 +269,23 @@ PYTHON_LIB := $(ANACONDA_HOME)/lib
 
 # Uncomment to support layers written in Python (will link against Python libs)
 #WITH_PYTHON_LAYER := 1
-
-# Whatever else you find you need goes here.
 INCLUDE_DIRS := $(PYTHON_INCLUDE) /usr/local/include
 LIBRARY_DIRS := $(PYTHON_LIB) /usr/local/lib /usr/lib
-
 # If Homebrew is installed at a non standard location (for example your home directory) and you use it for general dependencies
 # INCLUDE_DIRS += $(shell brew --prefix)/include
 # LIBRARY_DIRS += $(shell brew --prefix)/lib
-
-# Uncomment to use `pkg-config` to specify OpenCV library paths.
-# (Usually not necessary -- OpenCV libraries are normally installed in one of the above $LIBRARY_DIRS.)
 #USE_PKG_CONFIG := 1
-
 BUILD_DIR := build
 DISTRIBUTE_DIR := distribute
-
-# Uncomment for debugging. Does not work on OSX due to https://github.com/BVLC/caffe/issues/171
-# DEBUG := 1
-
-# The ID of the GPU that 'make runtest' will use to run unit tests.
 TEST_GPUID := 0
-
-# enable pretty build (comment to see full commands)
 Q ?= @
-
 {% endhighlight %}
 
 and build
 
     mkdir build
     cd build
-    make all
+    make all --jobs=4
     make test
     make runtest
     make pycaffe
@@ -194,5 +294,80 @@ and build
 
  7\. Download DIGITS
 
-    tar xvzf digits-2.0.0-preview.gz
-    cd digits-2.0
+{% highlight bash %}
+git clone https://github.com/NVIDIA/DIGITS.git digits-2.0
+cd digits-2.0/digits/
+sudo pip install -r requirements.txt
+./digits-devserver
+{% endhighlight %}
+
+and choose `~/caffe` as Caffe path.
+
+Open Port 5000 on the instance. The server will be running at [http://0.0.0.0:5000/](http://0.0.0.0:5000/)
+
+
+
+
+#Install Caffe with Ananconda
+
+{% highlight bash %}
+#Install Anaconda
+wget https://3230d63b5fc54e62148e-c95ac804525aac4b6dba79b00b39d1d3.ssl.cf1.rackcdn.com/Anaconda-2.3.0-Linux-x86_64.sh
+bash Anaconda-2.3.0-Linux-x86_64.sh
+conda install python
+
+#Install Caffe requirements
+sudo apt-get install libprotobuf-dev libleveldb-dev libsnappy-dev libopencv-dev libhdf5-serial-dev
+sudo apt-get install --no-install-recommends libboost-all-dev
+sudo apt-get install libgflags-dev libgoogle-glog-dev liblmdb-dev protobuf-compiler
+sudo apt-get install libatlas-base-dev
+#sudo apt-get remove libopenblas-base
+#sudo ldconfig /usr/local/cuda/lib64
+#sudo ln /dev/null /dev/raw1394
+#conda install protobuf  
+
+#Download Digits
+tar xvzf digits-2.0.0-preview.gz
+cd digits-2.0/caffe
+
+#Edit the Makefile
+vi Makefile.config
+{% endhighlight %}
+
+The `Makefile.config` is :
+
+{% highlight makefile %}
+USE_CUDNN := 1
+CUDA_DIR := /usr/local/cuda
+CUDA_ARCH := -gencode arch=compute_20,code=sm_20 \
+                -gencode arch=compute_20,code=sm_21 \
+                -gencode arch=compute_30,code=sm_30 \
+                -gencode arch=compute_35,code=sm_35 \
+                -gencode arch=compute_50,code=sm_50 \
+                -gencode arch=compute_50,code=compute_50
+BLAS := atlas
+ANACONDA_HOME := $(HOME)/anaconda
+PYTHON_INCLUDE := $(ANACONDA_HOME)/include \
+                $(ANACONDA_HOME)/include/python2.7 \
+                $(ANACONDA_HOME)/lib/python2.7/site-packages/numpy/core/include \
+PYTHON_LIB := $(ANACONDA_HOME)/lib
+INCLUDE_DIRS := $(PYTHON_INCLUDE) /usr/local/include
+LIBRARY_DIRS := $(PYTHON_LIB) /usr/local/lib /usr/lib
+{% endhighlight %}
+
+
+
+#And Theano ?
+
+Have a look if everything is ok with Theano as well :
+
+{% highlight bash %}
+sudo apt-get install libopenblas-dev
+git clone git://github.com/lisa-lab/DeepLearningTutorials.git
+#let's try a logistic regression (http://deeplearning.net/tutorial/logreg.html) on MNIST dataset
+python code/logistic_sgd.py
+{% endhighlight %}
+
+If GPU is correctly enabled, should be 2 times faster !
+
+**Well done!**

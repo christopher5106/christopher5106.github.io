@@ -88,16 +88,16 @@ All this is available in my [Chef deployment recipe](https://github.com/christop
 #Create dataset
 
 Add dataset
-![Add dataset]({{ site.url }}/img/dataset.png)
+![Add dataset]({{ site.url }}/img/digits_dataset.png)
 
 and it will create it in the DB
 
-![Classification]({{ site.url }}/img/classification.png)
+![Classification]({{ site.url }}/img/digits_create_db.png)
 
 
 #Create the model
 
-![Classification]({{ site.url }}/img/create_model.png)
+![Classification]({{ site.url }}/img/digits_create_model.png)
 
 and it will create the classification model.
 

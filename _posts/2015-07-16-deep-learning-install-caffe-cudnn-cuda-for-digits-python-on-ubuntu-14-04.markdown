@@ -38,7 +38,7 @@ tar xvzf digits-2.0.0-preview.gz
 cd digits-2.0/
 ./install.sh
 cd caffe
-sudo apt-get install --no-install-recommends libboost-all-dev #missing
+sudo apt-get -y install --no-install-recommends libboost-all-dev #missing
 make all --jobs=8
 cd ../digits/
 export CUDA_HOME=/usr/local/cuda

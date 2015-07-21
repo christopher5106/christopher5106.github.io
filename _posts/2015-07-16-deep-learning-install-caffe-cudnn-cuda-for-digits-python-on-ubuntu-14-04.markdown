@@ -87,15 +87,14 @@ LIBRARY_NAME_SUFFIX := -nv
 
 You can launch instantly a g2 instance on AWS with my Chef deployment recipe ['digits-server-simple'](https://github.com/christopher5106/digits-server-simple).
 
-Create a repository containing just one file, named `Berksfile`. In this file,  configure the recipe following the instructions.
+Create a repository containing just one file, named `Berksfile`. In this file,  configure the recipe following the [instructions](https://github.com/christopher5106/digits-server-simple).
 
-Create an AWS Opsworks Stack with your repo and its deploy key. Add a 'Digits' layer with the recipe, a security group open on port 8080 and an EBS under `/digits` path.
+Create an AWS Opsworks Stack with your repo and its deploy key. Add to your stack a 'Digits' layer with the recipe, a security group open on port 8080 and an EBS under `/digits` path.
 
-**That's it !**. Now, whenever you want DIGITS, simply launch an instance type to launch in the panel.
+**That's it !** Now, whenever you want DIGITS, simply launch a g2 instance with the panel.
 
-#Create dataset
+#Add a dataset to train on
 
-Add dataset
 ![Add dataset]({{ site.url }}/img/digits_dataset.png)
 
 and it will create it in the DB
@@ -107,11 +106,10 @@ and it will create it in the DB
 
 ![Classification]({{ site.url }}/img/digits_create_model.png)
 
-and it will create the classification model.
 
 #The REST API
 
-The Digits classification server offers a great [REST API](https://github.com/NVIDIA/DIGITS/blob/master/docs/API.md) in order to integrate it in a process or among an IT system.
+The Digits classification server offers a great [REST API](https://github.com/NVIDIA/DIGITS/blob/master/docs/API.md) in order to integrate it in a bigger IT process and global system.
 
 ![Classification]({{ site.url }}/img/digits_rest.png)
 

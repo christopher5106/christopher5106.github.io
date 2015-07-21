@@ -9,7 +9,7 @@ categories: big data
 
 [iPython](http://ipython.org/notebook.html) was the first shell to introduce this great feature called "notebook", that enables a nice display of your computations in a web server instead of a standard shell :
 
-![iPython Notebook](http://ipython.org/_images/9_home_fperez_prof_grants_1207-sloan-ipython_proposal_fig_ipython-notebook-specgram.png)
+![iPython Notebook]({{ site.url }}/img/9_home_fperez_prof_grants_1207-sloan-ipython_proposal_fig_ipython-notebook-specgram.png)
 
 This allows you to **share your computations with others, that can understand, modify and adapt to their needs in live**.
 

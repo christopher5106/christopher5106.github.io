@@ -98,4 +98,10 @@ and it will create it in the DB
 
 ![Classification]({{ site.url }}/img/create_model.png)
 
+and it will create the classification model.
+
+#Usefull Links
+
+[REST API](https://github.com/NVIDIA/DIGITS/blob/master/docs/API.md)
+
 **Well done!**

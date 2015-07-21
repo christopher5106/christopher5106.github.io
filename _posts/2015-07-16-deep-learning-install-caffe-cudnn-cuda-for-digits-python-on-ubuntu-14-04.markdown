@@ -91,7 +91,7 @@ Create a repository containing just one file, named `Berksfile`. In this file,  
 
 Create an AWS Opsworks Stack with your repo and its deploy key. Add to your stack a 'Digits' layer with the recipe, a security group open on port 8080 and an EBS under `/digits` path.
 
-**That's it !** Now, whenever you want DIGITS, simply launch a g2 instance with the panel.
+**That's it !** Now, whenever you want DIGITS, simply launch a g2 instance in one click, with the 'Add instance' button and it will configure itself.
 
 #Add a dataset to train on
 

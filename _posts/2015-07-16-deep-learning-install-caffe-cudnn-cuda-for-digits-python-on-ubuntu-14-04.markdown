@@ -4,6 +4,7 @@ title:  "Deep learning with Cuda 7, CuDNN 2 and Caffe for Digits 2 and Python on
 date:   2015-07-16 23:00:51
 categories: big data
 ---
+![Classification]({{ site.url }}/img/digits.png)
 
 Install on a AWS g2 instance, with Ubuntu 14.04.
 
@@ -15,6 +16,7 @@ wget http://developer.download.nvidia.com/compute/cuda/repos/ubuntu1404/x86_64/c
 sudo dpkg -i cuda-repo-ubuntu1404_7.0-28_amd64.deb
 sudo apt-get update
 sudo apt-get -y install cuda
+rm cuda-repo-ubuntu1404_7.0-28_amd64.deb
 #check everything ok
 /usr/local/cuda/bin/nvcc --version
 #> Cuda compilation tools, release 7.0, V7.0.27
@@ -22,9 +24,9 @@ sudo apt-get -y install cuda
 #Install Cudnn
 wget https://s3-eu-west-1.amazonaws.com/christopherbourez/public/cudnn-6.5-linux-x64-v2.tgz
 tar xvzf cudnn-6.5-linux-x64-v2.tgz
-cd cudnn-6.5-linux-x64-v2/
-sudo cp cudnn.h /usr/local/cuda/include/
-sudo cp libcudnn* /usr/local/cuda/lib64/
+rm xvzf cudnn-6.5-linux-x64-v2.tgz
+sudo cp cudnn-6.5-linux-x64-v2/cudnn.h /usr/local/cuda/include/
+sudo cp cudnn-6.5-linux-x64-v2/libcudnn* /usr/local/cuda/lib64/
 
 #Install Git
 sudo apt-get -y install git
@@ -35,6 +37,7 @@ sudo apt-get -y install git
 {% highlight bash %}
 wget https://s3-eu-west-1.amazonaws.com/christopherbourez/public/digits-2.0.0-preview.gz
 tar xvzf digits-2.0.0-preview.gz
+rm xvzf digits-2.0.0-preview.gz
 cd digits-2.0/
 ./install.sh
 cd caffe
@@ -48,6 +51,7 @@ sudo pip install -r requirements.txt
 export CAFE_HOME=../caffe
 mkdir /home/ubuntu/data/mnist -p
 python tools/download_data/main.py mnist ~/data/mnist
+apt-get install linux-image-extra-$(uname -r)
 ./digits-server
 {% endhighlight %}
 
@@ -80,7 +84,7 @@ LIBRARY_NAME_SUFFIX := -nv
 
 All this is available in my [Chef deployment recipe](https://github.com/christopher5106/digits-server-simple) that you can use on AWS Opsworks.
 
-#Create dataset and classify
+#Create dataset
 
 Add dataset
 ![Add dataset]({{ site.url }}/img/dataset.png)
@@ -90,7 +94,8 @@ and it will create it in the DB
 ![Classification]({{ site.url }}/img/classification.png)
 
 
-Create the model :
+#Create the model
+
 ![Classification]({{ site.url }}/img/create_model.png)
 
 **Well done!**

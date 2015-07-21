@@ -100,8 +100,12 @@ and it will create it in the DB
 
 and it will create the classification model.
 
-#Usefull Links
+#The REST API
 
 [REST API](https://github.com/NVIDIA/DIGITS/blob/master/docs/API.md)
+
+![Classification]({{ site.url }}/img/digits_rest_api.png)
+
+![Classification]({{ site.url }}/img/digits_rest_classification.png)
 
 **Well done!**

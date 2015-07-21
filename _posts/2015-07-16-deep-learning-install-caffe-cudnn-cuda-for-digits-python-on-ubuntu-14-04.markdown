@@ -7,26 +7,77 @@ categories: big data
 
 Install on a AWS g2 instance, with Ubuntu 14.04.
 
+#Install Cuda and Cudnn
+
 {% highlight bash %}
 #Install Cuda
 wget http://developer.download.nvidia.com/compute/cuda/repos/ubuntu1404/x86_64/cuda-repo-ubuntu1404_7.0-28_amd64.deb
 sudo dpkg -i cuda-repo-ubuntu1404_7.0-28_amd64.deb
 sudo apt-get update
-sudo apt-get install cuda
+sudo apt-get -y install cuda
 #check everything ok
 /usr/local/cuda/bin/nvcc --version
 #> Cuda compilation tools, release 7.0, V7.0.27
-
-#Install Anaconda
-wget https://3230d63b5fc54e62148e-c95ac804525aac4b6dba79b00b39d1d3.ssl.cf1.rackcdn.com/Anaconda-2.3.0-Linux-x86_64.sh
-bash Anaconda-2.3.0-Linux-x86_64.sh
-conda install python
 
 #Install Cudnn
 tar xvzf cudnn-6.5-linux-x64-v2.tgz
 cd cudnn-6.5-linux-x64-v2/
 sudo cp cudnn.h /usr/local/cuda/include/
 sudo cp *.so* /usr/local/cuda/lib64/
+
+#Install Git
+sudo apt-get install git
+{% endhighlight %}
+
+#Install Digits with Digits'Caffe...
+
+{% highlight bash %}
+tar xvzf digits-2.0.0-preview.gz
+cd digits-2.0/
+./install.sh
+sudo apt-get install --no-install-recommends libboost-all-dev #missing
+make all --jobs=8
+cd digits/
+./digits-devserver
+{% endhighlight %}
+
+and choose `../caffe` as Caffe path.
+
+Open Port 5000 on the instance. The server will be running at [http://0.0.0.0:5000/](http://0.0.0.0:5000/)
+
+Note : the `Makefile`
+
+{% highlight makefile %}
+USE_CUDNN := 1
+CUDA_DIR := /usr/local/cuda
+CUDA_ARCH := -gencode arch=compute_20,code=sm_20 \
+                -gencode arch=compute_20,code=sm_21 \
+                -gencode arch=compute_30,code=sm_30 \
+                -gencode arch=compute_35,code=sm_35 \
+                -gencode arch=compute_50,code=sm_50 \
+                -gencode arch=compute_50,code=compute_50
+BLAS := atlas
+PYTHON_INCLUDE := /usr/include/python2.7 \
+                /usr/lib/python2.7/dist-packages/numpy/core/include \
+                /usr/local/lib/python2.7/dist-packages/numpy/core/include
+PYTHON_LIB := /usr/lib
+INCLUDE_DIRS := $(PYTHON_INCLUDE) /usr/local/include
+LIBRARY_DIRS := $(PYTHON_LIB) /usr/local/lib /usr/lib
+BUILD_DIR := build
+DISTRIBUTE_DIR := distribute
+TEST_GPUID := 0
+Q ?= @
+LIBRARY_NAME_SUFFIX := -nv
+{% endhighlight %}
+
+
+#... or install your own Caffe with Ananconda
+
+{% highlight bash %}
+#Install Anaconda
+wget https://3230d63b5fc54e62148e-c95ac804525aac4b6dba79b00b39d1d3.ssl.cf1.rackcdn.com/Anaconda-2.3.0-Linux-x86_64.sh
+bash Anaconda-2.3.0-Linux-x86_64.sh
+conda install python
 
 #Install Caffe requirements
 sudo apt-get install libprotobuf-dev libleveldb-dev libsnappy-dev libopencv-dev libhdf5-serial-dev
@@ -83,12 +134,9 @@ cd ../digits
 
 and specify `~/caffe` for Caffe path.
 
-The server will be running at [http://0.0.0.0:5000/](http://0.0.0.0:5000/)
-
 Have a look if everything is ok with Theano as well :
 
 {% highlight bash %}
-sudo apt-get install git
 git clone git://github.com/lisa-lab/DeepLearningTutorials.git
 #let's try a logistic regression (http://deeplearning.net/tutorial/logreg.html) on MNIST dataset
 python code/logistic_sgd.py

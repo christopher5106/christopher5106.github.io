@@ -41,7 +41,7 @@ sudo apt-get install --no-install-recommends libboost-all-dev #missing
 make all --jobs=8
 cd ../digits/
 export CUDA_HOME=/usr/local/cuda
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CUDA_HOME/lib
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CUDA_HOME/lib64
 sudo ln /dev/null /dev/raw1394
 sudo pip install -r requirements.txt
 ./digits-devserver

@@ -83,15 +83,15 @@ Q ?= @
 LIBRARY_NAME_SUFFIX := -nv
 {% endhighlight %}
 
-#Instant launch
+#... or simply launch an instance provisionned by Chef
 
-You can launch instantly a g2 instance on AWS with my [Chef deployment recipe](https://github.com/christopher5106/digits-server-simple).
+You can launch instantly a g2 instance on AWS with my Chef deployment recipe ['digits-server-simple'](https://github.com/christopher5106/digits-server-simple).
 
-Create a repository containing a file named `Berksfile`, with this recipe following the instructions.
+Create a repository containing just one file, named `Berksfile`. In this file,  configure the recipe following the instructions.
 
 Create an AWS Opsworks Stack with your repo and its deploy key. Add a 'Digits' layer with the recipe, a security group open on port 8080 and an EBS under `/digits` path.
 
-That's it : then choose your instance type to launch.
+**That's it !**. Now, whenever you want DIGITS, simply launch an instance type to launch in the panel.
 
 #Create dataset
 

@@ -134,6 +134,8 @@ cd ../digits
 
 and specify `~/caffe` for Caffe path.
 
+#And Theano ?
+
 Have a look if everything is ok with Theano as well :
 
 {% highlight bash %}

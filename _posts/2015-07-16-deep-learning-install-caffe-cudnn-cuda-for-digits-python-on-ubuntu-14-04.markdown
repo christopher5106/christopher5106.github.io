@@ -20,14 +20,14 @@ sudo apt-get -y install cuda
 #> Cuda compilation tools, release 7.0, V7.0.27
 
 #Install Cudnn
-wget https://s3-eu-west-1.amazonaws.com/christopherbourez/public/cudnn-6.5-osx-v2.tgz
+wget https://s3-eu-west-1.amazonaws.com/christopherbourez/public/cudnn-6.5-linux-x64-v2.tgz
 tar xvzf cudnn-6.5-linux-x64-v2.tgz
 cd cudnn-6.5-linux-x64-v2/
 sudo cp cudnn.h /usr/local/cuda/include/
 sudo cp libcudnn* /usr/local/cuda/lib64/
 
 #Install Git
-sudo apt-get install git
+sudo apt-get -y install git
 {% endhighlight %}
 
 #Install Digits with Digits'Caffe...

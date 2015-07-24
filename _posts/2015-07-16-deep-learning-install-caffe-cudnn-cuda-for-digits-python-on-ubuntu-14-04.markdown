@@ -44,16 +44,14 @@ cd caffe
 sudo apt-get -y install --no-install-recommends libboost-all-dev #missing
 make all --jobs=8
 cd ../digits/
-export CUDA_HOME=/usr/local/cuda
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CUDA_HOME/lib64
 sudo ln /dev/null /dev/raw1394
 sudo pip install -r requirements.txt
-export CAFE_HOME=../caffe
-ldconfig
 mkdir /home/ubuntu/data/mnist -p
 python tools/download_data/main.py mnist ~/data/mnist
 apt-get install linux-image-extra-$(uname -r)
-./digits-server
+echo '[DIGITS]' >> digits/digits.cfg
+echo 'caffe_root = /digits/digits-2.0/caffe' >> digits/digits.cfg
+LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/lib64 ./digits-server -D
 {% endhighlight %}
 
 Open Port 8080 on the instance. The server will be running at [http://0.0.0.0:8080/](http://0.0.0.0:8080/)

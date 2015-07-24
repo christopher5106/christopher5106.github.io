@@ -1,0 +1,18 @@
+FFmpeg has been built without libfaac for licensing reasons;
+libvo-aacenc is used by default.
+To install with libfaac, you can:
+  brew reinstall ffmpeg --with-faac
+
+You can also use the experimental FFmpeg encoder, libfdk-aac, or
+libvo_aacenc to encode AAC audio:
+  ffmpeg -i input.wav -c:a aac -strict experimental output.m4a
+Or:
+  brew reinstall ffmpeg --with-fdk-aac
+  ffmpeg -i input.wav -c:a libfdk_aac output.m4a
+
+
+Generally there are no consequences of this for you. If you build your
+own software and it requires this formula, you'll need to add to your
+build variables:
+LDFLAGS:  -L/usr/local/opt/opencv3/lib
+CPPFLAGS: -I/usr/local/opt/opencv3/include

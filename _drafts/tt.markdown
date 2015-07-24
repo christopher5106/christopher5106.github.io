@@ -1,9 +1,21 @@
----
-layout: post
-title:  "Deep learning with Cuda 7, CuDNN 2 and Caffe for Digits 2 and Python on Ubuntu 14.04"
-date:   2015-07-16 23:00:51
-categories: big data
----
+4\. Download
+
+    brew install libdc1394
+    brew install libgphoto2
+    brew install ffmpeg
+    brew install -v mjpegtools
+    brew install gstreamer
+    wget https://github.com/Itseez/opencv/archive/3.0.0.zip
+    unzip 3.0.0.zip
+    rm 3.0.0.zip
+    opencv-3.0.0
+    mkdir release
+    cd release
+    [OpenCV 3.0.0](http://opencv.org/downloads.html) and [install](http://docs.opencv.org/doc/tutorials/introduction/linux_install/linux_install.html#linux-installation) with CUDA support following [this very good tutorial](http://www.learnopencv.com/install-opencv-3-on-yosemite-osx-10-10-x/).
+    export DYLD_FALLBACK_LIBRARY_PATH=/usr/local/cuda/lib/:$DYLD_FALLBACK_LIBRARY_PATH
+    cmake -D WITH_CUDA=ON -D CMAKE_INSTALL_PREFIX=/usr/local -D CMAKE_BUILD_TYPE=RELEASE BUILD_EXAMPLES=ON  -D CMAKE_OSX_ARCHITECTURES=x86_64 ..
+    make all
+    sudo make install
 
 
 #... or install your own Caffe with Ananconda
@@ -22,7 +34,7 @@ sudo apt-get install libatlas-base-dev
 sudo apt-get remove libopenblas-base
 sudo ldconfig /usr/local/cuda/lib64
 sudo ln /dev/null /dev/raw1394
-conda install protobuf  
+conda install protobuf
 
 #Download Digits
 tar xvzf digits-2.0.0-preview.gz
@@ -176,137 +188,6 @@ LIBRARY_NAME_SUFFIX := -nv
 
 
 
-#Install on iMac 27", OS X 10.10.4, NVIDIA GeForce GT 755M 1024 Mo
-
-1\. Install Cuda 7
-
-Check your version
-
-{% highlight bash %}
-/usr/local/cuda/bin/nvcc --version
-# Cuda compilation tools, release 7.0, V7.0.27
-{% endhighlight %}
-
-2\. Download CuDNN
-
-    wget https://s3-eu-west-1.amazonaws.com/christopherbourez/public/cudnn-6.5-osx-v2.tgz
-    tar xvzf cudnn-6.5-osx-v2.tgz
-    rm cudnn-6.5-osx-v2.tgz
-    cd cudnn-6.5-osx-v2/
-    sudo cp cudnn.h /usr/local/cuda/include/
-    sudo cp libcudnn* /usr/local/cuda/lib/
-
-3\. Install the packages
-
-    brew tap homebrew/science
-    brew update
-    brew install boost
-    brew install snappy
-    brew install lmdb
-    brew install hdf5
-    brew install leveldb
-    brew install openblas
-    brew install glog
-    brew install protobuf
-    brew install cmake
-    brew install boost-python
-
-4\. Download [OpenCV 3.0.0](http://opencv.org/downloads.html) and [install](http://docs.opencv.org/doc/tutorials/introduction/linux_install/linux_install.html#linux-installation)
-
-    wget https://github.com/Itseez/opencv/archive/3.0.0.zip
-    unzip 3.0.0.zip
-    opencv-3.0.0
-    mkdir release
-    cd release
-    cmake -D CMAKE_BUILD_TYPE=Release -D CMAKE_INSTALL_PREFIX=/usr/local -D BUILD_TIFF=ON -D BUILD_EXAMPLES=ON -D CUDA_GENERATION=Auto -D BUILD_NEW_PYTHON_SUPPORT=ON ..
-    sudo make install
-
-5\. Download and install [Anaconda](http://continuum.io/downloads) which is a very great for managing python packages.
-
-    bash Anaconda-2.3.0-MacOSX-x86_64.sh
-
-Install the python packages
-
-    conda install python
-    conda install numpy
-    conda install hdf5
-
-You can verify the path :
-
-{% highlight bash %}
-which python
-#/Users/christopherbourez/anaconda/bin/python
-{% endhighlight %}
-
-
-6\. Clone the caffe repository
-
-    git clone https://github.com/BVLC/caffe.git
-    cd caffe
-    cp Makefile.config.example Makefile.config
-
-and edit the configuration
-
-{% highlight makefile %}
-USE_CUDNN := 1
-CUDA_DIR := /usr/local/cuda
-CUDA_ARCH := -gencode arch=compute_20,code=sm_20 \
-		-gencode arch=compute_20,code=sm_21 \
-		-gencode arch=compute_30,code=sm_30 \
-		-gencode arch=compute_35,code=sm_35 \
-		-gencode arch=compute_50,code=sm_50 \
-		-gencode arch=compute_50,code=compute_50
-BLAS := atlas
-ANACONDA_HOME := $(HOME)/anaconda
-PYTHON_INCLUDE := $(ANACONDA_HOME)/include \
-		 $(ANACONDA_HOME)/include/python2.7 \
-		$(ANACONDA_HOME)/lib/python2.7/site-packages/numpy/core/include \
-PYTHON_LIB := $(ANACONDA_HOME)/lib
-
-# Homebrew installs numpy in a non standard path (keg only)
-# PYTHON_INCLUDE += $(dir $(shell python -c 'import numpy.core; print(numpy.core.__file__)'))/include
-# PYTHON_LIB += $(shell brew --prefix numpy)/lib
-
-# Uncomment to support layers written in Python (will link against Python libs)
-#WITH_PYTHON_LAYER := 1
-INCLUDE_DIRS := $(PYTHON_INCLUDE) /usr/local/include
-LIBRARY_DIRS := $(PYTHON_LIB) /usr/local/lib /usr/lib
-# If Homebrew is installed at a non standard location (for example your home directory) and you use it for general dependencies
-# INCLUDE_DIRS += $(shell brew --prefix)/include
-# LIBRARY_DIRS += $(shell brew --prefix)/lib
-#USE_PKG_CONFIG := 1
-BUILD_DIR := build
-DISTRIBUTE_DIR := distribute
-TEST_GPUID := 0
-Q ?= @
-{% endhighlight %}
-
-and build
-
-    mkdir build
-    cd build
-    make all --jobs=4
-    make test
-    make runtest
-    make pycaffe
-    export CAFFE_HOME=~/caffe
-
-
- 7\. Download DIGITS
-
-{% highlight bash %}
-git clone https://github.com/NVIDIA/DIGITS.git digits-2.0
-cd digits-2.0/digits/
-sudo pip install -r requirements.txt
-./digits-devserver
-{% endhighlight %}
-
-and choose `~/caffe` as Caffe path.
-
-Open Port 5000 on the instance. The server will be running at [http://0.0.0.0:5000/](http://0.0.0.0:5000/)
-
-
-
 
 #Install Caffe with Ananconda
 
@@ -369,5 +250,3 @@ python code/logistic_sgd.py
 {% endhighlight %}
 
 If GPU is correctly enabled, should be 2 times faster !
-
-**Well done!**

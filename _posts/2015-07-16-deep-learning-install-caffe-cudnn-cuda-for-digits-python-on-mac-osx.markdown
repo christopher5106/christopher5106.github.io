@@ -29,7 +29,6 @@ Check your version
 
     brew tap homebrew/science
     brew update
-    brew install boost
     brew install snappy
     brew install lmdb
     brew install hdf5
@@ -38,11 +37,13 @@ Check your version
     brew install glog
     brew install protobuf
     brew install cmake
-    brew install boost-python
     brew install opencv
     brew install opencv3
 
 4\. Install boost 1.57 (Caffe is not compatible with Boost 1.58 as explaned [here](http://itinerantbioinformaticist.blogspot.fr/2015/05/caffe-incompatible-with-boost-1580.html)). For that reason change the `/usr/local/Library/Formula/boost.rb` with the contents of [boost.rb 1.57](https://raw.githubusercontent.com/Homebrew/homebrew/6fd6a9b6b2f56139a44dd689d30b7168ac13effb/Library/Formula/boost.rb) and `/usr/local/Library/Formula/boost-python.rb` with the contents of [boost-python.rb 1.57](https://raw.githubusercontent.com/Homebrew/homebrew/3141234b3473717e87f3958d4916fe0ada0baba9/Library/Formula/boost-python.rb).
+
+    brew install boost
+    brew install boost-python
 
 5\. Download and install [Anaconda](http://continuum.io/downloads) which is a very great for managing python packages.
 

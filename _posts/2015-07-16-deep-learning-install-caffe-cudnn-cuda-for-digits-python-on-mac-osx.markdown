@@ -80,6 +80,14 @@ CUDA_ARCH := -gencode arch=compute_20,code=sm_20 \
                 -gencode arch=compute_50,code=sm_50 \
                 -gencode arch=compute_50,code=compute_50
 BLAS := atlas
+
+ANACONDA_HOME := $(HOME)/anaconda
+PYTHON_INCLUDE := $(ANACONDA_HOME)/include \
+                $(ANACONDA_HOME)/include/python2.7 \
+                $(ANACONDA_HOME)/lib/python2.7/site-packages/numpy/core/include \
+                
+PYTHON_LIB := $(ANACONDA_HOME)/lib
+
 INCLUDE_DIRS := $(PYTHON_INCLUDE) /usr/local/include
 LIBRARY_DIRS := $(PYTHON_LIB) /usr/local/lib /usr/lib
 INCLUDE_DIRS += $(shell brew --prefix)/include

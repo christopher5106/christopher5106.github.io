@@ -7,7 +7,7 @@ categories: big data
 
 #Install on iMac 27", OS X 10.10.4, NVIDIA GeForce GT 755M 1024 Mo
 
-1\. Install Cuda 7
+1\. Install Cuda 7 (pass this step if your Mac GPU is not CUDA capable)
 
 Check your version
 
@@ -16,7 +16,7 @@ Check your version
 # Cuda compilation tools, release 7.0, V7.0.27
 {% endhighlight %}
 
-2\. Download CuDNN
+2\. Download CuDNN (pass this step if your Mac GPU is not CUDA capable)
 
     wget https://s3-eu-west-1.amazonaws.com/christopherbourez/public/cudnn-6.5-osx-v2.tgz
     tar xvzf cudnn-6.5-osx-v2.tgz
@@ -36,7 +36,6 @@ Check your version
     brew install openblas
     brew install glog
     brew install protobuf
-    brew install cmake
     brew install opencv
     brew install opencv3
 
@@ -72,7 +71,7 @@ which python
 7\. Create the configuration file `Makefile.config`
 
 {% highlight makefile %}
-CPU_ONLY := 1
+USE_CUDNN := 1
 CUDA_DIR := /usr/local/cuda
 CUDA_ARCH := -gencode arch=compute_20,code=sm_20 \
                 -gencode arch=compute_20,code=sm_21 \
@@ -92,6 +91,8 @@ DISTRIBUTE_DIR := distribute
 TEST_GPUID := 0
 Q ?= @
 {% endhighlight %}
+
+If your iMac is not CUDA capable, comment `USE_CUDNN := 1` and `CUDA_DIR := /usr/local/cuda` and uncomment `CPU_ONLY := 1`
 
 8\. Build
 

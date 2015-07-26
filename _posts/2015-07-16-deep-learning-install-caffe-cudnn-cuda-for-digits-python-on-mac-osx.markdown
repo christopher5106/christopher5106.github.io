@@ -33,7 +33,6 @@ Check your version
     brew install lmdb
     brew install hdf5
     brew install leveldb
-    brew install openblas
     brew install glog
     brew install protobuf
     brew install opencv
@@ -66,7 +65,7 @@ which python
 
     git clone https://github.com/BVLC/caffe.git
     cd caffe
-    cp Makefile.config.example
+    vi Makefile.config
 
 7\. Create the configuration file `Makefile.config`
 
@@ -85,7 +84,7 @@ ANACONDA_HOME := $(HOME)/anaconda
 PYTHON_INCLUDE := $(ANACONDA_HOME)/include \
                 $(ANACONDA_HOME)/include/python2.7 \
                 $(ANACONDA_HOME)/lib/python2.7/site-packages/numpy/core/include \
-                
+
 PYTHON_LIB := $(ANACONDA_HOME)/lib
 
 INCLUDE_DIRS := $(PYTHON_INCLUDE) /usr/local/include

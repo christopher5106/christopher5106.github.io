@@ -99,7 +99,7 @@ TEST_GPUID := 0
 Q ?= @
 {% endhighlight %}
 
-If your iMac is not CUDA capable, comment `USE_CUDNN := 1` and `CUDA_DIR := /usr/local/cuda` and uncomment `CPU_ONLY := 1`
+If your iMac is not CUDA capable, comment `USE_CUDNN := 1`, `CUDA_DIR := /usr/local/cuda` and `CUDA_ARCH=...` lines and uncomment `CPU_ONLY := 1`
 
 8\. Build
 

@@ -101,7 +101,11 @@ Q ?= @
 
 If your iMac is not CUDA capable, comment `USE_CUDNN := 1`, `CUDA_DIR := /usr/local/cuda` and `CUDA_ARCH=...` lines and uncomment `CPU_ONLY := 1`
 
-8\. Build
+8\. You need Mac Os Command Line Tools if not already installed :
+
+    xcode-select --install
+
+9\. Build
 
     make all --jobs=4
     make test
@@ -110,7 +114,7 @@ If your iMac is not CUDA capable, comment `USE_CUDNN := 1`, `CUDA_DIR := /usr/lo
     export CAFFE_HOME=~/caffe
 
 
- 9\. Download DIGITS
+ 10\. Download DIGITS
 
 {% highlight bash %}
 git clone https://github.com/NVIDIA/DIGITS.git digits-2.0

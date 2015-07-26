@@ -103,8 +103,6 @@ If your iMac is not CUDA capable, comment `USE_CUDNN := 1`, `CUDA_DIR := /usr/lo
 
 8\. Build
 
-    mkdir build
-    cd build
     make all --jobs=4
     make test
     make runtest

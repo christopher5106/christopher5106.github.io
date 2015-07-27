@@ -16,6 +16,8 @@ Check your version
 # Cuda compilation tools, release 7.0, V7.0.27
 {% endhighlight %}
 
+You can also install the [latest version of the driver (recommended)](http://www.nvidia.com/object/mac-driver-archive.html) because the driver in Cuda is not the latest one.
+
 2\. Download CuDNN (pass this step if your Mac GPU is not CUDA capable)
 
     wget https://s3-eu-west-1.amazonaws.com/christopherbourez/public/cudnn-6.5-osx-v2.tgz
@@ -105,10 +107,15 @@ If your iMac is not CUDA capable, comment `USE_CUDNN := 1`, `CUDA_DIR := /usr/lo
 
     xcode-select --install
 
+9\. In `/usr/local/Library/Formula/protobuf.rb` change
+
+    ENV["CXX"] = "/usr/bin/clang++ -L/usr/lib -stdlib=libstdc++"
+
 9\. Build
 
+    export DYLD_LIBRARY_PATH=/usr/local/cuda/lib:$DYLD_LIBRARY_PATH
     make all --jobs=4
-    make test
+    make test --jobs=4
     make runtest
     #make pycaffe
     export CAFFE_HOME=~/caffe

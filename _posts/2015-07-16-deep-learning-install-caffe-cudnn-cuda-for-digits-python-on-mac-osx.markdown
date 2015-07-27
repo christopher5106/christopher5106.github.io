@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Deep learning with Cuda 7, CuDNN 2 and Caffe for Digits 2 and Python on Ubuntu 14.04"
+title:  "Deep learning with Cuda 7, CuDNN 2 and Caffe for Digits 2 and Python on Mac OS X"
 date:   2015-07-16 23:00:51
 categories: big data
 ---

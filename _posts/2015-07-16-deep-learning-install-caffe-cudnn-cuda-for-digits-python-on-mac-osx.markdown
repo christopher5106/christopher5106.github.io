@@ -7,7 +7,7 @@ categories: big data
 
 #Install on iMac 27", OS X 10.10.4, NVIDIA GeForce GT 755M 1024 Mo
 
-1\. Install Cuda 7
+1\. Install Cuda 7 (pass this step if your Mac GPU is not CUDA capable)
 
 Check your version
 
@@ -16,7 +16,7 @@ Check your version
 # Cuda compilation tools, release 7.0, V7.0.27
 {% endhighlight %}
 
-2\. Download CuDNN
+2\. Download CuDNN (pass this step if your Mac GPU is not CUDA capable)
 
     wget https://s3-eu-west-1.amazonaws.com/christopherbourez/public/cudnn-6.5-osx-v2.tgz
     tar xvzf cudnn-6.5-osx-v2.tgz
@@ -29,20 +29,19 @@ Check your version
 
     brew tap homebrew/science
     brew update
-    brew install boost
     brew install snappy
     brew install lmdb
     brew install hdf5
     brew install leveldb
-    brew install openblas
     brew install glog
     brew install protobuf
-    brew install cmake
-    brew install boost-python
     brew install opencv
     brew install opencv3
 
 4\. Install boost 1.57 (Caffe is not compatible with Boost 1.58 as explaned [here](http://itinerantbioinformaticist.blogspot.fr/2015/05/caffe-incompatible-with-boost-1580.html)). For that reason change the `/usr/local/Library/Formula/boost.rb` with the contents of [boost.rb 1.57](https://raw.githubusercontent.com/Homebrew/homebrew/6fd6a9b6b2f56139a44dd689d30b7168ac13effb/Library/Formula/boost.rb) and `/usr/local/Library/Formula/boost-python.rb` with the contents of [boost-python.rb 1.57](https://raw.githubusercontent.com/Homebrew/homebrew/3141234b3473717e87f3958d4916fe0ada0baba9/Library/Formula/boost-python.rb).
+
+    brew install boost
+    brew install boost-python
 
 5\. Download and install [Anaconda](http://continuum.io/downloads) which is a very great for managing python packages.
 
@@ -66,12 +65,12 @@ which python
 
     git clone https://github.com/BVLC/caffe.git
     cd caffe
-    cp Makefile.config.example
+    vi Makefile.config
 
 7\. Create the configuration file `Makefile.config`
 
 {% highlight makefile %}
-CPU_ONLY := 1
+USE_CUDNN := 1
 CUDA_DIR := /usr/local/cuda
 CUDA_ARCH := -gencode arch=compute_20,code=sm_20 \
                 -gencode arch=compute_20,code=sm_21 \
@@ -80,6 +79,14 @@ CUDA_ARCH := -gencode arch=compute_20,code=sm_20 \
                 -gencode arch=compute_50,code=sm_50 \
                 -gencode arch=compute_50,code=compute_50
 BLAS := atlas
+
+ANACONDA_HOME := $(HOME)/anaconda
+PYTHON_INCLUDE := $(ANACONDA_HOME)/include \
+                $(ANACONDA_HOME)/include/python2.7 \
+                $(ANACONDA_HOME)/lib/python2.7/site-packages/numpy/core/include \
+
+PYTHON_LIB := $(ANACONDA_HOME)/lib
+
 INCLUDE_DIRS := $(PYTHON_INCLUDE) /usr/local/include
 LIBRARY_DIRS := $(PYTHON_LIB) /usr/local/lib /usr/lib
 INCLUDE_DIRS += $(shell brew --prefix)/include
@@ -92,10 +99,14 @@ TEST_GPUID := 0
 Q ?= @
 {% endhighlight %}
 
-8\. Build
+If your iMac is not CUDA capable, comment `USE_CUDNN := 1`, `CUDA_DIR := /usr/local/cuda` and `CUDA_ARCH=...` lines and uncomment `CPU_ONLY := 1`
 
-    mkdir build
-    cd build
+8\. You need Mac Os Command Line Tools if not already installed :
+
+    xcode-select --install
+
+9\. Build
+
     make all --jobs=4
     make test
     make runtest
@@ -103,7 +114,7 @@ Q ?= @
     export CAFFE_HOME=~/caffe
 
 
- 9\. Download DIGITS
+ 10\. Download DIGITS
 
 {% highlight bash %}
 git clone https://github.com/NVIDIA/DIGITS.git digits-2.0

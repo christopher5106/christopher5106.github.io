@@ -131,11 +131,11 @@ Open Port 5000 on the instance. The server will be running at [http://0.0.0.0:50
 
 Troubleshooting :
 
-I had some errors :
+A few help on common errors :
 
 Undefined symbols for architecture x86_64:   "cv::imread
 
-=> I cleaned all the opencv
+=> Clean all the opencv before re-installing it
 
     sudo make uninstall #in the opencv build repo (if you installed from source)
     brew uninstall opencv
@@ -149,13 +149,18 @@ Be careful to brew messages, all libraries have to be linked.
 Undefined symbols for architecture x86_64:
   "google::SetUsageMessage
 
-=> I re-installed gflags
+=> Re-install gflags. `brew install gflags`
 
 Undefined symbols for architecture x86_64:
 "leveldb::
 
-=> I re-installed leveldb
+=> Re-install leveldb. `brew install leveldb`
 
 Undefined symbols for architecture x86_64: "google::protobuf:
 
-=> I re-installed protobuf.
+=> Re-install protobuf. `brew install protobuf`
+
+./include/caffe/util/mkl_alternate.hpp:11:10: fatal error: 'cblas.h' file not found
+#include <cblas.h>
+
+=> Install Mac OS command line tools `xcode-select --install`.

@@ -50,7 +50,7 @@ You can verify the path :
 
 {% highlight bash %}
 which python
-#/usr/bin/python
+#/usr/local/bin/python
 {% endhighlight %}
 
 5\. Install boost 1.57 (Caffe is not compatible with Boost 1.58 as explained [here](http://itinerantbioinformaticist.blogspot.fr/2015/05/caffe-incompatible-with-boost-1580.html)). For that reason change the `/usr/local/Library/Formula/boost.rb` with the contents of [boost.rb 1.57](https://raw.githubusercontent.com/Homebrew/homebrew/6fd6a9b6b2f56139a44dd689d30b7168ac13effb/Library/Formula/boost.rb) and `/usr/local/Library/Formula/boost-python.rb` with the contents of [boost-python.rb 1.57](https://raw.githubusercontent.com/Homebrew/homebrew/3141234b3473717e87f3958d4916fe0ada0baba9/Library/Formula/boost-python.rb).
@@ -59,7 +59,7 @@ which python
     brew install boost-python
 
 
-7\. Install OpenCV (bundled with numpy and hdf5).
+6\. Install OpenCV (bundled with numpy and hdf5).
 
 With `brew edit opencv`, change the line
 
@@ -74,13 +74,13 @@ Install:
     brew install opencv
 
 
-8\. Clone the caffe repository
+7\. Clone the caffe repository
 
     git clone https://github.com/BVLC/caffe.git
     cd caffe
     vi Makefile.config
 
-9\. Create the configuration file `Makefile.config`
+8\. Create the configuration file `Makefile.config`
 
 {% highlight makefile %}
 USE_CUDNN := 1
@@ -106,7 +106,7 @@ Q ?= @
 If your iMac is not CUDA capable, comment `USE_CUDNN := 1`, `CUDA_DIR := /usr/local/cuda` and `CUDA_ARCH=...` lines and uncomment `CPU_ONLY := 1`
 
 
-10\. Build
+9\. Build
 
     export DYLD_LIBRARY_PATH=/usr/local/cuda/lib:$HOME/anaconda/lib:/usr/local/lib:/usr/lib
     make all --jobs=4
@@ -116,7 +116,7 @@ If your iMac is not CUDA capable, comment `USE_CUDNN := 1`, `CUDA_DIR := /usr/lo
     export CAFFE_HOME=~/caffe
 
 
-11\. Download DIGITS
+10\. Download DIGITS
 
 {% highlight bash %}
 git clone https://github.com/NVIDIA/DIGITS.git digits-2.0

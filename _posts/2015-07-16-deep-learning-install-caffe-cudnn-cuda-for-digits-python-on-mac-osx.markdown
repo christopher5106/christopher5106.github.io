@@ -111,7 +111,7 @@ which python
     make runtest
     make pycaffe
 
-Here is the result of the [runtest run]({{ site.url }}/make_runtest_result.txt).
+Here is the result of the [runtest run]({{ site.url }}/img/make_runtest_result.txt).
 
 10\. Download DIGITS
 

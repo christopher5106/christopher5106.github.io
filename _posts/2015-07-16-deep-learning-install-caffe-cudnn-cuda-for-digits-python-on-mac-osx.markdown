@@ -106,10 +106,15 @@ which python
 
 9\. Build
 
-    make all --jobs=4
-    make test --jobs=4
-    make runtest
-    make pycaffe
+{% highlight bash %}
+make all --jobs=4
+make test --jobs=4
+make runtest
+#python
+for req in $(cat python/requirements.txt); do pip install $req; done
+make pycaffe
+cd ..
+{% endhighlight %}
 
 Here is the result of the [runtest run]({{ site.url }}/img/make_runtest_result.txt).
 
@@ -120,6 +125,7 @@ export CUDA_HOME=/usr/local/cuda
 git clone https://github.com/NVIDIA/DIGITS.git digits-2.0
 cd digits-2.0/digits/
 pip install -r requirements.txt
+export CAFFE_HOME=../caffe
 ./digits-devserver
 {% endhighlight %}
 

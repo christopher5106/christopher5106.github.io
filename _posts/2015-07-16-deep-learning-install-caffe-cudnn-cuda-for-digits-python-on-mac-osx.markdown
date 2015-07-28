@@ -14,11 +14,12 @@ categories: big data
 
 2\. Install Cuda 7 (pass this step if your Mac GPU is not CUDA capable)
 
-Check your version
+Check your version and the path.
 
 {% highlight bash %}
 /usr/local/cuda/bin/nvcc --version
 # Cuda compilation tools, release 7.0, V7.0.27
+export DYLD_LIBRARY_PATH=/usr/local/cuda/lib:/usr/local/lib:/usr/lib
 {% endhighlight %}
 
 You can also install the [latest version of the driver (recommended)](http://www.nvidia.com/object/mac-driver-archive.html) because the driver in Cuda is not the latest one.
@@ -38,20 +39,8 @@ You can also install the [latest version of the driver (recommended)](http://www
 
     brew tap homebrew/science
     brew update
-    brew install snappy
-    brew install lmdb
-    brew install leveldb
-    brew install glog
-    brew install protobuf
-    brew install hdf5
-    brew install numpy
+    brew install snappy leveldb protobuf gflags glog szip lmdb hdf5 numpy
 
-You can verify the path :
-
-{% highlight bash %}
-which python
-#/usr/local/bin/python
-{% endhighlight %}
 
 5\. Install boost 1.57 (Caffe is not compatible with Boost 1.58 as explained [here](http://itinerantbioinformaticist.blogspot.fr/2015/05/caffe-incompatible-with-boost-1580.html)). For that reason change the `/usr/local/Library/Formula/boost.rb` with the contents of [boost.rb 1.57](https://raw.githubusercontent.com/Homebrew/homebrew/6fd6a9b6b2f56139a44dd689d30b7168ac13effb/Library/Formula/boost.rb) and `/usr/local/Library/Formula/boost-python.rb` with the contents of [boost-python.rb 1.57](https://raw.githubusercontent.com/Homebrew/homebrew/3141234b3473717e87f3958d4916fe0ada0baba9/Library/Formula/boost-python.rb).
 
@@ -95,6 +84,8 @@ BLAS := atlas
 PYTHON_INCLUDE := /usr/include/python2.7 \
                 /usr/lib/python2.7/dist-packages/numpy/core/include
 PYTHON_LIB := /usr/lib
+PYTHON_INCLUDE += $(dir $(shell python -c 'import numpy.core; print(numpy.core.__file__)'))/include
+PYTHON_LIB += $(shell brew --prefix numpy)/lib
 INCLUDE_DIRS := $(PYTHON_INCLUDE) /usr/local/include
 LIBRARY_DIRS := $(PYTHON_LIB) /usr/local/lib /usr/lib
 BUILD_DIR := build
@@ -105,23 +96,30 @@ Q ?= @
 
 If your iMac is not CUDA capable, comment `USE_CUDNN := 1`, `CUDA_DIR := /usr/local/cuda` and `CUDA_ARCH=...` lines and uncomment `CPU_ONLY := 1`
 
+You can verify that Python is at the right place :
+
+{% highlight bash %}
+which python
+#/usr/local/bin/python
+{% endhighlight %}
+
 
 9\. Build
 
-    export DYLD_LIBRARY_PATH=/usr/local/cuda/lib:$HOME/anaconda/lib:/usr/local/lib:/usr/lib
     make all --jobs=4
     make test --jobs=4
     make runtest
-    #make pycaffe
+    make pycaffe
     export CAFFE_HOME=~/caffe
 
+Here is the result of the [runtest run]({{ site.url }}/make_runtest_result.txt).
 
 10\. Download DIGITS
 
 {% highlight bash %}
 git clone https://github.com/NVIDIA/DIGITS.git digits-2.0
 cd digits-2.0/digits/
-sudo pip install -r requirements.txt
+pip install -r requirements.txt
 ./digits-devserver
 {% endhighlight %}
 

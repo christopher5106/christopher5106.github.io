@@ -110,13 +110,13 @@ which python
     make test --jobs=4
     make runtest
     make pycaffe
-    export CAFFE_HOME=~/caffe
 
 Here is the result of the [runtest run]({{ site.url }}/make_runtest_result.txt).
 
 10\. Download DIGITS
 
 {% highlight bash %}
+export CUDA_HOME=/usr/local/cuda
 git clone https://github.com/NVIDIA/DIGITS.git digits-2.0
 cd digits-2.0/digits/
 pip install -r requirements.txt

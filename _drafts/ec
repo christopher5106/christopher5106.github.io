@@ -1,4 +1,10 @@
-FFmpeg has been built without libfaac for licensing reasons;
+10\. In `/usr/local/Library/Formula/protobuf.rb` change
+
+    ENV["CXX"] = "/usr/bin/clang++ -L/usr/lib -stdlib=libstdc++"
+
+
+
+Fmpeg has been built without libfaac for licensing reasons;
 libvo-aacenc is used by default.
 To install with libfaac, you can:
   brew reinstall ffmpeg --with-faac

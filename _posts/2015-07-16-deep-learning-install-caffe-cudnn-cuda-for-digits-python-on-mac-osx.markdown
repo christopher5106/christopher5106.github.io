@@ -123,7 +123,7 @@ pip install -r requirements.txt
 ./digits-devserver
 {% endhighlight %}
 
-and choose `~/caffe` as Caffe path.
+and choose `../caffe` as Caffe path.
 
 Open Port 5000 on the instance. The server will be running at [http://0.0.0.0:5000/](http://0.0.0.0:5000/)
 

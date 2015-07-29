@@ -52,12 +52,13 @@ which python
 
     brew tap homebrew/science
     brew update
-    brew install snappy leveldb protobuf gflags glog szip lmdb hdf5 numpy opencv
+    brew install snappy leveldb gflags glog szip lmdb hdf5 numpy opencv
+    brew install --build-from-source --with-python -vd protobuf
 
 
 6\. Install boost 1.57 (Caffe is not compatible with Boost 1.58 as explained [here](http://itinerantbioinformaticist.blogspot.fr/2015/05/caffe-incompatible-with-boost-1580.html)). For that reason change the `/usr/local/Library/Formula/boost.rb` with the contents of [boost.rb 1.57](https://raw.githubusercontent.com/Homebrew/homebrew/6fd6a9b6b2f56139a44dd689d30b7168ac13effb/Library/Formula/boost.rb) and `/usr/local/Library/Formula/boost-python.rb` with the contents of [boost-python.rb 1.57](https://raw.githubusercontent.com/Homebrew/homebrew/3141234b3473717e87f3958d4916fe0ada0baba9/Library/Formula/boost-python.rb).
 
-    brew install boost boost-python
+    brew install --build-from-source -vd boost boost-python
 
 
 7\. Clone the caffe repository

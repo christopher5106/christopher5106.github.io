@@ -7,7 +7,7 @@ categories: big data
 
 #Install on iMac 27", OS X 10.10.4, NVIDIA GeForce GT 755M 1024 Mo
 
-1\. You need Mac Os Command Line Tools if not already installed :
+1\. Install Mac Os Command Line Tools if not already installed :
 
     xcode-select --install
 
@@ -19,7 +19,7 @@ Check your version and the path.
 {% highlight bash %}
 /usr/local/cuda/bin/nvcc --version
 # Cuda compilation tools, release 7.0, V7.0.27
-export DYLD_LIBRARY_PATH=/usr/local/cuda/lib:/usr/local/lib:/usr/lib
+export DYLD_LIBRARY_PATH=/usr/local/cuda/lib
 {% endhighlight %}
 
 You can also install the [latest version of the driver (recommended)](http://www.nvidia.com/object/mac-driver-archive.html) because the driver in Cuda is not the latest one.
@@ -31,36 +31,33 @@ You can also install the [latest version of the driver (recommended)](http://www
     tar xvzf cudnn-6.5-osx-v2.tgz
     rm cudnn-6.5-osx-v2.tgz
     cd cudnn-6.5-osx-v2/
-    sudo cp cudnn.h /usr/local/cuda/include/
+    sudo cp cudnn.h /Developer/NVIDIA/CUDA-7.0/include/
     sudo cp libcudnn* /usr/local/cuda/lib/
 
 
-4\. Install the packages
+4\. Install Python packages
+
+    brew install python #if not already installed
+    pip install --upgrade pip setuptools #or update
+
+You can verify that Python is at the right place, installed via Homebrew :
+
+{% highlight bash %}
+which python
+#> /usr/local/bin/python
+{% endhighlight %}
+
+
+5\. Install other packages
 
     brew tap homebrew/science
     brew update
-    brew install snappy leveldb protobuf gflags glog szip lmdb hdf5 numpy
+    brew install snappy leveldb protobuf gflags glog szip lmdb hdf5 numpy opencv
 
 
-5\. Install boost 1.57 (Caffe is not compatible with Boost 1.58 as explained [here](http://itinerantbioinformaticist.blogspot.fr/2015/05/caffe-incompatible-with-boost-1580.html)). For that reason change the `/usr/local/Library/Formula/boost.rb` with the contents of [boost.rb 1.57](https://raw.githubusercontent.com/Homebrew/homebrew/6fd6a9b6b2f56139a44dd689d30b7168ac13effb/Library/Formula/boost.rb) and `/usr/local/Library/Formula/boost-python.rb` with the contents of [boost-python.rb 1.57](https://raw.githubusercontent.com/Homebrew/homebrew/3141234b3473717e87f3958d4916fe0ada0baba9/Library/Formula/boost-python.rb).
+6\. Install boost 1.57 (Caffe is not compatible with Boost 1.58 as explained [here](http://itinerantbioinformaticist.blogspot.fr/2015/05/caffe-incompatible-with-boost-1580.html)). For that reason change the `/usr/local/Library/Formula/boost.rb` with the contents of [boost.rb 1.57](https://raw.githubusercontent.com/Homebrew/homebrew/6fd6a9b6b2f56139a44dd689d30b7168ac13effb/Library/Formula/boost.rb) and `/usr/local/Library/Formula/boost-python.rb` with the contents of [boost-python.rb 1.57](https://raw.githubusercontent.com/Homebrew/homebrew/3141234b3473717e87f3958d4916fe0ada0baba9/Library/Formula/boost-python.rb).
 
-    brew install boost
-    brew install boost-python
-
-
-6\. Install OpenCV (bundled with numpy and hdf5).
-
-With `brew edit opencv`, change the line
-
-    args << "-DPYTHON_LIBRARY=#{py_lib}/libpython2.7.#{dylib}"
-
-for
-
-    args << "-DPYTHON_LIBRARY=#{py_prefix}/lib/libpython2.7.#{dylib}"
-
-Install:
-
-    brew install opencv
+    brew install boost boost-python
 
 
 7\. Clone the caffe repository
@@ -68,6 +65,7 @@ Install:
     git clone https://github.com/BVLC/caffe.git
     cd caffe
     vi Makefile.config
+
 
 8\. Create the configuration file `Makefile.config`
 
@@ -96,17 +94,11 @@ Q ?= @
 
 If your iMac is not CUDA capable, comment `USE_CUDNN := 1`, `CUDA_DIR := /usr/local/cuda` and `CUDA_ARCH=...` lines and uncomment `CPU_ONLY := 1`
 
-You can verify that Python is at the right place :
-
-{% highlight bash %}
-which python
-#/usr/local/bin/python
-{% endhighlight %}
-
 
 9\. Build
 
 {% highlight bash %}
+export DYLD_LIBRARY_PATH=/usr/local/cuda/lib
 make all --jobs=4
 make test --jobs=4
 make runtest
@@ -117,6 +109,7 @@ cd ..
 {% endhighlight %}
 
 Here is the result of the [runtest run]({{ site.url }}/img/make_runtest_result.txt).
+
 
 10\. Download DIGITS
 

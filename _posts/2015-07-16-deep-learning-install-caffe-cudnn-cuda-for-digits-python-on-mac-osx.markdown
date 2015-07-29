@@ -63,6 +63,8 @@ which python
 
 7\. Clone the caffe repository
 
+    mkdir technologies
+    cd technologies
     git clone https://github.com/BVLC/caffe.git
     cd caffe
     vi Makefile.config
@@ -106,6 +108,7 @@ make runtest
 #python
 for req in $(cat python/requirements.txt); do pip install $req; done
 make pycaffe
+export PYTHONPATH=~/technologies/caffe/python/:$PYTHONPATH
 cd ..
 {% endhighlight %}
 

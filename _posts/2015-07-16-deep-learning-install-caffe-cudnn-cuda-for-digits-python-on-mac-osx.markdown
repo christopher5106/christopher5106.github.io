@@ -179,4 +179,15 @@ Undefined symbols for architecture x86_64: "google::protobuf:
 => Install Mac OS command line tools `xcode-select --install`.
 
 
-Add ``/usr/local/Cellar/python/2.7.10_2/Frameworks/Python.framework/Versions/2.7/lib` to the PYTHON lib in the Makefile.
+TEXT                 0000000109e08000-0000000109e0a000 [    8K] r-x/rwx SM=COW  /usr/local/Cellar/python/2.7.10_2/Frameworks/Python.framework/Versions/2.7/Resources/Python.app/Contents/MacOS/Python
+
+Thread 0 Crashed:: Dispatch queue: com.apple.main-thread
+0   ???                           	000000000000000000 0 + 0
+1   org.python.python             	0x0000000112c7f0dd PyEval_GetGlobals + 23
+2   org.python.python             	0x0000000112c8e62b PyImport_Import + 137
+3   org.python.python             	0x0000000112c8cd27 PyImport_ImportModule + 31
+4   caffe.so                     	0x000000010c92bcf8 caffe::init_module__caffe() + 4328
+5   libboost_python.dylib         	0x0000000112ba0391 boost::python::handle_exception_impl(boost::function0<void>) + 81
+6   libboost_python.dylib         	0x0000000112ba13b9 boost::python::detail::init_module(char const*, void ()()) + 121
+
+=> Add `/usr/local/Cellar/python/2.7.10_2/Frameworks/Python.framework/Versions/2.7/lib` to the PYTHON lib in the Makefile.

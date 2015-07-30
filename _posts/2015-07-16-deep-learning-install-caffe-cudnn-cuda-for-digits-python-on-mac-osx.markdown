@@ -131,7 +131,7 @@ export CAFFE_HOME=../caffe
 
 and choose `../caffe` as Caffe path.
 
-Open Port 5000 on the instance. The server will be running at [http://0.0.0.0:5000/](http://0.0.0.0:5000/)
+The server will be running at [http://0.0.0.0:5000/](http://0.0.0.0:5000/)
 
 You can then [have fun with DIGITS as we did on Ubuntu]({{ site.url }}/big/data/2015/07/16/deep-learning-install-caffe-cudnn-cuda-for-digits-python-on-ubuntu-14-04.html) : download the MNIST dataset and train a first classifier on your GPU.
 
@@ -171,7 +171,7 @@ Undefined symbols for architecture x86_64:
 
 Undefined symbols for architecture x86_64: "google::protobuf:
 
-=> Re-install protobuf. `brew install protobuf`
+=> Re-install protobuf. `brew install --build-from-source --with-python -vd protobuf`
 
 ./include/caffe/util/mkl_alternate.hpp:11:10: fatal error: 'cblas.h' file not found
 #include <cblas.h>

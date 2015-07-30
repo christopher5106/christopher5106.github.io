@@ -5,6 +5,8 @@ date:   2015-04-09 23:00:51
 categories: mobile
 ---
 
+Updated: July 30, 2015, for Cordova 5
+
 #Create the app
 
 Create the app project folder and add the IOS and Android platforms
@@ -16,6 +18,17 @@ Create the app project folder and add the IOS and Android platforms
 
 #Add the native plugins you wish
 
+####Whitelist plugin
+
+To allow HTTP network requests,
+
+	cordova plugins add cordova-plugin-whitelist
+
+and add
+
+	<allow-navigation href="http://*/*" />
+
+to `config.xml` file.
 
 ####Camera
 
@@ -45,9 +58,8 @@ To manage the splashscreen
 
 I recommand this plugin :
 
-	cordova plugin add https://github.com/danwilson/google-analytics-plugin.git
+	cordova plugin add cordova-plugin-google-analytics@0.7.1
 
-danwilson/google-analytics-plugin has not been updated for a while.
 
 ####Network informations
 
@@ -158,7 +170,7 @@ Sign the APK
 
 Align
 
-	/Applications/adt-bundle-mac-x86_64-20140321/sdk/build-tools/22.0.1/zipalign  -v 4 platforms/android/ant-build/MainActivity-release-unsigned.apk platforms/android/ant-build/MainActivity-release-signed.apk 
+	/Applications/adt-bundle-mac-x86_64-20140321/sdk/build-tools/22.0.1/zipalign  -v 4 platforms/android/ant-build/MainActivity-release-unsigned.apk platforms/android/ant-build/MainActivity-release-signed.apk
 
 Submit the *MainActivity-release-signed.apk* to Google Play Publish.
 

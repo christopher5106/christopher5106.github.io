@@ -1,11 +1,13 @@
 ---
 layout: post
-title:  "Deep learning with Cuda 7, CuDNN 2 and Caffe for Digits 2 and Python on Mac OS X"
+title:  "Deep learning with Cuda 7, CuDNN 2 and Caffe for Digits 2 and Python on iMac with NVIDIA GeForce 755M GPU (Mac OS X)"
 date:   2015-07-16 23:00:51
 categories: big data
 ---
 
 #Install on iMac 27", OS X 10.10.4, NVIDIA GeForce GT 755M 1024 Mo
+
+[![Classification]({{ site.url }}/img/mac_digits3.png)]({{ site.url }}/img/mac_digits.png)
 
 1\. Install Mac Os Command Line Tools if not already installed :
 
@@ -84,7 +86,7 @@ CUDA_ARCH := -gencode arch=compute_20,code=sm_20 \
 BLAS := atlas
 PYTHON_INCLUDE := /usr/include/python2.7 \
                 /usr/lib/python2.7/dist-packages/numpy/core/include
-PYTHON_LIB := /usr/lib
+PYTHON_LIB := /usr/local/Cellar/python/2.7.10_2/Frameworks/Python.framework/Versions/2.7/lib /usr/lib
 PYTHON_INCLUDE += $(dir $(shell python -c 'import numpy.core; print(numpy.core.__file__)'))/include
 PYTHON_LIB += $(shell brew --prefix numpy)/lib
 INCLUDE_DIRS := $(PYTHON_INCLUDE) /usr/local/include
@@ -97,6 +99,7 @@ Q ?= @
 
 If your iMac is not CUDA capable, comment `USE_CUDNN := 1`, `CUDA_DIR := /usr/local/cuda` and `CUDA_ARCH=...` lines and uncomment `CPU_ONLY := 1`
 
+Here is the full copy of the [Makefile.config]({{ site.url }}/img/Makefile.config).
 
 9\. Build
 
@@ -130,7 +133,9 @@ and choose `../caffe` as Caffe path.
 
 Open Port 5000 on the instance. The server will be running at [http://0.0.0.0:5000/](http://0.0.0.0:5000/)
 
-**Done!**
+You can then [have fun with DIGITS as we did on Ubuntu]({{ site.url }}/big/data/2015/07/16/deep-learning-install-caffe-cudnn-cuda-for-digits-python-on-ubuntu-14-04.html) : download the MNIST dataset and train a first classifier on your GPU.
+
+**Well done!**
 
 Troubleshooting :
 
@@ -167,3 +172,6 @@ Undefined symbols for architecture x86_64: "google::protobuf:
 #include <cblas.h>
 
 => Install Mac OS command line tools `xcode-select --install`.
+
+
+Add ``/usr/local/Cellar/python/2.7.10_2/Frameworks/Python.framework/Versions/2.7/lib` to the PYTHON lib in the Makefile.

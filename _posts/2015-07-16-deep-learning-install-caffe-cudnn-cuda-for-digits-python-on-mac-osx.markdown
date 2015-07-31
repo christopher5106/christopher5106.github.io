@@ -54,7 +54,7 @@ which python
 
     brew tap homebrew/science
     brew update
-    brew install snappy leveldb gflags glog szip lmdb hdf5 numpy opencv
+    brew install snappy leveldb gflags glog szip lmdb hdf5 numpy opencv graphviz
     brew install --build-from-source --with-python -vd protobuf
 
 

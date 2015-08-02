@@ -191,3 +191,9 @@ Thread 0 Crashed:: Dispatch queue: com.apple.main-thread
 6   libboost_python.dylib         	0x0000000112ba13b9 boost::python::detail::init_module(char const*, void ()()) + 121
 
 => Add `/usr/local/Cellar/python/2.7.10_2/Frameworks/Python.framework/Versions/2.7/lib` to the PYTHON lib in the Makefile.
+
+
+nvcc fatal : The version ('60100') of the host compiler ('Apple clang') is not supported
+
+=> Download XCode 6.0 to replace 6.3
+Have a look at [compatibilities](http://docs.nvidia.com/cuda/cuda-getting-started-guide-for-mac-os-x/#axzz3hb15JIpL) and [Clang versions](https://gist.github.com/yamaya/2924292).

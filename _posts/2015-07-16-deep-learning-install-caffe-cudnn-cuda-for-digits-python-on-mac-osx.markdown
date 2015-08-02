@@ -5,7 +5,7 @@ date:   2015-07-16 23:00:51
 categories: big data
 ---
 
-#Install on iMac 27", OS X 10.10.4
+#Install on iMac, OS X 10.10.4
 
 This install has been tested on
 

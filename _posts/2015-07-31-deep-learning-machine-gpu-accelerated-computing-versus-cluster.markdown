@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "GPU accelerated computing versus cluster for machine and deep learning"
+title:  "GPU accelerated computing versus cluster computing for machine / deep learning"
 date:   2015-07-31 23:00:51
 categories: big data
 ---

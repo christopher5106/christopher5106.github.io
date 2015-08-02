@@ -49,3 +49,5 @@ Installs on mobile phones :
 - [Android](https://github.com/sh1r0/caffe-android-lib)
 
 - [iOS](https://github.com/noradaiko/caffe-ios-sample)
+
+Clusters remain very interesting for parsing and manipulating large files such as for example [parsing Wikipedia pages with Spark]({{ site.url }}/bigdata/2015/05/28/parse-wikipedia-statistics-and-pages-with-Spark.html).

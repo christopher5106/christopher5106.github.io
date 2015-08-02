@@ -42,7 +42,7 @@ Here are my installs of Berkeley's deep learning library [Caffe](http://caffe.be
 
 - on [iMac]({{ site.url }}/big/data/2015/07/16/deep-learning-install-caffe-cudnn-cuda-for-digits-python-on-mac-osx.html)
 
-- on [AWS g2 instances]({{ site.url }}/big/data/2015/07/16/deep-learning-install-caffe-cudnn-cuda-for-digits-python-on-ubuntu-14-04.html)
+- on [AWS g2 instances]({{ site.url }}/big/data/2015/07/16/deep-learning-install-caffe-cudnn-cuda-for-digits-python-on-ubuntu-14-04.html) with my ready-to-deploy [AWS OpWorks Chef recipe](https://github.com/christopher5106/digits-server-simple).
 
 Installs on mobile phones :
 

@@ -140,7 +140,7 @@ and choose `../caffe` as Caffe path.
 
 The server will be running at [http://0.0.0.0:5000/](http://0.0.0.0:5000/)
 
-You can then [have fun with DIGITS as we did on Ubuntu]({{ site.url }}/big/data/2015/07/16/deep-learning-install-caffe-cudnn-cuda-for-digits-python-on-ubuntu-14-04.html) : download the MNIST dataset and train a first classifier on your GPU.
+You can then [have fun with DIGITS as we did on Ubuntu]({{ site.url }}/big/data/2015/07/16/deep-learning-install-caffe-cudnn-cuda-for-digits-python-on-ubuntu-14-04.html) : download the MNIST dataset `python tools/download_data/main.py mnist ~/data/mnist` and train a first classifier on your GPU.
 
 [![Classification]({{ site.url }}/img/mac_digits_create_dataset3.png)]({{ site.url }}/img/mac_digits_create_dataset.png)
 

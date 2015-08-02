@@ -1,11 +1,18 @@
 ---
 layout: post
-title:  "Deep learning with Cuda 7, CuDNN 2 and Caffe for Digits 2 and Python on iMac with NVIDIA GeForce 755M GPU (Mac OS X)"
+title:  "Deep learning with Cuda 7, CuDNN 2 and Caffe for Digits 2 and Python on iMac with NVIDIA GeForce GT 755M/640M GPU (Mac OS X)"
 date:   2015-07-16 23:00:51
 categories: big data
 ---
 
-#Install on iMac 27", OS X 10.10.4, NVIDIA GeForce GT 755M 1024 Mo
+#Install on iMac 27", OS X 10.10.4
+
+This install has been tested on
+
+- a new iMac 27" with NVIDIA GeForce GT 755M 1024 Mo
+- an old iMac 21" with NVIDIA GeForce GT 640M 512 Mo
+
+**NVIDIA is great!**
 
 [![Classification]({{ site.url }}/img/mac_digits3.png)]({{ site.url }}/img/mac_digits.png)
 

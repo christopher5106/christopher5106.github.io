@@ -96,6 +96,7 @@ PYTHON_INCLUDE := /usr/include/python2.7 \
 PYTHON_LIB := /usr/local/Cellar/python/2.7.10_2/Frameworks/Python.framework/Versions/2.7/lib /usr/lib
 PYTHON_INCLUDE += $(dir $(shell python -c 'import numpy.core; print(numpy.core.__file__)'))/include
 PYTHON_LIB += $(shell brew --prefix numpy)/lib
+WITH_PYTHON_LAYER := 1
 INCLUDE_DIRS := $(PYTHON_INCLUDE) /usr/local/include
 LIBRARY_DIRS := $(PYTHON_LIB) /usr/local/lib /usr/lib
 BUILD_DIR := build

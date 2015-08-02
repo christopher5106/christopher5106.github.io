@@ -411,9 +411,9 @@ curl -XGET http://52.17.250.224:9200/map2/poi/_search -d '{
 
 {% highlight bash %}
 #stop
-./ec2/ec2/ec2/spark-ec2 -k sparkclusterkey -i ~/sparkclusterkey.pem --region=eu-west-1  stop spark-cluster
+./ec2/spark-ec2 -k sparkclusterkey -i ~/sparkclusterkey.pem --region=eu-west-1  stop spark-cluster
 #restart
-./ec2/ec2/spark-ec2 -k sparkclusterkey -i ~/sparkclusterkey.pem --region=eu-west-1  start spark-cluster
+./ec2/spark-ec2 -k sparkclusterkey -i ~/sparkclusterkey.pem --region=eu-west-1  start spark-cluster
 #destroy
 ./ec2/spark-ec2 -k sparkclusterkey -i ~/sparkclusterkey.pem --region=eu-west-1  destroy spark-cluster
 {% endhighlight %}

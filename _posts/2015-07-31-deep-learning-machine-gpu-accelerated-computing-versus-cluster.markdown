@@ -21,7 +21,7 @@ Practical examples from NVIDIA :
 
 The traditional approach of feature engineering :
 
-![Deep learning]({{ site.url }}/img/deeplearning/traditional.png)
+![Deep learning]({{ site.url }}/img/deeplearning/traditionnal.png)
 
 where the main problem was to find the correct definition of features.
 
@@ -38,7 +38,7 @@ with the following advantages :
 ![Deep learning]({{ site.url }}/img/deeplearning/advantages.png)
 
 
-Here are my installs of Caffe and Digits on NVIDIA GPU :
+Here are my installs of Berkeley's deep learning library [Caffe](http://caffe.berkeleyvision.org/) and NVIDIA deep learning interactive interface [DIGITS](https://developer.nvidia.com/digits) on NVIDIA GPU :
 
 - on [iMac]({{ site.url }}/big/data/2015/07/16/deep-learning-install-caffe-cudnn-cuda-for-digits-python-on-mac-osx.html)
 

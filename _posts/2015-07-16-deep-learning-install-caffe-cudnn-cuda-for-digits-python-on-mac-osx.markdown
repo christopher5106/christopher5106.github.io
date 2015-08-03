@@ -1,11 +1,18 @@
 ---
 layout: post
-title:  "Deep learning with Cuda 7, CuDNN 2 and Caffe for Digits 2 and Python on iMac with NVIDIA GeForce 755M GPU (Mac OS X)"
+title:  "Deep learning with Cuda 7, CuDNN 2 and Caffe for Digits 2 and Python on iMac with NVIDIA GeForce GT 755M/640M GPU (Mac OS X)"
 date:   2015-07-16 23:00:51
 categories: big data
 ---
 
-#Install on iMac 27", OS X 10.10.4, NVIDIA GeForce GT 755M 1024 Mo
+#Install on iMac, OS X 10.10.4
+
+This install has been tested on
+
+- a new iMac 27" with NVIDIA GeForce GT 755M 1024 Mo
+- an old iMac 21" with NVIDIA GeForce GT 640M 512 Mo
+
+**NVIDIA is great!**
 
 [![Classification]({{ site.url }}/img/mac_digits3.png)]({{ site.url }}/img/mac_digits.png)
 
@@ -89,6 +96,7 @@ PYTHON_INCLUDE := /usr/include/python2.7 \
 PYTHON_LIB := /usr/local/Cellar/python/2.7.10_2/Frameworks/Python.framework/Versions/2.7/lib /usr/lib
 PYTHON_INCLUDE += $(dir $(shell python -c 'import numpy.core; print(numpy.core.__file__)'))/include
 PYTHON_LIB += $(shell brew --prefix numpy)/lib
+WITH_PYTHON_LAYER := 1
 INCLUDE_DIRS := $(PYTHON_INCLUDE) /usr/local/include
 LIBRARY_DIRS := $(PYTHON_LIB) /usr/local/lib /usr/lib
 BUILD_DIR := build
@@ -133,7 +141,7 @@ and choose `../caffe` as Caffe path.
 
 The server will be running at [http://0.0.0.0:5000/](http://0.0.0.0:5000/)
 
-You can then [have fun with DIGITS as we did on Ubuntu]({{ site.url }}/big/data/2015/07/16/deep-learning-install-caffe-cudnn-cuda-for-digits-python-on-ubuntu-14-04.html) : download the MNIST dataset and train a first classifier on your GPU.
+You can then [have fun with DIGITS as we did on Ubuntu]({{ site.url }}/big/data/2015/07/16/deep-learning-install-caffe-cudnn-cuda-for-digits-python-on-ubuntu-14-04.html) : download the MNIST dataset `python tools/download_data/main.py mnist ~/data/mnist` and train a first classifier on your GPU.
 
 [![Classification]({{ site.url }}/img/mac_digits_create_dataset3.png)]({{ site.url }}/img/mac_digits_create_dataset.png)
 
@@ -191,3 +199,9 @@ Thread 0 Crashed:: Dispatch queue: com.apple.main-thread
 6   libboost_python.dylib         	0x0000000112ba13b9 boost::python::detail::init_module(char const*, void ()()) + 121
 
 => Add `/usr/local/Cellar/python/2.7.10_2/Frameworks/Python.framework/Versions/2.7/lib` to the PYTHON lib in the Makefile.
+
+
+nvcc fatal : The version ('60100') of the host compiler ('Apple clang') is not supported
+
+=> Download XCode 6.0 to replace 6.3
+Have a look at [compatibilities](http://docs.nvidia.com/cuda/cuda-getting-started-guide-for-mac-os-x/#axzz3hb15JIpL) and [Clang versions](https://gist.github.com/yamaya/2924292).

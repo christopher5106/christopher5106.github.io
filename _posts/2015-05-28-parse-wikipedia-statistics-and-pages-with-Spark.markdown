@@ -17,8 +17,8 @@ To prepare
 - download the latest version of [Spark](https://spark.apache.org/downloads.html)
 
 {% highlight bash %}
-wget http://apache.websitebeheerjd.nl/spark/spark-1.3.1/spark-1.3.1-bin-hadoop2.6.tgz
-tar xvf spark-1.3.1-bin-hadoop2.6.tgz
+wget http://d3kbcqa49mib13.cloudfront.net/spark-1.4.1-bin-hadoop2.6.tgz
+tar xvf spark-1.4.1-bin-hadoop2.6.tgz
 {% endhighlight %}
 
 - create an AWS account, and get your credentials, if you don't have one already
@@ -39,10 +39,11 @@ export AWS_ACCESS_KEY_ID=...
 export AWS_SECRET_ACCESS_KEY=...
 
 #launch the cluster with --copy-aws-credentials option to enable S3 access.
-./spark-1.3.1-bin-hadoop2.6/ec2/spark-ec2 -k sparkclusterkey -i sparkclusterkey.pem --region=eu-west-1 --copy-aws-credentials --instance-type=m1.large -s 4 --hadoop-major-version=2 launch spark-cluster
+cd spark-1.4.1-bin-hadoop2.6
+./ec2/spark-ec2 -k sparkclusterkey -i ~/sparkclusterkey.pem --region=eu-west-1 --copy-aws-credentials --instance-type=m1.large -s 4 --hadoop-major-version=2 launch spark-cluster
 
 #connect to the master
-./spark-1.3.1-bin-hadoop2.6/ec2/spark-ec2 -k sparkclusterkey -i sparkclusterkey.pem --region=eu-west-1 login spark-cluster
+./ec2/spark-ec2 -k sparkclusterkey -i ~/sparkclusterkey.pem --region=eu-west-1 login spark-cluster
 
 #launch the shell
 ./spark/bin/spark-shell
@@ -410,11 +411,11 @@ curl -XGET http://52.17.250.224:9200/map2/poi/_search -d '{
 
 {% highlight bash %}
 #stop
-./spark-1.3.1-bin-hadoop2.6/spark-ec2 -k sparkclusterkey -i sparkclusterkey.pem --region=eu-west-1  stop spark-cluster
+./ec2/spark-ec2 -k sparkclusterkey -i ~/sparkclusterkey.pem --region=eu-west-1  stop spark-cluster
 #restart
-./spark-1.3.1-bin-hadoop2.6/spark-ec2 -k sparkclusterkey -i sparkclusterkey.pem --region=eu-west-1  start spark-cluster
+./ec2/spark-ec2 -k sparkclusterkey -i ~/sparkclusterkey.pem --region=eu-west-1  start spark-cluster
 #destroy
-./spark-1.3.1-bin-hadoop2.6/spark-ec2 -k sparkclusterkey -i sparkclusterkey.pem --region=eu-west-1  destroy spark-cluster
+./ec2/spark-ec2 -k sparkclusterkey -i ~/sparkclusterkey.pem --region=eu-west-1  destroy spark-cluster
 {% endhighlight %}
 
 **Well done !**

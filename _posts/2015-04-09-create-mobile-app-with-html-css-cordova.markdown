@@ -116,7 +116,13 @@ You can use the standard plugin
 
 or I would recommend you the [Radium One Plugin](https://github.com/radiumone/r1-connect-demo-phonegap) that gives you a great interface to push and segment your users.
 
-	cordova plugin add https://github.com/radiumone/r1-connect-demo-phonegap
+	cordova plugin add cordova plugin add https://github.com/radiumone/r1-connect-demo-phonegap#cordova5
+
+and add in the `config.xml`
+
+	<preference name="com.radiumone.r1connect.applicationId" value="Your application Id" />
+	<preference name="com.radiumone.r1connect.clientKey" value="Your client Key" />
+	<preference name="com.radiumone.r1connect.senderId" value="Your GCM sender id" />
 
 ####Other plugins : Clipboard, device, file, file-transfer, statusbar, inappbrowser
 

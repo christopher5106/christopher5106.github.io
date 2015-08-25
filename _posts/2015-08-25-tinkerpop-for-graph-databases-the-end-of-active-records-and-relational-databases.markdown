@@ -46,3 +46,17 @@ Here is a scheme from AWS :
 ![SQL MCD](https://media.amazonwebservices.com/blog/2015/gr_the_parts_3.png)
 
 and an implementation on [AWS DynamoDB](https://aws.amazon.com/fr/blogs/aws/new-store-and-process-graph-data-using-the-dynamodb-storage-backend-for-titan/) with [Titan](http://thinkaurelius.github.io/titan/).
+
+#Install Gremlin
+
+{% highlight bash %}
+cd technologies
+wget http://apache.crihan.fr/dist/maven/maven-3/3.3.3/binaries/apache-maven-3.3.3-bin.tar.gz
+tar xvzf apache-maven-3.3.3-bin.tar.gz
+export PATH=$PATH:/Users/christopherbourez/technologies/apache-maven-3.3.3/bin
+git clone https://github.com/tinkerpop/gremlin.git
+export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_51.jdk/Contents/Home
+cd gremlin
+vi pom.xml #edit to change [1.6,1.8) to [1.6,1.9) for maven-enforcer-plugin
+mvn compile
+{% endhighlight %}

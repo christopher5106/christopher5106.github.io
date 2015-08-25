@@ -21,14 +21,17 @@ MySQL is great for simple operations. The problem with relational databases come
 
 - a *search approach*, with filters applied on fields of linked tables, is not easy, not as fast.
 
+#The document approach
 
-The solution I used so far was to create "documents" stored by NoSQL databases and indexed by search engines. To avoid the growing number of tables:
+To replace relational databases, the solution I used so far was to create "documents" stored by NoSQL databases and indexed by search engines. To avoid the growing number of tables:
 
 - instead of having secondary tables, I store strings that can describe the variable information directly in the main document. For example, facet ID `1378` becomes `SHOES`. The search engine can retrieve all existing values thanks to aggregation queries.
 
 - data that would normally be in secondary table was directly set in the main document. This leads to duplicates. Such duplicates can be very useful when edition of one document should not impact another document. This is the case, for example, of the company name in invoice documents : if the company name changes, we don't want former invoices to change. On the contrary around, if edition has to impact all duplicates, a simple search query can find the documents in order to edit the information in them.
 
 This solution is not a fully satisfying solution.
+
+#Tinkerpop standardization effort
 
 The best solution to such a problem is to use a *technology* which will contain all the work in front of the databases, instead of writing your own code and use frameworks.
 
@@ -38,4 +41,4 @@ TinkerPop provides a console, a REST API, a server and works with different data
 
 ![SQL MCD](https://media.amazonwebservices.com/blog/2015/gr_the_parts_3.png)
 
-and an implementation on [AWS DynamoDB](https://aws.amazon.com/fr/blogs/aws/new-store-and-process-graph-data-using-the-dynamodb-storage-backend-for-titan/)
+and an implementation on [AWS DynamoDB](https://aws.amazon.com/fr/blogs/aws/new-store-and-process-graph-data-using-the-dynamodb-storage-backend-for-titan/) with [Titan](http://thinkaurelius.github.io/titan/).

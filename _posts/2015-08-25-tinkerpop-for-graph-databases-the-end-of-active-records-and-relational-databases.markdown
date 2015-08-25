@@ -33,7 +33,7 @@ To replace relational databases, the solution I used so far is to create "docume
 
 This solution is not a fully satisfying solution.
 
-#Tinkerpop standardization effort
+#TinkerPop standardization effort
 
 The best solution to such a problem is certainly the use of **technology** which will contain all the work in front of the databases, instead of writing your own code or use code frameworks.
 

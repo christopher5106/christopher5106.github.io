@@ -7,19 +7,21 @@ categories: databases
 
 #Anti-patterns with relational databases and Active Records
 
-It's been a long time that I prefer to avoid some aspects of relational databases and SQL queries.
+It's been a long time since I prefer to avoid some aspects of relational databases and SQL queries.
 
-MySQL is great for simple operations. The problem with relational databases comes with the `JOIN` statement with theses consequences :
+MySQL is great for simple CRUD operations (insert, alter, delete, get).
 
-- developers create a new table every time there is a possibility of dissociation, which leads usually to plenty of tables. The "relation" between entries in different tables is made through the use of ID fields... The first drawback is the *maintenance and complexity*. Developers have developed tools in order to visualize and maintain the relations, which leads to unreadable documents :
+The problem with relational databases comes with the `JOIN` statement with theses consequences :
+
+- *developers create a new table every time there is a possibility of dissociation*, which leads usually to **plenty of tables**. The "relation" between entries in different tables is made through the use of ID fields... The first drawback is the *maintenance and complexity*. Developers have developed tools in order to visualize and maintain the relations, which leads to unreadable documents :
 
 ![SQL MCD]({{ site.url }}/img/mcd.png)
 
-- in order to get a result, requests have to merge different tables, which is made with `JOIN` statements. *Performance decrease fast when join list are not a singleton*, but also, *usually it leads to multiple JOIN queries that are hard to read*.
+- in order to get a result, requests have to merge different tables, which is made with `JOIN` statements. **Performance decrease fast when join list are not a singleton**, but also, usually it leads to **multiple JOIN queries that are hard to read**.
 
-- developers have developed some frameworks such as Active Records for Ruby, which *requires to learn* lots of convention and is *language dependent*.
+- developers have developed some frameworks such as Active Records for Ruby, which **requires to learn** lots of convention and is **language dependent**.
 
-- a *search approach*, with filters applied on fields of linked tables, is not easy, not as fast.
+- the **search approach**, with filters applied on fields of linked tables, is not that easy to implement, and is not as effective.
 
 #The document approach
 
@@ -33,7 +35,7 @@ This solution is not a fully satisfying solution.
 
 #Tinkerpop standardization effort
 
-The best solution to such a problem is to use a *technology* which will contain all the work in front of the databases, instead of writing your own code and use frameworks.
+The best solution to such a problem is to use a *technology* which will contain all the work in front of the databases, instead of writing your own code or use code frameworks.
 
 There is a new initiative from Apache, [TinkerPop](http://tinkerpop.incubator.apache.org/docs/3.0.0-incubating/), which solves many of the requirements and defines a *standard* such as SQL standard.
 

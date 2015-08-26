@@ -37,9 +37,13 @@ This solution is not a fully satisfying solution.
 
 The best solution to such a problem is certainly the use of a **technology** which will contain all the work in front of the databases, instead of writing your own code or use code frameworks.
 
-There is a new initiative from Apache called [TinkerPop](http://tinkerpop.incubator.apache.org/docs/3.0.0-incubating/), which solves many of the requirements and defines a *standard* such as the SQL standard.
+There is a new initiative from Apache called [TinkerPop3](http://tinkerpop.incubator.apache.org/docs/3.0.0-incubating/) :
 
-TinkerPop also provides an interactive console, a REST API, a server and can work with different underlying databases (HBASE, Cassandra, DynamoDB, Neo4j ... ).
+![TinkerPop3](http://tinkerpop.incubator.apache.org/docs/3.0.0-incubating/images/graph-computing.png)
+
+TinkerPop3 solves many of the requirements and defines a **standard** such as the SQL standard.
+
+TinkerPop3 also provides an interactive console, a REST API, a server and can work with different underlying databases (HBASE, Cassandra, DynamoDB, Neo4j ... ).
 
 Here is a scheme from AWS :
 

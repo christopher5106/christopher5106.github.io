@@ -47,7 +47,7 @@ Here is a scheme from AWS :
 
 and an implementation on [AWS DynamoDB](https://aws.amazon.com/fr/blogs/aws/new-store-and-process-graph-data-using-the-dynamodb-storage-backend-for-titan/) with [Titan](http://thinkaurelius.github.io/titan/).
 
-#Install and launch Gremlin on your Mac OS
+#Install, launch Gremlin and execute traversals on graphs
 
 {% highlight bash %}
 cd technologies
@@ -56,4 +56,23 @@ unzip apache-gremlin-console-3.0.0-incubating-bin.zip
 rm apache-gremlin-console-3.0.0-incubating-bin.zip
 cd apache-gremlin-console-3.0.0-incubating
 ./bin/gremlin.sh
+{% endhighlight %}
+
+Execute a traversal on the modern graph example
+
+![TinkerPop Modern](http://tinkerpop.incubator.apache.org/docs/3.0.0-incubating/images/tinkerpop-modern.png)
+
+{% highlight java %}
+graph = TinkerFactory.createModern()
+g = graph.traversal(standard())
+g.V().repeat(groupCount('m').by(label)).times(10).cap('m')
+{% endhighlight %}
+
+Test the bulk-optimized traversal on Grateful Dead Graph :
+
+{% highlight java %}
+graph = TinkerGraph.open()
+graph.io(graphml()).readGraph('data/grateful-dead.xml')
+g = graph.traversal(standard())
+clockWithResult(1){g.V().both().barrier().both().barrier().both().barrier().count().next()}
 {% endhighlight %}

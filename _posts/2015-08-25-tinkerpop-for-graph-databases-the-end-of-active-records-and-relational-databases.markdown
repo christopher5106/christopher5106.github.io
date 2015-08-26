@@ -49,6 +49,8 @@ and an implementation on [AWS DynamoDB](https://aws.amazon.com/fr/blogs/aws/new-
 
 #Install, launch Gremlin and execute traversals on graphs
 
+Install and launch TinkerPop3 Gremlin :
+
 {% highlight bash %}
 cd technologies
 wget https://www.apache.org/dist/incubator/tinkerpop/3.0.0-incubating/apache-gremlin-console-3.0.0-incubating-bin.zip

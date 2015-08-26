@@ -49,7 +49,19 @@ Here is a scheme from AWS :
 
 ![SQL MCD](https://media.amazonwebservices.com/blog/2015/gr_the_parts_3.png)
 
-and an implementation on [AWS DynamoDB](https://aws.amazon.com/fr/blogs/aws/new-store-and-process-graph-data-using-the-dynamodb-storage-backend-for-titan/) with [Titan](http://thinkaurelius.github.io/titan/).
+The analog of JDBC is [Blueprints](https://github.com/tinkerpop/blueprints/wiki).
+
+On top of Blueprints,
+
+- [Rexter](https://github.com/tinkerpop/rexster/wiki) provides a REST server
+
+- [Gremlin](https://github.com/tinkerpop/gremlin/wiki) provides a graph traversal language for Java, Groovy, Scala
+
+as well as [pipes](https://github.com/tinkerpop/pipes/wiki), [object wrappers](http://frames.tinkerpop.com/) or [graph algorithm](http://furnace.tinkerpop.com/).
+
+AWS implemented [Blueprints for DynamoDB](https://aws.amazon.com/fr/blogs/aws/new-store-and-process-graph-data-using-the-dynamodb-storage-backend-for-titan/) thanks to [Titan technology](http://thinkaurelius.github.io/titan/).
+
+
 
 #Install, launch Gremlin and execute traversals on graphs
 

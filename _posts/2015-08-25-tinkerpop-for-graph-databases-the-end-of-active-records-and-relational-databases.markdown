@@ -45,7 +45,7 @@ TinkerPop3 solves many of the requirements and defines a **standard** such as th
 
 TinkerPop3 also provides an interactive console, a REST API, a server and can work with different underlying databases (HBASE, Cassandra, DynamoDB, Neo4j ... ).
 
-The analog of JDBC is [Blueprints](https://github.com/tinkerpop/blueprints/wiki).
+The analog of JDBC for TinkerPop standard is [Blueprints](https://github.com/tinkerpop/blueprints/wiki).
 
 On top of Blueprints,
 
@@ -53,7 +53,7 @@ On top of Blueprints,
 
 - [Gremlin](https://github.com/tinkerpop/gremlin/wiki) provides a graph traversal language for Java, Groovy, Scala
 
-as well as [pipes](https://github.com/tinkerpop/pipes/wiki), [object wrappers](http://frames.tinkerpop.com/) or [graph algorithm](http://furnace.tinkerpop.com/).
+as well as [pipes](https://github.com/tinkerpop/pipes/wiki), [object wrappers](http://frames.tinkerpop.com/) or [graph algorithms](http://furnace.tinkerpop.com/).
 
 AWS implemented [Blueprints for DynamoDB](https://aws.amazon.com/fr/blogs/aws/new-store-and-process-graph-data-using-the-dynamodb-storage-backend-for-titan/) thanks to [Titan technology](http://thinkaurelius.github.io/titan/).
 
@@ -86,7 +86,7 @@ g.V().repeat(groupCount('m').by(label)).times(10).cap('m')
 
 
 
-Test a bulk-optimized traversal on the [Grateful Dead Graph](https://github.com/tinkerpop/gremlin/wiki/Defining-a-More-Complex-Property-Graph) :
+Test a bulk-optimized traversal on the [Grateful Dead Graph](https://github.com/tinkerpop/gremlin/wiki/Defining-a-More-Complex-Property-Graph) example :
 
 ![Grateful Dead Graph](https://github.com/tinkerpop/gremlin/raw/master/doc/images/graph-example-2.jpg)
 

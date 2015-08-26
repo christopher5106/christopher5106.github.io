@@ -68,7 +68,9 @@ g = graph.traversal(standard())
 g.V().repeat(groupCount('m').by(label)).times(10).cap('m')
 {% endhighlight %}
 
-Test the bulk-optimized traversal on Grateful Dead Graph :
+Test the bulk-optimized traversal on the [Grateful Dead Graph](https://github.com/tinkerpop/gremlin/wiki/Defining-a-More-Complex-Property-Graph) :
+
+![Grateful Dead Graph](https://github.com/tinkerpop/gremlin/raw/master/doc/images/graph-example-2.jpg)
 
 {% highlight java %}
 graph = TinkerGraph.open()

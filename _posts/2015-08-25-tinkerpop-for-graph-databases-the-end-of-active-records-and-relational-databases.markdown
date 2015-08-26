@@ -45,10 +45,6 @@ TinkerPop3 solves many of the requirements and defines a **standard** such as th
 
 TinkerPop3 also provides an interactive console, a REST API, a server and can work with different underlying databases (HBASE, Cassandra, DynamoDB, Neo4j ... ).
 
-Here is a scheme from AWS :
-
-![SQL MCD](https://media.amazonwebservices.com/blog/2015/gr_the_parts_3.png)
-
 The analog of JDBC is [Blueprints](https://github.com/tinkerpop/blueprints/wiki).
 
 On top of Blueprints,
@@ -61,7 +57,9 @@ as well as [pipes](https://github.com/tinkerpop/pipes/wiki), [object wrappers](h
 
 AWS implemented [Blueprints for DynamoDB](https://aws.amazon.com/fr/blogs/aws/new-store-and-process-graph-data-using-the-dynamodb-storage-backend-for-titan/) thanks to [Titan technology](http://thinkaurelius.github.io/titan/).
 
+Here is a great schema from AWS (thanks to @AWS) :
 
+![SQL MCD](https://media.amazonwebservices.com/blog/2015/gr_the_parts_3.png)
 
 #Install, launch Gremlin and execute traversals on graphs
 

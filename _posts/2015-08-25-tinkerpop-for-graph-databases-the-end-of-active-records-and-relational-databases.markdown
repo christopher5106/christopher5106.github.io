@@ -76,3 +76,5 @@ graph.io(graphml()).readGraph('data/grateful-dead.xml')
 g = graph.traversal(standard())
 clockWithResult(1){g.V().both().barrier().both().barrier().both().barrier().count().next()}
 {% endhighlight %}
+
+**Well done !**

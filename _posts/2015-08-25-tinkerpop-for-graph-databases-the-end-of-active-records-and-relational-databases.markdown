@@ -58,7 +58,7 @@ cd apache-gremlin-console-3.0.0-incubating
 ./bin/gremlin.sh
 {% endhighlight %}
 
-Execute a traversal on the modern graph example
+Execute a traversal on the modern graph example :
 
 ![TinkerPop Modern](http://tinkerpop.incubator.apache.org/docs/3.0.0-incubating/images/tinkerpop-modern.png)
 
@@ -68,7 +68,9 @@ g = graph.traversal(standard())
 g.V().repeat(groupCount('m').by(label)).times(10).cap('m')
 {% endhighlight %}
 
-Test the bulk-optimized traversal on the [Grateful Dead Graph](https://github.com/tinkerpop/gremlin/wiki/Defining-a-More-Complex-Property-Graph) :
+
+
+Test a bulk-optimized traversal on the [Grateful Dead Graph](https://github.com/tinkerpop/gremlin/wiki/Defining-a-More-Complex-Property-Graph) :
 
 ![Grateful Dead Graph](https://github.com/tinkerpop/gremlin/raw/master/doc/images/graph-example-2.jpg)
 

@@ -147,6 +147,27 @@ You can then [have fun with DIGITS as we did on Ubuntu]({{ site.url }}/big/data/
 
 [![Classification]({{ site.url }}/img/mac_digits_learn3.png)]({{ site.url }}/img/mac_digits_learn.png)
 
+#R-CNN Example
+
+Now it's easy to try the R-CNN example from Ross Girshick :
+
+{% highlight bash %}
+cd ~/technologies
+git clone https://github.com/rbgirshick/fast-rcnn.git
+cd fast-rcnn/lib
+export CFLAGS=-I/usr/local/lib/python2.7/site-packages/numpy/core/include/
+make
+cd ../caffe-fast-rcnn
+cp ../../caffe/Makefile.config ./
+make -j8 && make pycaffe
+cd ..
+./data/scripts/fetch_fast_rcnn_models.sh
+./tools/demo.py
+#or if it crashes due to insufficient memory on your GPU, try a smaller network or GPU
+./tools/demo.py --net caffenet
+./tools/demo.py --net vgg_cnn_m_1024
+./tools/demo.py --cpu
+{% endhighlight %}
 
 **Well done!**
 

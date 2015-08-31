@@ -1,9 +1,8 @@
-
 ---
 layout: post
-title:  "Training optical caracter recognition technology Tesseract on a new character font on MacOS"
-date:   2015-07-16 23:00:51
-categories: character recognition
+title:  "Training optical character recognition technology Tesseract on a new character font on MacOS"
+date:   2015-09-01 23:00:51
+categories: optical character recognition
 ---
 
 #Training Tesseract on a new font

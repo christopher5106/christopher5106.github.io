@@ -28,6 +28,7 @@ newlang="newfra"
 tesseract ${newlang}.std.exp0.tif ${newlang}.std.exp0 -l fra batch.nochop makebox # '-l fra' is optional, if use of the French language recognition
 tesseract ${newlang}.std.exp0.tif ${newlang}.std.exp0 box.train.stderr
 unicharset_extractor ${newlang}.std.exp0.box
+echo "std 0 0 0 0 0" > font_properties
 shapeclustering -F font_properties -U unicharset ${newlang}.std.exp0.tr
 mftraining -F font_properties -U unicharset -O lfra.unicharset ${newlang}.std.exp0.tr
 cntraining ${newlang}.std.exp0.tr

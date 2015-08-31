@@ -38,8 +38,9 @@ mv shapetable ${newlang}.shapetable
 mv inttemp ${newlang}.inttemp
 mv unicharset ${newlang}.unicharset
 combine_tessdata ${newlang}.
+cp ${newlang}.traineddata /usr/local/share/tessdata/
 {% endhighlight %}
 
-Put the file `newfra.traineddata` in `/usr/local/share/tessdata/` for Tesseract to use it. To recognize characters in a new image simply type
+To recognize characters in a new image simply type
 
     tesseract image.tif output -l newfra

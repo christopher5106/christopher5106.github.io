@@ -19,13 +19,13 @@ Here is an example of TIFF file :
 
 The format of the box file is one ligne per character in the image and each line of the form `char bl_x bl_y rt_x rt_y` where `char` is the character, `bl_x` the abcyss of bottom-left corner in a coordinate system where (0,0) is at the bottom-left corner of the TIFF image.
 
-To create the box file, it's possible to use Tesseract recognition engine and add manually complete the lines that were not recognized automatically. To perform a better recognition, you can download additional languages such as "fra" for French language. Put the file `fra.traineddata` in `/usr/local/share/tessdata/` for Tesseract to use it.
+To create the box file, it's possible to use Tesseract recognition engine and manually add/complete the lines that were not recognized automatically, correct lines that were recognized improperly. To perform a better recognition, you can download additional languages such as "fra" for French language. Put the file `fra.traineddata` in `/usr/local/share/tessdata/` for Tesseract to use it.
 
-First begin by creating the character table as a TIFF image. Then, here is the list of command to create a new language for Tesseract from this TIFF image :
+First begin by creating the character table as a TIFF image. Then, here is the list of commands to create a new language `newfra` for Tesseract from this TIFF image :
 
 {% highlight bash %}
 newlang="newfra"
-tesseract ${newlang}.std.exp0.tif ${newlang}.std.exp0 batch.nochop makebox # the option '-l fra' to use the French language
+tesseract ${newlang}.std.exp0.tif ${newlang}.std.exp0 -l fra batch.nochop makebox # '-l fra' is optional, if use of the French language recognition
 tesseract ${newlang}.std.exp0.tif ${newlang}.std.exp0 box.train.stderr
 unicharset_extractor ${newlang}.std.exp0.box
 shapeclustering -F font_properties -U unicharset ${newlang}.std.exp0.tr

@@ -11,6 +11,8 @@ Nowadays, it's even more the case with GPU :
 
 ![Google Brain]({{ site.url }}/img/deeplearning/google_brain_versus_three_gpu.png)
 
+[Benchmarks](https://github.com/BIDData/BIDMach/wiki/Benchmarks) with [BIDMach library](http://bid2.berkeley.edu/bid-data-project/) show that main classification algorithms run on a single instance with a GPU are faster than on a cluster of hundred CPU instances with distributed technologies such as SPARK.
+
 The new approach of deep learning:
 
 ![Deep learning]({{ site.url }}/img/deeplearning/deeplearning.png)

@@ -42,7 +42,7 @@ caffe.set_mode_gpu()
 
 Let's create first a very simple model with a single convolution composed of 3 convolutional neurons, with a kernel of size 5x5 and a stride of 1 :
 
-![simple network]({{ site.url }}/simple_network.png)
+![simple network]({{ site.url }}/img/simple_network.png)
 
 
 The output map of the convolution given receptive field size has a size following the equation :
@@ -88,15 +88,15 @@ The net contains two ordered dictionaries
 
 - `net.blobs` for data  :
 
-    `net.blobs['data']`` contains input data, an array  of shape (1, 1, 100, 100)
-    `net.blobs['conv']`` contains computed data in layer 'conv' (1, 3, 96, 96)
+    `net.blobs['data']` contains input data, an array  of shape (1, 1, 100, 100)
+    `net.blobs['conv']` contains computed data in layer 'conv' (1, 3, 96, 96)
 
     initialiazed with zeros.
 
 - `net.params` a vector of blobs for weight and bias parameters
 
-    `net.params['conv'][0]`` contains the weight parameters, an array of shape (3, 1, 5, 5)
-    `net.params['conv'][1]`` contains the bias parameters, an array of shape (3,)
+    `net.params['conv'][0]` contains the weight parameters, an array of shape (3, 1, 5, 5)
+    `net.params['conv'][1]` contains the bias parameters, an array of shape (3,)
 
     initialiazed with 'weight_filler' and 'bias_filler'.
 
@@ -110,7 +110,7 @@ You can draw the network with the following python command :
 
     python python/draw_net.py examples/net_surgery/conv.prototxt my_net.png
 
-####Compute the network on an image
+####Compute the network output on an image as input
 
 Let's load a gray image (1 channel) of size (height x width) 360x480 and reshape the blob to its new size :
 

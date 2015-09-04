@@ -81,7 +81,7 @@ Create a first file `conv.prototxt` describing the neuron network :
 
 Load the net
 
-    net = caffe.Net('conv.prototxt', caffe.TEST)
+    net = caffe.Net('examples/net_surgery/conv.prototxt', caffe.TEST)
 
 The names of input layers of the net are given by `print net.inputs`.
 
@@ -107,17 +107,21 @@ The net contains two ordered dictionaries
 
     To print these infos :
 
-        [(k, v.data.shape) for k, v in net.params.items()]
+        [(k, v[0].data.shape, v[1].data.shape) for k, v in net.params.items()]
 
-Blobs are a memory abstraction object (depending on the mode), and data is in the field data
+
+Blobs are a memory abstraction object (depending on the mode), and data is in the field containing the data array :
 
 {% highlight python %}
 print net.blobs['conv'].data.shape
 {% endhighlight %}
 
-You can draw the network with the following python command :
+You can draw the network with a simle python command :
 
     python python/draw_net.py examples/net_surgery/conv.prototxt my_net.png
+    open my_net.png
+
+![simple network]({{ site.url }}/img/simple_network.png)
 
 ###Compute the network output on an image as input
 
@@ -150,7 +154,7 @@ To save the net parameters `net.params`, just call :
 net.save('mymodel.caffemodel')
 {% endhighlight %}
 
-###Loading parameters to classify the image
+###Loading pretrained parameters to classify the image
 
 In the previous net, weight and bias params have been initialiazed randomly.
 
@@ -221,7 +225,7 @@ print labels[top_k]
 
 
 
-###Solve the params on training data in order to learn new models
+###Learn new models: solve the params on training data 
 
 To train a network, you need
 

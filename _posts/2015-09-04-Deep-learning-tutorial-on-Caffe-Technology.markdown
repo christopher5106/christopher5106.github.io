@@ -9,12 +9,12 @@ categories: deep learning
 
 Let's try to put things into order, in order to get a good tutorial :).
 
-####Install
+###Install
 
 First install Caffe on [Ubuntu]({{ site.url }}/big/data/2015/07/16/deep-learning-install-caffe-cudnn-cuda-for-digits-python-on-ubuntu-14-04.html) or [Mac OS]({{ site.url }}/big/data/2015/07/16/deep-learning-install-caffe-cudnn-cuda-for-digits-python-on-mac-osx.html) with Python layers activated and pycaffe path correctly set `export PYTHONPATH=~/technologies/caffe/python/:$PYTHONPATH`.
 
 
-####Launch the python shell
+###Launch the python shell
 
 In the iPython shell, load the different libraries  :
 
@@ -38,7 +38,7 @@ caffe.set_device(0)
 caffe.set_mode_gpu()
 {% endhighlight %}
 
-####Define a network model
+###Define a network model
 
 Let's create first a very simple model with a single convolution composed of 3 convolutional neurons, with a kernel of size 5x5 and a stride of 1 :
 
@@ -119,7 +119,7 @@ You can draw the network with the following python command :
 
     python python/draw_net.py examples/net_surgery/conv.prototxt my_net.png
 
-####Compute the network output on an image as input
+###Compute the network output on an image as input
 
 
 
@@ -147,7 +147,7 @@ To save the net parameters `net.params`, just call :
   net.save('mymodel.caffemodel')
 
 
-####Loading parameters to classify the image
+###Loading parameters to classify the image
 
 In the previous net, weight and bias params have been initialiazed randomly.
 
@@ -214,7 +214,7 @@ print labels[top_k]
 
 
 
-####Solve the params on training data in order to learn new models
+###Solve the params on training data in order to learn new models
 
 To train a network, you need
 
@@ -242,7 +242,7 @@ Load the
 
 
 
-####Resources :
+###Resources :
 
 [The catalog of available layers](http://caffe.berkeleyvision.org/tutorial/layers.html)
 

@@ -44,8 +44,9 @@ Let's create first a very simple model with a single convolution composed of 3 c
 
 ![simple network]({{ site.url }}/img/simple_network.png)
 
+This net will produce 3 output maps.
 
-The output map of the convolution given receptive field size has a size following the equation :
+The output map for a convolution given receptive field size has a dimension given by the following equation :
 
     output = (input - kernel_size) / stride + 1
 
@@ -93,12 +94,20 @@ The net contains two ordered dictionaries
 
     initialiazed with zeros.
 
+    To print these infos,
+
+        [(k, v.data.shape) for k, v in net.blobs.items()]
+
 - `net.params` a vector of blobs for weight and bias parameters
 
     `net.params['conv'][0]` contains the weight parameters, an array of shape (3, 1, 5, 5)
     `net.params['conv'][1]` contains the bias parameters, an array of shape (3,)
 
     initialiazed with 'weight_filler' and 'bias_filler' algorithms.
+
+    To print these infos :
+
+        [(k, v.data.shape) for k, v in net.params.items()]
 
 Blobs are a memory abstraction object (depending on the mode), and data is in the field data
 
@@ -112,7 +121,13 @@ You can draw the network with the following python command :
 
 ####Compute the network output on an image as input
 
-Let's load a gray image (1 channel) of size (height x width) 360x480 and reshape the blob (1, 1, 100, 100) to this new size (1, 1, 360, 480) :
+
+
+Let's load a gray image (1 channel) of size (height x width) 360x480 :
+
+![Gray cat]({{ site.url }}/img/cat_gray.jpg)
+
+We need reshape the data blob (1, 1, 100, 100) to this new size (1, 1, 360, 480) :
 
 {% highlight python %}
 im = np.array(Image.open('examples/images/cat_gray.jpg'))
@@ -127,10 +142,78 @@ Let's compute the blobs given this input
 
 Now `net.blobs['conv']` is filled with data, and the 3 pictures inside each of the 3 neurons (net.blobs['conv'].data[0,i]) can be plotted easily.
 
+To save the net parameters `net.params`, just call :
+
+  net.save('mymodel.caffemodel')
+
+
+####Loading parameters to classify the image
+
+In the previous net, weight and bias params have been initialiazed randomly.
+
+It's possible to load trained parameters and in this case, the result of the net will produce a classification.
+
+Many models can be downloaded from the community in the [Caffe Model Zoo](https://github.com/BVLC/caffe/wiki/Model-Zoo).
+
+Model informations are written in Github Gist format. The parameters are saved in a `.caffemodel` file specified in the gist. To download the model :
+
+    ./scripts/download_model_from_gist.sh <gist_id>
+    ./scripts/download_model_binary.py <dirname>
+
+where <dirname> is the gist directory (by default the gist is saved in the *models* directory).
+
+Let's download CaffeNet and the labels corresponding to the classes :
+
+    ./scripts/download_model_binary.py models/bvlc_reference_caffenet
+    ./data/ilsvrc12/get_ilsvrc_aux.sh
+
+This model has been trained on processed images, so you need to preprocess the image with a preprocessor.
+
+![Cat]({{ site.url }}/img/cat.jpg)
+
+In the python shell :
+
+{% highlight python %}
+#load the model
+net = caffe.Net('models/bvlc_reference_caffenet/deploy.prototxt',
+                'models/bvlc_reference_caffenet/bvlc_reference_caffenet.caffemodel',
+                caffe.TEST)
+
+# load input and configure preprocessing
+im = caffe.io.load_image('examples/images/cat.jpg')
+transformer = caffe.io.Transformer({'data': net.blobs['data'].data.shape})
+transformer.set_mean('data', np.load('python/caffe/imagenet/ilsvrc_2012_mean.npy').mean(1).mean(1))
+transformer.set_transpose('data', (2,0,1))
+transformer.set_channel_swap('data', (2,1,0))
+transformer.set_raw_scale('data', 255.0)
+
+#note we can change the batch size on-the-fly
+#since we classify only one image, we change batch size from 10 to 1
+net.blobs['data'].reshape(1,3,227,227)
+net.blobs['data'].data[...] = transformer.preprocess('data', im)
+
+#compute
+out = net.forward() # also : out = net.forward_all(data=np.asarray([transformer.preprocess('data', im)]))
+
+#predicted predicted class
+print out['prob'].argmax()
+
+#print predicted labels
+labels = np.loadtxt("data/ilsvrc12/synset_words.txt", str, delimiter='\t')
+top_k = net.blobs['prob'].data[0].flatten().argsort()[-1:-6:-1]
+print labels[top_k]
+{% endhighlight %}
+
+
 
 ####Solve the params
 
-To solve a network, you need a second protobuf file, describing the iterations parameters :
+To solve a network, you need
+
+- its definition, as seen previously
+
+- a second protobuf file, describing the parameters for the stochastic gradient deep-learning-install-caffe-cudnn-cuda-for-digits-python-on-mac-osx
+
 
 
 
@@ -148,9 +231,7 @@ Load the
 
     and load it in iPython
 
-Save the model :
 
-    net.save('mymodel.caffemodel')
 
 
 ####Resources :

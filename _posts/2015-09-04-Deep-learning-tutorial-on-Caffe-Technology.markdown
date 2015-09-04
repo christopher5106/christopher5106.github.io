@@ -16,7 +16,7 @@ First install Caffe on [Ubuntu]({{ site.url }}/big/data/2015/07/16/deep-learning
 
 ###Launch the python shell
 
-In the iPython shell, load the different libraries  :
+In the iPython shell in your Caffe repository, load the different libraries  :
 
 {% highlight python %}
 import numpy as np
@@ -53,31 +53,31 @@ The output map for a convolution given receptive field size has a dimension give
 
 Create a first file `conv.prototxt` describing the neuron network :
 
-      name: "convolution"
-      input: "data"
-      input_dim: 1
-      input_dim: 1
-      input_dim: 100
-      input_dim: 100
-      layer {
-        name: "conv"
-        type: "Convolution"
-        bottom: "data"
-        top: "conv"
-        convolution_param {
-          num_output: 3
-          kernel_size: 5
-          stride: 1
-          weight_filler {
-            type: "gaussian"
-            std: 0.01
-          }
-          bias_filler {
-            type: "constant"
-            value: 0
-          }
+    name: "convolution"
+    input: "data"
+    input_dim: 1
+    input_dim: 1
+    input_dim: 100
+    input_dim: 100
+    layer {
+      name: "conv"
+      type: "Convolution"
+      bottom: "data"
+      top: "conv"
+      convolution_param {
+        num_output: 3
+        kernel_size: 5
+        stride: 1
+        weight_filler {
+          type: "gaussian"
+          std: 0.01
+        }
+        bias_filler {
+          type: "constant"
+          value: 0
         }
       }
+    }
 
 Load the net
 
@@ -123,7 +123,7 @@ You can draw the network with a simle python command :
 
 ![simple network]({{ site.url }}/img/simple_network.png)
 
-###Compute the network output on an image as input
+###Compute the net output on an image as input
 
 
 
@@ -154,7 +154,7 @@ To save the net parameters `net.params`, just call :
 net.save('mymodel.caffemodel')
 {% endhighlight %}
 
-###Loading pretrained parameters to classify the image
+###Load pretrained parameters to classify the image
 
 In the previous net, weight and bias params have been initialiazed randomly.
 
@@ -225,7 +225,7 @@ print labels[top_k]
 
 
 
-###Learn new models: solve the params on training data 
+###Learn new models: solve the params on training data
 
 To train a network, you need
 
@@ -237,6 +237,8 @@ Load the solver
 
     solver = caffe.get_solver('examples/hdf5_classification/nonlinear_solver.prototxt')
     solver = caffe.SGDSolver('models/bvlc_reference_caffenet/solver.prototxt')
+
+Training data can be set either in the model definition, or set in the solver.
 
 
 

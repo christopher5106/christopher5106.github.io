@@ -5,16 +5,16 @@ date:   2015-09-04 23:00:51
 categories: deep learning
 ---
 
-[Caffe](http://caffe.berkeleyvision.org/) is certainly one of the best framework for deep learning, if not the best.
+[Caffe](http://caffe.berkeleyvision.org/) is certainly one of the best frameworks for deep learning, if not the best.
 
 Let's try to put things into order, in order to get a good tutorial :).
 
-##Install
+####Install
 
 First install Caffe on [Ubuntu]({{ site.url }}/big/data/2015/07/16/deep-learning-install-caffe-cudnn-cuda-for-digits-python-on-ubuntu-14-04.html) or [Mac OS]({{ site.url }}/big/data/2015/07/16/deep-learning-install-caffe-cudnn-cuda-for-digits-python-on-mac-osx.html) with Python layers ON and pycaffe path correctly set `export PYTHONPATH=~/technologies/caffe/python/:$PYTHONPATH`.
 
 
-##Launch
+####Launch
 
 In the iPython shell, load the different libraries  :
 
@@ -38,7 +38,7 @@ caffe.set_device(0)
 caffe.set_mode_gpu()
 {% endhighlight %}
 
-##Define a model
+####Define a model
 
 Let's create first a very simple model with a single convolution composed of 3 convolutional neurons, with a kernel of size 5x5 and a stride of 1 :
 
@@ -110,7 +110,7 @@ You can draw the network with the following python command :
 
     python python/draw_net.py examples/net_surgery/conv.prototxt my_net.png
 
-##Compute the network on an image
+####Compute the network on an image
 
 Let's load a gray image (1 channel) of size (height x width) 360x480 and reshape the blob to its new size :
 
@@ -128,7 +128,7 @@ Let's compute the blobs given this input
 Now `net.blobs['conv']` is not any more a zero and its subpictures can be plotted easily.
 
 
-##Solve the params
+####Solve the params
 
 To solve a network, you need a second protobuf file, describing the iterations parameters :
 
@@ -153,6 +153,6 @@ Save the model :
     net.save('mymodel.caffemodel')
 
 
-##Resources :
+####Resources :
 
 [The catalog of available layers](http://caffe.berkeleyvision.org/tutorial/layers.html)

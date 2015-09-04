@@ -123,7 +123,7 @@ You can draw the network with the following python command :
 
 
 
-Let's load a gray image (1 channel) of size (height x width) 360x480 :
+Let's load a gray image of size 1x360x480 (channel x height x width) :
 
 ![Gray cat]({{ site.url }}/img/cat_gray.jpg)
 
@@ -162,10 +162,18 @@ Model informations are written in Github Gist format. The parameters are saved i
 
 where <dirname> is the gist directory (by default the gist is saved in the *models* directory).
 
-Let's download CaffeNet and the labels corresponding to the classes :
+Let's download the CaffeNet model and the labels corresponding to the classes :
 
-    ./scripts/download_model_binary.py models/bvlc_reference_caffenet
-    ./data/ilsvrc12/get_ilsvrc_aux.sh
+{% highlight bash %}
+./scripts/download_model_binary.py models/bvlc_reference_caffenet
+./data/ilsvrc12/get_ilsvrc_aux.sh
+
+#have a look at the model
+python python/draw_net.py models/bvlc_reference_caffenet/deploy.prototxt caffenet.png
+open caffenet.png
+{% endhighlight %}
+
+![CaffeNet model]({{ site.url }}/img/caffenet_model.png)
 
 This model has been trained on processed images, so you need to preprocess the image with a preprocessor.
 
@@ -206,11 +214,11 @@ print labels[top_k]
 
 
 
-####Solve the params
+####Solve the params on training data in order to learn new models
 
-To solve a network, you need
+To train a network, you need
 
-- its definition, as seen previously
+- its model definition, as seen previously
 
 - a second protobuf file, describing the parameters for the stochastic gradient deep-learning-install-caffe-cudnn-cuda-for-digits-python-on-mac-osx
 

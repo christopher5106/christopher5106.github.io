@@ -14,7 +14,7 @@ Let's try to put things into order, in order to get a good tutorial :).
 First install Caffe on [Ubuntu]({{ site.url }}/big/data/2015/07/16/deep-learning-install-caffe-cudnn-cuda-for-digits-python-on-ubuntu-14-04.html) or [Mac OS]({{ site.url }}/big/data/2015/07/16/deep-learning-install-caffe-cudnn-cuda-for-digits-python-on-mac-osx.html) with Python layers activated and pycaffe path correctly set `export PYTHONPATH=~/technologies/caffe/python/:$PYTHONPATH`.
 
 
-####Launch
+####Launch the python shell
 
 In the iPython shell, load the different libraries  :
 
@@ -38,7 +38,7 @@ caffe.set_device(0)
 caffe.set_mode_gpu()
 {% endhighlight %}
 
-####Define a model
+####Define a network model
 
 Let's create first a very simple model with a single convolution composed of 3 convolutional neurons, with a kernel of size 5x5 and a stride of 1 :
 
@@ -98,7 +98,7 @@ The net contains two ordered dictionaries
     `net.params['conv'][0]` contains the weight parameters, an array of shape (3, 1, 5, 5)
     `net.params['conv'][1]` contains the bias parameters, an array of shape (3,)
 
-    initialiazed with 'weight_filler' and 'bias_filler'.
+    initialiazed with 'weight_filler' and 'bias_filler' algorithms.
 
 Blobs are a memory abstraction object (depending on the mode), and data is in the field data
 
@@ -112,11 +112,11 @@ You can draw the network with the following python command :
 
 ####Compute the network output on an image as input
 
-Let's load a gray image (1 channel) of size (height x width) 360x480 and reshape the blob to its new size :
+Let's load a gray image (1 channel) of size (height x width) 360x480 and reshape the blob (1, 1, 100, 100) to this new size (1, 1, 360, 480) :
 
 {% highlight python %}
-im = np.array(Image.open('examples/images/cat_gray.jpg')) #shape :
-im_input = im[np.newaxis, np.newaxis, :, :] #new shape : (1, 1, 360, 480)
+im = np.array(Image.open('examples/images/cat_gray.jpg'))
+im_input = im[np.newaxis, np.newaxis, :, :]
 net.blobs['data'].reshape(*im_input.shape)
 net.blobs['data'].data[...] = im_input
 {% endhighlight %}
@@ -125,7 +125,7 @@ Let's compute the blobs given this input
 
     net.forward()
 
-Now `net.blobs['conv']` is not any more a zero and its subpictures can be plotted easily.
+Now `net.blobs['conv']` is filled with data, and the 3 pictures inside each of the 3 neurons (net.blobs['conv'].data[0,i]) can be plotted easily.
 
 
 ####Solve the params

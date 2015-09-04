@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Deep learning tutorial on Caffe Tutorial"
+title:  "Deep learning tutorial on Caffe technology"
 date:   2015-09-04 23:00:51
 categories: deep learning
 ---

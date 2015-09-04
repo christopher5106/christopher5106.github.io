@@ -21,7 +21,7 @@ In the iPython shell, load the different libraries  :
 {% highlight python %}
 import numpy as np
 import matplotlib.pyplot as plt
-from PIL  import Image
+from PIL import Image
 import caffe
 {% endhighlight %}
 
@@ -138,14 +138,17 @@ net.blobs['data'].data[...] = im_input
 
 Let's compute the blobs given this input
 
-    net.forward()
+{% highlight python %}
+net.forward()
+{% endhighlight %}
 
-Now `net.blobs['conv']` is filled with data, and the 3 pictures inside each of the 3 neurons (net.blobs['conv'].data[0,i]) can be plotted easily.
+Now `net.blobs['conv']` is filled with data, and the 3 pictures inside each of the 3 neurons (`net.blobs['conv'].data[0,i]`) can be plotted easily.
 
 To save the net parameters `net.params`, just call :
 
-  net.save('mymodel.caffemodel')
-
+{% highlight python %}
+net.save('mymodel.caffemodel')
+{% endhighlight %}
 
 ###Loading parameters to classify the image
 
@@ -188,7 +191,6 @@ net = caffe.Net('models/bvlc_reference_caffenet/deploy.prototxt',
                 caffe.TEST)
 
 # load input and configure preprocessing
-im = caffe.io.load_image('examples/images/cat.jpg')
 transformer = caffe.io.Transformer({'data': net.blobs['data'].data.shape})
 transformer.set_mean('data', np.load('python/caffe/imagenet/ilsvrc_2012_mean.npy').mean(1).mean(1))
 transformer.set_transpose('data', (2,0,1))
@@ -198,10 +200,15 @@ transformer.set_raw_scale('data', 255.0)
 #note we can change the batch size on-the-fly
 #since we classify only one image, we change batch size from 10 to 1
 net.blobs['data'].reshape(1,3,227,227)
+
+#load the image in the data layer
+im = caffe.io.load_image('examples/images/cat.jpg')
 net.blobs['data'].data[...] = transformer.preprocess('data', im)
 
 #compute
-out = net.forward() # also : out = net.forward_all(data=np.asarray([transformer.preprocess('data', im)]))
+out = net.forward()
+
+# other possibility : out = net.forward_all(data=np.asarray([transformer.preprocess('data', im)]))
 
 #predicted predicted class
 print out['prob'].argmax()
@@ -220,25 +227,12 @@ To train a network, you need
 
 - its model definition, as seen previously
 
-- a second protobuf file, describing the parameters for the stochastic gradient deep-learning-install-caffe-cudnn-cuda-for-digits-python-on-mac-osx
+- a second protobuf file, the solver file, describing the parameters for the stochastic gradient
 
-
-
-
-Create the solver file `solv`
-
-
-Load the
-
-    net = caffe.Net('models/bvlc_reference_caffenet/deploy.prototxt',
-                'models/bvlc_reference_caffenet/bvlc_reference_caffenet.caffemodel',
-                caffe.TEST)
-
+Load the solver
 
     solver = caffe.get_solver('examples/hdf5_classification/nonlinear_solver.prototxt')
-
-    and load it in iPython
-
+    solver = caffe.SGDSolver('models/bvlc_reference_caffenet/solver.prototxt')
 
 
 

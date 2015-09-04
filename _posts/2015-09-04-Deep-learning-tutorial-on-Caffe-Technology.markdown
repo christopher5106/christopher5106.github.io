@@ -237,3 +237,7 @@ Load the
 ####Resources :
 
 [The catalog of available layers](http://caffe.berkeleyvision.org/tutorial/layers.html)
+
+[Create a classification map with net surgery on a trained model](http://localhost:8888/notebooks/examples/net_surgery.ipynb)
+
+![classification map]({{ site.url }}/img/classification_map.png)

@@ -473,11 +473,28 @@ The different input layer can be :
           }
         }
 
+###Compute accuracy of the model on the test data
+
+Once solved,
+
+{% highlight python %}
+accuracy = 0
+batch_size = solver.test_nets[0].blobs['data'].num
+test_iters = int(len(Xt) / batch_size)
+for i in range(test_iters):
+    solver.test_nets[0].forward()
+    accuracy += solver.test_nets[0].blobs['accuracy'].data
+accuracy /= test_iters
+
+print("Accuracy: {:.3f}".format(accuracy))
+{% endhighlight %}
+
+**The higher the accuracy, the better !**
 
 ###Resources :
 
 [The catalog of available layers](http://caffe.berkeleyvision.org/tutorial/layers.html)
 
-[Create a classification map with net surgery on a trained model](http://localhost:8888/notebooks/examples/net_surgery.ipynb)
+[Create a classification map with net surgery to insert a trained model into an extended model where convolutions will be innerproducts spatially](http://localhost:8888/notebooks/examples/net_surgery.ipynb)
 
 ![classification map]({{ site.url }}/img/classification_map.png)

@@ -371,7 +371,7 @@ To train a network, you need
 
 - its model definition, as seen previously
 
-- a second protobuf file, the `solver file`, describing the parameters for the stochastic gradient.
+- a second protobuf file, the *solver file*, describing the parameters for the stochastic gradient.
 
 For example, the CaffeNet solver :
 
@@ -395,7 +395,7 @@ Usually, you define a train net, for training, with training data, and a test se
     train_net: "examples/hdf5_classification/nonlinear_auto_train.prototxt"
     test_net: "examples/hdf5_classification/nonlinear_auto_test.prototxt"
 
-or you can also specify only one prototxt file, adding an **include phase** statement to layers different in training and testing :
+or you can also specify only one prototxt file, adding an **include phase** statement for the layers that have to be different in training and testing phases, such as input data :
 
     layer {
       name: "data"

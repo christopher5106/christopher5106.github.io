@@ -11,7 +11,7 @@ Let's try to put things into order, in order to get a good tutorial :).
 
 ###Install
 
-First install Caffe on [Ubuntu]({{ site.url }}/big/data/2015/07/16/deep-learning-install-caffe-cudnn-cuda-for-digits-python-on-ubuntu-14-04.html) or [Mac OS]({{ site.url }}/big/data/2015/07/16/deep-learning-install-caffe-cudnn-cuda-for-digits-python-on-mac-osx.html) with Python layers activated and pycaffe path correctly set `export PYTHONPATH=~/technologies/caffe/python/:$PYTHONPATH`.
+First install Caffe following my tutorials on [Ubuntu]({{ site.url }}/big/data/2015/07/16/deep-learning-install-caffe-cudnn-cuda-for-digits-python-on-ubuntu-14-04.html) or [Mac OS]({{ site.url }}/big/data/2015/07/16/deep-learning-install-caffe-cudnn-cuda-for-digits-python-on-mac-osx.html) with Python layers activated and pycaffe path correctly set `export PYTHONPATH=~/technologies/caffe/python/:$PYTHONPATH`.
 
 
 ###Launch the python shell
@@ -40,11 +40,11 @@ caffe.set_mode_gpu()
 
 ###Define a network model
 
-Let's create first a very simple model with a single convolution composed of 3 convolutional neurons, with a kernel of size 5x5 and a stride of 1 :
+Let's create first a very simple model with a single convolution composed of 3 convolutional neurons, with kernel of size 5x5 and stride of 1 :
 
 ![simple network]({{ site.url }}/img/simple_network.png)
 
-This net will produce 3 output maps.
+This net will produce 3 output maps from an input map.
 
 The output map for a convolution given receptive field size has a dimension given by the following equation :
 
@@ -87,14 +87,14 @@ The names of input layers of the net are given by `print net.inputs`.
 
 The net contains two ordered dictionaries
 
-- `net.blobs` for data  :
+- `net.blobs` for input data and its propagation in the layers :
 
     `net.blobs['data']` contains input data, an array  of shape (1, 1, 100, 100)
     `net.blobs['conv']` contains computed data in layer 'conv' (1, 3, 96, 96)
 
     initialiazed with zeros.
 
-    To print these infos,
+    To print the infos,
 
         [(k, v.data.shape) for k, v in net.blobs.items()]
 
@@ -105,21 +105,23 @@ The net contains two ordered dictionaries
 
     initialiazed with 'weight_filler' and 'bias_filler' algorithms.
 
-    To print these infos :
+    To print the infos :
 
         [(k, v[0].data.shape, v[1].data.shape) for k, v in net.params.items()]
 
 
-Blobs are a memory abstraction object (depending on the mode), and data is in the field containing the data array :
+Blobs are memory abstraction objects (with execution depending on the mode), and data is contained in the field *data* as an array :
 
 {% highlight python %}
 print net.blobs['conv'].data.shape
 {% endhighlight %}
 
-You can draw the network with a simle python command :
+To draw the network, a simle python command :
 
     python python/draw_net.py examples/net_surgery/conv.prototxt my_net.png
     open my_net.png
+
+This will print the following image :
 
 ![simple network]({{ site.url }}/img/simple_network.png)
 
@@ -127,11 +129,11 @@ You can draw the network with a simle python command :
 
 
 
-Let's load a gray image of size 1x360x480 (channel x height x width) :
+Let's load a gray image of size 1x360x480 (channel x height x width) into the previous net :
 
 ![Gray cat]({{ site.url }}/img/cat_gray.jpg)
 
-We need reshape the data blob (1, 1, 100, 100) to this new size (1, 1, 360, 480) :
+We need to reshape the data blob (1, 1, 100, 100) to the new size (1, 1, 360, 480) to fit the image :
 
 {% highlight python %}
 im = np.array(Image.open('examples/images/cat_gray.jpg'))
@@ -154,13 +156,13 @@ To save the net parameters `net.params`, just call :
 net.save('mymodel.caffemodel')
 {% endhighlight %}
 
-###Load pretrained parameters to classify the image
+###Load pretrained parameters to classify an image
 
 In the previous net, weight and bias params have been initialiazed randomly.
 
-It's possible to load trained parameters and in this case, the result of the net will produce a classification.
+It is possible to load trained parameters and in this case, the result of the net will produce a classification.
 
-Many models can be downloaded from the community in the [Caffe Model Zoo](https://github.com/BVLC/caffe/wiki/Model-Zoo).
+Many trained models can be downloaded from the community in the [Caffe Model Zoo](https://github.com/BVLC/caffe/wiki/Model-Zoo), such as car classification, flower classification, digit classification...
 
 Model informations are written in Github Gist format. The parameters are saved in a `.caffemodel` file specified in the gist. To download the model :
 
@@ -182,11 +184,11 @@ open caffenet.png
 
 ![CaffeNet model]({{ site.url }}/img/caffenet_model.png)
 
-This model has been trained on processed images, so you need to preprocess the image with a preprocessor.
+This model has been trained on processed images, so you need to preprocess the image with a preprocessor, before saving it in the blob.
 
 ![Cat]({{ site.url }}/img/cat.jpg)
 
-In the python shell :
+That is, in the python shell :
 
 {% highlight python %}
 #load the model
@@ -223,7 +225,11 @@ top_k = net.blobs['prob'].data[0].flatten().argsort()[-1:-6:-1]
 print labels[top_k]
 {% endhighlight %}
 
+It will print you the top classes detected for the images.
+
 ###Define a model in Python
+
+It is also possible to define the net model directly in Python, and save it to a prototxt files. Here are the commands :
 
 {% highlight python %}
 from caffe import layers as L
@@ -359,16 +365,36 @@ will produce the prototxt file :
 
 ###Learn : solve the params on training data
 
+It is now time to create your own model, and training the parameters on training data.
+
 To train a network, you need
 
 - its model definition, as seen previously
 
-- a second protobuf file, the solver file, describing the parameters for the stochastic gradient
+- a second protobuf file, the `solver file`, describing the parameters for the stochastic gradient.
+
+For example, the CaffeNet solver :
+
+    net: "models/bvlc_reference_caffenet/train_val.prototxt"
+    test_iter: 1000
+    test_interval: 1000
+    base_lr: 0.01
+    lr_policy: "step"
+    gamma: 0.1
+    stepsize: 100000
+    display: 20
+    max_iter: 450000
+    momentum: 0.9
+    weight_decay: 0.0005
+    snapshot: 10000
+    snapshot_prefix: "models/bvlc_reference_caffenet/caffenet_train"
+    solver_mode: GPU
 
 Load the solver
 
-    solver = caffe.get_solver('examples/hdf5_classification/nonlinear_solver.prototxt')
     solver = caffe.SGDSolver('models/bvlc_reference_caffenet/solver.prototxt')
+    #or also : solver = caffe.get_solver('examples/hdf5_classification/nonlinear_solver.prototxt')
+
 
 Training data can be set either in the model definition, or set in the solver.
 
@@ -394,24 +420,23 @@ Either you can define the train and test set in the prototxt solver file
 
     train_net: "examples/hdf5_classification/nonlinear_auto_train.prototxt"
     test_net: "examples/hdf5_classification/nonlinear_auto_test.prototxt"
+
 or you can also specify two different layers in the prototxt model file, using the "include phase" statement
 
     layer {
-    name: "data"
-    type: "Data"
-    top: "data"
-    top: "label"
-    include {
-      phase: TRAIN
+      name: "data"
+      type: "Data"
+      top: "data"
+      top: "label"
+      include {
+        phase: TRAIN
+      }
+      data_param {
+        source: "examples/imagenet/ilsvrc12_train_lmdb"
+        batch_size: 256
+        backend: LMDB
+      }
     }
-    data_param {
-      source: "examples/imagenet/ilsvrc12_train_lmdb"
-      batch_size: 256
-      backend: LMDB
-    }
-    }
-
-
     layer {
       name: "data"
       type: "Data"
@@ -428,9 +453,26 @@ or you can also specify two different layers in the prototxt model file, using t
       }
     }
 
+The different input layer can be :
+
+- 'Data' : for data saved in a LMDB database, such as before
+
+- 'DataImage' : for data in a txt file listing all the files
 
 
 
+- 'HDF5Data' for data saved in HDF5 files
+
+    layer {
+      name: "data"
+      type: "HDF5Data"
+      top: "data"
+      top: "label"
+      hdf5_data_param {
+        source: "examples/hdf5_classification/data/train.txt"
+        batch_size: 10
+      }
+    }
 
 
 ###Resources :

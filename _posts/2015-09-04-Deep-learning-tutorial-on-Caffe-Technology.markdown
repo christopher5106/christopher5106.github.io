@@ -390,38 +390,12 @@ For example, the CaffeNet solver :
     snapshot_prefix: "models/bvlc_reference_caffenet/caffenet_train"
     solver_mode: GPU
 
-Load the solver
-
-    solver = caffe.SGDSolver('models/bvlc_reference_caffenet/solver.prototxt')
-    #or also : solver = caffe.get_solver('examples/hdf5_classification/nonlinear_solver.prototxt')
-
-
-Training data can be set either in the model definition, or set in the solver.
-
-To fill the layers to check if every blobs is filled correctly
-
-    solver.net.forward()  # train net
-    solver.test_nets[0].forward()  # test net (there can be more than one)
-
-To launch one step of the gradient descent :
-
-    solver.step(1)
-
-To run the full gradient descent :
-
-    solver.solve()
-
-
-###Input data, train and test set
-
-In order to learn a model, you usually set a training set and a test set.
-
-Either you can define the train and test set in the prototxt solver file
+Usually, you define a train net, for training, with training data, and a test set, for validation. Either you can define the train and test nets in the prototxt solver file
 
     train_net: "examples/hdf5_classification/nonlinear_auto_train.prototxt"
     test_net: "examples/hdf5_classification/nonlinear_auto_test.prototxt"
 
-or you can also specify two different layers in the prototxt model file, using the "include phase" statement
+or you can also specify only one prototxt file, adding an **include phase** statement to layers different in training and testing :
 
     layer {
       name: "data"
@@ -453,6 +427,31 @@ or you can also specify two different layers in the prototxt model file, using t
       }
     }
 
+Data can also be set directly in Python.
+
+Load the solver in python
+
+    solver = caffe.SGDSolver('models/bvlc_reference_caffenet/solver.prototxt')
+    #or also : solver = caffe.get_solver('examples/hdf5_classification/nonlinear_solver.prototxt')
+
+Now, it's time to begin to see if everything works well and to fill the layers in a forward propagation in the net :
+
+    solver.net.forward()  # train net
+    solver.test_nets[0].forward()  # test net (there can be more than one)
+
+To launch one step of the gradient descent :
+
+    solver.step(1)
+
+To run the full gradient descent :
+
+    solver.solve()
+
+
+###Input data, train and test set
+
+In order to learn a model, you usually set a training set and a test set.
+
 The different input layer can be :
 
 - 'Data' : for data saved in a LMDB database, such as before
@@ -463,16 +462,16 @@ The different input layer can be :
 
 - 'HDF5Data' for data saved in HDF5 files
 
-    layer {
-      name: "data"
-      type: "HDF5Data"
-      top: "data"
-      top: "label"
-      hdf5_data_param {
-        source: "examples/hdf5_classification/data/train.txt"
-        batch_size: 10
-      }
-    }
+        layer {
+          name: "data"
+          type: "HDF5Data"
+          top: "data"
+          top: "label"
+          hdf5_data_param {
+            source: "examples/hdf5_classification/data/train.txt"
+            batch_size: 10
+          }
+        }
 
 
 ###Resources :

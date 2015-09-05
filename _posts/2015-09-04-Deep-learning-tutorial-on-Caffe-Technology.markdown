@@ -456,9 +456,25 @@ The different input layer can be :
 
 - 'Data' : for data saved in a LMDB database, such as before
 
-- 'DataImage' : for data in a txt file listing all the files
+- 'ImageData' : for data in a txt file listing all the files
 
-
+    layer {
+      name: "data"
+      type: "ImageData"
+      top: "data"
+      top: "label"
+      transform_param {
+        mirror: false
+        crop_size: 227
+        mean_file: "data/ilsvrc12/imagenet_mean.binaryproto"
+      }
+      image_data_param {
+        source: "examples/_temp/file_list.txt"
+        batch_size: 50
+        new_height: 256
+        new_width: 256
+      }
+    }
 
 - 'HDF5Data' for data saved in HDF5 files
 
@@ -498,3 +514,5 @@ print("Accuracy: {:.3f}".format(accuracy))
 [Create a classification map with net surgery to insert a trained model into an extended model where convolutions will be innerproducts spatially](http://localhost:8888/notebooks/examples/net_surgery.ipynb)
 
 ![classification map]({{ site.url }}/img/classification_map.png)
+
+[Parameter sharing between Siamese networks](http://caffe.berkeleyvision.org/gathered/examples/siamese.html)

@@ -223,9 +223,141 @@ top_k = net.blobs['prob'].data[0].flatten().argsort()[-1:-6:-1]
 print labels[top_k]
 {% endhighlight %}
 
+###Define a model in Python
+
+{% highlight python %}
+from caffe import layers as L
+from caffe import params as P
+
+def lenet(lmdb, batch_size):
+    # our version of LeNet: a series of linear and simple nonlinear transformations
+    n = caffe.NetSpec()
+    n.data, n.label = L.Data(batch_size=batch_size, backend=P.Data.LMDB, source=lmdb,
+                             transform_param=dict(scale=1./255), ntop=2)
+    n.conv1 = L.Convolution(n.data, kernel_size=5, num_output=20, weight_filler=dict(type='xavier'))
+    n.pool1 = L.Pooling(n.conv1, kernel_size=2, stride=2, pool=P.Pooling.MAX)
+    n.conv2 = L.Convolution(n.pool1, kernel_size=5, num_output=50, weight_filler=dict(type='xavier'))
+    n.pool2 = L.Pooling(n.conv2, kernel_size=2, stride=2, pool=P.Pooling.MAX)
+    n.ip1 = L.InnerProduct(n.pool2, num_output=500, weight_filler=dict(type='xavier'))
+    n.relu1 = L.ReLU(n.ip1, in_place=True)
+    n.ip2 = L.InnerProduct(n.relu1, num_output=10, weight_filler=dict(type='xavier'))
+    n.loss = L.SoftmaxWithLoss(n.ip2, n.label)
+    return n.to_proto()
+
+with open('examples/mnist/lenet_auto_train.prototxt', 'w') as f:
+    f.write(str(lenet('examples/mnist/mnist_train_lmdb', 64)))
+
+with open('examples/mnist/lenet_auto_test.prototxt', 'w') as f:
+    f.write(str(lenet('examples/mnist/mnist_test_lmdb', 100)))
+
+{% endhighlight %}
+
+will produce the prototxt file :
 
 
-###Learn new models: solve the params on training data
+    layer {
+      name: "data"
+      type: "Data"
+      top: "data"
+      top: "label"
+      transform_param {
+        scale: 0.00392156862745
+      }
+      data_param {
+        source: "examples/mnist/mnist_train_lmdb"
+        batch_size: 64
+        backend: LMDB
+      }
+    }
+    layer {
+      name: "conv1"
+      type: "Convolution"
+      bottom: "data"
+      top: "conv1"
+      convolution_param {
+        num_output: 20
+        kernel_size: 5
+        weight_filler {
+          type: "xavier"
+        }
+      }
+    }
+    layer {
+      name: "pool1"
+      type: "Pooling"
+      bottom: "conv1"
+      top: "pool1"
+      pooling_param {
+        pool: MAX
+        kernel_size: 2
+        stride: 2
+      }
+    }
+    layer {
+      name: "conv2"
+      type: "Convolution"
+      bottom: "pool1"
+      top: "conv2"
+      convolution_param {
+        num_output: 50
+        kernel_size: 5
+        weight_filler {
+          type: "xavier"
+        }
+      }
+    }
+    layer {
+      name: "pool2"
+      type: "Pooling"
+      bottom: "conv2"
+      top: "pool2"
+      pooling_param {
+        pool: MAX
+        kernel_size: 2
+        stride: 2
+      }
+    }
+    layer {
+      name: "ip1"
+      type: "InnerProduct"
+      bottom: "pool2"
+      top: "ip1"
+      inner_product_param {
+        num_output: 500
+        weight_filler {
+          type: "xavier"
+        }
+      }
+    }
+    layer {
+      name: "relu1"
+      type: "ReLU"
+      bottom: "ip1"
+      top: "ip1"
+    }
+    layer {
+      name: "ip2"
+      type: "InnerProduct"
+      bottom: "ip1"
+      top: "ip2"
+      inner_product_param {
+        num_output: 10
+        weight_filler {
+          type: "xavier"
+        }
+      }
+    }
+    layer {
+      name: "loss"
+      type: "SoftmaxWithLoss"
+      bottom: "ip2"
+      bottom: "label"
+      top: "loss"
+    }
+
+
+
+###Learn : solve the params on training data
 
 To train a network, you need
 
@@ -239,6 +371,65 @@ Load the solver
     solver = caffe.SGDSolver('models/bvlc_reference_caffenet/solver.prototxt')
 
 Training data can be set either in the model definition, or set in the solver.
+
+To fill the layers to check if every blobs is filled correctly
+
+    solver.net.forward()  # train net
+    solver.test_nets[0].forward()  # test net (there can be more than one)
+
+To launch one step of the gradient descent :
+
+    solver.step(1)
+
+To run the full gradient descent :
+
+    solver.solve()
+
+
+###Input data, train and test set
+
+In order to learn a model, you usually set a training set and a test set.
+
+Either you can define the train and test set in the prototxt solver file
+
+    train_net: "examples/hdf5_classification/nonlinear_auto_train.prototxt"
+    test_net: "examples/hdf5_classification/nonlinear_auto_test.prototxt"
+or you can also specify two different layers in the prototxt model file, using the "include phase" statement
+
+    layer {
+    name: "data"
+    type: "Data"
+    top: "data"
+    top: "label"
+    include {
+      phase: TRAIN
+    }
+    data_param {
+      source: "examples/imagenet/ilsvrc12_train_lmdb"
+      batch_size: 256
+      backend: LMDB
+    }
+    }
+
+
+    layer {
+      name: "data"
+      type: "Data"
+      top: "data"
+      top: "label"
+      top: "label"
+      include {
+        phase: TEST
+      }
+      data_param {
+        source: "examples/imagenet/ilsvrc12_val_lmdb"
+        batch_size: 50
+        backend: LMDB
+      }
+    }
+
+
+
 
 
 

@@ -429,10 +429,16 @@ or you can also specify only one prototxt file, adding an **include phase** stat
 
 Data can also be set directly in Python.
 
+
 Load the solver in python
 
+    solver = caffe.get_solver('models/bvlc_reference_caffenet/solver.prototxt')
+
+By default it is the SGD solver. It's possible to specify another `solver_type` in the prototxt solver file ([ADAGRAD or NESTEROV](http://caffe.berkeleyvision.org/tutorial/solver.html)). It's also possible to load directly
+
     solver = caffe.SGDSolver('models/bvlc_reference_caffenet/solver.prototxt')
-    #or also : solver = caffe.get_solver('examples/hdf5_classification/nonlinear_solver.prototxt')
+
+but be careful since `SGDSolver` will use SGDSolver whatever is configured in the prototxt file... so it is less reliable.
 
 Now, it's time to begin to see if everything works well and to fill the layers in a forward propagation in the net :
 

@@ -464,23 +464,23 @@ The different input layer can be :
 
 - 'ImageData' : for data in a txt file listing all the files
 
-    layer {
-      name: "data"
-      type: "ImageData"
-      top: "data"
-      top: "label"
-      transform_param {
-        mirror: false
-        crop_size: 227
-        mean_file: "data/ilsvrc12/imagenet_mean.binaryproto"
-      }
-      image_data_param {
-        source: "examples/_temp/file_list.txt"
-        batch_size: 50
-        new_height: 256
-        new_width: 256
-      }
-    }
+        layer {
+          name: "data"
+          type: "ImageData"
+          top: "data"
+          top: "label"
+          transform_param {
+            mirror: false
+            crop_size: 227
+            mean_file: "data/ilsvrc12/imagenet_mean.binaryproto"
+          }
+          image_data_param {
+            source: "examples/_temp/file_list.txt"
+            batch_size: 50
+            new_height: 256
+            new_width: 256
+          }
+        }
 
 - 'HDF5Data' for data saved in HDF5 files
 

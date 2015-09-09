@@ -71,28 +71,24 @@ In the shell :
 
 {% highlight bash %}
 import com.cloudera.datascience.risk._
+import com.cloudera.datascience.risk.RunRisk._
 import java.io.File
 import org.apache.commons.math3.stat.regression.OLSMultipleLinearRegression
 import org.apache.commons.math3.stat.correlation.Covariance
 import org.apache.commons.math3.stat.correlation.PearsonsCorrelation
 import com.github.nscala_time.time.Imports._
 import breeze.plot._
-import com.cloudera.datascience.risk._
-import com.cloudera.datascience.risk.RunRisk._
 val fiveYears = 260 * 5+10
 val start = new DateTime(2009, 10, 23, 0, 0)
 val end = new DateTime(2014, 10, 23, 0, 0)
-val stocks1 = readHistories(new File(prefix + "data/stocks/")).filter(_.size >=
+val stocks1 = readHistories(new File("./data/stocks/")).filter(_.size >=
 fiveYears)
 val stocks = stocks1.map(trimToRegion(_, start, end)).map(fillInHistory(_, start
 , end))
 val factorsPrefix = "./data/factors/"
-val factors1 = Array("crudeoil.tsv", "us30yeartreasurybonds.tsv").map(x => new F
-ile(factorsPrefix + x)).map(readInvestingDotComHistory)
-val factors2 = Array("SNP.csv", "NDX.csv").map(x => new File(factorsPrefix + x))
-.map(readYahooHistory)
-val factors = (factors1 ++ factors2).map(trimToRegion(_, start, end)).map(fillIn
-History(_, start, end))
+val factors1 = Array("crudeoil.tsv", "us30yeartreasurybonds.tsv").map(x => new File(factorsPrefix + x)).map(readInvestingDotComHistory)
+val factors2 = Array("SNP.csv", "NDX.csv").map(x => new File(factorsPrefix + x)).map(readYahooHistory)
+val factors = (factors1 ++ factors2).map(trimToRegion(_, start, end)).map(fillInHistory(_, start, end))
 val stocksReturns = stocks.map(twoWeekReturns)
 val factorsReturns = factors.map(twoWeekReturns)
 val factorMat = factorMatrix(factorsReturns)
@@ -108,7 +104,7 @@ val factorCov = new Covariance(factorMat).getCovarianceMatrix().getData()
 println(factorCov.map(_.mkString("\t")).mkString("\n"))
 val factorMeans = factorsReturns.map(factor => factor.sum / factor.size)
 val broadcastInstruments = sc.broadcast(factorWeights)
-val parallelism = 1
+val parallelism = 1000
 val baseSeed = 1496L
 val seeds = (baseSeed until baseSeed + parallelism)
 val seedRdd = sc.parallelize(seeds, parallelism)
@@ -128,6 +124,13 @@ which leads to status of each executor (you can check that memory is 6G out of 6
 
 ![spark application interface]({{ site.url }}/img/spark_client.png)
 
+Be careful if you want to have multiple shell, you have to restrict the number of cores per shell using option in spark-shell :
+
+    --total-executor-cores 4
+
+such as : 
+
+    ~/technologies/spark-1.4.1-bin-hadoop2.6/bin/spark-shell --master spark://ec2-52-19-187-119.eu-west-1.compute.amazonaws.com:7077 --driver-memory 1g --executor-memory 1g --driver-cores 1 --executor-cores 1 --total-executor-cores 4
 
 #Geometric brownian motion
 

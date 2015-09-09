@@ -27,6 +27,8 @@ where
 
 - market factor returns follow a  multivariate normal distribution since market factors are often correlated.
 
+I take this example from ["Advanced Analytics with Spark" by Sandy Ryza, Uri Laserson, Sean Owen and Josh Wills (O'Reilly)."](http://shop.oreilly.com/product/0636920035091.do). I won't explain the book, but give details on how to reproduce the results.
+
 {% highlight bash %}
 #download the code (commit eed30d7214e0e7996068083f2ac6793e6375a768)
 cd ~/examples
@@ -34,8 +36,10 @@ git clone https://github.com/sryza/aas
 cd aas
 mvn install
 cd ch09-risk/data
+
 #download all stocks in the NASDAQ index :
 ./download-all-symbols.sh
+
 #download indexes SP500 et Nasdaq :
 mkdir factors
 ./download-symbol.sh SNP factors
@@ -44,19 +48,17 @@ wget https://s3-eu-west-1.amazonaws.com/christopherbourez/public/data/factors/ND
 wget https://s3-eu-west-1.amazonaws.com/christopherbourez/public/data/factors/crudeoil.tsv
 wget https://s3-eu-west-1.amazonaws.com/christopherbourez/public/data/factors/us30yeartreasurybonds.tsv
 cd ../..
-{% endhighlight %}
 
-The script computes the multivariate normal distribution parameters for the market factor returns, the linear model between market factor returns and market returns, N trials distributed on the cluster, compute the VAR/CVAR and evaluate the confidence interval and the Kupiec's proportion of failures (POF) for the computed VAR and CVAR.
-
-{% highlight bash %}
 #launch a cluster of 5 instances (1 master and 4 slaves)
 ~/technologies/spark-1.4.1-bin-hadoop2.6/ec2/spark-ec2 -k sparkclusterkey -i ~/sparkclusterkey.pem --region=eu-west-1 --copy-aws-credentials --instance-type=m1.large -s 4 --hadoop-major-version=2 launch spark-cluster
 
 #submit the job
 master=ec2-IP.REGION.compute.amazonaws.com
 ~/technologies/spark-1.4.1-bin-hadoop2.6/bin/spark-submit --executor-memory 6g --driver-memory 6g --driver-java-options "-Duser.country=UK -Duser.language=en" --conf "spark.executor.extraJavaOptions=-Duser.country=UK -Duser.language=en" --class com.cloudera.datascience.risk.RunRisk --master spark://${master}:7077 --deploy-mode client target/ch09-risk-1.0.0-jar-with-dependencies.jar
-
 {% endhighlight %}
+
+The code is explained in details in the ["Advanced Analytics with Spark" by Sandy Ryza, Uri Laserson, Sean Owen and Josh Wills (O'Reilly)."](http://shop.oreilly.com/product/0636920035091.do). The script computes the multivariate normal distribution parameters for the market factor returns, the linear model between market factor returns and market returns, N trials distributed on the cluster, compute the VAR/CVAR and evaluate the confidence interval and the Kupiec's proportion of failures (POF) for the computed VAR and CVAR.
+
 
 Rather than submitting the whole class, you can also submit step-by-step the instructions in the spark-shell :
 
@@ -122,7 +124,7 @@ At any moment, the status of your cluster can be checked on the interface of the
 
 ![spark application interface]({{ site.url }}/img/spark_master.png)
 
-which leads to status of each executor and to your client (localhost:4040) :
+which leads to status of each executor (you can check that memory is 6G out of 6.3G available) and to your client (localhost:4040) :
 
 ![spark application interface]({{ site.url }}/img/spark_client.png)
 

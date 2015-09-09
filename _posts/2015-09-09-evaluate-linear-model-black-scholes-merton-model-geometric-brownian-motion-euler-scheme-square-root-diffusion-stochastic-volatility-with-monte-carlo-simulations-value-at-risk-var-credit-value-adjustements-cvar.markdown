@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Evaluate linear model, geometric brownian motion (Black-Scholes-Merton model), square-root diffusion, stochastic volatility, with Monte Carlo Simulations for Value at Risk and Credit Value Ajustements"
+title:  "Evaluate linear model, geometric brownian motion (Black-Scholes-Merton model), square-root diffusion, stochastic volatility, with Monte Carlo Simulations for Value at Risk and Credit Value Adjustements"
 date:   2015-09-09 23:00:51
 categories: finance
 ---

@@ -97,4 +97,4 @@ The training file has letters with a better background :
 | Tesseract trained language      | 93      |
 | Caffe trained (NN)  | 152 |
 
-Caffe results do not improve, but Tesseract results are better on black & white images. This comes from the fact the first layers of the neural network do the preprocessing.
+Tesseract results are better on black & white images. Caffe results do not improve, this comes from the fact the first layers of the neural network do the preprocessing.

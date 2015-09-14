@@ -63,7 +63,7 @@ I trained both technologies and here is the result :
 
 | Technology        | Correct results           |
 | ------------- |:-------------:|
-| Tesseract eng language      | 82 |
+| Tesseract eng language      | 64 |
 | Tesseract trained language      | 71      |
 | Caffe trained (NN)  | 154 |
 

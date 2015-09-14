@@ -13,7 +13,7 @@ I first created a simple "plate annotation tool"
 
 in order to create a text file labelling the data, one line per character
 
-    image_path  character  x  y width height orientation
+    image_path,character,x,y,width,height,orientation
 
 in a CSV format. Licence plates are detected with a cascade classifier and letters with the findContours method from OpenCV.
 

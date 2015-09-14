@@ -76,4 +76,6 @@ Caffe is 97% right. The wrong matches are :
     D 0
     D Q
 
-Given that we know infer the letter/number shema for a licence plate (LL-NNN-LL or NN-LLL-NN) with a good precision, it's in fact a 99% correctness, that means one wrong letter every hundred letters with Caffe.
+Given that we can now infer the letter/number shema for a licence plate (LL-NNN-LL or NN-LLL-NN) with a good precision, it's in fact a **99% correctness**, that means one wrong letter every hundred letters thanks to deep learning. 
+
+There remains a group of letters that is still hardly distinguishable (O-D-Q) under poor conditions.

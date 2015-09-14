@@ -21,7 +21,7 @@ I created a convertion tool
 
     ./extract file.csv output_dir --backend=[lmdb|leveldb|directory|tesseract]
 
-to convert this CSV file to their respective format for [Tesseract]({{ site.url }}/optical/character/recognition/2015/09/01/training-optical-character-recognition-technology-tesseract.html) and [Caffe learning]({{ site.url }}/deep/learning/2015/09/04/Deep-learning-tutorial-on-Caffe-Technology.html).
+to convert this CSV file to their respective format for [Tesseract]({{ site.url }}/optical/character/recognition/2015/09/01/training-optical-character-recognition-technology-tesseract.html) and [Caffe learning]({{ site.url }}/deep/learning/2015/09/04/Deep-learning-tutorial-on-Caffe-Technology.html). The *directory* option exports the extracts into a tree of directories, one directory per letter, which is a great way for me to check the labelling errors.
 
 For Tesseract, this will bring me such a Tiff file with a .box file :
 
@@ -63,8 +63,8 @@ I trained both technologies and here is the result :
 
 | Technology        | Correct results           |
 | ------------- |:-------------:|
-| Tesseract eng language      | 72 |
-| Tesseract trained      | -      |
+| Tesseract eng language      | 63 |
+| Tesseract trained language      | 65      |
 | Caffe trained (NN)  | 154 |
 
 Caffe is 97% right. The wrong matches are :
@@ -76,6 +76,19 @@ Caffe is 97% right. The wrong matches are :
     D 0
     D Q
 
-Given that we can now infer the letter/number shema for a licence plate (LL-NNN-LL or NN-LLL-NN) with a good precision, it's in fact a **99% correctness**, that means *one wrong letter every hundred letters* thanks to deep learning. 
+Given that we can now infer the letter/number shema for a licence plate (LL-NNN-LL or NN-LLL-NN) with a good precision, it's in fact a **99% correctness**, that means *one wrong letter every hundred letters* thanks to deep learning.
 
 There remains a group of letters that is still hardly distinguishable (O-D-Q) under poor conditions.
+
+Let's try some optimizations : previous results were computed on the gray image of the image. Let's give a try on the thresholded image with
+
+    cvtColor(image,gray_image,CV_BGR2GRAY);
+    adaptiveThreshold(gray_image,threshold_image,255,ADAPTIVE_THRESH_MEAN_C,THRESH_BINARY,11,12);
+
+![Tiff file for Tessearct]({{ site.url }}/img/lpfra.std.exp1.jpg)
+
+| Technology        | Correct results           |
+| ------------- |:-------------:|
+| Tesseract eng language      | 72 |
+| Tesseract trained language      | 46      |
+| Caffe trained (NN)  | 152 |

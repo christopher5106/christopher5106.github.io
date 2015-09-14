@@ -11,21 +11,31 @@ First install Tesseract
 
     brew install tesseract
 
+Let's create a new language "newfra" :
+
+{% highlight bash %}
+newlang="newfra"
+{% endhighlight %}
+
 Tesseract will use a **TIFF image file** (with characters to learn) and a **Box file** (indicating the bounding box of the characters in the image) to do its training to a new language.
 
-Here is an example of TIFF file :
+First begin by creating the character table as a TIFF image. Here is an example of TIFF file :
 
 ![TIFF File](https://printalert.files.wordpress.com/2014/04/ocr_input.jpg)
 
 The format of the box file is one ligne per character in the image and each line of the form `char bl_x bl_y rt_x rt_y` where `char` is the character, `bl_x` the abcyss of bottom-left corner in a coordinate system where (0,0) is at the bottom-left corner of the TIFF image.
 
-To create the box file, it's possible to use Tesseract recognition engine and manually add/complete the lines that were not recognized automatically, correct lines that were recognized improperly. To perform a better recognition, you can download additional languages such as "fra" for French language. Put the file `fra.traineddata` in `/usr/local/share/tessdata/` for Tesseract to use it.
-
-First begin by creating the character table as a TIFF image. Then, here is the list of commands to create a new language `newfra` for Tesseract from this TIFF image :
+To create the box file, it's possible to use Tesseract recognition engine and manually add/complete the lines that were not recognized automatically, correct lines that were recognized improperly.
 
 {% highlight bash %}
-newlang="newfra"
 tesseract ${newlang}.std.exp0.tif ${newlang}.std.exp0 -l fra batch.nochop makebox # '-l fra' is optional, if use of the French language recognition
+{% endhighlight %}
+
+To perform a better recognition, you can download additional languages such as "fra" for French language. Put the file `fra.traineddata` in `/usr/local/share/tessdata/` for Tesseract to use it.
+
+Then, with the 2 files (.tiff and .box), here is the list of commands to create a new language `newfra` for Tesseract from this TIFF image :
+
+{% highlight bash %}
 tesseract ${newlang}.std.exp0.tif ${newlang}.std.exp0 box.train.stderr
 unicharset_extractor ${newlang}.std.exp0.box
 echo "std 0 0 0 0 0" > font_properties
@@ -44,3 +54,5 @@ cp ${newlang}.traineddata /usr/local/share/tessdata/
 To recognize characters in a new image simply type
 
     tesseract image.tif output -l newfra
+
+[Full Tesseract specification](https://code.google.com/p/tesseract-ocr/wiki/TrainingTesseract3)

@@ -85,7 +85,7 @@ Let's try some optimizations : previous results were computed on the gray image 
     cvtColor(image,gray_image,CV_BGR2GRAY);
     adaptiveThreshold(gray_image,threshold_image,255,ADAPTIVE_THRESH_MEAN_C,THRESH_BINARY,11,12);
 
-![Tiff file for Tessearct]({{ site.url }}/img/lpfra.std.exp1.jpg)
+![Tiff file for Tessearct]({{ site.url }}/img/lpfra.std.exp1.png)
 
 | Technology        | Correct results           |
 | ------------- |:-------------:|

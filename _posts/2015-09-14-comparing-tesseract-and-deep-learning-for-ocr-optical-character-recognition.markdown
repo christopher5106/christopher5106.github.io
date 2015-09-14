@@ -11,7 +11,7 @@ I first created a simple "plate annotation tool"
 
     ./annotate input_dir output.csv
 
-in order to create a txt file labelling the data, one line per character
+in order to create a text file labelling the data, one line per character
 
     image_path  character  x  y width height orientation
 
@@ -21,13 +21,13 @@ I created a convertion tool
 
     ./extract file.csv output_dir --backend=[lmdb|leveldb|directory|tesseract]
 
-to convert this file to format for [Tesseract]({{ site.url }}/optical/character/recognition/2015/09/01/training-optical-character-recognition-technology-tesseract.html) and [Caffe learning]({{ site.url }}/deep/learning/2015/09/04/Deep-learning-tutorial-on-Caffe-Technology.html).
+to convert this CSV file to their respective format for [Tesseract]({{ site.url }}/optical/character/recognition/2015/09/01/training-optical-character-recognition-technology-tesseract.html) and [Caffe learning]({{ site.url }}/deep/learning/2015/09/04/Deep-learning-tutorial-on-Caffe-Technology.html).
 
-For Tesseract, this will bring me such a file :
+For Tesseract, this will bring me such a Tiff file with a .box file :
 
 ![Tiff file for Tessearct]({{ site.url }}/img/lpfra.std.exp0.jpg)
 
-For Caffe, this will populate a LMDB database that I can inspect in Python :
+For Caffe, it will populate a LMDB database that I can inspect in Python :
 
 {% highlight python %}
 import caffe
@@ -69,11 +69,11 @@ I trained both technologies and here is the result :
 
 Caffe is 97% right. The wrong matches are :
 
-M W
-0 D
-B 8
-1 A
-D 0
-D Q
+    M W
+    0 D
+    B 8
+    1 A
+    D 0
+    D Q
 
 Given that we know infer the letter/number shema for a licence plate (LL-NNN-LL or NN-LLL-NN) with a good precision, it's in fact a 99% correctness, that means one wrong letter every hundred letters with Caffe.

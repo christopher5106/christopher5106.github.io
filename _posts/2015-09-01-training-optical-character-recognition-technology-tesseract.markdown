@@ -33,7 +33,7 @@ tesseract ${newlang}.std.exp0.tif ${newlang}.std.exp0 -l fra batch.nochop makebo
 
 To perform a better recognition, you can download additional languages such as "fra" for French language. Put the file `fra.traineddata` in `/usr/local/share/tessdata/` for Tesseract to use it. You can also use an [online tool](http://pp19dd.com/tesseract-ocr-chopper/).
 
-Then, with the 2 files (.tiff and .box), here is the list of commands to create a new language `newfra` for Tesseract from this TIFF image :
+Then, with the 2 files (.tiff and .box), here is the list of commands to create the new language `newfra` for Tesseract from this TIFF image :
 
 {% highlight bash %}
 tesseract ${newlang}.std.exp0.tif ${newlang}.std.exp0 box.train.stderr

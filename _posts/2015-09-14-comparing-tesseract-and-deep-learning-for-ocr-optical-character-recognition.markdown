@@ -87,6 +87,8 @@ Let's try some optimizations : previous results were computed on the gray image 
     cvtColor(image,gray_image,CV_BGR2GRAY);
     adaptiveThreshold(gray_image,threshold_image,255,ADAPTIVE_THRESH_MEAN_C,THRESH_BINARY,11,12);
 
+The training file has letters with a better background :
+
 ![Tiff file for Tessearct]({{ site.url }}/img/lpfra.std.exp1.png)
 
 | Technology        | Correct results           |
@@ -94,3 +96,5 @@ Let's try some optimizations : previous results were computed on the gray image 
 | Tesseract eng language      | 82 |
 | Tesseract trained language      | 93      |
 | Caffe trained (NN)  | 152 |
+
+Caffe results do not improve, but Tesseract results are better on black & white images. This comes from the fact the first layers of the neural network do the preprocessing.

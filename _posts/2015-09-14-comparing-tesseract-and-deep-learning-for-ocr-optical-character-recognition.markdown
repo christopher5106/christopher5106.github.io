@@ -55,9 +55,9 @@ get(b'00000006')
 get(b'00000009')
 {% endhighlight %}
 
-The training set is composed of 5000 letters, and the test set of 160 letters.
+The training set is composed of 5000 letters, and the test set of 160 letters. For Tesseract I had to use a subset for the training set of 800 letters, otherwise training was not working properly.
 
-I used a standard LeNet neural network with dropout layers.
+For deep learning, I used a standard LeNet neural network with dropout layers.
 
 I trained both technologies and here is the result :
 
@@ -66,6 +66,8 @@ I trained both technologies and here is the result :
 | Tesseract eng language      | 63 |
 | Tesseract trained language      | 65      |
 | Caffe trained (NN)  | 154 |
+
+For Tesseract I consider a match when the letter returned by the best confidence matches the ground truth.
 
 Caffe is 97% right. The wrong matches are :
 
@@ -89,6 +91,6 @@ Let's try some optimizations : previous results were computed on the gray image 
 
 | Technology        | Correct results           |
 | ------------- |:-------------:|
-| Tesseract eng language      | 72 |
-| Tesseract trained language      | 46      |
+| Tesseract eng language      | 82 |
+| Tesseract trained language      | 93      |
 | Caffe trained (NN)  | 152 |

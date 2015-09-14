@@ -11,12 +11,12 @@ Let's try to put things into order, in order to get a good tutorial :).
 
 ###Install
 
-First install Caffe on [Ubuntu]({{ site.url }}/big/data/2015/07/16/deep-learning-install-caffe-cudnn-cuda-for-digits-python-on-ubuntu-14-04.html) or [Mac OS]({{ site.url }}/big/data/2015/07/16/deep-learning-install-caffe-cudnn-cuda-for-digits-python-on-mac-osx.html) with Python layers activated and pycaffe path correctly set `export PYTHONPATH=~/technologies/caffe/python/:$PYTHONPATH`.
+First install Caffe following my tutorials on [Ubuntu]({{ site.url }}/big/data/2015/07/16/deep-learning-install-caffe-cudnn-cuda-for-digits-python-on-ubuntu-14-04.html) or [Mac OS]({{ site.url }}/big/data/2015/07/16/deep-learning-install-caffe-cudnn-cuda-for-digits-python-on-mac-osx.html) with Python layers activated and pycaffe path correctly set `export PYTHONPATH=~/technologies/caffe/python/:$PYTHONPATH`.
 
 
 ###Launch the python shell
 
-In the iPython shell, load the different libraries  :
+In the iPython shell in your Caffe repository, load the different libraries  :
 
 {% highlight python %}
 import numpy as np
@@ -40,11 +40,11 @@ caffe.set_mode_gpu()
 
 ###Define a network model
 
-Let's create first a very simple model with a single convolution composed of 3 convolutional neurons, with a kernel of size 5x5 and a stride of 1 :
+Let's create first a very simple model with a single convolution composed of 3 convolutional neurons, with kernel of size 5x5 and stride of 1 :
 
 ![simple network]({{ site.url }}/img/simple_network.png)
 
-This net will produce 3 output maps.
+This net will produce 3 output maps from an input map.
 
 The output map for a convolution given receptive field size has a dimension given by the following equation :
 
@@ -53,48 +53,48 @@ The output map for a convolution given receptive field size has a dimension give
 
 Create a first file `conv.prototxt` describing the neuron network :
 
-      name: "convolution"
-      input: "data"
-      input_dim: 1
-      input_dim: 1
-      input_dim: 100
-      input_dim: 100
-      layer {
-        name: "conv"
-        type: "Convolution"
-        bottom: "data"
-        top: "conv"
-        convolution_param {
-          num_output: 3
-          kernel_size: 5
-          stride: 1
-          weight_filler {
-            type: "gaussian"
-            std: 0.01
-          }
-          bias_filler {
-            type: "constant"
-            value: 0
-          }
+    name: "convolution"
+    input: "data"
+    input_dim: 1
+    input_dim: 1
+    input_dim: 100
+    input_dim: 100
+    layer {
+      name: "conv"
+      type: "Convolution"
+      bottom: "data"
+      top: "conv"
+      convolution_param {
+        num_output: 3
+        kernel_size: 5
+        stride: 1
+        weight_filler {
+          type: "gaussian"
+          std: 0.01
+        }
+        bias_filler {
+          type: "constant"
+          value: 0
         }
       }
+    }
 
 Load the net
 
-    net = caffe.Net('conv.prototxt', caffe.TEST)
+    net = caffe.Net('examples/net_surgery/conv.prototxt', caffe.TEST)
 
 The names of input layers of the net are given by `print net.inputs`.
 
 The net contains two ordered dictionaries
 
-- `net.blobs` for data  :
+- `net.blobs` for input data and its propagation in the layers :
 
     `net.blobs['data']` contains input data, an array  of shape (1, 1, 100, 100)
     `net.blobs['conv']` contains computed data in layer 'conv' (1, 3, 96, 96)
 
     initialiazed with zeros.
 
-    To print these infos,
+    To print the infos,
 
         [(k, v.data.shape) for k, v in net.blobs.items()]
 
@@ -105,29 +105,35 @@ The net contains two ordered dictionaries
 
     initialiazed with 'weight_filler' and 'bias_filler' algorithms.
 
-    To print these infos :
+    To print the infos :
 
-        [(k, v.data.shape) for k, v in net.params.items()]
+        [(k, v[0].data.shape, v[1].data.shape) for k, v in net.params.items()]
 
-Blobs are a memory abstraction object (depending on the mode), and data is in the field data
+
+Blobs are memory abstraction objects (with execution depending on the mode), and data is contained in the field *data* as an array :
 
 {% highlight python %}
 print net.blobs['conv'].data.shape
 {% endhighlight %}
 
-You can draw the network with the following python command :
+To draw the network, a simle python command :
 
     python python/draw_net.py examples/net_surgery/conv.prototxt my_net.png
+    open my_net.png
 
-###Compute the network output on an image as input
+This will print the following image :
+
+![simple network]({{ site.url }}/img/simple_network.png)
+
+###Compute the net output on an image as input
 
 
 
-Let's load a gray image of size 1x360x480 (channel x height x width) :
+Let's load a gray image of size 1x360x480 (channel x height x width) into the previous net :
 
 ![Gray cat]({{ site.url }}/img/cat_gray.jpg)
 
-We need reshape the data blob (1, 1, 100, 100) to this new size (1, 1, 360, 480) :
+We need to reshape the data blob (1, 1, 100, 100) to the new size (1, 1, 360, 480) to fit the image :
 
 {% highlight python %}
 im = np.array(Image.open('examples/images/cat_gray.jpg'))
@@ -150,13 +156,13 @@ To save the net parameters `net.params`, just call :
 net.save('mymodel.caffemodel')
 {% endhighlight %}
 
-###Loading parameters to classify the image
+###Load pretrained parameters to classify an image
 
 In the previous net, weight and bias params have been initialiazed randomly.
 
-It's possible to load trained parameters and in this case, the result of the net will produce a classification.
+It is possible to load trained parameters and in this case, the result of the net will produce a classification.
 
-Many models can be downloaded from the community in the [Caffe Model Zoo](https://github.com/BVLC/caffe/wiki/Model-Zoo).
+Many trained models can be downloaded from the community in the [Caffe Model Zoo](https://github.com/BVLC/caffe/wiki/Model-Zoo), such as car classification, flower classification, digit classification...
 
 Model informations are written in Github Gist format. The parameters are saved in a `.caffemodel` file specified in the gist. To download the model :
 
@@ -178,11 +184,11 @@ open caffenet.png
 
 ![CaffeNet model]({{ site.url }}/img/caffenet_model.png)
 
-This model has been trained on processed images, so you need to preprocess the image with a preprocessor.
+This model has been trained on processed images, so you need to preprocess the image with a preprocessor, before saving it in the blob.
 
 ![Cat]({{ site.url }}/img/cat.jpg)
 
-In the python shell :
+That is, in the python shell :
 
 {% highlight python %}
 #load the model
@@ -219,27 +225,300 @@ top_k = net.blobs['prob'].data[0].flatten().argsort()[-1:-6:-1]
 print labels[top_k]
 {% endhighlight %}
 
+It will print you the top classes detected for the images.
+
+###Define a model in Python
+
+It is also possible to define the net model directly in Python, and save it to a prototxt files. Here are the commands :
+
+{% highlight python %}
+from caffe import layers as L
+from caffe import params as P
+
+def lenet(lmdb, batch_size):
+    # our version of LeNet: a series of linear and simple nonlinear transformations
+    n = caffe.NetSpec()
+    n.data, n.label = L.Data(batch_size=batch_size, backend=P.Data.LMDB, source=lmdb,
+                             transform_param=dict(scale=1./255), ntop=2)
+    n.conv1 = L.Convolution(n.data, kernel_size=5, num_output=20, weight_filler=dict(type='xavier'))
+    n.pool1 = L.Pooling(n.conv1, kernel_size=2, stride=2, pool=P.Pooling.MAX)
+    n.conv2 = L.Convolution(n.pool1, kernel_size=5, num_output=50, weight_filler=dict(type='xavier'))
+    n.pool2 = L.Pooling(n.conv2, kernel_size=2, stride=2, pool=P.Pooling.MAX)
+    n.ip1 = L.InnerProduct(n.pool2, num_output=500, weight_filler=dict(type='xavier'))
+    n.relu1 = L.ReLU(n.ip1, in_place=True)
+    n.ip2 = L.InnerProduct(n.relu1, num_output=10, weight_filler=dict(type='xavier'))
+    n.loss = L.SoftmaxWithLoss(n.ip2, n.label)
+    return n.to_proto()
+
+with open('examples/mnist/lenet_auto_train.prototxt', 'w') as f:
+    f.write(str(lenet('examples/mnist/mnist_train_lmdb', 64)))
+
+with open('examples/mnist/lenet_auto_test.prototxt', 'w') as f:
+    f.write(str(lenet('examples/mnist/mnist_test_lmdb', 100)))
+
+{% endhighlight %}
+
+will produce the prototxt file :
 
 
-###Solve the params on training data in order to learn new models
+    layer {
+      name: "data"
+      type: "Data"
+      top: "data"
+      top: "label"
+      transform_param {
+        scale: 0.00392156862745
+      }
+      data_param {
+        source: "examples/mnist/mnist_train_lmdb"
+        batch_size: 64
+        backend: LMDB
+      }
+    }
+    layer {
+      name: "conv1"
+      type: "Convolution"
+      bottom: "data"
+      top: "conv1"
+      convolution_param {
+        num_output: 20
+        kernel_size: 5
+        weight_filler {
+          type: "xavier"
+        }
+      }
+    }
+    layer {
+      name: "pool1"
+      type: "Pooling"
+      bottom: "conv1"
+      top: "pool1"
+      pooling_param {
+        pool: MAX
+        kernel_size: 2
+        stride: 2
+      }
+    }
+    layer {
+      name: "conv2"
+      type: "Convolution"
+      bottom: "pool1"
+      top: "conv2"
+      convolution_param {
+        num_output: 50
+        kernel_size: 5
+        weight_filler {
+          type: "xavier"
+        }
+      }
+    }
+    layer {
+      name: "pool2"
+      type: "Pooling"
+      bottom: "conv2"
+      top: "pool2"
+      pooling_param {
+        pool: MAX
+        kernel_size: 2
+        stride: 2
+      }
+    }
+    layer {
+      name: "ip1"
+      type: "InnerProduct"
+      bottom: "pool2"
+      top: "ip1"
+      inner_product_param {
+        num_output: 500
+        weight_filler {
+          type: "xavier"
+        }
+      }
+    }
+    layer {
+      name: "relu1"
+      type: "ReLU"
+      bottom: "ip1"
+      top: "ip1"
+    }
+    layer {
+      name: "ip2"
+      type: "InnerProduct"
+      bottom: "ip1"
+      top: "ip2"
+      inner_product_param {
+        num_output: 10
+        weight_filler {
+          type: "xavier"
+        }
+      }
+    }
+    layer {
+      name: "loss"
+      type: "SoftmaxWithLoss"
+      bottom: "ip2"
+      bottom: "label"
+      top: "loss"
+    }
+
+
+
+###Learn : solve the params on training data
+
+It is now time to create your own model, and training the parameters on training data.
 
 To train a network, you need
 
 - its model definition, as seen previously
 
-- a second protobuf file, the solver file, describing the parameters for the stochastic gradient
+- a second protobuf file, the *solver file*, describing the parameters for the stochastic gradient.
 
-Load the solver
+For example, the CaffeNet solver :
 
-    solver = caffe.get_solver('examples/hdf5_classification/nonlinear_solver.prototxt')
+    net: "models/bvlc_reference_caffenet/train_val.prototxt"
+    test_iter: 1000
+    test_interval: 1000
+    base_lr: 0.01
+    lr_policy: "step"
+    gamma: 0.1
+    stepsize: 100000
+    display: 20
+    max_iter: 450000
+    momentum: 0.9
+    weight_decay: 0.0005
+    snapshot: 10000
+    snapshot_prefix: "models/bvlc_reference_caffenet/caffenet_train"
+    solver_mode: GPU
+
+Usually, you define a train net, for training, with training data, and a test set, for validation. Either you can define the train and test nets in the prototxt solver file
+
+    train_net: "examples/hdf5_classification/nonlinear_auto_train.prototxt"
+    test_net: "examples/hdf5_classification/nonlinear_auto_test.prototxt"
+
+or you can also specify only one prototxt file, adding an **include phase** statement for the layers that have to be different in training and testing phases, such as input data :
+
+    layer {
+      name: "data"
+      type: "Data"
+      top: "data"
+      top: "label"
+      include {
+        phase: TRAIN
+      }
+      data_param {
+        source: "examples/imagenet/ilsvrc12_train_lmdb"
+        batch_size: 256
+        backend: LMDB
+      }
+    }
+    layer {
+      name: "data"
+      type: "Data"
+      top: "data"
+      top: "label"
+      top: "label"
+      include {
+        phase: TEST
+      }
+      data_param {
+        source: "examples/imagenet/ilsvrc12_val_lmdb"
+        batch_size: 50
+        backend: LMDB
+      }
+    }
+
+Data can also be set directly in Python.
+
+
+Load the solver in python
+
+    solver = caffe.get_solver('models/bvlc_reference_caffenet/solver.prototxt')
+
+By default it is the SGD solver. It's possible to specify another `solver_type` in the prototxt solver file ([ADAGRAD or NESTEROV](http://caffe.berkeleyvision.org/tutorial/solver.html)). It's also possible to load directly
+
     solver = caffe.SGDSolver('models/bvlc_reference_caffenet/solver.prototxt')
 
+but be careful since `SGDSolver` will use SGDSolver whatever is configured in the prototxt file... so it is less reliable.
 
+Now, it's time to begin to see if everything works well and to fill the layers in a forward propagation in the net :
+
+    solver.net.forward()  # train net
+    solver.test_nets[0].forward()  # test net (there can be more than one)
+
+To launch one step of the gradient descent :
+
+    solver.step(1)
+
+To run the full gradient descent :
+
+    solver.solve()
+
+
+###Input data, train and test set
+
+In order to learn a model, you usually set a training set and a test set.
+
+The different input layer can be :
+
+- 'Data' : for data saved in a LMDB database, such as before
+
+- 'ImageData' : for data in a txt file listing all the files
+
+        layer {
+          name: "data"
+          type: "ImageData"
+          top: "data"
+          top: "label"
+          transform_param {
+            mirror: false
+            crop_size: 227
+            mean_file: "data/ilsvrc12/imagenet_mean.binaryproto"
+          }
+          image_data_param {
+            source: "examples/_temp/file_list.txt"
+            batch_size: 50
+            new_height: 256
+            new_width: 256
+          }
+        }
+
+- 'HDF5Data' for data saved in HDF5 files
+
+        layer {
+          name: "data"
+          type: "HDF5Data"
+          top: "data"
+          top: "label"
+          hdf5_data_param {
+            source: "examples/hdf5_classification/data/train.txt"
+            batch_size: 10
+          }
+        }
+
+###Compute accuracy of the model on the test data
+
+Once solved,
+
+{% highlight python %}
+accuracy = 0
+batch_size = solver.test_nets[0].blobs['data'].num
+test_iters = int(len(Xt) / batch_size)
+for i in range(test_iters):
+    solver.test_nets[0].forward()
+    accuracy += solver.test_nets[0].blobs['accuracy'].data
+accuracy /= test_iters
+
+print("Accuracy: {:.3f}".format(accuracy))
+{% endhighlight %}
+
+**The higher the accuracy, the better !**
 
 ###Resources :
 
 [The catalog of available layers](http://caffe.berkeleyvision.org/tutorial/layers.html)
 
-[Create a classification map with net surgery on a trained model](http://localhost:8888/notebooks/examples/net_surgery.ipynb)
+[Create a classification map with net surgery to insert a trained model into an extended model where convolutions will be innerproducts spatially](http://localhost:8888/notebooks/examples/net_surgery.ipynb)
 
 ![classification map]({{ site.url }}/img/classification_map.png)
+
+[Parameter sharing between Siamese networks](http://caffe.berkeleyvision.org/gathered/examples/siamese.html)

@@ -5,7 +5,7 @@ date:   2015-09-14 23:00:51
 categories: computer vision
 ---
 
-![Cat]({{ site.url }}/img/plate_recognition.jpg)
+![Cat]({{ site.url }}/img/plate_recognition2.jpg)
 
 I first created a simple "plate annotation tool"
 

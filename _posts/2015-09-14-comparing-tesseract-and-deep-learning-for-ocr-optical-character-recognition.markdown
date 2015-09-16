@@ -1,9 +1,11 @@
 ---
 layout: post
-title:  "Compare Tesseract and deep learning techniques for Optical Character Recognition of licence plates"
+title:  "Compare Tesseract and deep learning techniques for Optical Character Recognition of license plates"
 date:   2015-09-14 23:00:51
 categories: computer vision
 ---
+
+In this article, I follow techniques used in [Google Translate app](http://googleresearch.blogspot.fr/2015/07/how-google-translate-squeezes-deep.html) for the case of license plates and I compare performances of deep learning nets with what we could have previously done with Tesseract engine.
 
 ![Cat]({{ site.url }}/img/plate_recognition2.jpg)
 

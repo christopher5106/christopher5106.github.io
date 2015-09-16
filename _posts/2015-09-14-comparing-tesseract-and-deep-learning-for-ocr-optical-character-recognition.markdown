@@ -17,9 +17,9 @@ in order to create a text file labelling the data, one line per character
 
     image_path,character,x,y,width,height,orientation
 
-in a CSV format. Licence plates are detected with a cascade classifier and letters with the findContours method from OpenCV.
+in a CSV format. License plates are detected with a cascade classifier and letters with the findContours method from OpenCV. I filter contours that are too small compared to the license plate dimensions, and contours that do not contain enough black/dark colors, because french license plates are always written in black color.
 
-I created a convertion tool
+I created a conversion tool
 
     ./extract file.csv output_dir --backend=[lmdb|leveldb|directory|tesseract]
 
@@ -91,7 +91,7 @@ Let's try some optimizations : previous results were computed on the gray image 
 
 The training file has letters with a better background :
 
-![Tiff file for Tessearct]({{ site.url }}/img/lpfra.std.exp1.png)
+![Tiff file for Tesseract]({{ site.url }}/img/lpfra.std.exp1.png)
 
 | Technology        | Correct results           |
 | ------------- |:-------------:|

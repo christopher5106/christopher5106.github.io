@@ -517,7 +517,7 @@ print("Accuracy: {:.3f}".format(accuracy))
 
 [The catalog of available layers](http://caffe.berkeleyvision.org/tutorial/layers.html)
 
-[Create a classification map with net surgery to insert a trained model into an extended model where convolutions will be innerproducts spatially](http://localhost:8888/notebooks/examples/net_surgery.ipynb)
+[Create a classification map with net surgery to insert a trained model into an extended model where convolutions will be innerproducts spatially](http://nbviewer.ipython.org/github/BVLC/caffe/blob/master/examples/net_surgery.ipynb)
 
 ![classification map]({{ site.url }}/img/classification_map.png)
 

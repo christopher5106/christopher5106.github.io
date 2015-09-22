@@ -23,13 +23,65 @@ rm cuda-repo-ubuntu1404_7.0-28_amd64.deb
 
 #Install Cudnn
 wget https://s3-eu-west-1.amazonaws.com/christopherbourez/public/cudnn-6.5-linux-x64-v2.tgz
-tar xvzf cudnn-6.5-linux-x64-v2.tgz
+tar cudnn-6.5-linux-x64-v2.tgz
 rm xvzf cudnn-6.5-linux-x64-v2.tgz
-sudo cp cudnn-6.5-linux-x64-v2/cudnn.h /usr/local/cuda/include/
-sudo cp cudnn-6.5-linux-x64-v2/libcudnn* /usr/local/cuda/lib64/
+sudo cp cudnn-6.5-linux-x64-v2/cudnn.h /usr/local/cuda-7.5/include/
+sudo cp cudnn-6.5-linux-x64-v2/libcudnn* /usr/local/cuda-7.5/lib64/
 
 #Install Git
 sudo apt-get -y install git
+{% endhighlight %}
+
+
+#Install Caffe alone
+
+{% highlight bash %}
+git clone https://github.com/BVLC/caffe.git
+cd caffe
+sudo apt-get install libprotobuf-dev libleveldb-dev libsnappy-dev libopencv-dev libhdf5-serial-dev protobuf-compiler
+sudo apt-get install --no-install-recommends libboost-all-dev
+sudo apt-get install libgflags-dev libgoogle-glog-dev liblmdb-dev
+sudo apt-get install libatlas-base-dev
+sudo apt-get install python-dev
+sudo apt-get install awscli
+vi Makefile.config
+{% endhighlight %}
+
+with the following Makefile
+
+{% highlight makefile %}
+USE_CUDNN := 1
+CUDA_DIR := /usr/local/cuda
+CUDA_ARCH := -gencode arch=compute_20,code=sm_20 \
+                -gencode arch=compute_20,code=sm_21 \
+                -gencode arch=compute_30,code=sm_30 \
+                -gencode arch=compute_35,code=sm_35 \
+                -gencode arch=compute_50,code=sm_50 \
+                -gencode arch=compute_50,code=compute_50
+BLAS := atlas
+PYTHON_INCLUDE := /usr/include/python2.7 \
+                /usr/lib/python2.7/dist-packages/numpy/core/include \
+                /usr/local/lib/python2.7/dist-packages/numpy/core/include
+PYTHON_LIB := /usr/lib
+WITH_PYTHON_LAYER := 1
+INCLUDE_DIRS := $(PYTHON_INCLUDE) /usr/local/include
+LIBRARY_DIRS := $(PYTHON_LIB) /usr/local/lib /usr/lib
+BUILD_DIR := build
+DISTRIBUTE_DIR := distribute
+TEST_GPUID := 0
+Q ?= @
+{% endhighlight %}
+
+Compile the code :
+
+{% highlight bash %}
+make all -j8
+make test
+make runtest
+sudo ln /dev/null /dev/raw1394
+echo "export LD_LIBRARY_PATH=/usr/local/cuda/lib64:$LD_LIBRARY_PATH" >> ~/.bashrc
+sudo apt-get install linux-image-extra-$(uname -r)
+sudo reboot
 {% endhighlight %}
 
 #Install Digits with Digits'Caffe...

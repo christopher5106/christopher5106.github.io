@@ -25,7 +25,7 @@ plt.rcParams['image.interpolation'] = 'nearest'
 plt.rcParams['image.cmap'] = 'gray'
 {% endhighlight %}
 
-# Have a look a the training data
+# Have a look at the training data
 
 {% highlight python %}
 env = lmdb.open('test_lmdb')
@@ -115,7 +115,7 @@ print("The result is {}".format(t[out['ip2-alpha'].argmax()]))
 
 #Feature map
 
-Let's cast the innerproducts layer 'ip1' and 'ip2-alpha' into convolution layers 'ip1-conv' and 'ip2-alpha-conv' :
+Let's cast the innerproduct layers 'ip1' and 'ip2-alpha' into convolution layers 'ip1-conv' and 'ip2-alpha-conv' :
 
 
     !diff lenet_train_test_withoutdata.prototxt lenet_train_test_featuremap.prototxt
@@ -274,3 +274,5 @@ plt.imshow(out['ip2-alpha-conv'][0,0] )
 
 
 ![png]({{ site.url }}/img/feature_map/Example_20_1.png)
+
+**Here we are !**

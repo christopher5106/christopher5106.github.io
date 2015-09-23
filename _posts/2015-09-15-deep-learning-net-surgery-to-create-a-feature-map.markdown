@@ -41,14 +41,14 @@ categories: computer vision
     get(b'00000009')
 
 
-![png](Example_files/Example_3_0.png)
+![png]({{ site.url }}/img/feature_map/Example_3_0.png)
 
 
     D
 
 
 
-![png](Example_files/Example_3_2.png)
+![png]({{ site.url }}/img/feature_map/Example_3_2.png)
 
 
     5
@@ -81,7 +81,7 @@ categories: computer vision
 
 
 
-![png](Example_files/Example_7_1.png)
+![png]({{ site.url }}/img/feature_map/Example_7_1.png)
 
 
 
@@ -105,7 +105,7 @@ categories: computer vision
 
 
 
-![png](Example_files/Example_9_1.png)
+![png]({{ site.url }}/img/feature_map/Example_9_1.png)
 
 
 #Feature map
@@ -230,7 +230,7 @@ Let's cast the Innerproducts layer 'ip1' and 'ip2-alpha' into convolution layers
 
 
 
-![png](Example_files/Example_16_1.png)
+![png]({{ site.url }}/img/feature_map/Example_16_1.png)
 
 
 
@@ -250,7 +250,7 @@ Let's cast the Innerproducts layer 'ip1' and 'ip2-alpha' into convolution layers
 
 
 
-![png](Example_files/Example_17_1.png)
+![png](feature_map/img/Example_17_1.png)
 
 
 
@@ -284,4 +284,4 @@ Let's cast the Innerproducts layer 'ip1' and 'ip2-alpha' into convolution layers
 
 
 
-![png](Example_files/Example_20_1.png)
+![png]({{ site.url }}/img/feature_map/Example_20_1.png)

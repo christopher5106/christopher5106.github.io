@@ -250,7 +250,7 @@ Let's cast the Innerproducts layer 'ip1' and 'ip2-alpha' into convolution layers
 
 
 
-![png](feature_map/img/Example_17_1.png)
+![png]({{ site.url }}/img/feature_map/Example_17_1.png)
 
 
 

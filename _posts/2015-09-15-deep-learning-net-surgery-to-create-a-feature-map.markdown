@@ -248,7 +248,7 @@ im_gray = cv2.resize(im_gray,None, fx=0.9, fy=0.9, interpolation = cv2.INTER_ARE
 plt.title("Gray image")
 plt.imshow(im_gray)
 plt.axis('off')
-im_gray.shape //(290, 720)
+im_gray.shape #(290, 720)
 {% endhighlight %}
 
 
@@ -262,7 +262,7 @@ net_full_conv.blobs['data'].reshape(*im_input.shape)
 net_full_conv.blobs['data'].data[...] = im_input
 
 out = net_full_conv.forward()
-out['ip2-alpha-conv'].shape // (1, 36, 70, 177)
+out['ip2-alpha-conv'].shape # (1, 36, 70, 177)
 
 # show net input and confidence map (probability of the top prediction at each location)
 plt.subplot(1, 2, 1)

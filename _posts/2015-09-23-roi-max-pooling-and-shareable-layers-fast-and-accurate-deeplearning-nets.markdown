@@ -9,14 +9,14 @@ As seen in [previous post](http://christopher5106.github.io/computer/vision/2015
 
 ![Feature map]({{ site.url }}/img/caffe_immat_feature_map.png)
 
-Let's go further to get position information about the license plate and its letters.
+Let's go further to get precise position information about the license plate and its letters.
 
-I will re-use the first 2 convolution layers to create a feature map over which I will slide two new nets over a window of 3x3 :
+I will re-use the first 2 convolution layers to create a feature map over which I will slide a window of 3x3 on top of which will operate two new nets :
 
 - a box classification layer, giving the probability of the licence plate to be centered on this point
 
-- a box regression layer, giving the size of the box on that layer
+- a box regression layer, giving the size of the box on that point
 
-These sliding nets can be done via convolution layers of kernel 3 on top of the previous net.
+A sliding 'inner product net' on a window of 3x3 can be done with a simple 'convolution net' of kernel 3.
 
 At the end, the effective receptive field on the input image will be of size XxX.

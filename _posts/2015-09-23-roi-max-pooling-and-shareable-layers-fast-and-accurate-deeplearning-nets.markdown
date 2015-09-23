@@ -6,4 +6,4 @@ categories: computer vision
 ---
 
 
-[Feature map]({{ site.url }}/caffe_immat_feature_map)
+![Feature map]({{ site.url }}/img/caffe_immat_feature_map.png)

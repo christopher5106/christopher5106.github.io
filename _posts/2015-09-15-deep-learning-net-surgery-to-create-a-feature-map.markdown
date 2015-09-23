@@ -1,3 +1,9 @@
+---
+layout: post
+title:  "Deep learning net surgery to create a feature map from a classification net"
+date:   2015-09-15 23:00:51
+categories: computer vision
+---
 
 
     import numpy as np
@@ -17,11 +23,11 @@
 
     env = lmdb.open('test_lmdb')
     t = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z','0','1','2','3','4','5','6','7','8','9'];
-    
+
     def get(k):
         with env.begin() as txn:
             raw_datum = txn.get(k)
-    
+
         datum = caffe.proto.caffe_pb2.Datum()
         datum.ParseFromString(raw_datum)
         flat_x = np.fromstring(datum.data, dtype=np.uint8)
@@ -30,7 +36,7 @@
         plt.imshow(x[0,...],cmap='gray')
         plt.show()
         print t[y]
-    
+
     get(b'00000006')
     get(b'00000009')
 
@@ -178,7 +184,7 @@ Let's cast the Innerproducts layer 'ip1' and 'ip2-alpha' into convolution layers
     params = ['ip1', 'ip2-alpha']
     # fc_params = {name: (weights, biases)}
     fc_params = {pr: (net.params[pr][0].data, net.params[pr][1].data) for pr in params}
-    
+
     for fc in params:
         print '{} weights are {} dimensional and biases are {} dimensional'.format(fc, fc_params[fc][0].shape, fc_params[fc][1].shape)
 
@@ -192,7 +198,7 @@ Let's cast the Innerproducts layer 'ip1' and 'ip2-alpha' into convolution layers
     params_full_conv = ['ip1-conv', 'ip2-alpha-conv']
     # conv_params = {name: (weights, biases)}
     conv_params = {pr: (net_full_conv.params[pr][0].data, net_full_conv.params[pr][1].data) for pr in params_full_conv}
-    
+
     for conv in params_full_conv:
         print '{} weights are {} dimensional and biases are {} dimensional'.format(conv, conv_params[conv][0].shape, conv_params[conv][1].shape)
 
@@ -279,7 +285,3 @@ Let's cast the Innerproducts layer 'ip1' and 'ip2-alpha' into convolution layers
 
 
 ![png](Example_files/Example_20_1.png)
-
-
-
-    

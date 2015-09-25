@@ -68,7 +68,7 @@ Here are the different steps for the train net :
 
 6. data layer
 
-I will feed the data layer with extracted rectangles images, a label, position t_x, t_y, t_w and t_o.
+I will feed the data layer with extracted rectangles images, and for each reactangle, a label, position t_x, t_y, t_w and t_o.
 
 
 #Feature map net

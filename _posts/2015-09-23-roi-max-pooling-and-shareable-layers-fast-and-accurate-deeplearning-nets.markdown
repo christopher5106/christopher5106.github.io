@@ -8,7 +8,7 @@ categories: computer vision
 
 As seen in [previous post](http://christopher5106.github.io/computer/vision/2015/09/14/comparing-tesseract-and-deep-learning-for-ocr-optical-character-recognition.html), deep nets read the correct letter with a correctness of 99%.
 
-Now let's go further to get precise position information about the license plate and its letters, as explained in [Faster RCNN publication](https://github.com/ShaoqingRen/faster_rcnn).
+Now let's go further to get precise position information about the license plate and its letters, as explained in [Faster RCNN publication](https://github.com/ShaoqingRen/faster_rcnn) from Microsoft Research two weeks ago.
 
 I will re-use the first 2 convolution layers to create a feature map over which I will slide a window of 3x3 on top of which will operate two new nets :
 
@@ -90,3 +90,26 @@ On top of the feature map layer, add a NMS layer and a Top-N layer and a ROI poo
         spatial_scale: 0.0625 # 1/16
       }
     }
+
+Creating our own NMS and Top-N layer.
+
+###Note : Caffe in C++
+
+The **blob** ([blob.hpp](https://github.com/BVLC/caffe/blob/master/include/caffe/blob.hpp) and [blob.cpp](https://github.com/BVLC/caffe/blob/master/src/caffe/blob.cpp)) is a wrapper to manage memory independently of CPU/GPU choice, using [SyncedMemory class](https://github.com/BVLC/caffe/blob/master/src/caffe/syncedmem.cpp), and has a few functions like Arrays in Python, both for the data and the computed gradient (diff) arrays contained in the blob :
+
+- shape() and shape_string() to get the shape, or shape(i) to get the size of the i-th dimension, or shapeEquals() to compare shape equality
+- reshape() or reshapeLike() another blob
+- offset() to get the c++ index in the array
+- CopyFrom() to copy the blob
+- data_at() and diff_at()
+- asum_data() and asum_diff() their L1 norm
+- sumsq_data() and sumsq_diff() their L1 norm
+- scale_data() and scale_diff() to multilply the data by a factor
+
+A layer, such as the [SoftmaxWithLoss layer](https://github.com/BVLC/caffe/blob/master/src/caffe/layers/softmax_loss_layer.cpp), will need a few functions working with arguments top blobs and bottom blobs :
+- Forward_cpu or Forward_gpu
+- Backward_cpu or Backward_gpu
+- Reshape
+- optionaly : LayerSetUp, to set non-standard fields
+
+The [layer_factory](https://github.com/BVLC/caffe/blob/master/src/caffe/layer_factory.cpp) is a set of helper functions to get the right layer implementation according to the engine (Caffe or CUDNN).

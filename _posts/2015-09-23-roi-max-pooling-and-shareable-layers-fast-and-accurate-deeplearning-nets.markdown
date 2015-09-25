@@ -25,19 +25,11 @@ During testing and deployment, the sliding 'inner product net' on a window of 3x
 A a dataset, I labeled the letters on each images and I can easily extract the plate zone. Statistics of license plates are :
 
 
-| Metric       | Value           |
+|        | Average          | Max          | Min          |
 | ------------- |:-------------:|
-| Average rectangle width | 200 |
-| Average rectangle height | 40 |
-| ------------- |:-------------:|
-| Max width | 673 |
-| Min width | 61 |
-| ------------- |:-------------:|
-| Max height | 127 |
-| Min height | 15 |
-| ------------- |:-------------:|
-| Min orientation | -25 |
-| Max orientation | 25 |
+| Width | 200 | 673 | 61 |
+| Height | 40 | 127 | 15 |
+| Min orientation | - | 25 |  -25 |
 
 <br/>
 

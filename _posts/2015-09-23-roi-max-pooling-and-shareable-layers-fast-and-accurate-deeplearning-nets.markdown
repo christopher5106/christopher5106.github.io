@@ -51,24 +51,25 @@ Here are the different steps for the train net :
 
 2. fix their learning rate at 0 :
 
-    param {
-      lr_mult: 0
-      decay_mult: 0
-    }
+        param {
+          lr_mult: 0
+          decay_mult: 0
+        }
 
 3. keep the dropout layer after the convolution layers
 
 4. change the name of the innerproduct layer "ip1" for "ip1-rpn" to train with new random weight params and replace the innerproduct layer "ip2" with 2 sibling convolutional layers :
 
-- "cls_score" with 5 x 2 parameters (the probability or not to be a plate)
+    - "cls_score" with 5 x 2 parameters (the probability or not to be a plate)
 
-- "bbox_pred" with 5 x 4 parameters : t_x, t_y, t_w (width) and t_o (orientation)
+    - "bbox_pred" with 5 x 4 parameters : t_x, t_y, t_w (width) and t_o (orientation)
 
 5. add a "SoftmaxWithLoss" layer for cls_score and "SmoothL1Loss" layer for bounding box regression layer.
 
 6. data layer
 
 I will feed the data layer with extracted rectangles images, a label, position t_x, t_y, t_w and t_o.
+
 
 #Feature map net
 
@@ -79,6 +80,7 @@ Let's train with the previously learned parameters the new model :
 Once trained, we can convert the innerproduct layers into the convolution layers to get a feature map, as seen in [previous post](http://christopher5106.github.io/computer/vision/2015/09/15/deep-learning-net-surgery-to-create-a-feature-map.html).
 
 ![Feature map]({{ site.url }}/img/caffe_immat_feature_map.png)
+
 
 #Test/deploy net
 

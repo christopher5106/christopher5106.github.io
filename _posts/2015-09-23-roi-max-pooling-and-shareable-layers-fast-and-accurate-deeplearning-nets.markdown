@@ -6,7 +6,7 @@ categories: computer vision
 ---
 
 
-As seen in [previous post](http://christopher5106.github.io/computer/vision/2015/09/14/comparing-tesseract-and-deep-learning-for-ocr-optical-character-recognition.html), we are able to read the correct letter with a correctness of 99%.
+As seen in [previous post](http://christopher5106.github.io/computer/vision/2015/09/14/comparing-tesseract-and-deep-learning-for-ocr-optical-character-recognition.html), deep nets read the correct letter with a correctness of 99%.
 
 Now let's further to get precise position information about the license plate and its letters.
 

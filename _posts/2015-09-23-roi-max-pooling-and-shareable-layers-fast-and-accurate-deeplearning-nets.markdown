@@ -39,6 +39,8 @@ A a dataset, I labeled the letters on each images and I can easily extract the p
 | Min orientation | -25 |
 | Max orientation | 25 |
 
+ 
+
 So I will consider the output of the nets to predict the probability and regression of 5 anchors at 5 different scales / widths : 660x330 - 560x187 - 460x153 - 360x120 - 260x87 - 160x53 - 60x20.
 
 #Train net

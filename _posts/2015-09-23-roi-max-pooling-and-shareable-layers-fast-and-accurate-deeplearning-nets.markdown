@@ -8,7 +8,7 @@ categories: computer vision
 
 As seen in [previous post](http://christopher5106.github.io/computer/vision/2015/09/14/comparing-tesseract-and-deep-learning-for-ocr-optical-character-recognition.html), deep nets read the correct letter with a correctness of 99%.
 
-Now let's further to get precise position information about the license plate and its letters.
+Now let's go further to get precise position information about the license plate and its letters.
 
 I will re-use the first 2 convolution layers to create a feature map over which I will slide a window of 3x3 on top of which will operate two new nets :
 
@@ -16,23 +16,28 @@ I will re-use the first 2 convolution layers to create a feature map over which 
 
 - a box regression layer, giving the size of the box on that point
 
-A sliding 'inner product net' on a window of 3x3 can be done with a simple 'convolution net' of kernel 3.
+These two new nets are composed of a common innerproduct layer "ip1-rpn", and another innerproduct layer specific to each of them.
 
-At the end, the effective receptive field on the input image will be of size XxX.
+Instead of training theses nets on the feature map, I will train the full net composed of the first 2 convolution layers and the two new nets. At the end, the effective receptive field on the input image will be of size XxX.
 
-I labeled the letters and I can easily extract the plates. Statistics of license plates are :
+During testing and deployment, the sliding 'inner product net' on a window of 3x3  will be replaced with a simple 'convolution net' of kernel 3 with the same parameters.
 
-Average rectangle width : 200
-Average rectangle height : 40
+A a dataset, I labeled the letters on each images and I can easily extract the plate zone. Statistics of license plates are :
 
-Max width : 673
-Min width : 61
 
-Max height : 127
-Min height : 15
-
-Min orientation : -25
-Max orientation : 25
+| Metric       | Value           |
+| ------------- |:-------------:|
+| Average rectangle width | 200 |
+| Average rectangle height | 40 |
+| ------------- |:-------------:|
+| Max width | 673 |
+| Min width | 61 |
+| ------------- |:-------------:|
+| Max height | 127 |
+| Min height | 15 |
+| ------------- |:-------------:|
+| Min orientation | -25 |
+| Max orientation | 25 |
 
 So I will consider the output of the nets to predict the probability and regression of 5 anchors at 5 different scales : width of 660 - 560 - 460 - 360 - 260 - 160 - 60.
 

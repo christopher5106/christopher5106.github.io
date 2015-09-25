@@ -18,7 +18,7 @@ I will re-use the first 2 convolution layers to create a feature map over which 
 
 These two new nets are composed of a common innerproduct layer "ip1-rpn", and another innerproduct layer specific to each of them.
 
-Instead of training theses nets on the feature map, I will train the full net composed of the first 2 convolution layers and the two new nets. At the end, the effective receptive field on the input image will be of size XxX.
+Instead of training theses nets on the feature map, I will train the full net composed of the first 2 convolution layers and the two new nets, but with a learning rate set to 0 for the first 2 layers. At the end, the effective receptive field on the input image will be of size XxX.
 
 During testing and deployment, the sliding 'inner product net' on a window of 3x3  will be replaced with a simple 'convolution net' of kernel 3 with the same parameters.
 
@@ -39,7 +39,7 @@ A a dataset, I labeled the letters on each images and I can easily extract the p
 | Min orientation | -25 |
 | Max orientation | 25 |
 
- 
+
 
 So I will consider the output of the nets to predict the probability and regression of 5 anchors at 5 different scales / widths : 660x330 - 560x187 - 460x153 - 360x120 - 260x87 - 160x53 - 60x20.
 
@@ -47,7 +47,7 @@ So I will consider the output of the nets to predict the probability and regress
 
 Here are the different steps for the train net :
 
-1. re-use the previous net parameters, so common layer will have the same names : conv1, pool1, conv2, pool2.
+1. re-use the previous net parameters for the shared layer that will have the same names : conv1, pool1, conv2, pool2.
 
 2. fix their learning rate at 0 :
 

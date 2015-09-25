@@ -107,9 +107,12 @@ The **blob** ([blob.hpp](https://github.com/BVLC/caffe/blob/master/include/caffe
 - scale_data() and scale_diff() to multilply the data by a factor
 
 A layer, such as the [SoftmaxWithLoss layer](https://github.com/BVLC/caffe/blob/master/src/caffe/layers/softmax_loss_layer.cpp), will need a few functions working with arguments top blobs and bottom blobs :
+
 - Forward_cpu or Forward_gpu
 - Backward_cpu or Backward_gpu
 - Reshape
 - optionaly : LayerSetUp, to set non-standard fields
 
 The [layer_factory](https://github.com/BVLC/caffe/blob/master/src/caffe/layer_factory.cpp) is a set of helper functions to get the right layer implementation according to the engine (Caffe or CUDNN).
+
+![png]({{ site.url }}/img/cars.png)

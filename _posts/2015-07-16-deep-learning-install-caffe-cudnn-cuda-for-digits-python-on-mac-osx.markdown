@@ -226,3 +226,12 @@ nvcc fatal : The version ('60100') of the host compiler ('Apple clang') is not s
 
 => Download XCode 6.0 to replace 6.3
 Have a look at [compatibilities](http://docs.nvidia.com/cuda/cuda-getting-started-guide-for-mac-os-x/#axzz3hb15JIpL) and [Clang versions](https://gist.github.com/yamaya/2924292).
+
+
+On one of my imacs I had a Segmentation Fault 11.
+
+=> I put the path to the correct library in the path since I used `pip install numpy` instead of homebrew
+
+    PYTHON_LIB := /usr/local/Frameworks/Python.framework/Versions/2.7/lib/
+    PYTHON_INCLUDE := /usr/local/Frameworks/Python.framework/Versions/2.7/include/python2.7/ \
+                    /usr/local/lib/python2.7/site-packages/numpy/core/include

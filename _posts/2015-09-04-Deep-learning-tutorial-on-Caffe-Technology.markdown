@@ -522,3 +522,27 @@ print("Accuracy: {:.3f}".format(accuracy))
 ![classification map]({{ site.url }}/img/classification_map.png)
 
 [Parameter sharing between Siamese networks](http://caffe.berkeleyvision.org/gathered/examples/siamese.html)
+
+###Caffe in C++
+
+The **blob** ([blob.hpp](https://github.com/BVLC/caffe/blob/master/include/caffe/blob.hpp) and [blob.cpp](https://github.com/BVLC/caffe/blob/master/src/caffe/blob.cpp)) is a wrapper to manage memory independently of CPU/GPU choice, using [SyncedMemory class](https://github.com/BVLC/caffe/blob/master/src/caffe/syncedmem.cpp), and has a few functions like Arrays in Python, both for the data and the computed gradient (diff) arrays contained in the blob :
+
+- `shape()` and `shape_string()` to get the shape, or `shape(i)` to get the size of the i-th dimension, or `shapeEquals()` to compare shape equality
+- `reshape()` or `reshapeLike()` another blob
+- `offset()` to get the c++ index in the array
+- `CopyFrom()` to copy the blob
+- `data_at()` and `diff_at()`
+- `asum_data()` and `asum_diff()` their L1 norm
+- `sumsq_data()` and `sumsq_diff()` their L1 norm
+- `scale_data()` and `scale_diff()` to multilply the data by a factor
+
+A **layer**, such as the [SoftmaxWithLoss layer](https://github.com/BVLC/caffe/blob/master/src/caffe/layers/softmax_loss_layer.cpp), will need a few functions working with arguments top blobs and bottom blobs :
+
+- `Forward_cpu` or `Forward_gpu`
+- `Backward_cpu` or `Backward_gpu`
+- `Reshape`
+- optionaly : `LayerSetUp`, to set non-standard fields
+
+The [layer_factory](https://github.com/BVLC/caffe/blob/master/src/caffe/layer_factory.cpp) is a set of helper functions to get the right layer implementation according to the engine (Caffe or CUDNN).
+
+![png]({{ site.url }}/img/cars.png)

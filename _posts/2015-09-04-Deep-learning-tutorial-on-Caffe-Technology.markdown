@@ -547,34 +547,38 @@ Add a custom python layer to your `conv.prototxt` file :
 
 and create a `mypythonlayer.py` file that has to to be in the PYTHONPATH :
 
-    import caffe
-    import numpy as np
-    import yaml
+{% highlight python %}
+import caffe
+import numpy as np
+import yaml
 
-    class MyLayer(caffe.Layer):
+class MyLayer(caffe.Layer):
 
-        def setup(self, bottom, top):
-            self.num = yaml.load(self.param_str)["num"]
-            print "Parameter num : ", self.num
+    def setup(self, bottom, top):
+        self.num = yaml.load(self.param_str)["num"]
+        print "Parameter num : ", self.num
 
-        def reshape(self, bottom, top):
-            pass
+    def reshape(self, bottom, top):
+        pass
 
-        def forward(self, bottom, top):
-            top[0].reshape(*bottom[0].shape)
-            top[0].data[...] = bottom[0].data + self.num
+    def forward(self, bottom, top):
+        top[0].reshape(*bottom[0].shape)
+        top[0].data[...] = bottom[0].data + self.num
 
-        def backward(self, top, propagate_down, bottom):
-            pass
+    def backward(self, top, propagate_down, bottom):
+        pass
+{% endhighlight %}
 
 This layer will simply add a value
 
-    net = caffe.Net('conv.prototxt',caffe.TEST)
-    im = np.array(Image.open('cat_gray.jpg'))
-    im_input = im[np.newaxis, np.newaxis, :, :]
-    net.blobs['data'].reshape(*im_input.shape)
-    net.blobs['data'].data[...] = im_input
-    net.forward()
+{% highlight python %}
+net = caffe.Net('conv.prototxt',caffe.TEST)
+im = np.array(Image.open('cat_gray.jpg'))
+im_input = im[np.newaxis, np.newaxis, :, :]
+net.blobs['data'].reshape(*im_input.shape)
+net.blobs['data'].data[...] = im_input
+net.forward()
+{% endhighlight %}
 
 #Caffe in C++
 

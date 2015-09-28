@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Deep learning tutorial on Caffe technology"
+title:  "Deep learning tutorial on Caffe technology : basic commands, Python and C++ code."
 date:   2015-09-04 23:00:51
 categories: deep learning
 ---

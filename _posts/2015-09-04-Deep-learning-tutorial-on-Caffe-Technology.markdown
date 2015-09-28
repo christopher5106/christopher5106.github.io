@@ -545,7 +545,7 @@ Add a custom python layer to your `conv.prototxt` file :
       }
     }
 
-and create a `mypythonlayer.py` file that has to to be in the PYTHONPATH :
+and create a `mypythonlayer.py` file that has to to be in the current directory or in the PYTHONPATH :
 
 {% highlight python %}
 import caffe

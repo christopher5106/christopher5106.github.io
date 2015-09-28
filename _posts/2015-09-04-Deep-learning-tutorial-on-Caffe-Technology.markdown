@@ -9,6 +9,8 @@ categories: deep learning
 
 Let's try to put things into order, in order to get a good tutorial :).
 
+#Caffe
+
 ###Install
 
 First install Caffe following my tutorials on [Ubuntu]({{ site.url }}/big/data/2015/07/16/deep-learning-install-caffe-cudnn-cuda-for-digits-python-on-ubuntu-14-04.html) or [Mac OS]({{ site.url }}/big/data/2015/07/16/deep-learning-install-caffe-cudnn-cuda-for-digits-python-on-mac-osx.html) with Python layers activated and pycaffe path correctly set `export PYTHONPATH=~/technologies/caffe/python/:$PYTHONPATH`.
@@ -79,9 +81,12 @@ Create a first file `conv.prototxt` describing the neuron network :
       }
     }
 
+with one layer, a convolution, from the [Catalog of available layers](http://caffe.berkeleyvision.org/tutorial/layers.html)
+
+
 Load the net
 
-    net = caffe.Net('examples/net_surgery/conv.prototxt', caffe.TEST)
+    net = caffe.Net('conv.prototxt', caffe.TEST)
 
 The names of input layers of the net are given by `print net.inputs`.
 
@@ -227,139 +232,9 @@ print labels[top_k]
 
 It will print you the top classes detected for the images.
 
-###Define a model in Python
+**Go further :** [Create a classification map with net surgery to insert a trained model into an extended model where convolutions will be innerproducts spatially](http://nbviewer.ipython.org/github/BVLC/caffe/blob/master/examples/net_surgery.ipynb)
 
-It is also possible to define the net model directly in Python, and save it to a prototxt files. Here are the commands :
-
-{% highlight python %}
-from caffe import layers as L
-from caffe import params as P
-
-def lenet(lmdb, batch_size):
-    # our version of LeNet: a series of linear and simple nonlinear transformations
-    n = caffe.NetSpec()
-    n.data, n.label = L.Data(batch_size=batch_size, backend=P.Data.LMDB, source=lmdb,
-                             transform_param=dict(scale=1./255), ntop=2)
-    n.conv1 = L.Convolution(n.data, kernel_size=5, num_output=20, weight_filler=dict(type='xavier'))
-    n.pool1 = L.Pooling(n.conv1, kernel_size=2, stride=2, pool=P.Pooling.MAX)
-    n.conv2 = L.Convolution(n.pool1, kernel_size=5, num_output=50, weight_filler=dict(type='xavier'))
-    n.pool2 = L.Pooling(n.conv2, kernel_size=2, stride=2, pool=P.Pooling.MAX)
-    n.ip1 = L.InnerProduct(n.pool2, num_output=500, weight_filler=dict(type='xavier'))
-    n.relu1 = L.ReLU(n.ip1, in_place=True)
-    n.ip2 = L.InnerProduct(n.relu1, num_output=10, weight_filler=dict(type='xavier'))
-    n.loss = L.SoftmaxWithLoss(n.ip2, n.label)
-    return n.to_proto()
-
-with open('examples/mnist/lenet_auto_train.prototxt', 'w') as f:
-    f.write(str(lenet('examples/mnist/mnist_train_lmdb', 64)))
-
-with open('examples/mnist/lenet_auto_test.prototxt', 'w') as f:
-    f.write(str(lenet('examples/mnist/mnist_test_lmdb', 100)))
-
-{% endhighlight %}
-
-will produce the prototxt file :
-
-
-    layer {
-      name: "data"
-      type: "Data"
-      top: "data"
-      top: "label"
-      transform_param {
-        scale: 0.00392156862745
-      }
-      data_param {
-        source: "examples/mnist/mnist_train_lmdb"
-        batch_size: 64
-        backend: LMDB
-      }
-    }
-    layer {
-      name: "conv1"
-      type: "Convolution"
-      bottom: "data"
-      top: "conv1"
-      convolution_param {
-        num_output: 20
-        kernel_size: 5
-        weight_filler {
-          type: "xavier"
-        }
-      }
-    }
-    layer {
-      name: "pool1"
-      type: "Pooling"
-      bottom: "conv1"
-      top: "pool1"
-      pooling_param {
-        pool: MAX
-        kernel_size: 2
-        stride: 2
-      }
-    }
-    layer {
-      name: "conv2"
-      type: "Convolution"
-      bottom: "pool1"
-      top: "conv2"
-      convolution_param {
-        num_output: 50
-        kernel_size: 5
-        weight_filler {
-          type: "xavier"
-        }
-      }
-    }
-    layer {
-      name: "pool2"
-      type: "Pooling"
-      bottom: "conv2"
-      top: "pool2"
-      pooling_param {
-        pool: MAX
-        kernel_size: 2
-        stride: 2
-      }
-    }
-    layer {
-      name: "ip1"
-      type: "InnerProduct"
-      bottom: "pool2"
-      top: "ip1"
-      inner_product_param {
-        num_output: 500
-        weight_filler {
-          type: "xavier"
-        }
-      }
-    }
-    layer {
-      name: "relu1"
-      type: "ReLU"
-      bottom: "ip1"
-      top: "ip1"
-    }
-    layer {
-      name: "ip2"
-      type: "InnerProduct"
-      bottom: "ip1"
-      top: "ip2"
-      inner_product_param {
-        num_output: 10
-        weight_filler {
-          type: "xavier"
-        }
-      }
-    }
-    layer {
-      name: "loss"
-      type: "SoftmaxWithLoss"
-      bottom: "ip2"
-      bottom: "label"
-      top: "loss"
-    }
+![classification map]({{ site.url }}/img/classification_map.png)
 
 
 
@@ -513,17 +388,195 @@ print("Accuracy: {:.3f}".format(accuracy))
 
 **The higher the accuracy, the better !**
 
-###Resources :
-
-[The catalog of available layers](http://caffe.berkeleyvision.org/tutorial/layers.html)
-
-[Create a classification map with net surgery to insert a trained model into an extended model where convolutions will be innerproducts spatially](http://nbviewer.ipython.org/github/BVLC/caffe/blob/master/examples/net_surgery.ipynb)
-
-![classification map]({{ site.url }}/img/classification_map.png)
+###Parameter sharing
 
 [Parameter sharing between Siamese networks](http://caffe.berkeleyvision.org/gathered/examples/siamese.html)
 
-###Caffe in C++
+
+#Caffe in Python
+
+###Define a model in Python
+
+It is also possible to define the net model directly in Python, and save it to a prototxt files. Here are the commands :
+
+{% highlight python %}
+from caffe import layers as L
+from caffe import params as P
+
+def lenet(lmdb, batch_size):
+    # our version of LeNet: a series of linear and simple nonlinear transformations
+    n = caffe.NetSpec()
+    n.data, n.label = L.Data(batch_size=batch_size, backend=P.Data.LMDB, source=lmdb,
+                             transform_param=dict(scale=1./255), ntop=2)
+    n.conv1 = L.Convolution(n.data, kernel_size=5, num_output=20, weight_filler=dict(type='xavier'))
+    n.pool1 = L.Pooling(n.conv1, kernel_size=2, stride=2, pool=P.Pooling.MAX)
+    n.conv2 = L.Convolution(n.pool1, kernel_size=5, num_output=50, weight_filler=dict(type='xavier'))
+    n.pool2 = L.Pooling(n.conv2, kernel_size=2, stride=2, pool=P.Pooling.MAX)
+    n.ip1 = L.InnerProduct(n.pool2, num_output=500, weight_filler=dict(type='xavier'))
+    n.relu1 = L.ReLU(n.ip1, in_place=True)
+    n.ip2 = L.InnerProduct(n.relu1, num_output=10, weight_filler=dict(type='xavier'))
+    n.loss = L.SoftmaxWithLoss(n.ip2, n.label)
+    return n.to_proto()
+
+with open('examples/mnist/lenet_auto_train.prototxt', 'w') as f:
+    f.write(str(lenet('examples/mnist/mnist_train_lmdb', 64)))
+
+with open('examples/mnist/lenet_auto_test.prototxt', 'w') as f:
+    f.write(str(lenet('examples/mnist/mnist_test_lmdb', 100)))
+
+{% endhighlight %}
+
+will produce the prototxt file :
+
+
+    layer {
+      name: "data"
+      type: "Data"
+      top: "data"
+      top: "label"
+      transform_param {
+        scale: 0.00392156862745
+      }
+      data_param {
+        source: "examples/mnist/mnist_train_lmdb"
+        batch_size: 64
+        backend: LMDB
+      }
+    }
+    layer {
+      name: "conv1"
+      type: "Convolution"
+      bottom: "data"
+      top: "conv1"
+      convolution_param {
+        num_output: 20
+        kernel_size: 5
+        weight_filler {
+          type: "xavier"
+        }
+      }
+    }
+    layer {
+      name: "pool1"
+      type: "Pooling"
+      bottom: "conv1"
+      top: "pool1"
+      pooling_param {
+        pool: MAX
+        kernel_size: 2
+        stride: 2
+      }
+    }
+    layer {
+      name: "conv2"
+      type: "Convolution"
+      bottom: "pool1"
+      top: "conv2"
+      convolution_param {
+        num_output: 50
+        kernel_size: 5
+        weight_filler {
+          type: "xavier"
+        }
+      }
+    }
+    layer {
+      name: "pool2"
+      type: "Pooling"
+      bottom: "conv2"
+      top: "pool2"
+      pooling_param {
+        pool: MAX
+        kernel_size: 2
+        stride: 2
+      }
+    }
+    layer {
+      name: "ip1"
+      type: "InnerProduct"
+      bottom: "pool2"
+      top: "ip1"
+      inner_product_param {
+        num_output: 500
+        weight_filler {
+          type: "xavier"
+        }
+      }
+    }
+    layer {
+      name: "relu1"
+      type: "ReLU"
+      bottom: "ip1"
+      top: "ip1"
+    }
+    layer {
+      name: "ip2"
+      type: "InnerProduct"
+      bottom: "ip1"
+      top: "ip2"
+      inner_product_param {
+        num_output: 10
+        weight_filler {
+          type: "xavier"
+        }
+      }
+    }
+    layer {
+      name: "loss"
+      type: "SoftmaxWithLoss"
+      bottom: "ip2"
+      bottom: "label"
+      top: "loss"
+    }
+
+###Create a python layer
+
+Add a custom python layer to your `conv.prototxt` file :
+
+    layer {
+      name: 'MyPythonLayer'
+      type: 'Python'
+      top: 'output'
+      bottom: 'conv'
+      python_param {
+        module: 'mypythonlayer952'
+        layer: 'MyLayer'
+        param_str: "'num': 21"
+      }
+    }
+
+and create a `mypythonlayer.py` file that has to to be in the PYTHONPATH :
+
+    import caffe
+    import numpy as np
+    import yaml
+
+    class MyLayer(caffe.Layer):
+
+        def setup(self, bottom, top):
+            self.num = yaml.load(self.param_str)["num"]
+            print "Parameter num : ", self.num
+
+        def reshape(self, bottom, top):
+            pass
+
+        def forward(self, bottom, top):
+            top[0].reshape(*bottom[0].shape)
+            top[0].data[...] = bottom[0].data + self.num
+
+        def backward(self, top, propagate_down, bottom):
+            pass
+
+This layer will simply add a value
+
+    net = caffe.Net('conv.prototxt',caffe.TEST)
+    im = np.array(Image.open('cat_gray.jpg'))
+    im_input = im[np.newaxis, np.newaxis, :, :]
+    net.blobs['data'].reshape(*im_input.shape)
+    net.blobs['data'].data[...] = im_input
+    net.forward()
+
+#Caffe in C++
 
 The **blob** ([blob.hpp](https://github.com/BVLC/caffe/blob/master/include/caffe/blob.hpp) and [blob.cpp](https://github.com/BVLC/caffe/blob/master/src/caffe/blob.cpp)) is a wrapper to manage memory independently of CPU/GPU choice, using [SyncedMemory class](https://github.com/BVLC/caffe/blob/master/src/caffe/syncedmem.cpp), and has a few functions like Arrays in Python, both for the data and the computed gradient (diff) arrays contained in the blob :
 

@@ -105,6 +105,8 @@ TEST_GPUID := 0
 Q ?= @
 {% endhighlight %}
 
+Note the Python lib directory `/usr/local/Cellar/python/2.7.10_2/Frameworks/Python.framework/Versions/2.7/lib`.
+
 If your iMac is not CUDA capable, comment `USE_CUDNN := 1`, `CUDA_DIR := /usr/local/cuda` and `CUDA_ARCH=...` lines and uncomment `CPU_ONLY := 1`
 
 Here is the full copy of the [Makefile.config]({{ site.url }}/img/Makefile.config).

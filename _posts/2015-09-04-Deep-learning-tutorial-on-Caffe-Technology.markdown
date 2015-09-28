@@ -529,7 +529,9 @@ will produce the prototxt file :
       top: "loss"
     }
 
-###Create a python layer
+###Create your custom python layer
+
+Let's create a layer to add a value.
 
 Add a custom python layer to your `conv.prototxt` file :
 

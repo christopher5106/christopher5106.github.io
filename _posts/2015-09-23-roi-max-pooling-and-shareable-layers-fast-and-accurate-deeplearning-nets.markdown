@@ -63,7 +63,7 @@ Here are the different steps for the train net :
 
 #Training set
 
-I will feed the data layer with extracted rectangles images, and for each rectangle, the label and the rectangle coordinates x, y, w and o. Since order is preserved, I can simply add 4 new *repeated* fields to the **caffe::Datum** message format :
+I will feed the data layer with extracted rectangles, and for each rectangle, the label and the rectangle coordinates x, y, w and o. Since order is preserved, I can simply add 4 new *repeated* fields to the **caffe::Datum** message format :
 
     message Datum {
       optional int32 channels = 1;
@@ -86,7 +86,7 @@ I will feed the data layer with extracted rectangles images, and for each rectan
 
 Since `optional` is compatible with `repeated` in the protobuf format, I could also have changed the `label` field as `repeated` but this would require more changes in the code.
 
-With this configuration, I can use **caffe::Datum** either in the 'old way', without the previous field, or in a 1-ROI way, where I add one rectangle information to each rectangle, or in the multiple-ROI-per-image way, where I add multiple rectangles to one image.
+With this configuration, I can use **caffe::Datum** either in the 'old way', without the previous fields / ROI information, or in a 1-ROI way, where I add one rectangle information to each image, or in the multiple-ROI-per-image way, where I add multiple rectangles to each image.
 
 #Feature map net
 

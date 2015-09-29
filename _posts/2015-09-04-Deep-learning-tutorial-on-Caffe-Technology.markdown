@@ -588,7 +588,7 @@ The **blob** ([blob.hpp](https://github.com/BVLC/caffe/blob/master/include/caffe
 
 - `shape()` and `shape_string()` to get the shape, or `shape(i)` to get the size of the i-th dimension, or `shapeEquals()` to compare shape equality
 - `reshape()` or `reshapeLike()` another blob
-- `count()` the number of elements (shape(0)*shape(1)*...)
+- `count()` the number of elements (`shape(0)*shape(1)*...`)
 - `offset()` to get the c++ index in the array
 - `CopyFrom()` to copy the blob
 - `data_at()` and `diff_at()`

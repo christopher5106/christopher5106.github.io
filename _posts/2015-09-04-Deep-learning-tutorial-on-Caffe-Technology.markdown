@@ -541,7 +541,7 @@ Add a custom python layer to your `conv.prototxt` file :
       top: 'output'
       bottom: 'conv'
       python_param {
-        module: 'mypythonlayer952'
+        module: 'mypythonlayer'
         layer: 'MyLayer'
         param_str: "'num': 21"
       }

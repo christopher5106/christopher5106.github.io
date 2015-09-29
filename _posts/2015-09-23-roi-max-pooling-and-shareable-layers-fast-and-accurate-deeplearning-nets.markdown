@@ -60,7 +60,28 @@ Here are the different steps for the train net :
 
 6. data layer
 
-I will feed the data layer with extracted rectangles images, and for each reactangle, a label, position t_x, t_y, t_w and t_o.
+
+#Training set
+
+I will feed the data layer with extracted rectangles images, and for each rectangle, the label and the rectangle coordinates x, y, w and o. Since `optional` is compatible with `repeated` in the protobuf format, I will change the `label` as repeated. Since order is preserved, I can simply add 4 new *repeated* fields to the **caffe::Datum** message format :
+
+    message Datum {
+      optional int32 channels = 1;
+      optional int32 height = 2;
+      optional int32 width = 3;
+      // the actual image data, in bytes
+      optional bytes data = 4;
+      repeated int32 label = 5;
+      // Optionally, the datum could also hold float data.
+      repeated float float_data = 6;
+      // If true data contains an encoded image that need to be decoded
+      optional bool encoded = 7 [default = false];
+      // ROI
+      repeated int32 x = 8;
+      repeated int32 y = 9 ;
+      repeated int32 w = 10;
+      repeated int32 h = 11;
+    }
 
 
 #Feature map net

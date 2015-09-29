@@ -86,6 +86,8 @@ I will feed the data layer with extracted rectangles images, and for each rectan
 
 Since `optional` is compatible with `repeated` in the protobuf format, I could also have changed the `label` as repeated but this would require more changes in the code.
 
+With this configuration, I can use **caffe::Datum** either in the 'old way', without the previous field, or in a 1-ROI way, where I add one rectangle information to each rectangle, or in the multiple-ROI-per-image way, where I add multiple rectangles to one image. 
+
 #Feature map net
 
 Let's train with the previously learned parameters the new model :

@@ -88,6 +88,29 @@ Since `optional` is compatible with `repeated` in the protobuf format, I could a
 
 With this configuration, I can use **caffe::Datum** either in the 'old way', without the previous fields / ROI information, or in a 1-ROI way, where I add one rectangle information to each image, or in the multiple-ROI-per-image way, where I add multiple rectangles to each image.
 
+The input layer will produce the correspondent new fields `labels`, `bbox_targets` and `bbox_loss_weights` (initialiazed to one) for the `SmoothL1Loss` layer :
+
+    layer {
+      name: "MyData"
+      type: "ROIData"
+      top: "data"
+      top: "label"
+      top: "labels"
+      top: "bbox_targets"
+      top: "bbox_loss_weights"
+      include {
+        phase: TRAIN  
+      }
+      transform_param {
+        scale: 0.00390625
+      }
+      data_param {
+        source: "train_lmdb"
+        batch_size: 64
+        backend: LMDB
+      }
+    }
+
 #Feature map net
 
 Let's train with the previously learned parameters the new model :

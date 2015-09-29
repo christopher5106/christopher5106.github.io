@@ -71,7 +71,7 @@ I will feed the data layer with extracted rectangles images, and for each rectan
       optional int32 width = 3;
       // the actual image data, in bytes
       optional bytes data = 4;
-      repeated int32 label = 5;
+      optional int32 label = 5;
       // Optionally, the datum could also hold float data.
       repeated float float_data = 6;
       // If true data contains an encoded image that need to be decoded

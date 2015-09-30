@@ -27,9 +27,9 @@ A a dataset, I labeled the letters on each images and I can easily extract the p
 
 |        | Average          | Max          | Min          |
 | ------------- |:-------------:|
-| Width | 200 | 673 | 61 |
+| Width | 200 | 673 | 18 |
 | Height | 40 | 127 | 15 |
-| Min orientation | - | 25 |  -25 |
+| Min orientation | - | 20 |  -26 |
 
 <br/>
 
@@ -110,6 +110,9 @@ The input layer will produce the correspondent new fields `labels`, `bbox_target
         backend: LMDB
       }
     }
+
+During the first training, I do not use a ROI Max pooling layer in the training net. I prefer not to send too big images but send the extracted rectangles rather than the full image.
+
 
 #Feature map net
 

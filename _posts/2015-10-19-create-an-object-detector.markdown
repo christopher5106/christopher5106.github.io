@@ -5,18 +5,17 @@ date:   2015-10-19 23:00:51
 categories: computer vision
 ---
 
-I would recommend reading a few posts :
-- [1](http://coding-robin.de/2013/07/22/train-your-own-opencv-haar-classifier.html)
+In order to gain information, read a few posts : [1](http://coding-robin.de/2013/07/22/train-your-own-opencv-haar-classifier.html)
 - [2](http://note.sonots.com/SciSoftware/haartraining.html)
 - [3](http://opencvuser.blogspot.be/2011/08/creating-haar-cascade-classifier-aka.html)
 
 
-To have a quick start, I would recommend to use this [example](https://github.com/mrnugget/opencv-haar-classifier-training)
+To have a quick start, try this [example](https://github.com/mrnugget/opencv-haar-classifier-training)
 
     git clone https://github.com/mrnugget/opencv-haar-classifier-training.git
 
 
-and to create an executable `extract` to create training windows, positive as well as negative ones :
+As a best practice, I would recommend to create an executable `extract` to create training windows, positive as well as negative ones :
 
     ./extract input.csv 100 20
 

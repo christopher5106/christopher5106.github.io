@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Create an object detector"
+title:  "Create an object detector with OpenCV Cascade Classifier"
 date:   2015-10-19 23:00:51
 categories: computer vision
 ---
@@ -16,7 +16,7 @@ To have a quick start, I would recommend to use this [example](https://github.co
     git clone https://github.com/mrnugget/opencv-haar-classifier-training.git
 
 
-and to create a executable `extract` to create training windows, positive as well as negative ones :
+and to create an executable `extract` to create training windows, positive as well as negative ones :
 
     ./extract input.csv 100 20
 
@@ -47,8 +47,13 @@ while `pos/info.dat` contains also rectangle informations
     img/xxxx.png 1 x,y,w,h
     img/yyyy.png 1 x,y,w,h
 
-Then you just need to call the following
+In the `pos/img/` images are full size, since the rectangle information is in the `info.dat` file, whereas the `neg/img/` images are extracted.
+
+Then to extract the positive rectangles :
 
     opencv_createsamples -info pos/info.dat -vec pos.vec -w 100 -h 20
     mkdir models
+
+and to train the classifier :
+
     opencv_traincascade -data models -vec pos.vec -bg neg/info.dat -w 100 -h 20

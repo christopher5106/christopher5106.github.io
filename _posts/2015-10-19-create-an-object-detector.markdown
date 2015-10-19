@@ -44,8 +44,8 @@ That's why the `extract` program create two directories
 
 while `pos/info.dat` contains also rectangle informations
 
-    img/xxxx.png 1 x,y,w,h
-    img/yyyy.png 1 x,y,w,h
+    img/xxxx.png 1 x y w h
+    img/yyyy.png 1 x y w h
 
 In the `pos/img/` images are full size, since the rectangle information is in the `info.dat` file, whereas the `neg/img/` images are extracted.
 

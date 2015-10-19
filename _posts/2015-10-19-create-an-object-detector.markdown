@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Create an object detector with OpenCV Cascade Classifier"
+title:  "Create an object detector with OpenCV Cascade Classifier : best practice"
 date:   2015-10-19 23:00:51
 categories: computer vision
 ---
@@ -47,6 +47,9 @@ while `pos/info.dat` contains also rectangle informations
     img/yyyy.png 1 x y w h
 
 In the `pos/img/` images are full size, since the rectangle information is in the `info.dat` file, whereas the `neg/img/` images are extracted.
+
+In my case I provide many more negatives than positives to the classifier  (4 times more).
+
 
 Then to extract the positive rectangles :
 

@@ -52,8 +52,8 @@ In the `pos/img/` images are full size, since the rectangle information is in th
 Then to extract the positive rectangles :
 
     opencv_createsamples -info pos/info.dat -vec pos.vec -w 100 -h 20
-    mkdir models
 
 and to train the classifier :
 
+    mkdir models
     opencv_traincascade -data models -vec pos.vec -bg neg/info.dat -w 100 -h 20

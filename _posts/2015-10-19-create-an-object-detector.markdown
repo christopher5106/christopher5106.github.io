@@ -5,11 +5,6 @@ date:   2015-10-19 23:00:51
 categories: computer vision
 ---
 
-In order to gain information, read a few posts : [1](http://coding-robin.de/2013/07/22/train-your-own-opencv-haar-classifier.html)
-- [2](http://note.sonots.com/SciSoftware/haartraining.html)
-- [3](http://opencvuser.blogspot.be/2011/08/creating-haar-cascade-classifier-aka.html)
-
-
 To have a quick start, try this [example](https://github.com/mrnugget/opencv-haar-classifier-training)
 
     git clone https://github.com/mrnugget/opencv-haar-classifier-training.git
@@ -63,7 +58,17 @@ Then to extract the positive rectangles :
 
     opencv_createsamples -info pos/info.dat -vec pos.vec -w $WIDTH -h $HEIGHT
 
+You can also augment the positive sample by rotating and distorting the images with `opencv_createsamples` and merging them back into one vec with Naotoshi Seo’s `mergevec.cpp` tool.
+
 and to train the classifier :
 
     mkdir models
     opencv_traincascade -data models -vec pos.vec -bg neg/info.dat -w $WIDTH -h $HEIGHT -nstages 20 -nsplits 2 -minhitrate 0.999 -maxfalsealarm 0.5 -numPos 1000 -numNeg 2000 -mem 2048 -mode ALL
+
+Be careful, the JS library `jsfeat` only accept detectors in the old format (use `opencv_haartraining` instead).
+
+##more
+
+A few posts : [1](http://coding-robin.de/2013/07/22/train-your-own-opencv-haar-classifier.html)
+- [2](http://note.sonots.com/SciSoftware/haartraining.html)
+- [3](http://opencvuser.blogspot.be/2011/08/creating-haar-cascade-classifier-aka.html)

@@ -56,4 +56,4 @@ Then to extract the positive rectangles :
 and to train the classifier :
 
     mkdir models
-    opencv_traincascade -data models -vec pos.vec -bg neg/info.dat -w 100 -h 20
+    opencv_traincascade -data models -vec pos.vec -bg neg/info.dat -w 100 -h 20 -nstages 20 -nsplits 2 -minhitrate 0.999 -maxfalsealarm 0.5 -numPos 1000 -numNeg 2000 -mem 2048 -mode ALL

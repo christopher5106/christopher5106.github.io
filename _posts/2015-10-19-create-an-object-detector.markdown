@@ -14,16 +14,24 @@ To have a quick start, try this [example](https://github.com/mrnugget/opencv-haa
 
     git clone https://github.com/mrnugget/opencv-haar-classifier-training.git
 
+In my example, I will train the classifier with training windows of size
 
-As a best practice, I would recommend to create an executable `extract` to create training windows, positive as well as negative ones :
+    WIDTH=100
+    HEIGHT=20
 
-    ./extract input.csv 100 20
+As a best practice, I would recommend to create an executable, `extract`, to extract training windows, positive ones as well as negative ones :
 
-The CSV file contains the list of images with the coordinates of the rectangles where objects are located, and the last two parameters correspond to the size to resize the windows after extraction.
+    ./extract input.csv $WIDTH $HEIGHT
 
-I would avoid to leave the creation of negative windows to the `opencv_traincascade` program, and to use a wild list of background images : I prefer to extract my own background images from the images where the objects have been found, because they are more realistic backgrounds for these objects. In order to have `opencv_traincascade` program use my windows as negative windows, `extract` will create the background images at the final training size (100x20 in my example).
+The CSV input file to the program is a list of input images with the coordinates of the rectangles where objects are located in the image,
 
-That's why the `extract` program create two directories
+    /Users/christopherbourez/data/img.png,10,30,210,65
+
+The last two parameters give the size to resize the negative windows after extraction.
+
+I would avoid to leave the creation of negative windows to the `opencv_traincascade` program, or to use a wild list of background images : I prefer to extract my own background images from the images where the objects have been found, because they are more realistic backgrounds for these objects. In order to have `opencv_traincascade` program use my windows as negative windows, `extract` will create the background images at the final training size (100x20 in my example).
+
+The `extract` program creates two directories
 
     pos
     -- info.dat
@@ -53,9 +61,9 @@ In my case I provide many more negatives than positives to the classifier  (4 ti
 
 Then to extract the positive rectangles :
 
-    opencv_createsamples -info pos/info.dat -vec pos.vec -w 100 -h 20
+    opencv_createsamples -info pos/info.dat -vec pos.vec -w $WIDTH -h $HEIGHT
 
 and to train the classifier :
 
     mkdir models
-    opencv_traincascade -data models -vec pos.vec -bg neg/info.dat -w 100 -h 20 -nstages 20 -nsplits 2 -minhitrate 0.999 -maxfalsealarm 0.5 -numPos 1000 -numNeg 2000 -mem 2048 -mode ALL
+    opencv_traincascade -data models -vec pos.vec -bg neg/info.dat -w $WIDTH -h $HEIGHT -nstages 20 -nsplits 2 -minhitrate 0.999 -maxfalsealarm 0.5 -numPos 1000 -numNeg 2000 -mem 2048 -mode ALL

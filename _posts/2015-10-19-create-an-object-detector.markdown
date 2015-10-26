@@ -63,7 +63,7 @@ You can also augment the positive sample by rotating and distorting the images w
 and to train the classifier :
 
     mkdir models
-    opencv_traincascade -data models -vec pos.vec -bg neg/info.dat -w $WIDTH -h $HEIGHT -nstages 20 -nsplits 2 -minhitrate 0.999 -maxfalsealarm 0.5 -numPos 1000 -numNeg 2000 -mem 2048 -mode ALL
+    opencv_traincascade -data models -vec pos.vec -bg neg/info.dat -w $WIDTH -h $HEIGHT -nunmStages 20 -nsplits 2 -minhitrate 0.999 -maxfalsealarm 0.5 -numPos 1000 -numNeg 2000 -mem 2048 -mode ALL -precalcValBufSize 1024 -precalcIdxBufSize 1024
 
 Be careful, the JS library `jsfeat` only accept detectors in the old format (use `opencv_haartraining` instead).
 

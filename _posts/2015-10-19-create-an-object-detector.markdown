@@ -104,7 +104,7 @@ var cv = require("opencv");
 var color = [0, 255, 0];
 var thickness = 2;
 
-var cascadeFile = "cascade.xml";
+var cascadeFile = "models/cascade.xml";
 
 var inputFiles = [ "image.jpg" ];
 

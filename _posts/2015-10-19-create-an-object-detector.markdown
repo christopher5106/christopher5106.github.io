@@ -98,7 +98,7 @@ Be careful also, the JS library `jsfeat` only accept detectors in the old format
 
 Simply create a **recognize.js** program :
 
-```javascript
+{% highlight javascript %}
 var cv = require("opencv");
 
 var color = [0, 255, 0];
@@ -120,7 +120,7 @@ inputFiles.forEach(function(fileName) {
     });
   });
 });
-```
+{% endhighlight %}
 
 and call the detector
 

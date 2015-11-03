@@ -93,6 +93,41 @@ About the training parameters :
 
 Be careful also, the JS library `jsfeat` only accept detectors in the old format (use `opencv_haartraining` instead).
 
+
+## Use in nodeJS
+
+Simply create a **recognize.js** program :
+
+```javascript
+var cv = require("opencv");
+
+var color = [0, 255, 0];
+var thickness = 2;
+
+var cascadeFile = "cascade.xml";
+
+var inputFiles = [ "image.jpg" ];
+
+inputFiles.forEach(function(fileName) {
+  cv.readImage(fileName, function(err, im) {
+    im.detectObject(cascadeFile, {neighbors: 2, scale: 2}, function(err, objects) {
+      console.log(objects);
+      for(var k = 0; k < objects.length; k++) {
+        var object = objects[k];
+        im.rectangle([object.x, object.y], [object.width, object.height], color, 2);
+      }
+      im.save(fileName.replace(/.jpg/, "processed.jpg"));
+    });
+  });
+});
+```
+
+and call the detector
+
+    node recognize.js
+
+**Well done !**
+
 ##more
 
 A few posts : [1](http://coding-robin.de/2013/07/22/train-your-own-opencv-haar-classifier.html)

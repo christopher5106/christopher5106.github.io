@@ -74,8 +74,19 @@ You could also augment the positive sample by rotating and distorting the images
 
 ## Train the classifier
 
+    NUMPOS=1000
+    RATIO=2
+
     mkdir models
-    opencv_traincascade -data models -vec pos.vec -bg neg/info.dat -w $WIDTH -h $HEIGHT -numStages 20 -minHitRate 0.999 -maxFalseAlarmRate 0.5 -numPos 1000 -numNeg 2000 -mode ALL -precalcValBufSize 1024 -precalcIdxBufSize 1024
+
+    opencv_traincascade -data models -vec pos.vec -bg neg/info.dat -w $WIDTH -h $HEIGHT -numPos $(expr $NUMPOSTRAIN*0.85/1 |bc) -numNeg $(expr $RATIO*$NUMPOSTRAIN*0.85/1 |bc)  -precalcValBufSize 1024 -precalcIdxBufSize 1024
+
+    # or
+
+    opencv_traincascade -data models -vec pos.vec -bg neg/info.dat -w $WIDTH -h $HEIGHT -numStages 20 -minHitRate 0.999 -maxFalseAlarmRate 0.5 -numPos $(expr $NUMPOSTRAIN*0.85/1 |bc) -numNeg $(expr $RATIO*$NUMPOSTRAIN*0.85/1 |bc) -mode ALL -precalcValBufSize 1024 -precalcIdxBufSize 1024
+
+
+
 
 About the training parameters :
 

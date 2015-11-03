@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Create an object detector with OpenCV Cascade Classifier : best practice"
+title:  "Create an object detector with OpenCV Cascade Classifier : best practice and tutorial"
 date:   2015-10-19 23:00:51
 categories: computer vision
 ---
@@ -13,6 +13,8 @@ In my example, I will train the classifier with training windows of size
 
     WIDTH=100
     HEIGHT=20
+
+The dimensions specify the smallest object size the classifier will be able to detect. Objects larger than that will be detected by the multiscale image pyramid approach.
 
 ## Extracting rectangles
 
@@ -83,11 +85,11 @@ About the parameter :
 
     Increasing the number of positives will enable a better generalization of the model. Usually a few thousand is good.
 
-- `numNeg` : For the ratio of number of Positives versus Negatives numPos:numNeg, a ratio of 1:2 is good usually.
+- `numNeg` : it is usually good to take two times more negatives than positives.
 
     Increasing the number of negative will diminish the number of false positive detections.
 
-
+- increasing `numStages` will not improve anymore the model when overfitting occurs. Then you'll need to add more positives and negatives.
 
 Be careful also, the JS library `jsfeat` only accept detectors in the old format (use `opencv_haartraining` instead).
 

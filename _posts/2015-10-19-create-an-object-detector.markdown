@@ -18,12 +18,12 @@ The dimensions specify the smallest object size the classifier will be able to d
 
 ## Extracting rectangles
 
-As a best practice, I would recommend to create an executable, `extract`, to extract training windows, positive ones as well as negative ones :
+As a best practice, I would recommend to create an executable, `extract`, to extract training windows, positive ones as well as negative ones, from an annotated input of your choice :
 
     ./extract input.csv $WIDTH $HEIGHT
 
 
-The `extract` program will create two directories directly used by OpenCV cascade training algorithm :
+The purpose of my `extract` program is to create two directories that can be directly used by OpenCV cascade training algorithm :
 
     pos
     -- info.dat

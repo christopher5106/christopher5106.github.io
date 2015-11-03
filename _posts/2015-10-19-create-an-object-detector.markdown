@@ -65,7 +65,11 @@ and to train the classifier :
     mkdir models
     opencv_traincascade -data models -vec pos.vec -bg neg/info.dat -w $WIDTH -h $HEIGHT -numStages 20 -minHitRate 0.999 -maxFalseAlarmRate 0.5 -numPos 1000 -numNeg 2000 -mode ALL -precalcValBufSize 1024 -precalcIdxBufSize 1024
 
-Be careful, the JS library `jsfeat` only accept detectors in the old format (use `opencv_haartraining` instead).
+`numPos` parameter has to be about 90% of the number of positive rectangles, since some positives that are too different from the the positive set can be rejected by the algorithm and if `numPos` equals the number of positives, it will fail.
+
+    OpenCV Error: Bad argument (Can not get new positive sample. The most possible reason is insufficient count of samples in given vec-file.
+
+Be careful also, the JS library `jsfeat` only accept detectors in the old format (use `opencv_haartraining` instead).
 
 ##more
 

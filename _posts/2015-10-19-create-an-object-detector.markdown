@@ -79,7 +79,7 @@ You can also augment the positive sample by rotating and distorting the images w
 
 About the parameter :
 
-- `numPos` parameter has to be about 90% of the number of positive rectangles, since some positives that are too different from the the positive set can be rejected by the algorithm and if `numPos` equals the number of positives, it will fail.
+- `numPos` parameter has to be about 90% of the number of positive rectangles, since some positives that are too different from the the positive set can be rejected by the algorithm and if `numPos` equals the number of positives, it will fail with the following message :
 
         OpenCV Error: Bad argument (Can not get new positive sample. The most possible reason is insufficient count of samples in given vec-file.
 
@@ -89,7 +89,7 @@ About the parameter :
 
     Increasing the number of negative will diminish the number of false positive detections.
 
-- increasing `numStages` will not improve anymore the model when overfitting occurs. Then you'll need to add more positives and negatives.
+- increasing `numStages` will not improve anymore the model when overfitting occurs. In this case, you'll need to add more positives and negatives to the training set.
 
 Be careful also, the JS library `jsfeat` only accept detectors in the old format (use `opencv_haartraining` instead).
 

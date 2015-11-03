@@ -14,19 +14,14 @@ In my example, I will train the classifier with training windows of size
     WIDTH=100
     HEIGHT=20
 
+## Extracting rectangles
+
 As a best practice, I would recommend to create an executable, `extract`, to extract training windows, positive ones as well as negative ones :
 
     ./extract input.csv $WIDTH $HEIGHT
 
-The CSV input file to the program is a list of input images with the coordinates of the rectangles where objects are located in the image,
 
-    /Users/christopherbourez/data/img.png,10,30,210,65
-
-The last two parameters give the size to resize the negative windows after extraction.
-
-I would avoid to leave the creation of negative windows to the `opencv_traincascade` program, or to use a wild list of background images : I prefer to extract my own background images from the images where the objects have been found, because they are more realistic backgrounds for these objects. In order to have `opencv_traincascade` program use my windows as negative windows, `extract` will create the background images at the final training size (100x20 in my example).
-
-The `extract` program creates two directories
+The `extract` program will create two directories directly used by OpenCV cascade training algorithm :
 
     pos
     -- info.dat
@@ -53,21 +48,46 @@ In the `pos/img/` images are full size, since the rectangle information is in th
 
 In my case I provide many more negatives than positives to the classifier  (4 times more).
 
+I would avoid leaving OpenCV training algorithm create the negative windows (`opencv_traincascade` subsample negative image), or to do that, my `extract` will create the background images at the final training size (100x20 in my example) so that it cannot subsample but only take the entire negative image as a negative.
 
-Then to extract the positive rectangles :
+Creating negatives from the backgrounds of the positives is much more "natural" and will give far better results, than using a wild list of background images taken on Internet. That's all that makes the interest of such an `extract` program.
+
+
+
+The CSV input file to the program is a list of input images with the class and coordinates of the rectangles where objects are located in the image,
+
+    /Users/christopherbourez/data/img.png,0,10,30,210,65
+
+The last two input parameters give the size to resize the negative windows after extraction.
+
+
+## OpenCV positive rectangle conversion
+
+It is required to use an OpenCV program to convert the positive rectangles to the required format :
 
     opencv_createsamples -info pos/info.dat -vec pos.vec -w $WIDTH -h $HEIGHT
 
 You can also augment the positive sample by rotating and distorting the images with `opencv_createsamples` and merging them back into one vec with Naotoshi Seo’s `mergevec.cpp` tool.
 
-and to train the classifier :
+
+## Train the classifier :
 
     mkdir models
     opencv_traincascade -data models -vec pos.vec -bg neg/info.dat -w $WIDTH -h $HEIGHT -numStages 20 -minHitRate 0.999 -maxFalseAlarmRate 0.5 -numPos 1000 -numNeg 2000 -mode ALL -precalcValBufSize 1024 -precalcIdxBufSize 1024
 
-`numPos` parameter has to be about 90% of the number of positive rectangles, since some positives that are too different from the the positive set can be rejected by the algorithm and if `numPos` equals the number of positives, it will fail.
+About the parameter :
+
+- `numPos` parameter has to be about 90% of the number of positive rectangles, since some positives that are too different from the the positive set can be rejected by the algorithm and if `numPos` equals the number of positives, it will fail.
 
     OpenCV Error: Bad argument (Can not get new positive sample. The most possible reason is insufficient count of samples in given vec-file.
+
+Increasing the number of positives will enable a better generalization of the model. Usually a few thousand is good.
+
+- `numNeg` : For the ratio of number of Positives versus Negatives numPos:numNeg, a ratio of 1:2 is good usually.
+
+Increasing the number of negative will diminish the number of false positive detections.
+
+
 
 Be careful also, the JS library `jsfeat` only accept detectors in the old format (use `opencv_haartraining` instead).
 

@@ -16,7 +16,7 @@ In my example, I will train the classifier with training windows of size
 
 The dimensions specify the smallest object size the classifier will be able to detect. Objects larger than that will be detected by the multiscale image pyramid approach.
 
-## Extracting rectangles
+## Extracting rectangles to OpenCV format
 
 As a best practice, I would recommend to create an executable, `extract`, to extract training windows, positive ones as well as negative ones, from an annotated input of your choice :
 
@@ -41,7 +41,7 @@ The purpose of my `extract` program is to create two directories that can be dir
     img/zzzz.png
     img/llll.png
 
-while `pos/info.dat` contains also rectangle informations
+while `pos/info.dat` contains rectangle informations
 
     img/xxxx.png 1 x y w h
     img/yyyy.png 1 x y w h
@@ -52,7 +52,7 @@ In my case I provide many more negatives than positives to the classifier  (4 ti
 
 I would avoid leaving OpenCV training algorithm create the negative windows (`opencv_traincascade` subsample negative image), or to do that, my `extract` will create the background images at the final training size (100x20 in my example) so that it cannot subsample but only take the entire negative image as a negative.
 
-Creating negatives from the backgrounds of the positives is much more "natural" and will give far better results, than using a wild list of background images taken on Internet. That's all that makes the interest of such an `extract` program.
+Creating negatives from the backgrounds of the positives is much more "natural" and will give far better results, than using a wild list of background images taken from the Internet. That's all that makes the interest of such an `extract` program.
 
 
 
@@ -63,13 +63,13 @@ The CSV input file to the program is a list of input images with the class and c
 The last two input parameters give the size to resize the negative windows after extraction.
 
 
-## OpenCV positives conversion
+## OpenCV positives preprocessing
 
-It is required to use an OpenCV program to convert the positive rectangles to the required format :
+It is required to use an OpenCV program to convert the positive rectangles to a new required format :
 
     opencv_createsamples -info pos/info.dat -vec pos.vec -w $WIDTH -h $HEIGHT
 
-You can also augment the positive sample by rotating and distorting the images with `opencv_createsamples` and merging them back into one vec with Naotoshi Seo’s `mergevec.cpp` tool.
+You could also augment the positive sample by rotating and distorting the images with `opencv_createsamples` and merging them back into one vec with Naotoshi Seo’s `mergevec.cpp` tool.
 
 
 ## Train the classifier
@@ -77,7 +77,7 @@ You can also augment the positive sample by rotating and distorting the images w
     mkdir models
     opencv_traincascade -data models -vec pos.vec -bg neg/info.dat -w $WIDTH -h $HEIGHT -numStages 20 -minHitRate 0.999 -maxFalseAlarmRate 0.5 -numPos 1000 -numNeg 2000 -mode ALL -precalcValBufSize 1024 -precalcIdxBufSize 1024
 
-About the parameter :
+About the training parameters :
 
 - `numPos` parameter has to be about 90% of the number of positive rectangles, since some positives that are too different from the the positive set can be rejected by the algorithm and if `numPos` equals the number of positives, it will fail with the following message :
 

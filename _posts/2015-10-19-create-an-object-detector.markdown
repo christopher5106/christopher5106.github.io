@@ -11,8 +11,10 @@ To have a quick start, try this [example](https://github.com/mrnugget/opencv-haa
 
 In my example, I will train the classifier with training windows of size
 
-    WIDTH=100
-    HEIGHT=20
+{% highlight bash %}
+WIDTH=100
+HEIGHT=20
+{% endhighlight %}
 
 The dimensions specify the smallest object size the classifier will be able to detect. Objects larger than that will be detected by the multiscale image pyramid approach.
 
@@ -65,21 +67,28 @@ The last two input parameters give the size to resize the negative windows after
 
 ## OpenCV positives preprocessing
 
+Let's set the number of positives we take (NUMPOS) :
+
+    NUMPOS=1000
+
 It is required to use an OpenCV program to convert the positive rectangles to a new required format :
 
-    opencv_createsamples -info pos/info.dat -vec pos.vec -w $WIDTH -h $HEIGHT
+    opencv_createsamples -info pos/info.dat -vec pos.vec -w $WIDTH -h $HEIGHT -num $NUMPOS
 
 You could also augment the positive sample by rotating and distorting the images with `opencv_createsamples` and merging them back into one vec with Naotoshi Seo’s `mergevec.cpp` tool.
 
 
 ## Train the classifier
 
-    NUMPOS=1000
+Let's the number of negatives we take per positives (RATIO) :
+
     RATIO=2
+
+and launch the training :
 
     mkdir data
 
-    opencv_traincascade -data data -vec pos.vec -bg neg/info.dat -w $WIDTH -h $HEIGHT -numPos $(expr $NUMPOSTRAIN*0.85/1 |bc) -numNeg $(expr $RATIO*$NUMPOSTRAIN*0.85/1 |bc)  -precalcValBufSize 1024 -precalcIdxBufSize 1024
+    opencv_traincascade -data data -vec pos.vec -bg neg/info.dat -w $WIDTH -h $HEIGHT -numPos $(expr $NUMPOS*0.85/1 |bc) -numNeg $(expr $RATIO*$NUMPOS*0.85/1 |bc)  -precalcValBufSize 1024 -precalcIdxBufSize 1024
 
     # or
 
@@ -90,7 +99,7 @@ You could also augment the positive sample by rotating and distorting the images
 
 About the training parameters :
 
-- `numPos` parameter has to be about 90% of the number of positive rectangles, since some positives that are too different from the the positive set can be rejected by the algorithm and if `numPos` equals the number of positives, it will fail with the following message :
+- I fix `numPos` parameter to be about 90% of the number of positive rectangles, since some positives that are too different from the the positive set can be rejected by the algorithm and if `numPos` equals the number of positives, it will fail with the following message :
 
         OpenCV Error: Bad argument (Can not get new positive sample. The most possible reason is insufficient count of samples in given vec-file.
 

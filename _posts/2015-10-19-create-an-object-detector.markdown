@@ -9,16 +9,14 @@ categories: computer vision
 ![png]({{ site.url }}/img/drive2.jpg)
 ![png]({{ site.url }}/img/drive3.jpg)
 
-To have a quick start, try this [example](https://github.com/mrnugget/opencv-haar-classifier-training)
-
-    git clone https://github.com/mrnugget/opencv-haar-classifier-training.git
-
-In my example, I will train the classifier with training windows of size
+In this driving license zone detector, I will train the classifier with training windows of size 50 x 42 :
 
 {% highlight bash %}
-WIDTH=100
-HEIGHT=20
+WIDTH=50
+RATIO=0.85
 {% endhighlight %}
+
+where ratio is height divided by width.
 
 The dimensions specify the smallest object size the classifier will be able to detect. Objects larger than that will be detected by the multiscale image pyramid approach.
 
@@ -56,10 +54,16 @@ In the `pos/img/` images are full size, since the rectangle information is in th
 
 In my case I provide many more negatives than positives to the classifier  (4 times more).
 
-I would avoid leaving OpenCV training algorithm create the negative windows (`opencv_traincascade` subsample negative image), or to do that, my `extract` will create the background images at the final training size (100x20 in my example) so that it cannot subsample but only take the entire negative image as a negative.
+I would avoid leaving OpenCV training algorithm create all the negative windows (`opencv_traincascade` subsample negative image), or to do that, my `extract` will create the background images at the final training size (100x20 in my example) so that it cannot subsample but only take the entire negative image as a negative.
 
 Creating negatives from the backgrounds of the positives is much more "natural" and will give far better results, than using a wild list of background images taken from the Internet. That's all that makes the interest of such an `extract` program.
 
+I will add these negatives to negatives from this repo :
+
+    cd ~/apps
+    git clone https://github.com/christopher5106/tutorial-haartraining.git
+    cd data/negatives
+    ls -l1 `*`.jpg > negatives.txt
 
 
 The CSV input file to the program is a list of input images with the class and coordinates of the rectangles where objects are located in the image,
@@ -77,29 +81,23 @@ Let's set the number of positives we take (NUMPOS) :
 
 It is required to use an OpenCV program to convert the positive rectangles to a new required format :
 
-    opencv_createsamples -info pos/info.dat -vec pos.vec -w $WIDTH -h $HEIGHT -num $NUMPOS
+    cd MYPOSITIVES_FOLDER
+    opencv_createsamples -info pos/info.dat -vec pos.vec -w $WIDTH -h $(expr $WIDTH*$RATIO/1 |bc) -num $NUMPOS
 
 You could also augment the positive sample by rotating and distorting the images with `opencv_createsamples` and merging them back into one vec with Naotoshi Seo’s `mergevec.cpp` tool.
 
 
 ## Train the classifier
 
-Let's the number of negatives we take per positives (RATIO) :
+Let's the number of negatives we take per positives (FACTOR) :
 
-    RATIO=2
+    FACTOR=10
 
 and launch the training :
 
     mkdir data
 
-    opencv_traincascade -data data -vec pos.vec -bg neg/info.dat -w $WIDTH -h $HEIGHT -numPos $(expr $NUMPOS*0.85/1 |bc) -numNeg $(expr $RATIO*$NUMPOS*0.85/1 |bc)  -precalcValBufSize 1024 -precalcIdxBufSize 1024
-
-    # or
-
-    opencv_traincascade -data data -vec pos.vec -bg neg/info.dat -w $WIDTH -h $HEIGHT -numStages 20 -minHitRate 0.999 -maxFalseAlarmRate 0.5 -numPos $(expr $NUMPOS*0.85/1 |bc) -numNeg $(expr $RATIO*$NUMPOS*0.85/1 |bc) -mode ALL -precalcValBufSize 1024 -precalcIdxBufSize 1024
-
-
-
+    opencv_traincascade -data data -vec pos.vec -bg ~/apps/tutorial-haartraining/data/negatives/negatives.txt -w $WIDTH -h $(expr $WIDTH*$RATIO/1 |bc) -numPos $(expr $NUMPOS*0.85/1 |bc) -numNeg $(expr $FACTOR*$NUMPOS*0.85/1 |bc)  -precalcValBufSize 1024 -precalcIdxBufSize 1024 -featureType HAAR
 
 About the training parameters :
 
@@ -157,3 +155,6 @@ and call the detector
 A few posts : [1](http://coding-robin.de/2013/07/22/train-your-own-opencv-haar-classifier.html)
 - [2](http://note.sonots.com/SciSoftware/haartraining.html)
 - [3](http://opencvuser.blogspot.be/2011/08/creating-haar-cascade-classifier-aka.html)
+- To have a quick start, try this [example](https://github.com/mrnugget/opencv-haar-classifier-training)
+
+    git clone https://github.com/mrnugget/opencv-haar-classifier-training.git

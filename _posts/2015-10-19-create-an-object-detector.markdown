@@ -64,10 +64,10 @@ Creating negatives from the backgrounds of the positives is much more "natural" 
 I will add these negatives to negatives from this repo :
 
 {% highlight bash  %}
-    cd ~/apps
-    git clone https://github.com/christopher5106/tutorial-haartraining.git
-    cd data/negatives
-    ls -l1 *.jpg > negatives.txt
+cd ~/apps
+git clone https://github.com/christopher5106/tutorial-haartraining.git
+cd data/negatives
+ls -l1 *.jpg > negatives.txt
 {% endhighlight %}
 
 The CSV input file to the program is a list of input images with the class and coordinates of the rectangles where objects are located in the image,
@@ -99,9 +99,11 @@ Let's the number of negatives we take per positives (FACTOR) :
 
 and launch the training :
 
-    mkdir data
+{% highlight bash  %}
+mkdir data
 
-    opencv_traincascade -data data -vec pos.vec -bg ~/apps/tutorial-haartraining/data/negatives/negatives.txt -w $WIDTH -h $(expr $WIDTH*$RATIO/1 |bc) -numPos $(expr $NUMPOS*0.85/1 |bc) -numNeg $(expr $FACTOR*$NUMPOS*0.85/1 |bc)  -precalcValBufSize 1024 -precalcIdxBufSize 1024 -featureType HAAR
+opencv_traincascade -data data -vec pos.vec -bg ~/apps/tutorial-haartraining/data/negatives/negatives.txt -w $WIDTH -h $(expr $WIDTH*$RATIO/1 |bc) -numPos $(expr $NUMPOS*0.85/1 |bc) -numNeg $(expr $FACTOR*$NUMPOS*0.85/1 |bc)  -precalcValBufSize 1024 -precalcIdxBufSize 1024 -featureType HAAR
+{% endhighlight  %}
 
 About the training parameters :
 

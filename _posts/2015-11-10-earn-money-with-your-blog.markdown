@@ -37,7 +37,7 @@ Add AdSense in your Google Analytics panel via [AdSense Linking in Google Analyt
 # Optimize your SEO with Woorank
 
 
-https://www.woorank.com
+[Woorank](https://www.woorank.com) helps you oversee all aspects of search engine optimization, with a report including most important aspects.
 
 
 # Check your position in keyword searches with Positeo

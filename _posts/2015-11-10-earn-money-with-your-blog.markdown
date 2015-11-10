@@ -22,4 +22,12 @@ Add advertising to your website with [Google Adsense](http://www.google.com/adse
 
 Create an ad unit and add it to your website.
 
-# Improve your sales :)
+# Improve your search presence with Google Webmaster Tools
+
+![png]({{ site.url }}/img/search_presence.png)
+
+# Improve your sales with the right subjects and keywords :)
+
+## Check your position in searches with Positeo
+
+[Positeo](http://www.positeo.com/check-position/) helps you check your position in search results for some keywords.

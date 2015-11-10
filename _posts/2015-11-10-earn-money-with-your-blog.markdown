@@ -33,14 +33,28 @@ Add AdSense in your Google Analytics panel via [AdSense Linking in Google Analyt
 
 ![png]({{ site.url }}/img/search_presence.png)
 
-# Improve your sales with the right subjects and keywords :)
 
-## Check your position in searches with Positeo
+# Optimize your SEO with Woorank
+
+
+https://www.woorank.com
+
+
+# Check your position in keyword searches with Positeo
 
 [Positeo](http://www.positeo.com/check-position/) helps you check your position in search results for some keywords.
 
 
-## Get links from other websites
+# Check keyword revenues with Adwords Keyword planner
+
+[Keyword Planner](https://adwords.google.com/KeywordPlanner)
+
+![png]({{ site.url }}/img/keyword_tool.png)
+
+This tool can help you decide which subject and keywords to optimize your revenues. In this example, the keyword "avion" will bring 0,23€ per click, while the keyword "deep learning" brings 1,5€ per click.
+
+
+# Improve your page rank thanks to links from other websites
 
 To improve your visibility in search results, the best is to get links from other websites with high page ranks. You can check the page ranks on [Page Rank websites](http://www.pagerank.fr).
 

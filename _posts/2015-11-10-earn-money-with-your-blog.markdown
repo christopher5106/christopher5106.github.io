@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Earn money with your blog : tools for the webmaster"
+title:  "Optimize your revenues and earn money with your blog : tools for the webmaster"
 date:   2015-10-19 23:00:51
 categories: marketing
 ---
@@ -21,6 +21,11 @@ After 10 articles, I got 1700 users per month. It's time to monetize it.
 Add advertising to your website with [Google Adsense](http://www.google.com/adsense)
 
 Create an ad unit and add it to your website.
+
+Add [multiple add units](https://support.google.com/adsense/answer/187698?hl=en&ref_topic=2717009) to the page to optimize your revenues.
+
+Add AdSense in your Google Analytics panel via [AdSense Linking in Google Analytics](https://support.google.com/adsense/answer/6084409?hl=en) in order to see AdSense metrics in Analytics reports.
+
 
 # Improve your search presence with Google Webmaster Tools
 

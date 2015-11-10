@@ -1,6 +1,6 @@
 # Site settings
 title: Christopher Bourez's blog
-email: christopher.bourez - at - gmail.com
+email: christopher.bourezATgmail.com
 description: > # this means to ignore newlines until "baseurl:"
   Disrupting SASU. Christopher Bourez
 baseurl: "" # the subpath of your site, e.g. /blog/

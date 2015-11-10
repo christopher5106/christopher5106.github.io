@@ -53,6 +53,8 @@ Add AdSense in your Google Analytics panel via [AdSense Linking in Google Analyt
 
 This tool can help you decide which subject and keywords to optimize your revenues. In this example, the keyword "avion" will bring 0,23€ per click, while the keyword "deep learning" brings 1,5€ per click.
 
+This analysis can help you define your subjects, which words to use in your document, in order to maximize your revenues.
+
 
 # Improve your page rank thanks to links from other websites
 

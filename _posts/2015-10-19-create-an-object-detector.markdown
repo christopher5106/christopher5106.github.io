@@ -66,7 +66,7 @@ I will add these negatives to negatives from this repo :
     cd ~/apps
     git clone https://github.com/christopher5106/tutorial-haartraining.git
     cd data/negatives
-    ls -l1 `*`.jpg > negatives.txt
+    ls -l1 \*.jpg > negatives.txt
 
 
 The CSV input file to the program is a list of input images with the class and coordinates of the rectangles where objects are located in the image,

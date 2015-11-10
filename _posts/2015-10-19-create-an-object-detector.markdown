@@ -5,6 +5,10 @@ date:   2015-10-19 23:00:51
 categories: computer vision
 ---
 
+![png]({{ site.url }}/img/drive1.jpg)
+![png]({{ site.url }}/img/drive2.jpg)
+![png]({{ site.url }}/img/drive3.jpg)
+
 To have a quick start, try this [example](https://github.com/mrnugget/opencv-haar-classifier-training)
 
     git clone https://github.com/mrnugget/opencv-haar-classifier-training.git

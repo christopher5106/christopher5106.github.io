@@ -9,23 +9,23 @@ TensorFlow comes as a library such as other deep learning libraries, [Caffe](htt
 
 # The main advantage of Tensorflow
 
-Such as Caffe, TensorFlow comes with an [API](http://tensorflow.org/api_docs) in Python and C++.
+Such as Caffe, TensorFlow comes with an [API](http://tensorflow.org/api_docs) in both Python and C++ languages.
 
 Python is great for the tasks of experimenting and learning the parameters. These tasks may require tons of data manipulation before you get to the correct prediction model. Remember that 80% of the job of the data scientist is to prepare data, first clean it, then find the correct representation from which a model can learn.
 
-Tensorflow enables GPU execution which is also a very useful tool when it comes to learning, which require usually from a few tens minutes to a few tens hours : learning time will be divided by 5 to 50 on GPU which makes playing with hyperparameters of the model very easy.
+Tensorflow enables GPU execution which is also a very useful feature when it comes to learning, which require usually from a few tens minutes to a few tens hours : learning time will be divided by 5 to 50 on GPU which makes playing with hyperparameters of the model very convenient.
 
-Lastly, when the model has been learned, it comes to production, and usually, speed and optimizations become more important and the C++ API is the expected choice in this case.
+Lastly, when the model has been learned, it has to be deployed in production apps, and usually, speed and optimizations become more important : the C++ API is the expected first choice for this purpose.
 
-Tensorflow comes with [Tensorboard](http://tensorflow.org/how_tos/summaries_and_tensorboard/index.md), which looks like the DIGITS interface from NVIDIA :
+Tensorflow comes with [Tensorboard](http://tensorflow.org/how_tos/summaries_and_tensorboard/index.md), which looks like the DIGITS interface from NVIDIA (see my tutorial [on Mac](http://christopher5106.github.io/big/data/2015/07/16/deep-learning-install-caffe-cudnn-cuda-for-digits-python-on-mac-osx.html) or [on Ubuntu](http://christopher5106.github.io/big/data/2015/07/16/deep-learning-install-caffe-cudnn-cuda-for-digits-python-on-ubuntu-14-04.html)) :
 
 ![Tensorboard](http://api.tensorflow.org/system/image/body/1675/mnist_tensorboard.png)
 
-and graph visualization tool that works like our `python python/draw_net.py` command in Caffe ([Tutorial](http://christopher5106.github.io/deep/learning/2015/09/04/Deep-learning-tutorial-on-Caffe-Technology.html))
+and a graph visualization tool that works like our `python python/draw_net.py` command in Caffe ([see tutorial](http://christopher5106.github.io/deep/learning/2015/09/04/Deep-learning-tutorial-on-Caffe-Technology.html))
 
 ![Tensorboard graph](http://api.tensorflow.org/system/image/body/1691/colorby_structure.png)
 
-I would say that Tensorflow brings nothing really new, but **the main advantage is that everything is in one place, and easy to install**, which is very nice. Caffe remains for me the main tool where R&D occurs, but I believe that Tensorflow will become greater and greater in the future. All the work done by Google is very great.
+I would say that Tensorflow brings nothing really new, but **the main advantage is that everything is in one place, and easy to install**, which is very nice. Caffe remains for me the main tool where R&D occurs, but I believe that Tensorflow will become greater and greater in the future. Technical work done by Google is usually very great.
 
 
 # Let's give a try
@@ -42,7 +42,7 @@ You will need protobuf version above 3.0  (otherwise you'll get a `TypeError: __
 
 `--devel` options will enable to install version  'protobuf>=3.0.0a3'.
 
-Let us create a `input_data.py` file](https://tensorflow.googlesource.com/tensorflow/+/master/tensorflow/g3doc/tutorials/mnist/input_data.py).
+Let us create a `input_data.py` [file](https://tensorflow.googlesource.com/tensorflow/+/master/tensorflow/g3doc/tutorials/mnist/input_data.py).
 
 Let's run the following commands in `ipython` or by creating a file `run.py` that we run with command `python run.py` :
 

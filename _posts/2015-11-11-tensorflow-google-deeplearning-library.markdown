@@ -5,9 +5,9 @@ date:   2015-11-11 23:00:51
 categories: deep learning
 ---
 
-TensorFlow comes a library such as [Caffe](http://caffe.berkeleyvision.org/), [Theano](http://deeplearning.net/software/theano/), or [Torch](http://torch.ch/). I've already written a lot on Caffe before.
+TensorFlow comes as a library such as other deep learning libraries, [Caffe](http://caffe.berkeleyvision.org/), [Theano](http://deeplearning.net/software/theano/), or [Torch](http://torch.ch/). I've already written a lot on Caffe before.
 
-# Main advantages
+# The main advantage of Tensorflow
 
 Such as Caffe, TensorFlow comes with an [API](http://tensorflow.org/api_docs) in Python and C++.
 
@@ -25,7 +25,7 @@ and graph visualization tool that works like our `python python/draw_net.py` com
 
 ![Tensorboard graph](http://api.tensorflow.org/system/image/body/1691/colorby_structure.png)
 
-I would say that Tensorflow brings nothing really new, but everything is in one place, which is very nice. Caffe remains for me the main tool where R&D occurs, but I believe that Tensorflow will become greater and greater in the future. All the work done by Google is very great.
+I would say that Tensorflow brings nothing really new, but **the main advantage is that everything is in one place, and easy to install**, which is very nice. Caffe remains for me the main tool where R&D occurs, but I believe that Tensorflow will become greater and greater in the future. All the work done by Google is very great.
 
 
 # Let's give a try

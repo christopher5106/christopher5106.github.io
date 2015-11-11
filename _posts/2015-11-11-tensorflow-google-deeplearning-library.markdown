@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Tensorflow : Google Deeplearning Library, let's give it a try"
+title:  "Tensorflow : a deep learning library by Google, let's give it a try"
 date:   2015-11-11 23:00:51
 categories: deep learning
 ---

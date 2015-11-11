@@ -5,11 +5,13 @@ date:   2015-10-19 23:00:51
 categories: marketing
 ---
 
-Let's see the tools for the webmaster.
+**The key important thing is to write articles about which visitors could be interested about.** Sounds obvious, but all the strategy then consists of choosing the right content, with the right words, corresponding to the keywords people look for in search engines.
 
-# Analytics with Google Analytics
+Let's see the different tools to help you in your earnings optimization.
 
-Google Analytics is the leading tool to view your analytics :
+# Track Analytics with Google Analytics
+
+Google Analytics is the leading platform to track your visitors, and view reports on your analytics :
 
 ![png]({{ site.url }}/img/google_analytics.png)
 

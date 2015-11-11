@@ -97,7 +97,7 @@ cd tensorflow/tensorflow
 python g3doc/tutorials/mnist/mnist_softmax.py
 {% endhighlight %}
 
-With `mnist_softmax.py` shown here, adding a few symbolic operations `tf.matmul` (matrices multiplication), `+` (tensor addition), `tf.nn.sofmax` (softmax function), `reduce_sum` (somme) and `minimize` (minimization with GradientDescentOptimizer) :
+With `mnist_softmax.py` shown here, adding a few symbolic operations `tf.matmul` (matrix multiplication), `+` (tensor addition), `tf.nn.sofmax` (softmax function), `reduce_sum` (sum) and `minimize` (minimization with GradientDescentOptimizer) :
 
 {% highlight python %}
 import input_data
@@ -122,7 +122,7 @@ print accuracy.eval(feed_dict={x: mnist.test.images, y_: mnist.test.labels})
 
 Which gives an accuracy of **~0.91**.
 
-And with the small convolutional network example :
+When it comes to the small convolutional network example :
 
 {% highlight python %}
 import input_data
@@ -193,7 +193,7 @@ print "test accuracy %g"%accuracy.eval(feed_dict={
     x: mnist.test.images, y_: mnist.test.labels, keep_prob: 1.0})
 {% endhighlight %}
 
-gives a stable training accuracy above 0.98 after 8000 iterations and a final test accuracy of 0.9909 after 20 000 iterations.
+the training accuracy consolidates above 0.98 after 8000 iterations, and the test accuracy closes with 0.9909 after 20 000 iterations.
 
 Let's try the [feed forward neural network](http://tensorflow.org/tutorials/mnist/tf/index.md) defined in [fully_connected_feed.py](https://tensorflow.googlesource.com/tensorflow/+/master/tensorflow/g3doc/tutorials/mnist/fully_connected_feed.py) :
 

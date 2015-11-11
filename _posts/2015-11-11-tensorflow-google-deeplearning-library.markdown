@@ -21,15 +21,24 @@ Tensorflow comes with [Tensorboard](http://tensorflow.org/how_tos/summaries_and_
 
 ![Tensorboard](http://api.tensorflow.org/system/image/body/1675/mnist_tensorboard.png)
 
-and a graph visualization tool that works like our `python python/draw_net.py` command in Caffe, but much more developed ([see tutorial](http://christopher5106.github.io/deep/learning/2015/09/04/Deep-learning-tutorial-on-Caffe-Technology.html))
+and a graph visualization tool, named **TensorBoard**, that works like our `python python/draw_net.py` command in Caffe, but much more developed ([see tutorial](http://christopher5106.github.io/deep/learning/2015/09/04/Deep-learning-tutorial-on-Caffe-Technology.html))
 
 ![Tensorboard graph](http://api.tensorflow.org/system/image/body/1691/colorby_structure.png)
 
 I would say that Tensorflow brings nothing really new, but **the main advantage is that everything is in one place, and easy to install**, which is very nice.
 
-Caffe remains for me the main tool where R&D occurs, but I believe that Tensorflow will become greater and greater in the future. Technical work done by Google is usually very great.
+Graph visualization brings new informations, and creation of networks directly and integrally from the Python code (without having to write Caffe's NetSpec interface) is great.
 
-Graph visualization is much more powerful and creation of networks directly and integrally from the Python code (without having to write Caffe's NetSpec interface) is great.
+A "best in class" work, but difficult to understand the value-added.
+
+A contrario, I would see these main drawbacks :
+
+- to program new layer types, I cannot imagine how complex it can be...
+
+- TensorBoard does not simplify understanding, display of some information is missing compared to other tools, such as the layer parameters, ... so I'm even more lost...
+
+Caffe remains for me the main tool where R&D occurs, but I believe that Tensorflow will become greater and greater in the future. Technical work done by Google is always very great.
+
 
 # Let's give it a try
 
@@ -77,7 +86,7 @@ accuracy = tf.reduce_mean(tf.cast(correct_prediction, "float"))
 print accuracy.eval(feed_dict={x: mnist.test.images, y_: mnist.test.labels})
 {% endhighlight %}
 
-Which gives an accuracy of 0.9092.
+Which gives an accuracy of **~0.91**.
 
 And with the small convolutional network example :
 

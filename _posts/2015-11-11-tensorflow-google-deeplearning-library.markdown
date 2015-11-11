@@ -57,11 +57,11 @@ You will need protobuf version above 3.0  (otherwise you'll get a `TypeError: __
 
 `--devel` options will enable to install version  'protobuf>=3.0.0a3'.
 
-# How it works
+# How it works : a graph with inputs and variable data
 
 As in Theano, the code you write is an symbolic abstraction : it decribes **operations**, and operations belong to a connected **graph**, with inputs and outputs.
 
-The first thing to do is to [initialize **variables**](http://tensorflow.org/how_tos/variables/index.md#initialization) in which to store the data. Initialization is performed with operations.
+The first thing to do is to [initialize **variables**](http://tensorflow.org/how_tos/variables/index.md#initialization) in which to store the data for the net. Initialization is performed with the following operations :
 
 {% highlight python %}
 # Create two variables.
@@ -90,7 +90,7 @@ with tf.Session() as sess:
 A **session** is created, in which all variables are stored. The session is a communication session with the processor (CPU, GPU).
 
 
-# Add network operations
+# Add neural network operations to the graph
 
 
 Let's run the [softmax regression model example with a single linear layer](http://tensorflow.org/tutorials/mnist/pros/index.md) :

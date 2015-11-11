@@ -7,6 +7,11 @@ categories: marketing
 
 Let's see the tools for the webmaster.
 
+<style>
+img {
+  border : solid black 1px;
+}
+</style>
 
 # Analytics with Google Analytics
 

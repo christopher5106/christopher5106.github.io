@@ -22,9 +22,30 @@ Add advertising to your website with [Google Adsense](http://www.google.com/adse
 
 Create an ad unit and add it to your website.
 
-Add [multiple add units](https://support.google.com/adsense/answer/187698?hl=en&ref_topic=2717009) to the page to optimize your revenues.
+Add [multiple add units](https://support.google.com/adsense/answer/187698?hl=en&ref_topic=2717009) to the page to optimize your revenues. I usually insert once at the beginning of the HTML layout :
+
+{% highlight javascript %}
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+{% endhighlight %}
+
+and at the end of the HTML layout as discussed [here](http://stackoverflow.com/questions/25095912/how-do-you-use-multiple-adsense-units-on-one-page)
+
+{% highlight javascript %}
+<script>
+  // (adsbygoogle = window.adsbygoogle || []).push({});
+  [].forEach.call(document.querySelectorAll('.adsbygoogle'), function(){
+    (adsbygoogle = window.adsbygoogle || []).push({});
+  });
+</script>
+{% endhighlight %}
 
 Add AdSense in your Google Analytics panel via [AdSense Linking in Google Analytics](https://support.google.com/adsense/answer/6084409?hl=en) in order to see AdSense metrics in Analytics reports.
+
+# Improve your web site interface and ergonomy with Page Analytics
+
+[Page Analytics](https://chrome.google.com/webstore/detail/page-analytics-by-google/fnbdnhhicmebfgdgglcdacdapkcihcoh) is a Chrome Extension to see conversions / click rates directly while navigating on the web pages for which you have Google Analytics enabled :
+
+![Page analytics]({{ site.url }}/img/page_analytics.png)
 
 
 # Improve your search presence with Google Webmaster Tools

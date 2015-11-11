@@ -27,9 +27,11 @@ and a graph visualization tool, that works like our `python python/draw_net.py` 
 
 I would say that Tensorflow brings nothing really new, but **the main advantage is that everything is in one place, and easy to install**, which is very nice.
 
-Graph visualization brings new informations, and creation of networks directly and integrally from the Python code (without having to write Caffe's NetSpec interface) is great.
+Such as Theano, TensorFlow has taken the bet of symbolic computation which brings lots of **flexibility** to layer definitions and **simplifies coding** with automatic differentiation of equations for the back propagation (gradient descent). This enables creation of networks **directly and integrally from the Python code** (without having to write a 'NetSpec' interface such as in Caffe).
 
-A "best-in-class" work, but difficult to understand the added-value compared with other tools.
+TensorBoard brings what DIGITS brings to Caffe and other deep learning libraries. Graph visualization brings informations about the operations that will occur in the processing, that no other library proposes.
+
+A "best-in-class" work, but it can still be challenging to understand the real added-value compared with other tools.
 
 A contrario, I would see these main drawbacks :
 
@@ -37,7 +39,9 @@ A contrario, I would see these main drawbacks :
 
 - TensorBoard does not simplify understanding of the network, is too much thorough, and display of some informations is missing compared to other tools, such as the layer parameters, ... so I'm even more lost...
 
-Caffe remains for me the main tool where R&D occurs, but I believe that Tensorflow will become greater and greater in the future. Technical work done by Google is always very great.
+Caffe remains for me the main tool where R&D occurs, but I believe that Tensorflow will become greater and greater in the future.
+
+Technical work done by Google is always very great.
 
 # Install
 
@@ -193,7 +197,7 @@ print "test accuracy %g"%accuracy.eval(feed_dict={
     x: mnist.test.images, y_: mnist.test.labels, keep_prob: 1.0})
 {% endhighlight %}
 
-the training accuracy consolidates above 0.98 after 8000 iterations, and the test accuracy closes with 0.9909 after 20 000 iterations.
+the training accuracy consolidates above 0.98 after 8000 iterations, and the test accuracy closes at 0.9909 after 20 000 iterations.
 
 Let's try the [feed forward neural network](http://tensorflow.org/tutorials/mnist/tf/index.md) defined in [fully_connected_feed.py](https://tensorflow.googlesource.com/tensorflow/+/master/tensorflow/g3doc/tutorials/mnist/fully_connected_feed.py) :
 

@@ -39,6 +39,18 @@ and at the end of the HTML layout as discussed [here](http://stackoverflow.com/q
 </script>
 {% endhighlight %}
 
+Then, I can add the provided snippet
+
+{% highlight html %}
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="XXX"
+     data-ad-slot="YYY"
+     data-ad-format="auto"></ins>
+{% endhighlight %}
+
+wherever I wand to place an add, in between the two previous snippets of code.
+
 Add AdSense in your Google Analytics panel via [AdSense Linking in Google Analytics](https://support.google.com/adsense/answer/6084409?hl=en) in order to see AdSense metrics in Analytics reports, see earnings and ad impressions based on user visits and pages.
 
 # Improve your web site interface and ergonomy with Page Analytics

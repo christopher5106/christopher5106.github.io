@@ -101,7 +101,7 @@ cd tensorflow/tensorflow
 python g3doc/tutorials/mnist/mnist_softmax.py
 {% endhighlight %}
 
-With `mnist_softmax.py` shown here, adding a few symbolic operations `tf.matmul` (matrix multiplication), `+` (tensor addition), `tf.nn.sofmax` (softmax function), `reduce_sum` (sum) and `minimize` (minimization with GradientDescentOptimizer) :
+With `mnist_softmax.py` shown just below, consisting in adding symbolic operations on the data, `tf.matmul` (matrix multiplication), `+` (tensor addition), `tf.nn.sofmax` (softmax function), `reduce_sum` (sum) and `minimize` (minimization with GradientDescentOptimizer) :
 
 {% highlight python %}
 import input_data

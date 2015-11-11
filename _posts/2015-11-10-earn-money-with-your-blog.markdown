@@ -39,7 +39,7 @@ and at the end of the HTML layout as discussed [here](http://stackoverflow.com/q
 </script>
 {% endhighlight %}
 
-Add AdSense in your Google Analytics panel via [AdSense Linking in Google Analytics](https://support.google.com/adsense/answer/6084409?hl=en) in order to see AdSense metrics in Analytics reports.
+Add AdSense in your Google Analytics panel via [AdSense Linking in Google Analytics](https://support.google.com/adsense/answer/6084409?hl=en) in order to see AdSense metrics in Analytics reports, see earnings and ad impressions based on user visits and pages.
 
 # Improve your web site interface and ergonomy with Page Analytics
 
@@ -54,6 +54,11 @@ Add AdSense in your Google Analytics panel via [AdSense Linking in Google Analyt
 
 ![png]({{ site.url }}/img/search_presence.png)
 
+Do not forget to link your search console in Google analytics
+
+![link search console]({{ site.url }}/img/link_search_console.png)
+
+![link search console]({{ site.url }}/img/link_search_console2.png)
 
 # Optimize your SEO with Woorank
 

@@ -142,6 +142,24 @@ print "test accuracy %g"%accuracy.eval(feed_dict={
     x: mnist.test.images, y_: mnist.test.labels, keep_prob: 1.0})
 {% endhighlight %}
 
-gives a stable accuracy of 1.0 after 8000 iterations.
+gives a stable training accuracy above 0.98 after 8000 iterations and a final test accuracy of 0.9909 after 20 000 iterations.
+
+Let's try the [feed forward neural network](http://tensorflow.org/tutorials/mnist/tf/index.md) defined in [fully_connected_feed.py](https://tensorflow.googlesource.com/tensorflow/+/master/tensorflow/g3doc/tutorials/mnist/fully_connected_feed.py) : 
+
+{% highlight bash %}
+git clone https://tensorflow.googlesource.com/tensorflow
+cd tensorflow/tensorflow
+#i had to edit fully_connected_feed.py to replace tensorflow.g3doc.tutorials.mnist by g3doc.tutorials.mnist
+python g3doc/tutorials/mnist/fully_connected_feed.py
+{% endhighlight %}
+
+Which gives the following results
+
+    Training Data Eval:
+    Num examples: 55000  Num correct: 49365  Precision @ 1: 0.8975
+    Validation Data Eval:
+    Num examples: 5000  Num correct: 4530  Precision @ 1: 0.9060
+    Test Data Eval:
+    Num examples: 10000  Num correct: 9027  Precision @ 1: 0.9027
 
 **Well done!**

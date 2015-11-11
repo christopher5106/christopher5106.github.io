@@ -59,7 +59,7 @@ You will need protobuf version above 3.0  (otherwise you'll get a `TypeError: __
 
 # How it works
 
-As Theano, the code you write is an symbolic abstraction : it decribes **operations**, and operations belong to a connected **graph**, with inputs and outputs.
+As in Theano, the code you write is an symbolic abstraction : it decribes **operations**, and operations belong to a connected **graph**, with inputs and outputs.
 
 The first thing to do is to [initialize **variables**](http://tensorflow.org/how_tos/variables/index.md#initialization) in which to store the data. Initialization is performed with operations.
 

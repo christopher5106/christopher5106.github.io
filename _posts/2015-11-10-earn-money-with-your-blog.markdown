@@ -5,7 +5,7 @@ date:   2015-10-19 23:00:51
 categories: marketing
 ---
 
-**The key important thing is to write articles about which visitors could be interested about.** Sounds obvious, but all the strategy then consists of choosing the right content, with the right words, corresponding to the keywords people look for in search engines.
+**The key important thing is to write articles about which visitors could be interested.** Sounds obvious, but, knowing this, the strategy then consists of choosing the right content, with the right words, corresponding to the keywords people look for in search engines.
 
 There can be many different strategies : using words that are in the trend can drive a lot a trafic, but there is a lot of competition for them, and you won't appear first in the search results. Using words that target a more narrow audience, or that are new, can be a good strategy for you to start : it's like innovation.
 

@@ -28,7 +28,7 @@ and a graph visualization tool that works like our `python python/draw_net.py` c
 I would say that Tensorflow brings nothing really new, but **the main advantage is that everything is in one place, and easy to install**, which is very nice. Caffe remains for me the main tool where R&D occurs, but I believe that Tensorflow will become greater and greater in the future. Technical work done by Google is usually very great.
 
 
-# Let's give a try
+# Let's give it a try
 
 Let's install [Tensorflow](http://tensorflow.org/get_started/os_setup.md) on an iMac :
 

@@ -45,9 +45,16 @@ You will need protobuf version above 3.0  (otherwise you'll get a `TypeError: __
 
 `--devel` options will enable to install version  'protobuf>=3.0.0a3'.
 
-Let us create a `input_data.py` file with the [content](https://tensorflow.googlesource.com/tensorflow/+/master/tensorflow/g3doc/tutorials/mnist/input_data.py).
 
-Let's run the following commands in `ipython` or by creating a file `run.py` that we run with command `python run.py`, for the [softmax regression model example with a single linear layer](http://tensorflow.org/tutorials/mnist/pros/index.md).
+Let's run the [softmax regression model example with a single linear layer](http://tensorflow.org/tutorials/mnist/pros/index.md) :
+
+{% highlight bash %}
+git clone https://tensorflow.googlesource.com/tensorflow
+cd tensorflow/tensorflow
+python g3doc/tutorials/mnist/mnist_softmax.py
+{% endhighlight %}
+
+With `mnist_softmax.py` code
 
 {% highlight python %}
 import input_data
@@ -73,6 +80,7 @@ print accuracy.eval(feed_dict={x: mnist.test.images, y_: mnist.test.labels})
 Which gives an accuracy of 0.9092.
 
 And with the small convolutional network example :
+
 {% highlight python %}
 import input_data
 import tensorflow as tf
@@ -144,11 +152,12 @@ print "test accuracy %g"%accuracy.eval(feed_dict={
 
 gives a stable training accuracy above 0.98 after 8000 iterations and a final test accuracy of 0.9909 after 20 000 iterations.
 
-Let's try the [feed forward neural network](http://tensorflow.org/tutorials/mnist/tf/index.md) defined in [fully_connected_feed.py](https://tensorflow.googlesource.com/tensorflow/+/master/tensorflow/g3doc/tutorials/mnist/fully_connected_feed.py) : 
+Let's try the [feed forward neural network](http://tensorflow.org/tutorials/mnist/tf/index.md) defined in [fully_connected_feed.py](https://tensorflow.googlesource.com/tensorflow/+/master/tensorflow/g3doc/tutorials/mnist/fully_connected_feed.py) :
 
 {% highlight bash %}
-git clone https://tensorflow.googlesource.com/tensorflow
-cd tensorflow/tensorflow
+#first launch Tensorboard to see the results in http://localhost:6006/
+#be careful to write full path because it checks path existence
+tensorboard --logdir=/Users/christopherbourez/examples/tensorflow/tensorflow/data
 #i had to edit fully_connected_feed.py to replace tensorflow.g3doc.tutorials.mnist by g3doc.tutorials.mnist
 python g3doc/tutorials/mnist/fully_connected_feed.py
 {% endhighlight %}
@@ -161,5 +170,11 @@ Which gives the following results
     Num examples: 5000  Num correct: 4530  Precision @ 1: 0.9060
     Test Data Eval:
     Num examples: 10000  Num correct: 9027  Precision @ 1: 0.9027
+
+And in Tensorboard (at *http://localhost:6006/*)
+
+![png]({{ site.url }}/img/tensorboard.png)
+
+![png]({{ site.url }}/img/tensorboard_graph.png)
 
 **Well done!**

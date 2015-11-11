@@ -11,17 +11,17 @@ TensorFlow comes as a library such as other deep learning libraries, [Caffe](htt
 
 Such as Caffe, TensorFlow comes with an [API](http://tensorflow.org/api_docs) in both Python and C++ languages.
 
-Python is great for the tasks of experimenting and learning the parameters. These tasks may require tons of data manipulation before you get to the correct prediction model. Remember that 80% of the job of the data scientist is to prepare data, first clean it, then find the correct representation from which a model can learn.
+Python is great for the tasks of experimenting and learning the parameters. These tasks may require tons of data manipulation before you get to the correct prediction model. Remember that 80% of the job of the data scientist is to prepare data, first clean it, then find the correct representation from which a model can learn. Learning comes last, as 20% of the work.
 
-Tensorflow enables GPU execution which is also a very useful feature when it comes to learning, which require usually from a few tens minutes to a few tens hours : learning time will be divided by 5 to 50 on GPU which makes playing with hyperparameters of the model very convenient.
+Tensorflow enables GPU execution which is also a very useful feature when it comes to learning, which requires usually from a few tens minutes to a few tens hours : learning time will be divided by 5 to 50 on GPU which makes playing with hyperparameters of the model very convenient.
 
 Lastly, when the model has been learned, it has to be deployed in production apps, and usually, speed and optimizations become more important : the C++ API is the expected first choice for this purpose.
 
-Tensorflow comes with [Tensorboard](http://tensorflow.org/how_tos/summaries_and_tensorboard/index.md), which looks like the DIGITS interface from NVIDIA (see my tutorial [on Mac](http://christopher5106.github.io/big/data/2015/07/16/deep-learning-install-caffe-cudnn-cuda-for-digits-python-on-mac-osx.html) or [on Ubuntu](http://christopher5106.github.io/big/data/2015/07/16/deep-learning-install-caffe-cudnn-cuda-for-digits-python-on-ubuntu-14-04.html)) :
+Tensorflow comes with [Tensorboard](http://tensorflow.org/how_tos/summaries_and_tensorboard/index.md), which looks like the DIGITS interface from NVIDIA (see my tutorial [on Mac](http://christopher5106.github.io/big/data/2015/07/16/deep-learning-install-caffe-cudnn-cuda-for-digits-python-on-mac-osx.html) or [on Ubuntu](http://christopher5106.github.io/big/data/2015/07/16/deep-learning-install-caffe-cudnn-cuda-for-digits-python-on-ubuntu-14-04.html)), but with much more flexibility on the *events* to display in the reports :
 
 ![Tensorboard](http://api.tensorflow.org/system/image/body/1675/mnist_tensorboard.png)
 
-and a graph visualization tool, named **TensorBoard**, that works like our `python python/draw_net.py` command in Caffe, but much more developed ([see tutorial](http://christopher5106.github.io/deep/learning/2015/09/04/Deep-learning-tutorial-on-Caffe-Technology.html))
+and a graph visualization tool, that works like our `python python/draw_net.py` command in Caffe, but with different informations ([see tutorial](http://christopher5106.github.io/deep/learning/2015/09/04/Deep-learning-tutorial-on-Caffe-Technology.html))
 
 ![Tensorboard graph](http://api.tensorflow.org/system/image/body/1691/colorby_structure.png)
 
@@ -29,13 +29,13 @@ I would say that Tensorflow brings nothing really new, but **the main advantage 
 
 Graph visualization brings new informations, and creation of networks directly and integrally from the Python code (without having to write Caffe's NetSpec interface) is great.
 
-A "best in class" work, but difficult to understand the value-added.
+A "best-in-class" work, but difficult to understand the added-value compared with other tools.
 
 A contrario, I would see these main drawbacks :
 
-- to program new layer types, I cannot imagine how complex it can be...
+- if some needed operations are not available in the library, I cannot imagine how complex it can be to add them...
 
-- TensorBoard does not simplify understanding, display of some information is missing compared to other tools, such as the layer parameters, ... so I'm even more lost...
+- TensorBoard does not simplify understanding of the network, is too much thorough, and display of some informations is missing compared to other tools, such as the layer parameters, ... so I'm even more lost...
 
 Caffe remains for me the main tool where R&D occurs, but I believe that Tensorflow will become greater and greater in the future. Technical work done by Google is always very great.
 

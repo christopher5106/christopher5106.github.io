@@ -39,8 +39,7 @@ A contrario, I would see these main drawbacks :
 
 Caffe remains for me the main tool where R&D occurs, but I believe that Tensorflow will become greater and greater in the future. Technical work done by Google is always very great.
 
-
-# Let's give it a try
+# Install
 
 Let's install [Tensorflow](http://tensorflow.org/get_started/os_setup.md) on an iMac :
 
@@ -53,6 +52,41 @@ You will need protobuf version above 3.0  (otherwise you'll get a `TypeError: __
 
 
 `--devel` options will enable to install version  'protobuf>=3.0.0a3'.
+
+# How it works
+
+As Theano, the code you write is an symbolic abstraction : it decribes **operations**, and operations belong to a connected **graph**, with inputs and outputs.
+
+The first thing to do is to [initialize **variables**](http://tensorflow.org/how_tos/variables/index.md#initialization) in which to store the data. Initialization is performed with operations.
+
+{% highlight python %}
+# Create two variables.
+weights = tf.Variable(tf.random_normal([784, 200], stddev=0.35),
+                  name="weights")
+biases = tf.Variable(tf.zeros([200]), name="biases")
+...
+# Add an op to initialize the variables.
+init_op = tf.initialize_all_variables()
+
+# Add ops to save and restore all the variables.
+saver = tf.train.Saver()
+
+# Later, when launching the model
+with tf.Session() as sess:
+# Run the init operation.
+    sess.run(init_op)
+    ...
+# Use the model
+    ...
+# Save the variables to disk.
+    save_path = saver.save(sess, "/tmp/model.ckpt")
+    print "Model saved in file: ", save_path
+{% endhighlight %}
+
+A **session** is created, in which all variables are stored. The session is a communication session with the processor (CPU, GPU).
+
+
+# Add network operations
 
 
 Let's run the [softmax regression model example with a single linear layer](http://tensorflow.org/tutorials/mnist/pros/index.md) :

@@ -42,9 +42,9 @@ You will need protobuf version above 3.0  (otherwise you'll get a `TypeError: __
 
 `--devel` options will enable to install version  'protobuf>=3.0.0a3'.
 
-Let us create a `input_data.py` [file](https://tensorflow.googlesource.com/tensorflow/+/master/tensorflow/g3doc/tutorials/mnist/input_data.py).
+Let us create a `input_data.py` file with the [content](https://tensorflow.googlesource.com/tensorflow/+/master/tensorflow/g3doc/tutorials/mnist/input_data.py).
 
-Let's run the following commands in `ipython` or by creating a file `run.py` that we run with command `python run.py` :
+Let's run the following commands in `ipython` or by creating a file `run.py` that we run with command `python run.py`, for the [softmax regression model example with a single linear layer](http://tensorflow.org/tutorials/mnist/pros/index.md). 
 
 {% highlight python %}
 import input_data

@@ -29,7 +29,7 @@ Add [multiple add units](https://support.google.com/adsense/answer/187698?hl=en&
 
 and at the end of the HTML layout as discussed [here](http://stackoverflow.com/questions/25095912/how-do-you-use-multiple-adsense-units-on-one-page)
 
-{% highlight javascript %}
+{% highlight html %}
 <script>
   // (adsbygoogle = window.adsbygoogle || []).push({});
   [].forEach.call(document.querySelectorAll('.adsbygoogle'), function(){

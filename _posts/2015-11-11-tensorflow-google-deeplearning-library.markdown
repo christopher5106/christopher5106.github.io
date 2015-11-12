@@ -31,13 +31,13 @@ Such as Theano, TensorFlow has taken the bet of symbolic computation which bring
 
 TensorBoard brings what DIGITS brings to Caffe and other deep learning libraries. Graph visualization brings informations about the operations that will occur in the processing, that no other library proposes.
 
-A "best-in-class" work, but it can still be challenging to understand the real added-value compared with other tools.
+A "best-in-class" work, but it can still be challenging to understand the real added-value compared to other tools.
 
 A contrario, I would see these main drawbacks :
 
 - if some needed operations are not available in the library, I cannot imagine how complex it can be to add them...
 
-- TensorBoard does not simplify understanding of the network, is too much thorough, and display of some informations is missing compared to other tools, such as the layer parameters, ... so I'm even more lost...
+- TensorBoard does not simplify understanding of the network, is too much thorough, and display of some informations, such as the layer parameters, is missing compared to other tools ... so I'm even more lost...
 
 Caffe remains for me the main tool where R&D occurs, but I believe that Tensorflow will become greater and greater in the future.
 
@@ -59,7 +59,7 @@ You will need protobuf version above 3.0  (otherwise you'll get a `TypeError: __
 
 # How it works : a graph with inputs and variable data
 
-As in Theano, the code you write is an symbolic abstraction : it decribes **operations**, and operations belong to a connected **graph**, with inputs and outputs.
+As in Theano, the code you write is a symbolic abstraction : it describes **operations**, and operations belong to a connected **graph**, with inputs and outputs.
 
 The first thing to do is to [initialize **variables**](http://tensorflow.org/how_tos/variables/index.md#initialization) in which to store the data for the net. Initialization is performed with the following operations :
 
@@ -87,7 +87,7 @@ with tf.Session() as sess:
     print "Model saved in file: ", save_path
 {% endhighlight %}
 
-A **session** is created, in which all variables are stored. The session is a communication session with the processor (CPU, GPU).
+A **session** is created, in which all variables are stored. The session enables communication with the processor (CPU, GPU).
 
 
 # Add neural network operations to the graph

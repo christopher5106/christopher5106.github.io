@@ -5,14 +5,7 @@ date:   2015-10-19 23:00:51
 categories: computer vision
 ---
 
-Let's create a detector. <!-- to extract document zones.
-
-![png]({{ site.url }}/img/drive1.jpg)
-![png]({{ site.url }}/img/drive2.jpg)
-![png]({{ site.url }}/img/drive3.jpg)
-![png]({{ site.url }}/img/drive4.jpg)
-
-In this driving license zone detector, -->
+Let's create a detector. 
 
 I will train the classifier with training windows of size 50 x 42 :
 

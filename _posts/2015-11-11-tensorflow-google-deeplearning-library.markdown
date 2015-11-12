@@ -13,7 +13,7 @@ Such as Caffe, TensorFlow comes with an [API](http://tensorflow.org/api_docs) in
 
 Python is great for the tasks of experimenting and learning the parameters. These tasks may require tons of data manipulation before you get to the correct prediction model. Remember that 80% of the job of the data scientist is to prepare data, first clean it, then find the correct representation from which a model can learn. Learning comes last, as 20% of the work.
 
-Tensorflow enables GPU execution which is also a very useful feature when it comes to learning, which requires usually from a few tens minutes to a few tens hours : learning time will be divided by 5 to 50 on GPU which makes playing with hyperparameters of the model very convenient.
+Tensorflow enables GPU computation which is also a very useful feature when it comes to learning, which requires usually from a few tens minutes to a few tens hours : learning time will be divided by 5 to 50 on GPU which makes playing with hyperparameters of the model very convenient.
 
 Lastly, when the model has been learned, it has to be deployed in production apps, and usually, speed and optimizations become more important : the C++ API is the expected first choice for this purpose.
 

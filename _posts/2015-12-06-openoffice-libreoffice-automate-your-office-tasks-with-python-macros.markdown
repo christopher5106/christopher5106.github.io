@@ -164,7 +164,7 @@ Let's see how to install it in the LibreOffice install first, I'll show you the 
 
 You can find and call your Macro scripts from the LibreOffice menu for macros **Tools > Macros > Organize Macros**.
 
-![LibreOffice Python Macro Directory]({{ site.url }}/img/libreoffice_python_macro_directory)
+![LibreOffice Python Macro Directory]({{ site.url }}/img/libreoffice_python_macro_directory.png)
 
 If you get a "Java SE 6 Error message" such as bellow
 

@@ -15,7 +15,7 @@ Both are equivalent, but the usual advise is to use LibreOffice ([see the differ
 
 I'll speak about LibreOffice now, but the same is true for OpenOffice.
 
-# Macros
+# Which language choice for writing your LibreOffice macros ?
 
 Macros are scripting for the office suite.
 
@@ -29,7 +29,7 @@ The API is interface-oriented, meaning you communicate with the controller of th
 - **.odg** for drawings
 
 
-For the choice of the language, I would first insist on the **multi-platform requirement**, which means it's better if the macro / script can be executed on different platforms such as Windows, Mac OS or Linux, because LibreOffice is also multi-platform. Visual Basic is not multi-platform and would require significant changes from one plateform to another (Visual Basic, [Real Basic](http://www.xojo.com/), AppleScript...).
+For the choice of the language, I would first insist on the **multi-platform requirement**, which means it's better if the macro / script can be executed on different platforms such as Windows, Mac OS or Linux, because LibreOffice is also multi-platform and documents will be shared between users from which we cannot expect a particular platform. Visual Basic is not multi-platform and would require significant changes from one plateform to another (Visual Basic, [Real Basic](http://www.xojo.com/), AppleScript...).
 
 Java and C/C++ require compilation, are much more complex and verbose.
 
@@ -39,24 +39,26 @@ But, Javascript could be **not precise enough** (even though there exists very n
 
 On the contrary, **Python has been used extensively for numeric computation**, with famous libraries such as Numpy, Numexpr ... which make it perfect for spreadsheet macros.
 
-Python has numerous available libraries, such as Excel reading or writing libraries which make it the perfect choice for macro development.
+Python has also numerous available libraries for other purposes, due to its success and support from big digital companies, such as Excel reading or writing libraries which make it the perfect choice for macro development.
 
 Even though Python 2.7 still remains very used, and Python 3 introduced differences, the latest version of LibreOffice comes with Python 3.3, so the use of Python 3.3 is advised for durability.
 
-     /Applications/LibreOffice.app/Contents/MacOS/python --version
-     #Python 3.3.5
+{% highlight bash %}
+/Applications/LibreOffice.app/Contents/MacOS/python --version
+#Python 3.3.5
+{% endhighlight %}
 
-# First play with the shell
+# First play with the shell before creating your own macro
 
-Before creating your own macro for a LibreOffice spreadsheet, you can play with the Python shell.
+Before creating your own macro for , you can play with the Python shell.
 
-First launch LibreOffice with the socket, here is the Mac OS command :
+First launch LibreOffice Calc (to create spreadsheet open document) with an open socket to communicate with from the shell, on your Mac OS :
 
     /Applications/LibreOffice.app//Contents/MacOS/soffice --calc --accept="socket,host=localhost,port=2002;urp;StarOffice.ServiceManager"
 
 (for the Windows command : `c:\Program Files\OpenOffice1.1\program\soffice "--calc --accept=socket,host=localhost,port=2002;urp;"`)
 
-and launch Python
+and launch the Python shell
 
     /Applications/LibreOffice.app/Contents/MacOS/python
 
@@ -127,7 +129,7 @@ It is the other mode, the macro is called from inside the Libreoffice program :
 
 OpenOffice.org does not offer a way to edit Python scripts. You have to use your own text editor (such as Sublim, Atom...) and your own commands.
 
-Let's edit a first macro script file **mymacro.py** :
+Let's edit a first macro script file **myscript.py** :
 
 
 
@@ -155,9 +157,9 @@ which gives
     /Applications/LibreOffice.app/Contents/Frameworks/LibreOfficePython.framework/lib/python3.3/plat-darwin
     /Applications/LibreOffice.app/Contents/Frameworks/LibreOfficePython.framework/lib/python3.3/lib-dynload
 
-- in the Macro directory for LibreOffice, so that you can call your Macro script from the LibreOffice menu : ** Tools > Macros > Organize Macros **
+- in the Macro directory for LibreOffice, so that you can call your Macro script from the LibreOffice menu **Tools > Macros > Organize Macros** :
 
-    /Applications/LibreOffice.app/Contents/Resources/Scripts/Python
+        cp myscript.py /Applications/LibreOffice.app/Contents/Resources/Scripts/Python/
 
 - inside the document, so that when shared another computer (by email, or whatever means), the document has still functional macros. I'll show you this in the next section.
 

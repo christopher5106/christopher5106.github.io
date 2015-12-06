@@ -62,7 +62,7 @@ and launch Python
 
 To initialize your context, type the following lines in your python shell :
 
-{% hightlight python %}
+{% highlight python %}
 import uno
 
 # get the uno component context from the PyUNO runtime
@@ -87,7 +87,7 @@ model = desktop.getCurrentComponent()
 These lines are common for every documents. Now you can interact with the document. Since we launched LibreOffice with `--calc` option, it's a spreadsheet.
 
 
-{% hightlight python %}
+{% highlight python %}
 # access the active sheet
 active_sheet = model.CurrentController.ActiveSheet
 
@@ -104,7 +104,7 @@ cell2.Value = cell2.Value + 1
 
 If it's a text document, you can try the following interactions :
 
-{% hightlight python %}
+{% highlight python %}
 # access the document's text property
 text = model.Text
 
@@ -136,7 +136,7 @@ There are 3 places where you can put your code :
 
 - in a library for LibreOffice in one of the directories in the PYTHONPATH
 
-{% hightlight python %}
+{% highlight python %}
 import sys
 for i in sys.path:
      print(i)

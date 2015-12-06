@@ -196,7 +196,7 @@ def HelloWorldPython( ):
 
 and copy it to the Macro directory for LibreOffice :
 
-        cp myscript.py /Applications/LibreOffice.app/Contents/Resources/Scripts/Python/
+		cp myscript.py /Applications/LibreOffice.app/Contents/Resources/Scripts/Python/
 
 which you can run from :
 

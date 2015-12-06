@@ -200,7 +200,7 @@ and copy it to the Macro directory for LibreOffice :
 
 which you can run from :
 
-![LibreOffice Python Macro Directory]({{ site.url }}/libreoffice_python_macro_script.png)
+![LibreOffice Python Macro Directory]({{ site.url }}/img/libreoffice_python_macro_script.png)
 
 after having opened a text document.
 

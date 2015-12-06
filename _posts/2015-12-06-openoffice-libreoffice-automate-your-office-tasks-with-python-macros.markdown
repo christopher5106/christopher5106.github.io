@@ -173,7 +173,7 @@ If you get a "Java SE 6 Error message" such as bellow
 download the [Java SE 6 version here](http://download.info.apple.com/Mac_OS_X/031-03190.20140529.Pp3r4/JavaForOSX2014-001.dmg).
 
 
-Let's edit a first macro script file **myscript.py** :
+Let's edit a first macro script file **myscript.py**, we need to create a method *HelloWorldPython* :
 
 {% highlight python %}
 def HelloWorldPython( ):
@@ -203,6 +203,12 @@ which you can run from :
 ![LibreOffice Python Macro Directory]({{ site.url }}/libreoffice_python_macro_script.png)
 
 after having opened a text document.
+
+In case there are multiple methods, all of them will be exported, but we can also specify which one to export with the following statement at the end of the file :
+
+{% highlight python %}
+g_exportedScripts = capitalisePython,
+{% endhighlight %}
 
 For distribution of code, [OXT format](http://wiki.openoffice.org/wiki/Documentation/DevGuide/Extensions/Extensions) acts as containers of code that will be installed by the Extension Manager or with the command line `/Applications/LibreOffice.app/Contents/MacOS/unopkg`.
 

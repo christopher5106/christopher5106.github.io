@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "OpenOffice / LibreOffice : automate your office tasks with Python Macros"
+title:  "Interface-oriented in OpenOffice / LibreOffice : automate your office tasks with Python Macros"
 date:   2015-12-06 23:00:51
 categories: office
 ---
@@ -54,9 +54,9 @@ Before creating your own macro for , you can play with the Python shell.
 
 First launch LibreOffice Calc (to create spreadsheet open document) with an open socket to communicate with from the shell, on your Mac OS :
 
-    /Applications/LibreOffice.app//Contents/MacOS/soffice --calc --accept="socket,host=localhost,port=2002;urp;StarOffice.ServiceManager"
+    /Applications/LibreOffice.app/Contents/MacOS/soffice --calc --accept="socket,host=localhost,port=2002;urp;StarOffice.ServiceManager"
 
-(for the Windows command : `c:\Program Files\OpenOffice1.1\program\soffice "--calc --accept=socket,host=localhost,port=2002;urp;"`)
+(for the Windows command : `c:\Program Files\OpenOffice1.1\program\soffice "--calc --accept=socket,host=localhost,port=2002;urp;"` but if any trouble, have a look the [proposed workarounds](http://www.openoffice.org/udk/python/python-bridge.html)).
 
 and launch the Python shell
 
@@ -65,6 +65,7 @@ and launch the Python shell
 To initialize your context, type the following lines in your python shell :
 
 {% highlight python %}
+import socket  # only needed on win32-OOo3.0.0
 import uno
 
 # get the uno component context from the PyUNO runtime
@@ -129,14 +130,7 @@ It is the other mode, the macro is called from inside the Libreoffice program :
 
 OpenOffice.org does not offer a way to edit Python scripts. You have to use your own text editor (such as Sublim, Atom...) and your own commands.
 
-Let's edit a first macro script file **myscript.py** :
-
-
-
-
-There are 3 places where you can put your code :
-
-- in a library for LibreOffice in one of the directories in the PYTHONPATH
+There are 3 places where you can put your code. The first way is to add it as a library for LibreOffice in one of the directories in the PYTHONPATH
 
 {% highlight python %}
 import sys
@@ -157,11 +151,65 @@ which gives
     /Applications/LibreOffice.app/Contents/Frameworks/LibreOfficePython.framework/lib/python3.3/plat-darwin
     /Applications/LibreOffice.app/Contents/Frameworks/LibreOfficePython.framework/lib/python3.3/lib-dynload
 
-- in the Macro directory for LibreOffice, so that you can call your Macro script from the LibreOffice menu **Tools > Macros > Organize Macros** :
+
+But this is only useful to be used in other macros.
+
+The 2 other ways are to insert your script
+
+- either globally on your computer, in your local LibreOffice installation,
+
+- or inside the document, so that when shared another computer (by email, or whatever means), the document has still functional macros.
+
+Let's see how to install it in the LibreOffice install first, I'll show you the document-inside install in the next section.
+
+You can find and call your Macro scripts from the LibreOffice menu for macros **Tools > Macros > Organize Macros**.
+
+![LibreOffice Python Macro Directory]({{ site.url }}/img/libreoffice_python_macro_directory)
+
+If you get a "Java SE 6 Error message" such as bellow
+
+![JavaSE6]({{ site.url }}/img/JavaSE6.png)
+
+download the [Java SE 6 version here](http://download.info.apple.com/Mac_OS_X/031-03190.20140529.Pp3r4/JavaForOSX2014-001.dmg).
+
+
+Let's edit a first macro script file **myscript.py** :
+
+{% highlight python %}
+def HelloWorldPython( ):
+    """Prints the string 'Hello World(in Python)' into the current document"""
+#get the doc from the scripting context which is made available to all scripts
+    desktop = XSCRIPTCONTEXT.getDesktop()
+    model = desktop.getCurrentComponent()
+#check whether there's already an opened document. Otherwise, create a new one
+    if not hasattr(model, "Text"):
+        model = desktop.loadComponentFromURL(
+            "private:factory/swriter","_blank", 0, () )
+#get the XText interface
+    text = model.Text
+#create an XTextRange at the end of the document
+    tRange = text.End
+#and set the string
+    tRange.String = "Hello World (in Python)"
+    return None
+{% endhighlight %}
+
+and copy it to the Macro directory for LibreOffice :
 
         cp myscript.py /Applications/LibreOffice.app/Contents/Resources/Scripts/Python/
 
-- inside the document, so that when shared another computer (by email, or whatever means), the document has still functional macros. I'll show you this in the next section.
+which you can run from :
+
+![LibreOffice Python Macro Directory]({{ site.url }}/libreoffice_python_macro_script.png)
+
+after having opened a text document.
+
+For distribution of code, [OXT format](http://wiki.openoffice.org/wiki/Documentation/DevGuide/Extensions/Extensions) acts as containers of code that will be installed by the Extension Manager or with the command line `/Applications/LibreOffice.app/Contents/MacOS/unopkg`.
+
+
+
+
+
 
 
 # Pack your script inside the document : the OpenDocument format
@@ -199,17 +247,19 @@ You'll get the following list of files and subdirectories in your extracted file
 
 You can directly append your script to the file with the *zipfile library* :
 
-    import zipfile
-    doc = zipfile.ZipFile("Documents/test.ods", 'a')
-    doc.write("myscript.py", "Scripts/python/myscript.py")
-    doc.close()
+{% highlight python %}
+import zipfile
+doc = zipfile.ZipFile("Documents/test.ods", 'a')
+doc.write("myscript.py", "Scripts/python/myscript.py")
+doc.close()
 
-    manifest = []
-    for line in doc.open('META-INF/manifest.xml'):
-        if '</manifest:manifest>' in line:
-            for path in ['Scripts/','Scripts/python/','Scripts/python/myscript.py']:
-                manifest.append(' <manifest:file-entry manifest:media-type="application/binary" manifest:full-path="%s"/>' % path)
-        manifest.append(line)
-    doc.writestr('META-INF/manifest.xml', ''.join(manifest))
+manifest = []
+for line in doc.open('META-INF/manifest.xml'):
+    if '</manifest:manifest>' in line:
+        for path in ['Scripts/','Scripts/python/','Scripts/python/myscript.py']:
+            manifest.append(' <manifest:file-entry manifest:media-type="application/binary" manifest:full-path="%s"/>' % path)
+    manifest.append(line)
+doc.writestr('META-INF/manifest.xml', ''.join(manifest))
+{% endhighlight %}
 
 **Well done !**

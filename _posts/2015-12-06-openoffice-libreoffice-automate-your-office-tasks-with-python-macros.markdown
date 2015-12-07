@@ -185,9 +185,8 @@ download the [Java SE 6 version here](http://download.info.apple.com/Mac_OS_X/03
 Let's edit a first macro script file **myscript.py** that will print the Python version, creating a method *PythonVersion* :
 
 {% highlight python %}
-
+import sys
 def PythonVersion( ):
-    import sys
     """Prints the Python version into the current document"""
 #get the doc from the scripting context which is made available to all scripts
     desktop = XSCRIPTCONTEXT.getDesktop()

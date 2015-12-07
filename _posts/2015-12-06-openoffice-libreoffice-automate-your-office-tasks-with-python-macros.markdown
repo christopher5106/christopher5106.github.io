@@ -17,6 +17,14 @@ I'll speak about LibreOffice now, but the same is true for OpenOffice.
 
 [Download Libreoffice](http://www.libreoffice.org/)
 
+and in the menu bar **LibreOffice > Preferences**, enable macros
+
+![macro_security]({{ site.url }}/img/macro_security.png)
+
+I would recommend you to set Macro security to Medium which will not block nor allow macros but alert you to choose if you trust the editor of the document :
+
+![macro_security]({{ site.url }}/img/macro_security_medium.png)
+
 # Which language choice for writing your LibreOffice macros ?
 
 Macros are scripting for the office suite.
@@ -220,6 +228,29 @@ In case there are multiple methods, all of them will be exported, but we can als
 g_exportedScripts = PythonVersion,
 {% endhighlight %}
 
+Its spreadsheet counterpart would be :
+
+{% highlight python %}
+import sys
+def PythonVersion( ):
+    """Prints the Python version into the current document"""
+#get the doc from the scripting context which is made available to all scripts
+    desktop = XSCRIPTCONTEXT.getDesktop()
+    model = desktop.getCurrentComponent()
+#check whether there's already an opened document. Otherwise, create a new one
+    if not hasattr(model, "Sheets"):
+        model = desktop.loadComponentFromURL(
+            "private:factory/scalc","_blank", 0, () )
+#get the XText interface
+    sheet = model.Sheets.getByIndex(0)
+#create an XTextRange at the end of the document
+    tRange = sheet.getCellRangeByName("C4")
+#and set the string
+    tRange.String = "The Python version is %s.%s.%s" % sys.version_info[:3]
+    return None
+{% endhighlight %}
+
+
 For distribution of code, [OXT format](http://wiki.openoffice.org/wiki/Documentation/DevGuide/Extensions/Extensions) acts as containers of code that will be installed by the Extension Manager or with the command line `/Applications/LibreOffice.app/Contents/MacOS/unopkg`.
 
 [A tutorial under Ubuntu](https://tmtlakmal.wordpress.com/2013/08/11/a-simple-python-macro-in-libreoffice-4-0/)
@@ -266,15 +297,33 @@ You can directly append your script to the file with the *zipfile library* :
 import zipfile
 doc = zipfile.ZipFile("Documents/test.ods", 'a')
 doc.write("myscript.py", "Scripts/python/myscript.py")
-doc.close()
 
 manifest = []
-for line in doc.open('META-INF/manifest.xml'):
-    if '</manifest:manifest>' in line:
-        for path in ['Scripts/','Scripts/python/','Scripts/python/myscript.py']:
-            manifest.append(' <manifest:file-entry manifest:media-type="application/binary" manifest:full-path="%s"/>' % path)
-    manifest.append(line)
+for line in doc.open('META-INF/manifest.xml','r'):
+  if '</manifest:manifest>' in line.decode('utf-8'):
+    for path in ['Scripts/','Scripts/python/','Scripts/python/myscript.py']:
+      manifest.append(' <manifest:file-entry manifest:media-type="application/binary" manifest:full-path="%s"/>' % path)
+  manifest.append(line.decode('utf-8'))
 doc.writestr('META-INF/manifest.xml', ''.join(manifest))
+doc.close()
 {% endhighlight %}
+
+After enabling macros,
+
+![macro_document_alert]({{ site.url }}/img/macro_document_alert.png)
+
+you should be able to run your macro
+
+![macro_document]({{ site.url }}/img/macro_document.png)
+
+# Spreadsheet methods
+
+**Get a sheet**
+
+*model.Sheets.getByName(sheet_name)*
+
+*model.Sheets.getByIndex(0)*
+
+
 
 **Well done !**

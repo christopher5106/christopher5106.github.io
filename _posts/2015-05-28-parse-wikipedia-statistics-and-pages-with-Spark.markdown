@@ -17,8 +17,8 @@ To prepare
 - download the latest version of [Spark](https://spark.apache.org/downloads.html)
 
 {% highlight bash %}
-wget http://d3kbcqa49mib13.cloudfront.net/spark-1.4.1-bin-hadoop2.6.tgz
-tar xvf spark-1.4.1-bin-hadoop2.6.tgz
+wget http://apache.crihan.fr/dist/spark/spark-1.5.2/spark-1.5.2-bin-hadoop2.6.tgz
+tar xvzf spark-1.5.2-bin-hadoop2.6.tgz
 {% endhighlight %}
 
 - create an AWS account, and get your credentials, if you don't have one already
@@ -39,7 +39,7 @@ export AWS_ACCESS_KEY_ID=...
 export AWS_SECRET_ACCESS_KEY=...
 
 #launch the cluster with --copy-aws-credentials option to enable S3 access.
-cd spark-1.4.1-bin-hadoop2.6
+cd spark-1.5.2-bin-hadoop2.6
 ./ec2/spark-ec2 -k sparkclusterkey -i ~/sparkclusterkey.pem --region=eu-west-1 --copy-aws-credentials --instance-type=m1.large -s 4 --hadoop-major-version=2 launch spark-cluster
 
 #connect to the master

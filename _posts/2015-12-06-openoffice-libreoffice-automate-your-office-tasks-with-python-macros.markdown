@@ -1,17 +1,17 @@
 ---
 layout: post
-title:  "Interface-oriented in OpenOffice / LibreOffice : automate your office tasks with Python Macros"
+title:  "Interface-oriented programming in OpenOffice / LibreOffice : automate your office tasks with Python Macros"
 date:   2015-12-06 23:00:51
 categories: office
 ---
 
 # OpenOffice or LibreOffice ?
 
-OpenOffice and LibreOffice are the main open-source office suites.
+OpenOffice and LibreOffice are the main open-source office suites, the opensource equivalent to Microsoft Office, to create text document, spreadsheets, presentations and drawings.
 
 LibreOffice was a fork of OpenOffice.org (when OpenOffice went under Oracle's umbrella) and is built on the original OpenOffice.org code base.
 
-Both are equivalent, but the usual advise is to use LibreOffice ([see the differences](http://www.howtogeek.com/187663/openoffice-vs.-libreoffice-whats-the-difference-and-which-should-you-use/)) since it is the project of the volunteers of the open-source community and has been developping more quickly.
+Both are equivalent, but the usual advise is to use LibreOffice ([see the differences](http://www.howtogeek.com/187663/openoffice-vs.-libreoffice-whats-the-difference-and-which-should-you-use/)) since it is the project of the volunteers from the open-source community and has been developping more quickly.
 
 I'll speak about LibreOffice now, but the same is true for OpenOffice.
 
@@ -19,9 +19,9 @@ I'll speak about LibreOffice now, but the same is true for OpenOffice.
 
 Macros are scripting for the office suite.
 
-Many languages are accepted by the [LibreOffice API](http://api.libreoffice.org/), thanks to the [Universal Network Objects (UNO)](https://en.wikipedia.org/wiki/Universal_Network_Objects). Among the available languages : Visual Basic, Java, C/C++, Javascript, Python.
+Many languages are accepted by the [LibreOffice API](http://api.libreoffice.org/), thanks to the [Universal Network Objects (UNO)](https://en.wikipedia.org/wiki/Universal_Network_Objects). Among them are : Visual Basic, Java, C/C++, Javascript, Python.
 
-The API is interface-oriented, meaning you communicate with the controller of the interface and the document has to be open. Many other Python libraries are not interface-oriented, creating  directly the file in the **Open Document format** and saving it to disk with the correct extension
+The API is interface-oriented, meaning your code communicate with the controller of the interface and the document has to be open. Many other Python libraries are not interface-oriented, creating  directly the file in the **Open Document format** and saving it to disk with the correct extension
 
 - **.odt** for text files
 - **.ods** for spreadsheets
@@ -33,9 +33,11 @@ For the choice of the language, I would first insist on the **multi-platform req
 
 Java and C/C++ require compilation, are much more complex and verbose.
 
-For a scripting need, I would advise Javascript or Python. Both are very present in script development world wide and are standard de facto. Many tools have been built for task automation on Javascript, such as Cordova (the multi-platform mobile app framework) or Grunt. Many other tools are using Python as well, such as AWS CLI for example.
+For a scripting need, I would advise Javascript or Python. Both are very present in script development world wide and are standards de facto. Many tools have been built for task automation on Javascript, such as Cordova (the multi-platform mobile app framework) or Grunt. Many other tools are using Python as well, such as AWS CLI for example.
 
-But, Javascript could be **not precise enough** (even though there exists very nice libraries for [numeric computation](http://blog.smartbear.com/testing/four-serious-math-libraries-for-javascript/)) and could be disconcerting for your Office users due to rounding errors ( `0.1 + 0.2` does not equals `0.3` in Javascript).
+**I would advise to write most of your code logic outside the interface-orientated architecture, following a standard code architecture, with your common NodeJS dependencies or Python libraries.**
+
+But, Javascript could be **not precise enough** to work nicely in your spreadsheets (even though there exists very nice libraries for [numeric computation](http://blog.smartbear.com/testing/four-serious-math-libraries-for-javascript/)) and could be disconcerting for your Office users due to rounding errors ( `0.1 + 0.2` does not equals `0.3` in Javascript).
 
 On the contrary, **Python has been used extensively for numeric computation**, with famous libraries such as Numpy, Numexpr ... which make it perfect for spreadsheet macros.
 
@@ -48,11 +50,11 @@ Even though Python 2.7 still remains very used, and Python 3 introduced differen
 #Python 3.3.5
 {% endhighlight %}
 
-# First play with the shell before creating your own macro
+# First play with the shell to get familiar
 
-Before creating your own macro for , you can play with the Python shell.
+Before creating your own macro, let's play with the Python shell and interact with a document, let's say a spreadsheet.
 
-First launch LibreOffice Calc (to create spreadsheet open document) with an open socket to communicate with from the shell, on your Mac OS :
+First launch LibreOffice Calc (Calc for spreadsheet open documents) with an open socket to communicate with from the shell on your Mac OS :
 
     /Applications/LibreOffice.app/Contents/MacOS/soffice --calc --accept="socket,host=localhost,port=2002;urp;StarOffice.ServiceManager"
 
@@ -87,8 +89,11 @@ model = desktop.getCurrentComponent()
 
 {% endhighlight %}
 
-These lines are common for every documents. Now you can interact with the document. Since we launched LibreOffice with `--calc` option, it's a spreadsheet.
+These lines are common for every documents (Text, Spreadsheet, Presentation, Drawing).
 
+Now you can interact with the document.
+
+Since we launched LibreOffice with `--calc` option, let's try the spreadsheet interactions :
 
 {% highlight python %}
 # access the active sheet
@@ -105,7 +110,7 @@ cell2 = oSheet.getCellRangeByName("E6")
 cell2.Value = cell2.Value + 1
 {% endhighlight %}
 
-If it's a text document, you can try the following interactions :
+If you open a text document and access it with a new document writer, you can try the following interactions :
 
 {% highlight python %}
 # access the document's text property
@@ -164,6 +169,10 @@ Let's see how to install it in the LibreOffice install first, I'll show you the 
 
 You can find and call your Macro scripts from the LibreOffice menu for macros **Tools > Macros > Organize Macros**.
 
+![LibreOffice Python Macros]({{ site.url }}/img/macro_in_libreoffice.png)
+
+choosing Python :
+
 ![LibreOffice Python Macro Directory]({{ site.url }}/img/libreoffice_python_macro_directory.png)
 
 If you get a "Java SE 6 Error message" such as bellow
@@ -173,11 +182,13 @@ If you get a "Java SE 6 Error message" such as bellow
 download the [Java SE 6 version here](http://download.info.apple.com/Mac_OS_X/031-03190.20140529.Pp3r4/JavaForOSX2014-001.dmg).
 
 
-Let's edit a first macro script file **myscript.py**, we need to create a method *HelloWorldPython* :
+Let's edit a first macro script file **myscript.py** that will print the Python version, creating a method *PythonVersion* :
 
 {% highlight python %}
-def HelloWorldPython( ):
-    """Prints the string 'Hello World(in Python)' into the current document"""
+
+def PythonVersion( ):
+    import sys
+    """Prints the Python version into the current document"""
 #get the doc from the scripting context which is made available to all scripts
     desktop = XSCRIPTCONTEXT.getDesktop()
     model = desktop.getCurrentComponent()
@@ -190,30 +201,25 @@ def HelloWorldPython( ):
 #create an XTextRange at the end of the document
     tRange = text.End
 #and set the string
-    tRange.String = "Hello World (in Python)"
+    tRange.String = "The Python version is %s.%s.%s" % sys.version_info[:3]
     return None
 {% endhighlight %}
 
 and copy it to the Macro directory for LibreOffice :
 
-	cp myscript.py /Applications/LibreOffice.app/Contents/Resources/Scripts/Python/
+	cp myscript.py /Applications/LibreOffice.app/Contents/Resources/Scripts/python/
 
-which you can run from :
+Open a new text document and run it from the menu :
 
 ![LibreOffice Python Macro Directory]({{ site.url }}/img/libreoffice_python_macro_script.png)
-
-after having opened a text document.
 
 In case there are multiple methods, all of them will be exported, but we can also specify which one to export with the following statement at the end of the file :
 
 {% highlight python %}
-g_exportedScripts = capitalisePython,
+g_exportedScripts = PythonVersion,
 {% endhighlight %}
 
 For distribution of code, [OXT format](http://wiki.openoffice.org/wiki/Documentation/DevGuide/Extensions/Extensions) acts as containers of code that will be installed by the Extension Manager or with the command line `/Applications/LibreOffice.app/Contents/MacOS/unopkg`.
-
-
-
 
 
 

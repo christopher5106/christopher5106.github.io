@@ -106,7 +106,7 @@ cell1 = active_sheet.getCellRangeByName("C4")
 cell1.String = "Hello world"
 
 # other example with a value
-cell2 = oSheet.getCellRangeByName("E6")
+cell2 = active_sheet.getCellRangeByName("E6")
 cell2.Value = cell2.Value + 1
 {% endhighlight %}
 

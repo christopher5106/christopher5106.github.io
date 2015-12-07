@@ -15,6 +15,8 @@ Both are equivalent, but the usual advise is to use LibreOffice ([see the differ
 
 I'll speak about LibreOffice now, but the same is true for OpenOffice.
 
+[Download Libreoffice](http://www.libreoffice.org/)
+
 # Which language choice for writing your LibreOffice macros ?
 
 Macros are scripting for the office suite.
@@ -220,7 +222,9 @@ g_exportedScripts = PythonVersion,
 
 For distribution of code, [OXT format](http://wiki.openoffice.org/wiki/Documentation/DevGuide/Extensions/Extensions) acts as containers of code that will be installed by the Extension Manager or with the command line `/Applications/LibreOffice.app/Contents/MacOS/unopkg`.
 
+[A tutorial under Ubuntu](https://tmtlakmal.wordpress.com/2013/08/11/a-simple-python-macro-in-libreoffice-4-0/)
 
+[Other examples](http://api.libreoffice.org/examples/examples.html#python_examples)
 
 
 # Pack your script inside the document : the OpenDocument format

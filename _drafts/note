@@ -1,0 +1,3 @@
+                ############## NOTE OpenCV
+                ### une image de width x height est stockée sous la forme d'un np array de shape (heigth,width) (== (rows,cols))
+                ### le Size object s'écrit bien (Width, height)

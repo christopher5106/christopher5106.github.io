@@ -196,7 +196,7 @@ Let's edit a first macro script file **myscript.py** that will print the Python 
 
 {% highlight python %}
 import sys
-def PythonVersion( ):
+def PythonVersion(*args):
     """Prints the Python version into the current document"""
 #get the doc from the scripting context which is made available to all scripts
     desktop = XSCRIPTCONTEXT.getDesktop()
@@ -232,7 +232,7 @@ Its spreadsheet counterpart would be :
 
 {% highlight python %}
 import sys
-def PythonVersion( ):
+def PythonVersion(*args):
     """Prints the Python version into the current document"""
 #get the doc from the scripting context which is made available to all scripts
     desktop = XSCRIPTCONTEXT.getDesktop()
@@ -315,6 +315,20 @@ After enabling macros,
 you should be able to run your macro
 
 ![macro_document]({{ site.url }}/img/macro_document.png)
+
+# Add a button control to launch your macro
+
+Show the form control toolbar in the menu **View > Toolbars > Form Controls**, activate *Design mode* (first red arrow) and add a button (second red arrow) :
+
+![libreoffice form control]({{ site.url }}/img/libreoffice_form_control.png)
+
+Right click on the button to open the control properties and link with your macro :
+
+![libreoffice form control with macro]({{ site.url }}/img/libreoffice_form_control_macro.png)
+
+Toggle design mode to OFF, close your toolbars. Your document is ready.
+
+You can download my example [here]({{ site.url }}/examples/test_compatibility.ods). This document can be used to check everything works as espected on the LibreOffice version of your customer.
 
 # Spreadsheet methods
 

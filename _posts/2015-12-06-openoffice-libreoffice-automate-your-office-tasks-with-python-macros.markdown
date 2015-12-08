@@ -60,7 +60,7 @@ Even though Python 2.7 still remains very used, and Python 3 introduced differen
 #Python 3.3.5
 {% endhighlight %}
 
-# First play with the shell to get familiar
+# First play with the Python shell to get familiar
 
 Before creating your own macro, let's play with the Python shell and interact with a document, let's say a spreadsheet.
 
@@ -73,6 +73,8 @@ First launch LibreOffice Calc (Calc for spreadsheet open documents) with an open
 and launch the Python shell
 
     /Applications/LibreOffice.app/Contents/MacOS/python
+
+[Python-Uno](http://www.openoffice.org/udk/python/python-bridge.html), the library to communicate via Uno, is already in the LibreOffice Python's path.
 
 To initialize your context, type the following lines in your python shell :
 
@@ -341,6 +343,327 @@ You can download my example [here]({{ site.url }}/examples/test_compatibility.od
 
 *model.Sheets.getByIndex(0)*
 
+**Protect / unprotect a sheet**
 
+*sheet.protect(password)*
+
+*sheet.unprotect(password)*
+
+**Get a cell**
+
+*sheet.getCellByPosition(col, row)*
+
+*sheet.getCellRangeByName("C4")*
+
+**Get cell range**
+
+*sheet.getCellRangeByName("C4:10")*
+
+*sheet.getCellRangeByName("C4:D10")*
+
+**Get cell value**
+
+*cell.getValue() or cell.value*
+
+*cell.getString() or cell.string*
+
+*cell.getFormula() or cell.Formula*
+
+You can also have a look at number formats, dates, ...
+
+**Set cell value**
+
+*cell.setValue(value) or cell.Value=value*
+
+*cell.setString(string) or cell.String=string*
+
+*cell.setFormula(formula) or cell.Formula=formula*
+(example : cell.setFormula("=A1"))
+
+**Get range value array**
+
+*range.getDataArray()*
+
+**Save as PDF**
+
+{% highlight python %}
+import uno
+from com.sun.star.beans import PropertyValue
+
+properties=[]
+p=PropertyValue()
+p.Name='FilterName'
+p.Value='calc_pdf_Export'
+properties.append(p)
+model.storeToURL('file:///tmp/test.pdf',tuple(properties))
+
+#less verbose :
+model.storeToURL('file:///tmp/test2.pdf',tuple([PropertyValue('FilterName',0,'calc_pdf_Export',0)]))
+{% endhighlight %}
+
+**Work on selections using the dispatcher**
+
+{% highlight python %}
+# access the dispatcher
+dispatcher = smgr.createInstanceWithContext( "com.sun.star.frame.DispatchHelper", ctx)
+
+# access the document
+doc = model.getCurrentController()
+
+# enter a string
+struct = uno.createUnoStruct('com.sun.star.beans.PropertyValue')
+struct.Name = 'StringName'
+struct.Value = 'Hello World!'
+dispatcher.executeDispatch(doc, ".uno:EnterString", "", 0, tuple([struct]))
+
+# focus / go to cell
+struct = uno.createUnoStruct('com.sun.star.beans.PropertyValue')
+struct.Name = 'ToPoint'
+struct.Value = 'Sheet1.A1'
+dispatcher.executeDispatch(doc, ".uno:GoToCell", "", 0, tuple([struct]))
+
+# drag and autofill
+struct = uno.createUnoStruct('com.sun.star.beans.PropertyValue')
+struct.Name = 'EndCell'
+struct.Value = 'Sheet1.A10'
+dispatcher.executeDispatch(doc, ".uno:AutoFill", "", 0, tuple([struct]))
+
+# recalculate
+dispatcher.executeDispatch(doc, ".uno:Calculate", "", 0, tuple([]))
+
+# unDo
+dispatcher.executeDispatch(doc, ".uno:Undo", "", 0, ())
+
+# reDo
+dispatcher.executeDispatch(doc, ".uno:Redo", "", 0, ())
+
+# quit LibreOffice
+dispatcher.executeDispatch(doc, ".uno:Quit", "", 0, ())
+
+# insert rows
+dispatcher.executeDispatch(doc, ".uno:InsertRows", "", 0, ())
+
+# delete rows
+dispatcher.executeDispatch(doc, ".uno:DeleteRows", "", 0, ())
+
+# insert columns
+dispatcher.executeDispatch(doc, ".uno:InsertColumns", "", 0, ())
+
+# delete columns
+dispatcher.executeDispatch(doc, ".uno:DeleteColumns", "", 0, ())
+
+# copy, cut, paste
+dispatcher.executeDispatch(doc, ".uno:Copy", "", 0, ())
+dispatcher.executeDispatch(doc, ".uno:Cut", "", 0, ())
+dispatcher.executeDispatch(doc, ".uno:Paste", "", 0, ())
+
+# clear contents of column A
+struct = uno.createUnoStruct('com.sun.star.beans.PropertyValue')
+struct.Name = 'Flags'
+struct.Value = 'A'
+dispatcher.executeDispatch(doc, ".uno:Delete", "", 0, tuple([struct]))
+
+# saveAs
+struct = uno.createUnoStruct('com.sun.star.beans.PropertyValue')
+struct.Name = 'URL'
+struct.Value = 'file:///Users/christopherbourez/Documents/test_save.ods'
+dispatcher.executeDispatch(doc, ".uno:SaveAs", "", 0, tuple([struct]))
+
+# open
+struct = uno.createUnoStruct('com.sun.star.beans.PropertyValue')
+struct.Name = 'URL'
+struct.Value = 'file:///Users/christopherbourez/Documents/test.ods'
+dispatcher.executeDispatch(doc, ".uno:Open", "", 0, tuple([struct]))
+
+{% endhighlight %}
+
+You can have a look at other actions such as Protection, Cancel, TerminateInplaceActivation, InsertContents (with properties 'Flags','FormulaCommand','SkipEmptyCells','Transpose','AsLink','MoveMode' )
+
+
+Have a look at the [equivalent in Visual Basic](http://www.debugpoint.com/2014/09/writing-a-macro-in-libreoffice-calc-getting-started/).
+
+
+# Create a dialog
+
+Let's create and open a dialog with a push button and a label such as :
+
+![macro dialog in python]({{ site.url }}/img/macro_dialog.png)
+
+(example from [this thread](https://forum.openoffice.org/en/forum/viewtopic.php?f=5&t=64465))
+
+{% highlight python %}
+# create dialog
+dialogModel = smgr.createInstanceWithContext("com.sun.star.awt.UnoControlDialogModel", ctx)
+dialogModel.PositionX = 10
+dialogModel.PositionY = 10
+dialogModel.Width = 200
+dialogModel.Height = 100
+dialogModel.Title = "Runtime Dialog Demo"
+
+# create listbox
+listBoxModel = dialogModel.createInstance("com.sun.star.awt.UnoControlListBoxModel" )
+listBoxModel.PositionX = 10
+listBoxModel.PositionY = 5
+listBoxModel.Width = 100
+listBoxModel.Height = 40
+listBoxModel.Name = "myListBoxName"
+listBoxModel.StringItemList = ('a','b','c')
+
+# create the button model and set the properties
+buttonModel = dialogModel.createInstance("com.sun.star.awt.UnoControlButtonModel" )
+buttonModel.PositionX = 50
+buttonModel.PositionY  = 50
+buttonModel.Width = 50
+buttonModel.Height = 14
+buttonModel.Name = "myButtonName"
+buttonModel.Label = "Click Me"
+
+# create the label model and set the properties
+labelModel = dialogModel.createInstance( "com.sun.star.awt.UnoControlFixedTextModel" )
+labelModel.PositionX = 10
+labelModel.PositionY = 70
+labelModel.Width  = 100
+labelModel.Height = 14
+labelModel.Name = "myLabelName"
+labelModel.Label = "Clicks "
+
+# insert the control models into the dialog model
+dialogModel.insertByName( "myButtonName", buttonModel)
+dialogModel.insertByName( "myLabelName", labelModel)
+dialogModel.insertByName( "myListBoxName", listBoxModel)
+
+# create the dialog control and set the model
+controlContainer = smgr.createInstanceWithContext("com.sun.star.awt.UnoControlDialog", ctx)
+controlContainer.setModel(dialogModel)
+
+oBox = controlContainer.getControl("myListBoxName")
+oLabel = controlContainer.getControl("myLabelName")
+oButton = controlContainer.getControl("myButtonName")
+oBox.addItem('d',4)
+
+
+
+
+
+# create a peer
+toolkit = smgr.createInstanceWithContext( "com.sun.star.awt.ExtToolkit", ctx)  
+
+controlContainer.setVisible(False)
+controlContainer.createPeer(toolkit, None)
+
+# execute it
+controlContainer.execute()
+{% endhighlight %}
+
+but clicking does not execute anything. Let's close it, add listeners to increase the label counter when clicking the button, and re-open the dialog :
+
+{% highlight python %}
+import unohelper
+from com.sun.star.awt import XActionListener
+
+class MyActionListener( unohelper.Base, XActionListener ):
+  def __init__(self, labelControl, prefix ):
+    self.nCount = 0
+    self.labelControl = labelControl
+    self.prefix = prefix
+  def actionPerformed(self, actionEvent):
+    # increase click counter
+    self.nCount = self.nCount + 1
+    self.labelControl.setText( self.prefix + str( self.nCount ) )
+
+# add the action listener
+oButton.addActionListener(MyActionListener( oLabel,labelModel.Label ))
+oBox.addActionListener(MyActionListener( oLabel,labelModel.Label ))
+
+# execute again
+controlContainer.execute()
+{% endhighlight %}
+
+And let's delete
+
+{% highlight python %}
+# dispose the dialog
+controlContainer.dispose()
+{% endhighlight %}
+
+
+
+# Create a mouse event listener
+
+
+
+{% highlight python %}
+import uno, unohelper
+from com.sun.star.awt import XMouseClickHandler
+from com.sun.star.awt.MouseButton import LEFT as MB_LEFT
+
+class Handler(unohelper.Base, XMouseClickHandler, object):
+  """ Handles mouse click on the document. """
+  def __init__(self, ctx, doc):
+    self.ctx = ctx
+    self.doc = doc
+    self._register()
+  def _register(self):
+    self.doc.getCurrentController().addMouseClickHandler(self)
+    self.ctx = uno.getComponentContext()  
+  def unregister(self):
+    """ Remove myself from broadcaster. """
+    self.doc.getCurrentController().removeMouseClickHandler(self)
+  def disposing(self, ev):
+    global handler
+    handler = None
+  def mousePressed(self, ev):
+    return False
+  def mouseReleased(self, ev):
+    if ev.Buttons == MB_LEFT:
+      selected = self.doc.getCurrentSelection()
+      addr = selected.getRangeAddress()
+      if addr.EndColumn == 0 and addr.EndRow == 1:  # cell A2
+        oSheet = doc.CurrentController.ActiveSheet
+        oCell1 = oSheet.getCellRangeByName("C4")
+        oCell1.String = "Hello world"
+        oCell2 = oSheet.getCellRangeByName("E6")
+        oCell2.Value = oCell2.Value + 1   
+    return False
+
+
+# start listening
+osheets = model.getSheets()
+osheet = osheets.getByName('Sheet1')
+ocell = osheet.getCellRangeByName('C4')
+global handler
+handler = Handler(ctx, model)  
+
+{% endhighlight %}
+
+
+
+{% highlight python %}
+
+#stop listening
+global handler
+if handler:
+  handler.unregister()
+  handler = None   
+
+
+
+def mouseReleased(self, ev):
+     if ev.Buttons == MB_LEFT and ev.ClickCount == 2 and ev.Modifiers==0:
+         selected = ev.Model.getCurrentSelection()
+         if selected.supportsService("com.sun.star.sheet.SheetCell"):
+             addr = selected.getCellAddress()
+             if addr.Column == 0 and addr.Row == 1:  # cell A2
+                 oSheet = selected.getSpreadsheet()
+                 oCell1 = oSheet.getCellRangeByName("C4")
+                 oCell1.String = "Hello world"
+                 oCell2 = oSheet.getCellRangeByName("E6")
+                 oCell2.Value = oCell2.Value + 1
+                 return True
+     return False
+
+{% endhighlight %}
+
+Please do not hesitate to do your contributions to my tutorial.
 
 **Well done !**

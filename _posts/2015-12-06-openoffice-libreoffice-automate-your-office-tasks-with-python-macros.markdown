@@ -210,7 +210,7 @@ def PythonVersion(*args):
 #create an XTextRange at the end of the document
     tRange = text.End
 #and set the string
-    tRange.String = "The Python version is %s.%s.%s" % sys.version_info[:3]
+    tRange.String = "The Python version is %s.%s.%s" % sys.version_info[:3] + " and the executable path is " + sys.executable
     return None
 {% endhighlight %}
 
@@ -247,6 +247,9 @@ def PythonVersion(*args):
     tRange = sheet.getCellRangeByName("C4")
 #and set the string
     tRange.String = "The Python version is %s.%s.%s" % sys.version_info[:3]
+#do the same for the python executable path
+    tRange = sheet.getCellRangeByName("C5")
+    tRange.String = sys.executable
     return None
 {% endhighlight %}
 

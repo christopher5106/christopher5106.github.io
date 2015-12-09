@@ -542,10 +542,6 @@ oLabel = controlContainer.getControl("myLabelName")
 oButton = controlContainer.getControl("myButtonName")
 oBox.addItem('d',4)
 
-
-
-
-
 # create a peer
 toolkit = smgr.createInstanceWithContext( "com.sun.star.awt.ExtToolkit", ctx)  
 
@@ -587,83 +583,6 @@ And let's delete
 controlContainer.dispose()
 {% endhighlight %}
 
-
-
-# Create a mouse event listener
-
-
-
-{% highlight python %}
-import uno, unohelper
-from com.sun.star.awt import XMouseClickHandler
-from com.sun.star.awt.MouseButton import LEFT as MB_LEFT
-
-class Handler(unohelper.Base, XMouseClickHandler, object):
-  """ Handles mouse click on the document. """
-  def __init__(self, ctx, doc):
-    self.ctx = ctx
-    self.doc = doc
-    self._register()
-  def _register(self):
-    self.doc.getCurrentController().addMouseClickHandler(self)
-    self.ctx = uno.getComponentContext()  
-  def unregister(self):
-    """ Remove myself from broadcaster. """
-    self.doc.getCurrentController().removeMouseClickHandler(self)
-  def disposing(self, ev):
-    global handler
-    handler = None
-  def mousePressed(self, ev):
-    return False
-  def mouseReleased(self, ev):
-    if ev.Buttons == MB_LEFT:
-      selected = self.doc.getCurrentSelection()
-      addr = selected.getRangeAddress()
-      if addr.EndColumn == 0 and addr.EndRow == 1:  # cell A2
-        oSheet = doc.CurrentController.ActiveSheet
-        oCell1 = oSheet.getCellRangeByName("C4")
-        oCell1.String = "Hello world"
-        oCell2 = oSheet.getCellRangeByName("E6")
-        oCell2.Value = oCell2.Value + 1   
-    return False
-
-
-# start listening
-osheets = model.getSheets()
-osheet = osheets.getByName('Sheet1')
-ocell = osheet.getCellRangeByName('C4')
-global handler
-handler = Handler(ctx, model)  
-
-{% endhighlight %}
-
-
-
-{% highlight python %}
-
-#stop listening
-global handler
-if handler:
-  handler.unregister()
-  handler = None   
-
-
-
-def mouseReleased(self, ev):
-     if ev.Buttons == MB_LEFT and ev.ClickCount == 2 and ev.Modifiers==0:
-         selected = ev.Model.getCurrentSelection()
-         if selected.supportsService("com.sun.star.sheet.SheetCell"):
-             addr = selected.getCellAddress()
-             if addr.Column == 0 and addr.Row == 1:  # cell A2
-                 oSheet = selected.getSpreadsheet()
-                 oCell1 = oSheet.getCellRangeByName("C4")
-                 oCell1.String = "Hello world"
-                 oCell2 = oSheet.getCellRangeByName("E6")
-                 oCell2.Value = oCell2.Value + 1
-                 return True
-     return False
-
-{% endhighlight %}
 
 Please do not hesitate to do your contributions to my tutorial.
 

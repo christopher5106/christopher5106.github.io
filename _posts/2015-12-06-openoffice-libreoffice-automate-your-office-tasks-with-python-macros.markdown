@@ -402,6 +402,11 @@ model.storeToURL('file:///tmp/test.pdf',tuple(properties))
 model.storeToURL('file:///tmp/test2.pdf',tuple([PropertyValue('FilterName',0,'calc_pdf_Export',0)]))
 {% endhighlight %}
 
+**Create a message box**
+
+Have a look [here](https://wiki.openoffice.org/wiki/PythonDialogBox).
+
+
 **Work on selections using the dispatcher**
 
 {% highlight python %}

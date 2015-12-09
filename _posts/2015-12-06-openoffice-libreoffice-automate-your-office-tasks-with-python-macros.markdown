@@ -17,6 +17,7 @@ I'll speak about LibreOffice now, but the same is true for OpenOffice.
 
 [Download Libreoffice](http://www.libreoffice.org/)
 
+<a id="activate_macros"/>
 and in the menu bar **LibreOffice > Preferences**, enable macros
 
 ![macro_security]({{ site.url }}/img/macro_security.png)

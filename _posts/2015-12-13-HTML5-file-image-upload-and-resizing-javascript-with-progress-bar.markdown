@@ -5,23 +5,24 @@ date:   2015-12-13 23:00:51
 categories: web
 ---
 
-There are tons of libraries on the web, such as [some](http://designscrazed.org/html5-jquery-file-upload-scripts/), but these libraries are always much more complicated than needed, and modifying them will require 10 times more work than do it from scratch.
+There are tons of libraries on the web, such as [shown in this list](http://designscrazed.org/html5-jquery-file-upload-scripts/), but these libraries are always much more complicated than needed, and modifying them will require 10 times more work than do it from scratch.
 
-So let us see the different components to do our file uploader library.
+So let us see the different components to do our own file uploader script.
 
 # Which request ?
 
 For files, it's necessarily a POST request (passing the file in the parameters of a GET request would be possible for small files though but a very bad anti-pattern).
 
-There exists different format :
+There exists different encoding format for the content of the data :
 
 - application/x-www-form-urlencoded
 - text/plain
 - multipart/form-data
 
-The multipart/form-data type is the recommanded one for files since you can upload multiple files and chunks of files.
+The `multipart/form-data` type is the recommended one for files since you can upload multiple files and chunks of files.
 
-In the form tag element `<form>`, the format is specified by the `enctype` attribute. Default is `application/x-www-form-urlencoded`.
+In the form tag element `<form>`, the format is usually specified by the `enctype` attribute and the correct request is made by the browser on input change. Default is `application/x-www-form-urlencoded`.
+
 
 # The XMLHttpRequest Object and the progress status
 
@@ -77,7 +78,7 @@ will produce the following output in the console
 
 Another way to write it for **GET requests** is using `xhr.addEventListener("progress", updateProgress); xhr.addEventListener("load", transferComplete); xhr.addEventListener("error", transferFailed); xhr.addEventListener("abort", transferCanceled)`.
 
-For **POST requests**, you need to use :
+For **POST requests**, you need to monitor also the upload progress with :
 
 {% highlight javascript %}
 xhr.upload.addEventListener("progress", function(evt){
@@ -87,6 +88,7 @@ xhr.upload.addEventListener("progress", function(evt){
     }, false);
 {% endhighlight %}
 
+I would advise the use of a HTML `<progress>` element to display current progress.
 
 Using jQuery
 
@@ -134,7 +136,7 @@ xhr.send(new FormData(formElement));
 
 It uses the XMLHttpRequest method send() to send the form's data.
 
-The FormData is recommanded not only for forms, but for any key-value post purpose, by [creating a FormData object from scratch](https://developer.mozilla.org/en-US/docs/Web/API/FormData/Using_FormData_Objects) :
+The FormData is recommended not only for forms, but for any key-value post purpose, by [creating a FormData object from scratch](https://developer.mozilla.org/en-US/docs/Web/API/FormData/Using_FormData_Objects) :
 
 {% highlight javascript %}
 var formData = new FormData();
@@ -167,10 +169,10 @@ $.ajax({
 
 # The Blob and File objects
 
-Let's use http://putsreq.com/ service that is a free file bin to debug our POST requests and send a file :
+Let's use [PutsReq service](http://putsreq.com/) that is a free file bin to debug our POST requests and send it a file :
 
 {% highlight html %}
-<input name="imagefile[]" type="file" id="takePictureField" accept="image/*" onchange="uploadPhotos('http://filebin.net/uploader')" />
+<input name="imagefile[]" type="file" id="takePictureField" accept="image/*" onchange="uploadPhotos('http://putsreq.com/jX2tGa272jPmLH4KtR2n')" />
 <script type="text/javascript">
 window.uploadPhotos = function(url){
   var formData = new FormData();
@@ -197,13 +199,13 @@ The field "webmasterfile" is a Blob. A Blob object represents a file-like object
 The File interface is based on Blob, inheriting blob functionality and expanding it to support files on the user's system.
 
 
-# Resize image size with FileReader API
+# Resize image size client-side with FileReader API
 
 
 Taken from [here](http://stackoverflow.com/questions/23945494/use-html5-to-resize-an-image-before-upload), here is a full upload with a resize :
 
 {% highlight html %}
-<input name="imagefile[]" type="file" id="takePictureField" accept="image/*" onchange="uploadPhotos('http://52.19.193.143/quote')" />
+<input name="imagefile[]" type="file" id="takePictureField" accept="image/*" onchange="uploadPhotos('http://putsreq.com/jX2tGa272jPmLH4KtR2n')" />
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 <script type="text/javascript">

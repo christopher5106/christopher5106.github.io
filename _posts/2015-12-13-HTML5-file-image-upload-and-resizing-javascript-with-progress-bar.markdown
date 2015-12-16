@@ -311,3 +311,9 @@ $(document).on("imageResized", function (event) {
 
 
 You can also add drag-and-drop functionality very easily following this [tutorial](http://html5doctor.com/drag-and-drop-to-server/).
+
+Lastly, you can also, during a drag-and-drop of an image from another browser window, get the URL of the image to send to the server : 
+
+		var url = event.dataTransfer.getData('URL');
+
+

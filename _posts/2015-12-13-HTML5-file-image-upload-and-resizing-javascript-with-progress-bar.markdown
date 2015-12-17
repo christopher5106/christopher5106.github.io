@@ -313,6 +313,6 @@ You can also add drag-and-drop functionality very easily following this [tutoria
 
 Lastly, you can also, during a drag-and-drop of an image from another browser window, get the URL of the image to send to the server : 
 
-		var url = event.dataTransfer.getData('URL');
+	var url = event.dataTransfer.getData('URL');
 
 

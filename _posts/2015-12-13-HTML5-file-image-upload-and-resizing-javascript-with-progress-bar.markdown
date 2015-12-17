@@ -226,7 +226,7 @@ window.uploadPhotos = function(url){
 
                 // Resize the image
                 var canvas = document.createElement('canvas'),
-                    max_size = 544,// TODO : pull max size from a site config
+                    max_size = 544,
                     width = image.width,
                     height = image.height;
                 if (width > height) {
@@ -283,7 +283,6 @@ var dataURLToBlob = function(dataURL) {
     return new Blob([uInt8Array], {type: contentType});
 }
 /* End Utility function to convert a canvas to a BLOB      */
-
 
 /* Handle image resized events */
 $(document).on("imageResized", function (event) {

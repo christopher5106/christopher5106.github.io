@@ -311,8 +311,66 @@ $(document).on("imageResized", function (event) {
 
 You can also add drag-and-drop functionality very easily following this [tutorial](http://html5doctor.com/drag-and-drop-to-server/).
 
-Lastly, you can also, during a drag-and-drop of an image from another browser window, get the URL of the image to send to the server : 
+Lastly, you can also, during a drag-and-drop of an image from another browser window, get the URL of the image to send to the server :
 
 	var url = event.dataTransfer.getData('URL');
 
+# Read EXIF information
 
+If the picture is taken from a mobile camera, then we need to correct the orientation of the data to get it the right way. This can be done with the exif library
+
+  bower install exif
+
+and the following code snippet : 
+
+{% highlight javascript %}
+canvas.width = width;
+canvas.height = height;
+var ctx = canvas.getContext("2d");
+if(metaData.Orientation) {
+  switch(metaData.Orientation){
+    case 2:
+        // horizontal flip
+        ctx.translate(canvas.width, 0);
+        ctx.scale(-1, 1);
+        break;
+    case 3:
+        // 180° rotate left
+        ctx.translate(canvas.width, canvas.height);
+        ctx.rotate(Math.PI);
+        break;
+    case 4:
+        // vertical flip
+        ctx.translate(0, canvas.height);
+        ctx.scale(1, -1);
+        break;
+    case 5:
+        // vertical flip + 90 rotate right
+        ctx.rotate(0.5 * Math.PI);
+        ctx.scale(1, -1);
+        break;
+    case 6:
+        // 90° rotate right
+        canvas.width = height;
+        canvas.height = width;
+        canvas.getContext("2d").rotate(0.5 * Math.PI);
+        canvas.getContext("2d").translate(0, -canvas.width);
+        break;
+    case 7:
+        // horizontal flip + 90 rotate right
+        ctx.rotate(0.5 * Math.PI);
+        ctx.translate(canvas.width, -canvas.height);
+        ctx.scale(-1, 1);
+        break;
+    case 8:
+        // 90° rotate left
+        canvas.width = height;
+        canvas.height = width;
+        ctx.rotate(-0.5 * Math.PI);
+        ctx.translate(-canvas.height, 0);
+        break;
+}
+}
+ctx.drawImage(image, 0, 0, width, height);
+img.dataUrl = canvas.toDataURL('image/jpeg');
+{% endhighlight %}

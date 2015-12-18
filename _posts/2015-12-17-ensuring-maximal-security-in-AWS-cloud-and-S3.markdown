@@ -73,7 +73,7 @@ The *main limitations to groups in AWS* :
 
 In both cases, you have to grant all your users independently.
 
-To observe : **never re-use, never download a credentials.** Copy them once to your `.aws/credentials` file, to one computer only.
+**Never re-use, never download a credentials.** Copy them once to your `.aws/credentials` file, to one computer only.
 
 
 
@@ -83,17 +83,17 @@ To observe : **never re-use, never download a credentials.** Copy them once to y
 
 Your computer are all set for **AWS CLI**, now it's time to code and run your application.
 
-**Advice \#3: create one group and one role per application**
+**Advice \#3: create one group and one role per application and attach them access policies.**
 
-The group is for the work on your computer, running the code on the localhost, and the role is for the EC2 instances running the development and production environments.
+The group is for the development work, to run the code on the localhost, access data... AWS SDK will get directly its credentials from the role for your EC2 instances, and from [your environment variables](http://docs.aws.amazon.com/aws-sdk-php/v2/guide/credentials.html#environment-credentials) for your computer.
 
-Attach access policies to groups and roles : these are **group/role white list**.
+The role is for the EC2 instances to run the preproduction and production environments. Do not forget to use a credential cache.
 
-AWS SDK will get directly its credentials from the role for your EC2 instances, and from [your environment variables](http://docs.aws.amazon.com/aws-sdk-php/v2/guide/credentials.html#environment-credentials) for your computer.
+Groups/roles act as **group/role white list**.
 
-Do not forget to use a credential cache.
+**Avoid using a credential in an application**
 
-To observe : **avoid using a credential in an application**
+
 
 # Encrypting data
 

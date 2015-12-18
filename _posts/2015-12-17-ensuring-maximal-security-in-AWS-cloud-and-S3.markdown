@@ -148,8 +148,8 @@ It is so easy to add an access to your bucket ! To avoid a misconfiguration, I a
   			"NotPrincipal": {
   				"AWS": "arn:aws:iam::ACCOUNT_ID:user/USER_NAME"
   			},
-  			"Action": "s3:PutObject",
-  			"Resource": "arn:aws:s3:::MYSECUREBUCKET/*"
+  			"Action": "s3:*",
+  			"Resource": "arn:aws:s3:::MYSECUREBUCKET-encrypted/*"
   		},
   		{
   			"Sid": "DenyUnEncryptedObjectUploads",
@@ -158,7 +158,7 @@ It is so easy to add an access to your bucket ! To avoid a misconfiguration, I a
   				"AWS": "arn:aws:iam::ACCOUNT_ID:user/USER_NAME"
   			},
   			"Action": "s3:PutObject",
-  			"Resource": "arn:aws:s3:::MYSECUREBUCKET/*",
+  			"Resource": "arn:aws:s3:::MYSECUREBUCKET-encrypted/*",
   			"Condition": {
   				"StringNotEquals": {
   					"s3:x-amz-server-side-encryption": "aws:kms"

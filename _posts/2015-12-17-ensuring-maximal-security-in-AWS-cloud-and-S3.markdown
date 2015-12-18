@@ -85,14 +85,15 @@ Your computer are all set for **AWS CLI**, now it's time to code and run your ap
 
 **Advice \#3: create one group and one role per application and attach them access policies.**
 
-The group is for the development work, to run the code on the localhost, access data... AWS SDK will get directly its credentials from the role for your EC2 instances, and from [your environment variables](http://docs.aws.amazon.com/aws-sdk-php/v2/guide/credentials.html#environment-credentials) for your computer.
+AWS SDK will get directly its credentials from the role for your EC2 instances, and from [your environment variables](http://docs.aws.amazon.com/aws-sdk-php/v2/guide/credentials.html#environment-credentials) for your computer :
 
-The role is for the EC2 instances to run the preproduction and production environments. Do not forget to use a credential cache.
+- the group is for the development work of your user computers, to run the code on the localhost, access data...
 
-Groups/roles act as **group/role white list**.
+- the role is for the EC2 instances to run the preproduction and production environments. Do not forget to use a credential cache.
 
-**Avoid using a credential in an application**
+Groups/roles act as **group/role white list**, listing allowed user computers and instances.
 
+**Avoid using any credential in an application**
 
 
 # Encrypting data

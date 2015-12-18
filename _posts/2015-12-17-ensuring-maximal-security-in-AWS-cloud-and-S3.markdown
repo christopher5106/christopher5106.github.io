@@ -73,35 +73,36 @@ The *main limitations to groups in AWS* :
 
 In both cases, you have to grant all your users independently.
 
-Easy to follow:
+To observe : **never re-use, never download a credentials.** Copy them once to your `.aws/credentials` file, to one computer only.
 
-- **one user per computer and never re-use, never download a credentials.** Copy them once to your `.aws/credentials` file, to one computer only.
-
-- **one group per logical application**
-
-- **access policies in groups**. A group is the first white list.
 
 
 
 
 # Applications
 
-Your computer are all set for **AWS CLI**, now it's time to code your application.
+Your computer are all set for **AWS CLI**, now it's time to code and run your application.
 
-**Advice \#3: avoid using a credential in an application, create a group for the work on your computer/localhost, and a role for your EC2 instances**
+**Advice \#3: create one group and one role per application**
+
+The group is for the work on your computer, running the code on the localhost, and the role is for the EC2 instances running the development and production environments.
+
+Attach access policies to groups and roles : these are **group/role white list**.
 
 AWS SDK will get directly its credentials from the role for your EC2 instances, and from [your environment variables](http://docs.aws.amazon.com/aws-sdk-php/v2/guide/credentials.html#environment-credentials) for your computer.
 
 Do not forget to use a credential cache.
 
-
+To observe : **avoid using a credential in an application**
 
 # Encrypting data
 
 
-Advice \#4 : **create a second level of security, with KMS encryption**.
+**Advice \#4 : encrypt your data**.
 
-In IAM > encryption keys panel, create an encryption key and allow a user to use it. It is an **encrypting key white list** (the white list number 2).
+KMS encryption is a second level of security.
+
+In IAM > encryption keys panel, create an encryption key and allow a user to use it. It is the **encrypting key white list** that acts as a second level of security.
 
 To ensure everything in the bucket is encrypted :
 
@@ -125,8 +126,10 @@ To ensure everything in the bucket is encrypted :
     ]
     }
 
+We can regret that policy grammar does not allow a `s3:x-amz-server-side-encryption-aws-kms-key-id` condition key which would be very nice [feature request](https://forums.aws.amazon.com/thread.jspa?messageID=609709).
 
-Give access to your user by attaching a policy to an application group and role :
+
+To give access to a computer or application, simply attach a policy to a group/role white list,
 
     {
         "Version": "2012-10-17",
@@ -147,7 +150,7 @@ Give access to your user by attaching a policy to an application group and role 
         ]
     }
 
-It is so easy to add an access to your bucket ! To avoid a misconfiguration, I add a security with a DENY statement to the bucket policy:
+It is so easy to add an access to your bucket ! To avoid a misconfiguration, you can add a third security with a DENY statement to the bucket policy:
 
     {
     	"Version": "2012-10-17",
@@ -179,11 +182,7 @@ It is so easy to add an access to your bucket ! To avoid a misconfiguration, I a
     	]
     }
 
-The order in which the policies are evaluated has no effect on the outcome of the evaluation. DENY have priority on ALLOW statements.
-
-We can regret that policy grammar does not allow a `s3:x-amz-server-side-encryption-aws-kms-key-id` condition key which would be very nice [feature request](https://forums.aws.amazon.com/thread.jspa?messageID=609709).
-
-We have in this bucket policy a **bucket white list** (white list number 3).
+The order in which the policies are evaluated has no effect on the outcome of the evaluation. DENY have priority on ALLOW statements. We have with this bucket policy a third white list, **bucket white list**.
 
 
 

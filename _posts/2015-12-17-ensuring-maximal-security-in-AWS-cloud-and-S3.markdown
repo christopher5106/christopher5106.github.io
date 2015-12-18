@@ -207,7 +207,7 @@ When revoking, do the contrary.
 
 **Adding an application** :
 
-- create a group (for your computer and physical user to which you will share your development code)
+- create a group (for your computers and other physical users to which you will share your development code)
 
 - create a role (for your EC2 instance)
 

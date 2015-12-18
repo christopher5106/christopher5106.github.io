@@ -196,11 +196,11 @@ It's now a mess again. Here is the checklist :
 
 - create a user
 
-- add it to a group
+- add it to a group (white list)
 
-- add it to a bucket white list
+- add it to a bucket policy (white list)
 
-- add it to an encryption key white list
+- add it to an encryption key (white list)
 
 Remember : you cannot add a group to a bucket policy or an encryption list.
 
@@ -208,7 +208,7 @@ When revoking, do the contrary.
 
 **Adding an application** :
 
-- create a group (for your computers and other physical users to which you will share your development code)
+- create a group (for your computers and other physical users with which you will share your development)
 
 - create a role (for your EC2 instance)
 

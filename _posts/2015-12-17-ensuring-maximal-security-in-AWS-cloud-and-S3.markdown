@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Ensuring maximal security in the AWS cloud and S3."
+title:  "Ensuring maximal security in the AWS cloud and S3"
 date:   2015-12-13 23:00:51
 categories: security
 ---
@@ -114,8 +114,6 @@ To ensure everything in the bucket is encrypted :
          "Sid":"DenyUnEncryptedObjectUploads",
          "Effect":"Deny",
          "Principal":"*",
-         "NotPrincipal": {
-           "AWS": "arn:aws:iam::ACCOUNT_ID:user/USER_NAME" },
          "Action":"s3:PutObject",
          "Resource":"arn:aws:s3:::MYSECUREBUCKET/*",
          "Condition":{
@@ -161,16 +159,25 @@ It is so easy to add an access to your bucket ! To avoid a misconfiguration, you
     			"Sid": "DenyUnEncryptedObjectUploads",
     			"Effect": "Deny",
     			"NotPrincipal": {
-    				"AWS": "arn:aws:iam::ACCOUNT_ID:user/USER_NAME"
+    				"AWS": [
+              "arn:aws:iam::ACCOUNT_ID:root",
+              "arn:aws:iam::ACCOUNT_ID:user/USER_NAME"
+            ]
     			},
     			"Action": "s3:*",
-    			"Resource": "arn:aws:s3:::MYSECUREBUCKET-encrypted/*"
+    			"Resource": [
+            "arn:aws:s3:::MYSECUREBUCKET-encrypted",
+            "arn:aws:s3:::MYSECUREBUCKET-encrypted/*"
+            ]
     		},
     		{
     			"Sid": "DenyUnEncryptedObjectUploads",
     			"Effect": "Deny",
     			"Principal": {
-    				"AWS": "arn:aws:iam::ACCOUNT_ID:user/USER_NAME"
+    				"AWS": [
+              "arn:aws:iam::ACCOUNT_ID:root",
+              "arn:aws:iam::ACCOUNT_ID:user/USER_NAME"
+            ]
     			},
     			"Action": "s3:PutObject",
     			"Resource": "arn:aws:s3:::MYSECUREBUCKET-encrypted/*",

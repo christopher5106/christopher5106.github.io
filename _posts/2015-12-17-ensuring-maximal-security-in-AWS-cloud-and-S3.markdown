@@ -220,3 +220,7 @@ When revoking, do the contrary.
 - create a role (for your EC2 instance)
 
 - create an encryption key
+
+# Securing your EC2 instances with a VPC
+
+Have a look at my former article about [VPC]({{ site.url }}/network/2015/03/23/enforcing-security-with-virtual-private-cloud.html).

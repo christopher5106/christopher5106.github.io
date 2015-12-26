@@ -33,7 +33,7 @@ It is also possible to go further by adding perspective information and rotation
 
 An alternative would be the polygon format (vector of points) which has less meaning than the transformation format (rotation parameters, affine parameters, ...) for computer vision tasks such as prediction (for me, all methods based on "contours" or "signal processing" are outdated - except mean subtraction and normalization).
 
-I will also give 2 other precious advices :
+I will also give 3 other precious advices :
 
 - coordinates have to be written for the **original-sized image** (not a resized image), because sometimes, you will have to extract parts of the image and read some data in them, and full size images will give a better recognition quality than resized images.
 

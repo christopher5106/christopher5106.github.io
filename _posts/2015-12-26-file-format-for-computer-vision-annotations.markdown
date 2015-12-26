@@ -13,7 +13,7 @@ In the [article about creating an object dectector with OpenCV traincascade algo
 
 - no class : OpenCV format is designed to train only one category of detector
 
-- separation of "positives" and "negatives", that are not a classification.
+- separation of "positives" and "negatives", that are not annotations, but more a format for a specific category training.
 
 The first solution is to create CSV files in the OpenCV Rect format, with a top left corner coordinates :
 
@@ -35,22 +35,22 @@ An alternative would be the polygon format (vector of points) which has less mea
 
 I will also give 2 other precious advices :
 
-- coordinates have to be written for the **original-sized image** (not a resized image), because sometimes, you will have to extract parts of the image and read some data in them, and full size image will give a better recognition quality than resized images.
+- coordinates have to be written for the **original-sized image** (not a resized image), because sometimes, you will have to extract parts of the image and read some data in them, and full size images will give a better recognition quality than resized images.
 
-- save the CSV file either in the image directory, or next to your image directory so that image path can be **relative paths**, because absolute paths will not work on different computers. The latter solution, **next to the image directory**, is better to include in the same CSV file two different image folders, very common in computer vision, such as "birds images" and "animals images" in the following example :
+- save the CSV file either in the image directory, or next to your image directory so that image path can be **relative paths**, because absolute paths will not work on different computers. The latter solution, **next to the image directory**, is better because you can include in the same CSV file two different image folders, for very common multi-class training, such as "birds images" and "animals images" in the following example :
 
-        iMacdeCstopher2:MyData christopher$ tree
-        .
-        ├── my_animals_images.csv
-        ├── my_birds_images.csv
-        ├── my_birds_images
-        │   ├── p1.jpg
-        │   ├── p10.jpg
-        │   ├── p11.jpg
-        │   ├── p12.jpg
-        │   ├── p13.jpg
-        │   ├── p14.jpg
-        │   └── p15.jpg
-        ├── my_cats_images.csv
-        ├── my_cats_images
-        │   ├── p1.jpg
+      iMacdeCstopher2:MyData christopher$ tree
+      .
+      ├── my_animals_images.csv
+      ├── my_birds_images.csv
+      ├── my_birds_images
+      │   ├── p1.jpg
+      │   ├── p10.jpg
+      │   ├── p11.jpg
+      │   ├── p12.jpg
+      │   ├── p13.jpg
+      │   ├── p14.jpg
+      │   └── p15.jpg
+      ├── my_cats_images.csv
+      ├── my_cats_images
+      │   ├── p1.jpg

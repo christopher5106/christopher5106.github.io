@@ -15,17 +15,17 @@ In the [article about creating an object dectector with OpenCV traincascade algo
 
 - separation of "positives" and "negatives", that are not annotations, but more a format for a specific category training.
 
-The first solution is to create CSV files in the OpenCV Rect format, with a top left corner coordinates :
+The first solution is to create CSV files, one annotation per line, in the OpenCV Rect format, where the line contains the top left corner coordinates of the annotation rectangle `(x,y)`, its width, height and the class of the annotated object (if I annotate a letter for example, it will be the letter itself) :
 
     path,class,x,y,w,h
 
 ![rectangle annotation format]({{ site.url }}/img/rectangle_format.png)
 
-To my point of view, the best format remains the **RotatedRect format** with center point coordinates, and orientation :
+To my point of view, the best format is not the Rect format, but the **RotatedRect format** with the center point coordinates and orientation of the annotation rectangle :
 
     path,class,center_x,center_y,w,h,o
 
-because it will be a more general case, orientations are very common, and it will enable you to use the same tools to work on your data, extract rectangles, etc. In this format, it is also quite easy to work without the orientation by ignoring the last column, if wanted.
+because it will be a more general case, while orientations are very common, and will enable you to use the same tools to work on your data, extract rectangles, etc in the case of orientation. In this format, it will be also quite easy to work without the orientation by ignoring the last column, if wanted.
 
 ![rotatedrect annotation format]({{ site.url }}/img/rotatedrectangle_format.png)
 

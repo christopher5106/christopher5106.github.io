@@ -37,6 +37,8 @@ I will also give 2 other precious advices :
 
 - coordinates have to be written for the **original-sized image** (not a resized image), because sometimes, you will have to extract parts of the image and read some data in them, and full size images will give a better recognition quality than resized images.
 
+- if there are two or more objects to annotate in the image, one line per annotation in the CSV file rather than a list
+
 - save the CSV file either in the image directory, or next to your image directory so that image path can be **relative paths**, because absolute paths will not work on different computers. The latter solution, **next to the image directory**, is better because you can include in the same CSV file two different image folders, for very common multi-class training, such as "birds images" and "animals images" in the following example :
 
       iMacdeCstopher2:MyData christopher$ tree

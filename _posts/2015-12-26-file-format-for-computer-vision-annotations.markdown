@@ -39,18 +39,18 @@ I will also give 2 other precious advices :
 
 - save the CSV file either in the image directory, or next to your image directory so that image path can be **relative paths**, because absolute paths will not work on different computers. The latter solution, **next to the image directory**, is better to include in the same CSV file two different image folders, very common in computer vision, such as "birds images" and "animals images" in the following example :
 
-    iMacdeCstopher2:MyData christopher$ tree
-    .
-    ├── my_animals_images.csv
-    ├── my_birds_images.csv
-    ├── my_birds_images
-    │   ├── p1.jpg
-    │   ├── p10.jpg
-    │   ├── p11.jpg
-    │   ├── p12.jpg
-    │   ├── p13.jpg
-    │   ├── p14.jpg
-    │   └── p15.jpg
-    ├── my_cats_images.csv
-    ├── my_cats_images
-    │   ├── p1.jpg
+        iMacdeCstopher2:MyData christopher$ tree
+        .
+        ├── my_animals_images.csv
+        ├── my_birds_images.csv
+        ├── my_birds_images
+        │   ├── p1.jpg
+        │   ├── p10.jpg
+        │   ├── p11.jpg
+        │   ├── p12.jpg
+        │   ├── p13.jpg
+        │   ├── p14.jpg
+        │   └── p15.jpg
+        ├── my_cats_images.csv
+        ├── my_cats_images
+        │   ├── p1.jpg

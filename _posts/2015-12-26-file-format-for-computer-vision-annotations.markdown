@@ -61,11 +61,13 @@ I will also give 3 other precious advices :
 
 # Annotation tool
 
-A good annotation tool should enable to feed the annotator with bounding boxes to help annotation. An algorithm can be used to create probable bounding boxes for the object you annotate :
+A good annotation tool should enable you to feed it with precomputed bounding boxes to help annotation. Precomputed rectangles help you save your time by presenting you a selection of potential annotations, for which you will just have to type the class of the object, before going to the next one :
 
 ![annotator feed]({{site.url}}/img/annotator_feed.png)
 
-Type the class of the object, and it will go to the next bounding box. Previously annotated rectangles will appear in yellow :
+Depending on the task, and on the previous classifiers you can re-use or train, you can develop the bounding box algorithm separately.
+
+Once the class of the rectangle has been saved, the rectangle will appear in yellow :
 
 ![annotator next rectangle]({{site.url}}/img/annotator_next.png)
 

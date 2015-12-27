@@ -61,28 +61,30 @@ I will also give 3 other precious advices :
 
 # Annotation tool
 
-A good annotation tool should enable you to feed it with precomputed bounding boxes to help annotation. Precomputed rectangles help you save your time by presenting you a selection of potential annotations, for which you will just have to type the class of the object, before going to the next one :
+A good annotation tool should enable you to feed it with precomputed bounding boxes to help annotation. Precomputed rectangles are potential places where objects might be in the image. This will save you the fastidious task of drawing and positioning the annotation rectangles. An algorithm will instead present you a selection of potential annotations, for which you just have to type the class of the object, and go from a potential position to another one just with the keyboard :
 
 ![annotator feed]({{site.url}}/img/annotator_feed.png)
 
-Depending on the task, and on the previous classifiers you can re-use or train, you can develop the bounding box algorithm separately.
+The algorithm to precompute bounding boxes will depend a lot on the task, and is separated from the main annotation tool. For example, for letter bounding boxes, the *findContours* OpenCV method is very convenient. You can also re-use previously trained classifiers.
 
-Once the class of the rectangle has been saved, the rectangle will appear in yellow :
+Once the class of the rectangle has been saved, the rectangle becomes yellow, the current active one is blue, and the next ones green :
 
 ![annotator next rectangle]({{site.url}}/img/annotator_resume.png)
 
-Erase a wrong box :
+You should be able to erase a wrongly proposed box :
 
 ![annotator erase]({{site.url}}/img/annotator_erase.png)
 
-Or rescale / reposition the rectangle or add a new one :
+Or rescale, rotate, or reposition the proposed rectangle, or add a new one manually :
 
 ![annotator add position scale]({{site.url}}/img/annotator_add_position_scale.png)
 
-Lastly, you should be able to resume work (reload previously saved data) :
+Lastly, you should be able to resume your work (reload previously saved data) :
 
 ![annotator resume]({{site.url}}/img/annotator_resume.png)
 
-In case rectangles are too close or two small compared to the definition of the image, you should be able to go into a cross (+) mode instead of rectangles for previously annotated rectangles or next ones :
+In case rectangles are too close or two small compared to the definition of the image, you should be able to have an alternative, not drawing all rectangles, such as a *cross (+) mode* presented below :
 
 ![annotator cross]({{site.url}}/img/annotation_cross.png)
+
+**Well done!**

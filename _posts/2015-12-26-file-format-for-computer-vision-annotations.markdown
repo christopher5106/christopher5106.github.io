@@ -69,7 +69,7 @@ Depending on the task, and on the previous classifiers you can re-use or train, 
 
 Once the class of the rectangle has been saved, the rectangle will appear in yellow :
 
-![annotator next rectangle]({{site.url}}/img/annotator_next.png)
+![annotator next rectangle]({{site.url}}/img/annotator_resume.png)
 
 Erase a wrong box :
 

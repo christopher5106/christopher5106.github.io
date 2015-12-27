@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Image annotations : Which file format and what features for the annotation tool?"
+title:  "Image annotations : which file format and what features for an annotation tool?"
 date:   2015-12-26 08:00:51
 categories: computer vision
 ---
@@ -79,7 +79,7 @@ Or rescale / reposition the rectangle or add a new one :
 
 ![annotator add position scale]({{site.url}}/img/annotator_add_position_scale.png)
 
-Lastly, you should be able to resume work (reload data) :
+Lastly, you should be able to resume work (reload previously saved data) :
 
 ![annotator resume]({{site.url}}/img/annotator_resume.png)
 

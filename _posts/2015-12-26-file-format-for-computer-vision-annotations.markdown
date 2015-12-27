@@ -1,9 +1,11 @@
 ---
 layout: post
-title:  "Which file format for computer vision annotations?"
+title:  "Image annotations : Which file format and what features for the annotation tool?"
 date:   2015-12-26 08:00:51
 categories: computer vision
 ---
+
+# File Format
 
 This is a good question when you start a computer vision project. You are going to annotate your pictures in a format that will serve different computer vision tools for training.
 
@@ -56,3 +58,29 @@ I will also give 3 other precious advices :
       ├── my_cats_images.csv
       ├── my_cats_images
       │   ├── p1.jpg
+
+# Annotation tool
+
+A good annotation tool should enable to feed the annotator with bounding boxes to help annotation. An algorithm can be used to create probable bounding boxes for the object you annotate :
+
+![annotator feed]({{site.url}}/img/annotator_feed.png)
+
+Type the class of the object, and it will go to the next bounding box. Previously annotated rectangles will appear in yellow :
+
+![annotator next rectangle]({{site.url}}/img/annotator_next.png)
+
+Erase a wrong box :
+
+![annotator erase]({{site.url}}/img/annotator_erase.png)
+
+Or rescale / reposition the rectangle or add a new one :
+
+![annotator add position scale]({{site.url}}/img/annotator_add_position_scale.png)
+
+Lastly, you should be able to resume work (reload data) :
+
+![annotator resume]({{site.url}}/img/annotator_resume.png)
+
+In case rectangles are too close or two small compared to the definition of the image, you should be able to go into a cross (+) mode instead of rectangles for previously annotated rectangles or next ones :
+
+![annotator cross]({{site.url}}/img/annotation_cross.png)

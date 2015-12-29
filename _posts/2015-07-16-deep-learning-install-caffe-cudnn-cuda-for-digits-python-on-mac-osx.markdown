@@ -74,7 +74,7 @@ which python
 
     mkdir technologies
     cd technologies
-    git clone https://github.com/BVLC/caffe.git
+    git clone  --branch digits-2.0 https://github.com/BVLC/caffe.git
     cd caffe
     vi Makefile.config
 

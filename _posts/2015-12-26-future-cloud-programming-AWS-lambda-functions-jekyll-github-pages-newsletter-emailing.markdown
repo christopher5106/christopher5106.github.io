@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "The future paradise of programming thanks to AWS lambda functions : let's send a newsletter from our Jekyll github pages"
+title:  "The future paradise of programming thanks to AWS lambda functions : let's send a newsletter for a Jekyll github pages site"
 date:   2015-12-26 23:00:51
 categories: cloud
 ---

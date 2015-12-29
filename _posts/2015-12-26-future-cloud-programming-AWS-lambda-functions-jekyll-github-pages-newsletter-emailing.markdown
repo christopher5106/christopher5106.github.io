@@ -36,11 +36,9 @@ This example would work for any website with a RSS or ATOM feed, such as a blog,
 
 I'll create a lambda function that gets the latest articles from the RSS feed, and sends a newsletter to our readers.
 
-I'll take the case of a [Jekyll blog](https://jekyllrb.com/) with [advised by Github](https://pages.github.com/), free of cost.
+I'll take the case of a free of cost [Jekyll blog](https://jekyllrb.com/) [hosted by Github](https://pages.github.com/).
 
-Subscription can be done very easily with [MailChimp Sign-up Form builder](http://kb.mailchimp.com/lists/signup-forms/create-signup-forms-and-response-emails) or [Mailjet Subscription widget](https://www.mailjet.com/docs/widget).
-
-Such forms enable to collect emails into a contact list and have an API to send newsletters to these contact lists.
+Subscription can be done very easily with [MailChimp Sign-up Form builder](http://kb.mailchimp.com/lists/signup-forms/create-signup-forms-and-response-emails) or [Mailjet Subscription widget](https://www.mailjet.com/docs/widget) : such forms collect emails into contact lists and have API to send newsletters to these contact lists later on.
 
 
 # Script development and local testing
@@ -53,7 +51,7 @@ Let us create a lambda function in Javascript using [MailJet NodeJS Wrapper](htt
     npm install xml2js
     vi send_newsletter.js
 
-and write the following javascript *send_newsletter.js* to get all articles being published not later than 1 week ago and send the list as a newsletter :
+and write the following javascript module, named *send_newsletter.js*, with the mission to get all articles being published the last week, and send their titles with their links in a newsletter :
 
 {% highlight javascript %}
 var Mailjet = require('node-mailjet').connect('API KEY', 'API SECRET');
@@ -145,7 +143,7 @@ context.succeed = function( res) {
   console.log(res)
 }
 
-send_newsletter.handler({},context)
+send_newsletter.handler(event,context)
 {% endhighlight %}
 
 and try it :
@@ -168,18 +166,18 @@ that I can directly upload to the console :
 or with AWS CLI :
 
 
-Configure the correct **filenames, memory, and execution time** :
+Configure the correct **module name, memory, and execution time** :
 
 ![lambda configuration]({{site.url}}/img/lambda_configuration.png)
 
 
 It's now time to verify everything works well, by creating an *test event* :
 
-![lambda test event]({{ site.url }}/lambda_test_event.png)
+![lambda test event]({{ site.url }}/img/lambda_test_event.png)
 
 and execute it :
 
-![lambda newsletter execution result]({{ site.url }}/lambda_execution_result.png)
+![lambda newsletter execution result]({{ site.url }}/img/lambda_execution_result.png)
 
 Have a look at the **max used memory** to check if you selected the right memory range.
 

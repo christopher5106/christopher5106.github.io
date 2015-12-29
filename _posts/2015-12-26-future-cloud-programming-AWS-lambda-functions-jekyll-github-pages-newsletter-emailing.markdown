@@ -7,19 +7,23 @@ categories: cloud
 
 # Introduction
 
-[AWS Lambda](http://docs.aws.amazon.com/lambda) is the future of programming : no administration of servers for the developers, all computing power and required memory is managed by the cloud provider... with two advantages :
+[AWS Lambda](http://docs.aws.amazon.com/lambda) is the future of programming :
 
-- scalability : the cloud provider scales the power in function of the traffic
+- no more administration of servers by the developers, a complete serenity : no more worry about how you'll deploy the code into production
 
-- cost : low usage will lead to reduced costs in computing power
+- all computing power and required memory is now managed by the cloud provider
+
+    - scalability : the cloud provider scales the power in function of the traffic
+
+    - cost : low usage will lead to reduced costs in computing power
 
 All this has a very important consequence, a new way of architecturing information systems, in a **event-oriented fashion** rather than our traditional **REST architectures**. It is still possible to create a REST API above the event-oriented architecture, with an API endpoint that will translate HTTP and HTTPS requests (GET, POST, ...) into events, thanks to AWS Gateway.
 
-But the possible sources of events, that will produce events for the lambda functions, is now much wider :
+But the scope of possible sources of events, that will produce events for the lambda functions, is now much wider :
 
 - API Gateway (HTTP, HTTPS, ...)
 
-- scheduled event
+- scheduled events
 
 - AWS services (S3, Cloudwatch logs, SNS...)
 
@@ -171,11 +175,11 @@ Configure the correct **filenames, memory, and execution time** :
 
 It's now time to verify everything works well, by creating an *test event* :
 
-![lambda cron aws]({{ site.url }}/lambda_test_event.png)
+![lambda test event]({{ site.url }}/lambda_test_event.png)
 
 and execute it :
 
-![lambda cron aws]({{ site.url }}/lambda_execution_result.png)
+![lambda newsletter execution result]({{ site.url }}/lambda_execution_result.png)
 
 Have a look at the **max used memory** to check if you selected the right memory range.
 

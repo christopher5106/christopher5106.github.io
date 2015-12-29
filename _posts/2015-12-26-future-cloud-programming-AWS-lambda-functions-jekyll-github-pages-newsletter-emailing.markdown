@@ -17,7 +17,7 @@ categories: cloud
 
     - cost : low usage will lead to reduced costs in computing power
 
-All this has a very important consequence, a new way of architecturing information systems, in a **event-oriented fashion** rather than our traditional **REST architectures**. It is still possible to create a REST API above the event-oriented architecture, with an API endpoint that will translate HTTP and HTTPS requests (GET, POST, ...) into events, thanks to AWS Gateway.
+All this has a very important consequence, a new way of architecturing information systems, in an **event-oriented fashion** rather than our traditional **REST architectures**. It is still possible to create a REST API above the event-oriented architecture, with an API endpoint that will translate HTTP and HTTPS requests (GET, POST, ...) into events, thanks to AWS Gateway.
 
 But the scope of possible sources of events, that will produce events for the lambda functions, is now much wider :
 

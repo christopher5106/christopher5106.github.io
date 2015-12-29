@@ -35,7 +35,7 @@ This event-oriented architecture simplifies the development and the organization
 
 - services do not require the knowledge of other services' context (see Domain Driven Design - by Eric Evans)
 
-Microservices at Netflix : 
+Microservices at Netflix :
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/5qJ_BibbMLw" frameborder="0" allowfullscreen></iframe>
 
@@ -45,9 +45,9 @@ This example would work for any website with a RSS or ATOM feed, that will give 
 
 I'll create a lambda function that will fetch the latest articles from the RSS feed, and send them in a newsletter to our readers.
 
-I'll take the case of a free of cost [Jekyll blog](https://jekyllrb.com/) [hosted by Github](https://pages.github.com/).
+I'll take the case of a free of cost [Jekyll blog](https://jekyllrb.com/) - [hosted by Github](https://pages.github.com/).
 
-Subscription can be done very easily with [MailChimp Sign-up Form builder](http://kb.mailchimp.com/lists/signup-forms/create-signup-forms-and-response-emails) or [Mailjet Subscription widget](https://www.mailjet.com/docs/widget) : such forms collect emails into contact lists and have API to send newsletters to these contact lists later on.
+Subscription can be integrated very easily into the website with [MailChimp Sign-up Form builder](http://kb.mailchimp.com/lists/signup-forms/create-signup-forms-and-response-emails) or [Mailjet Subscription widget](https://www.mailjet.com/docs/widget) : such forms collect emails into contact lists and have API to send newsletters to these contact lists later on.
 
 
 # Script development and local testing

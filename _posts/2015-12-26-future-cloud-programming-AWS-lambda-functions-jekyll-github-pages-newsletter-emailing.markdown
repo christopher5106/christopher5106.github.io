@@ -204,6 +204,6 @@ We created a newsletter in less than an hour... and the cost of its weekly execu
 
 As soon as the libraries are compiled for the [lambda execution environment](https://docs.aws.amazon.com/lambda/latest/dg/current-supported-versions.html) and included into the ZIP file, and execution time is not more than 5 minutes (have a look at [lambda limits](http://docs.aws.amazon.com/lambda/latest/dg/limits.html)), you can execute any code on AWS Lambda...
 
-And for the costs ? About **0,00003334 US$** per month.
+And for the costs ? 5 newsletter per month of 3200 ms cost about **0,00003334 US$** per month. Free of charge.
 
 **Well done !**

@@ -198,8 +198,12 @@ Now that everything works well, let's add a scheduled event as event source to *
 
 ![lambda cron aws]({{ site.url }}/img/lambda_cron.png)
 
+# Conclusion
+
 We created a newsletter in less than an hour... and the cost of its weekly execution will be almost nothing. You can now create thousands of such services, for whatever you feel like!
 
 As soon as the libraries are compiled for the [lambda execution environment](https://docs.aws.amazon.com/lambda/latest/dg/current-supported-versions.html) and included into the ZIP file, and execution time is not more than 5 minutes (have a look at [lambda limits](http://docs.aws.amazon.com/lambda/latest/dg/limits.html)), you can execute any code on AWS Lambda...
+
+And for the costs ? About **0,00003334 US$** per month.
 
 **Well done !**

@@ -163,8 +163,12 @@ that I can directly upload to the console :
 
 ![upload zip to aws lambda]({{site.url}}/img/lambda_upload_zip.png)
 
-or with AWS CLI :
+or with AWS CLI, provided you attached a Lambda:CreateFunction policy to your current AWS CLI user:
 
+    aws lambda update-function-code --function-name sendNewsletter --zip-file fileb://mylambda.zip
+
+Provided you have already created the `lambda_basic_execution` role for your lambdas, or know which IAM/EC2 role to use, you can also directly create it from command line :  
+    aws lambda create-function --function-name test --runtime  nodejs --role arn:aws:iam::ACCOUNT_ID:role/lambda_basic_execution --handler send_newsletter.handler --timeout 80 --zip-file fileb://mylambda.zip
 
 Configure the correct **module name, memory, and execution time** :
 
@@ -179,7 +183,11 @@ and execute it :
 
 ![lambda newsletter execution result]({{ site.url }}/img/lambda_execution_result.png)
 
-Have a look at the **max used memory** to check if you selected the right memory range.
+Have a look at the **max used memory** to check if you selected the right memory range. You can also check the **duration** and billed duration to ensure you are not charged for a too long timeout setting and an unterminated process.
+
+You can also invoke your lambda with AWS CLI :
+
+    aws lambda invoke --function-name sendNewsletter results.json
 
 Meanwhile, you'll certainly received the result in your mail box :
 

@@ -362,6 +362,21 @@ oDrawPage = sheet.DrawPage
 oDrawPage.add(LShape)
 {% endhighlight %}
 
+and add a listener
+
+{% highlight python %}
+aEvent = uno.createUnoStruct("com.sun.star.script.ScriptEventDescriptor")
+aEvent.AddListenerParam = ""
+aEvent.EventMethod = "actionPerformed"
+aEvent.ListenerType = "XActionListener"
+aEvent.ScriptCode = "myscript.py$PythonVersion (document, Python)"
+aEvent.ScriptType = "Script"
+
+oForm = oDrawPage.getForms().getByIndex(0)
+oForm.getCount()
+oForm.registerScriptEvent(0, aEvent)
+{% endhighlight %}
+
 # Spreadsheet methods
 
 **Get a sheet**

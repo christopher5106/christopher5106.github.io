@@ -35,6 +35,9 @@ This event-oriented architecture simplifies the development and the organization
 
 - services do not require the knowledge of other services' context (see Domain Driven Design - by Eric Evans)
 
+Microservices at Netflix : 
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/5qJ_BibbMLw" frameborder="0" allowfullscreen></iframe>
 
 # Example : let us send a newsletter for a Jekyll Gihub Pages blog
 

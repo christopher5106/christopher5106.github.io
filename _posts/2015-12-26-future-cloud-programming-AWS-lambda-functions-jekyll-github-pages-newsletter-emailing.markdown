@@ -32,9 +32,9 @@ This event-oriented architecture simplifies the development and the organization
 
 # Example : let us send a newsletter for a Jekyll Gihub Pages blog
 
-This example would work for any website with a RSS or ATOM feed, such as a blog, a news website, ...
+This example would work for any website with a RSS or ATOM feed, that will give the list of the latest articles, such as a blog, a news website, ...
 
-I'll create a lambda function that gets the latest articles from the RSS feed, and sends a newsletter to our readers.
+I'll create a lambda function that will fetch the latest articles from the RSS feed, and send them in a newsletter to our readers.
 
 I'll take the case of a free of cost [Jekyll blog](https://jekyllrb.com/) [hosted by Github](https://pages.github.com/).
 

@@ -336,6 +336,32 @@ Toggle design mode to OFF, close your toolbars. Your document is ready.
 
 You can download my example [here]({{ site.url }}/examples/test_compatibility.ods). This document can be used to check everything works as espected on the LibreOffice version of your customer.
 
+You can also add the button programmatically :
+
+{% highlight python %}
+sheet = model.Sheets.getByIndex(0)
+
+LShape  = model.createInstance("com.sun.star.drawing.ControlShape")
+
+aPoint = uno.createUnoStruct('com.sun.star.awt.Point')
+aSize = uno.createUnoStruct('com.sun.star.awt.Size')
+aPoint.X = 500
+aPoint.Y = 1000
+aSize.Width = 5000
+aSize.Height = 1000
+LShape.setPosition(aPoint)
+LShape.setSize(aSize)
+
+oButtonModel = smgr.createInstanceWithContext("com.sun.star.form.component.CommandButton", ctx)
+oButtonModel.Name = "Click"
+oButtonModel.Label = "Python Version"
+
+LShape.setControl(oButtonModel)
+
+oDrawPage = sheet.DrawPage
+oDrawPage.add(LShape)
+{% endhighlight %}
+
 # Spreadsheet methods
 
 **Get a sheet**

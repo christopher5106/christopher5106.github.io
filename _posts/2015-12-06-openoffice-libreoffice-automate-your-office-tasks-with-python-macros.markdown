@@ -377,6 +377,24 @@ oForm.getCount()
 oForm.registerScriptEvent(0, aEvent)
 {% endhighlight %}
 
+
+or
+
+{% highlight python %}
+import unohelper
+from com.sun.star.awt import XActionListener
+
+class MyActionListener( unohelper.Base, XActionListener ):
+  def __init__(self ):
+    print("ok1")
+  def actionPerformed(self, actionEvent):
+    print("ok2")
+
+doc = model.getCurrentController()
+doc.getControl(oButtonModel)
+doc.getControl(oButtonModel).addActionListener(MyActionListener())
+{% endhighlight %}
+
 # Spreadsheet methods
 
 **Get a sheet**

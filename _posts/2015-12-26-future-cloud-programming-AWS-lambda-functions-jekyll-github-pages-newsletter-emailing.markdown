@@ -189,6 +189,6 @@ Now that everything works well, let's add a scheduled event as event source to *
 
 ![lambda cron aws]({{ site.url }}/img/lambda_cron.png)
 
-We created a newsletter in less than an hour... and the cost of its weekly execution will be almost nothing.
+We created a newsletter in less than an hour... and the cost of its weekly execution will be almost nothing. You can now create thousands of such services, for whatever you feel like!
 
 **Well done !**

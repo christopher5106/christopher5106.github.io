@@ -27,6 +27,8 @@ But the scope of possible sources of events, that will produce events for the la
 
 - AWS services (S3, Cloudwatch logs, SNS...)
 
+And events can be delivered/propagated on faster and safer protocol than HTTP.
+
 This event-oriented architecture simplifies the development and the organization of information systems into what is now defined as **micro-services** : services with a narrow scope, that are independent, scalable, reliable and easy to communicate with for other parts of the organization.
 
 

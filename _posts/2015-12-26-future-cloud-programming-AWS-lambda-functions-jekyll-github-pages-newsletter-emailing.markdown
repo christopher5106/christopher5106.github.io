@@ -29,7 +29,11 @@ But the scope of possible sources of events, that will produce events for the la
 
 And events can be delivered/propagated on faster and safer protocol than HTTP.
 
-This event-oriented architecture simplifies the development and the organization of information systems into what is now defined as **micro-services** : services with a narrow scope, that are independent, scalable, reliable and easy to communicate with for other parts of the organization.
+This event-oriented architecture simplifies the development and the organization of information systems into what is now defined as **micro-services** : services with a narrow scope, that are independent, scalable, reliable and easy to communicate with for other parts of the organization :
+
+- services can be updated independently
+
+- services do not require the knowledge of other services' context (see Domain Driven Design - by Eric Evans)
 
 
 # Example : let us send a newsletter for a Jekyll Gihub Pages blog

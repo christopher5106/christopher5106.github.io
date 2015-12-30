@@ -423,6 +423,8 @@ doc.getControl(oButtonModel).addActionListener(MyActionListener())
 
 **Get cell value**
 
+*cell.getType()* cell type (in *from com.sun.star.table.CellContentType import TEXT, EMPTY, VALUE, FORMULA*)
+
 *cell.getValue() or cell.value*
 
 *cell.getString() or cell.string*
@@ -440,7 +442,7 @@ You can also have a look at number formats, dates, ...
 *cell.setFormula(formula) or cell.Formula=formula*
 (example : cell.setFormula("=A1"))
 
-**Get range value array**
+**Get range value as an array**
 
 *range.getDataArray()*
 
@@ -461,6 +463,36 @@ Get named range :
 
 *model.NamedRanges.getByName("Test Name")*
 
+**get cell column and row**
+
+*cell.getCellAddress().Column*
+
+*cell.getCellAddress().Row*
+
+**get range column and rowstart/end start/end/count**
+
+*cell/range.getRangeAddress().StartRow*
+
+*cell/range.getRangeAddress().StartColumn*
+
+*cell/range.getRangeAddress().EndRow*
+
+*cell/range.getRangeAddress().EndColumn*
+
+*range.Rows.getCount()* number of rows
+
+*range.Columns.getCount()* number of columns
+
+*range.getCellFormatRanges()*
+
+**deal with enumerations**
+
+{% highlight python %}
+RangesEnum = active_sheet.getCellRangeByName("C4").getCellFormatRanges().createEnumeration()
+while RangesEnum.hasMoreElements():
+     oRange = RangesEnum.nextElement()
+{% endhighlight %}
+
 **Save as PDF**
 
 {% highlight python %}
@@ -478,7 +510,30 @@ model.storeToURL('file:///tmp/test.pdf',tuple(properties))
 model.storeToURL('file:///tmp/test2.pdf',tuple([PropertyValue('FilterName',0,'calc_pdf_Export',0)]))
 {% endhighlight %}
 
+**determining the used area**
+
+{% highlight python %}
+cursor = sheet.createCursor()
+cursor.gotoStartOfUsedArea(False)
+cursor.gotoEndOfUsedArea(True)
+rangeaddress = cursor.getRangeAddress()
+{% endhighlight %}
+
 **Create a message box**
+
+{% highlight python %}
+from com.sun.star.awt.MessageBoxType import MESSAGEBOX, INFOBOX, WARNINGBOX, ERRORBOX, QUERYBOX
+
+from com.sun.star.awt.MessageBoxButtons import BUTTONS_OK, BUTTONS_OK_CANCEL, BUTTONS_YES_NO, BUTTONS_YES_NO_CANCEL, BUTTONS_RETRY_CANCEL, BUTTONS_ABORT_IGNORE_RETRY
+
+parentwin = model.CurrentController.Frame.ContainerWindow
+
+box = parentwin.getToolkit().createMessageBox(parentwin, MESSAGEBOX,  BUTTONS_OK, "Here the title", "Here the content of the message")
+
+result = box.execute()
+{% endhighlight %}
+
+returns the value.
 
 Have a look [here](https://wiki.openoffice.org/wiki/PythonDialogBox).
 

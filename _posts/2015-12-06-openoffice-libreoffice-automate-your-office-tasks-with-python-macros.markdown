@@ -444,6 +444,23 @@ You can also have a look at number formats, dates, ...
 
 *range.getDataArray()*
 
+**Document Path**
+
+*model.URL*
+
+**Named Ranges**
+
+Set a named range :
+
+{% highlight python %}
+oCellAddress = active_sheet.getCellRangeByName("C4").getCellAddress()
+model.NamedRanges.addNewByName("Test Name","C4",oCellAddress,0)
+{% endhighlight %}
+
+Get named range :
+
+*model.NamedRanges.getByName("Test Name")*
+
 **Save as PDF**
 
 {% highlight python %}

@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "The future paradise of programming thanks to AWS lambda functions : let's send a newsletter for a Jekyll github pages site"
+title:  "The future paradise of programming thanks to AWS Lambda functions : let's send a newsletter for a Jekyll github pages site with a Lambda"
 date:   2015-12-26 23:00:51
 categories: cloud
 ---
@@ -17,7 +17,7 @@ categories: cloud
 
     - cost : low usage will lead to reduced costs in computing power
 
-All this has a very important consequence, a new way of architecturing information systems, in an **event-oriented fashion** rather than our traditional **REST architectures**. It is still possible to create a REST API above the event-oriented architecture, with an API endpoint that will translate HTTP and HTTPS requests (GET, POST, ...) into events, thanks to AWS Gateway.
+All this has a very important consequence, a new way of architecturing information systems, in an **event-driven fashion** rather than our traditional **REST architectures**. It is still possible to create a REST API above the event-oriented architecture, with an API endpoint that will translate HTTP and HTTPS requests (GET, POST, ...) into events, thanks to AWS Gateway.
 
 But the scope of possible sources of events, that will produce events for the lambda functions, is now much wider :
 
@@ -39,11 +39,11 @@ Microservices at Netflix :
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/5qJ_BibbMLw" frameborder="0" allowfullscreen></iframe>
 
-# Example : let us send a newsletter for a Jekyll Gihub Pages blog
+# Example : let us send a newsletter for a Jekyll Gihub Pages blog with an AWS Lambda function
 
-This example would work for any website with a RSS or ATOM feed, that will give the list of the latest articles, such as a blog, a news website, ...
+This example works for any website with a RSS or ATOM feed or equivalent, listing the articles by dates, such as a blog, a news website, ...
 
-I'll create a lambda function that will fetch the latest articles from the RSS feed, and send them in a newsletter to our readers.
+I'll create a lambda function to fetch the latest articles from the RSS feed, and send them in a newsletter to our readers.
 
 I'll take the case of a free of cost [Jekyll blog](https://jekyllrb.com/) - [hosted by Github](https://pages.github.com/).
 
@@ -209,7 +209,7 @@ Now that everything works well, let's add a scheduled event as event source to *
 
 # Conclusion
 
-We created a newsletter in less than an hour... and the cost of its weekly execution will be almost nothing. You can now create thousands of such services, for whatever you feel like!
+We created a newsletter in less than an hour... You can now create thousands of such services, for whatever you feel like!
 
 As soon as the libraries are compiled for the [lambda execution environment](https://docs.aws.amazon.com/lambda/latest/dg/current-supported-versions.html) and included into the ZIP file, and execution time is not more than 5 minutes (have a look at [lambda limits](http://docs.aws.amazon.com/lambda/latest/dg/limits.html)), you can execute any code on AWS Lambda...
 

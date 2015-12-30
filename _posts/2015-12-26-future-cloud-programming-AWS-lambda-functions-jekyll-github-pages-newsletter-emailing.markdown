@@ -206,7 +206,7 @@ Meanwhile, you'll certainly received the result in your mail box :
 
 ![newsletter jekyll github pages]({{site.url}}/img/lambda_result.png)
 
-Now that everything works well, let's add a scheduled event as event source to **execute our lambda function every tuesday at 10AM** :
+Now that everything works well, let's add a scheduled event as event source to **execute our lambda function every tuesday at 10AM UTC time** :
 
 ![lambda cron aws]({{ site.url }}/img/lambda_cron.png)
 

@@ -104,15 +104,18 @@ exports.handler = function(event, context) {
             console.log('Successfully processed HTTPS response');
             parseString(body, function (err, result) {
               body = result.rss.channel[0].item;
+              var nb_articles = 0;
               for(i in body)
                 if( new Date( body[i].pubDate[0]) > date1weekago )
                   {
+                    nb_articles ++;
                     html_part += "<p><a href=" + body[i].link[0] + ">" + body[i].title[0] + "</a></p>";
                     text_part += body[i].title[0] + " : " + body[i].link[0] + "\n";
                   }
               html_part = "<strong>Hello!</strong><p>Here are my new articles :</p>" + html_part + "<p>MY NAME</p>";
               text_part = "Hello!\nHere are my new articles:\n" + text_part + "MY NAME";
-              Mailjet.post('newsletter')
+              if(nb_articles)
+                Mailjet.post('newsletter')
                   .request(newsletter_infos)
                   .on('success', function(res) {
                     var id = res.body.Data[0].ID;

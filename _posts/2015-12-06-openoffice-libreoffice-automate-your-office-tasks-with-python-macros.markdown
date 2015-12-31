@@ -463,6 +463,20 @@ Get named range :
 
 *model.NamedRanges.getByName("Test Name")*
 
+![libreoffice_names]({{site.url}}/img/libreoffice_names.png)
+
+List named ranges :
+
+*model.NamedRanges.getElementNames()*
+
+Test named range :
+
+*model.NamedRanges.hasByName("dirs")*
+
+Remove a named range :
+
+*model.NamedRanges.removeByName('dirs')*
+
 **get cell column and row**
 
 *cell.getCellAddress().Column*
@@ -485,7 +499,7 @@ Get named range :
 
 *range.getCellFormatRanges()*
 
-**deal with enumerations**
+**Deal with enumerations**
 
 {% highlight python %}
 RangesEnum = active_sheet.getCellRangeByName("C4").getCellFormatRanges().createEnumeration()
@@ -510,7 +524,7 @@ model.storeToURL('file:///tmp/test.pdf',tuple(properties))
 model.storeToURL('file:///tmp/test2.pdf',tuple([PropertyValue('FilterName',0,'calc_pdf_Export',0)]))
 {% endhighlight %}
 
-**determining the used area**
+**Determining the used area**
 
 {% highlight python %}
 cursor = sheet.createCursor()
@@ -535,7 +549,7 @@ result = box.execute()
 
 returns the value.
 
-Have a look [here](https://wiki.openoffice.org/wiki/PythonDialogBox).
+Have a look [here](https://wiki.openoffice.org/wiki/PythonDialogBox) also.
 
 
 **Work on selections using the dispatcher**

@@ -539,12 +539,16 @@ rangeaddress = cursor.getRangeAddress()
 from com.sun.star.awt.MessageBoxType import MESSAGEBOX, INFOBOX, WARNINGBOX, ERRORBOX, QUERYBOX
 
 from com.sun.star.awt.MessageBoxButtons import BUTTONS_OK, BUTTONS_OK_CANCEL, BUTTONS_YES_NO, BUTTONS_YES_NO_CANCEL, BUTTONS_RETRY_CANCEL, BUTTONS_ABORT_IGNORE_RETRY
+from com.sun.star.awt.MessageBoxResults import OK, YES, NO, CANCEL
 
 parentwin = model.CurrentController.Frame.ContainerWindow
 
 box = parentwin.getToolkit().createMessageBox(parentwin, MESSAGEBOX,  BUTTONS_OK, "Here the title", "Here the content of the message")
 
 result = box.execute()
+if result == OK:
+  print("OK")
+
 {% endhighlight %}
 
 returns the value.

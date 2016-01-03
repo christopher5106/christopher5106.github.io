@@ -734,6 +734,37 @@ controlContainer.dispose()
 {% endhighlight %}
 
 
+# Working with a form
+
+You might have created a listbox of name "Listbox"
+
+![libreoffice listbox python]({{ site.url}}/img/libreoffice_listbox_python.png)
+
+and linked to data :
+
+![libreoffice listbox data]({{ site.url}}/img/libreoffice_listbox_data.png)
+
+
+{% highlight python %}
+# access the draw page
+oDrawPage = accueil_sheet.DrawPage
+
+# count the number of form
+oDrawPage.getForms().getCount()
+
+# get the list box model
+ListBox = oDrawPage.getForms().getByIndex(0).getByName("Listbox")
+
+# get the list box item list
+ListBox.StringItemList
+
+# get the list box controller
+ListBoxCtrl = model.getCurrentController().getControl(ListBox)
+
+# get the selected items:
+ListBoxCtrl.SelectedItems
+{% endhighlight %}
+
 Please do not hesitate to do your contributions to my tutorial.
 
 **Well done !**

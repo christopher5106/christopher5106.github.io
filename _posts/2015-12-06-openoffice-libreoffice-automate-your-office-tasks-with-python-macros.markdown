@@ -746,6 +746,9 @@ and linked to data :
 
 
 {% highlight python %}
+# get the sheet
+accueil_sheet = model.Sheets.getByName("Accueil")
+
 # access the draw page
 oDrawPage = accueil_sheet.DrawPage
 

@@ -755,17 +755,17 @@ oDrawPage = accueil_sheet.DrawPage
 # count the number of form
 oDrawPage.getForms().getCount()
 
-# get the list box model
+# get the list box model of the control element
 ListBox = oDrawPage.getForms().getByIndex(0).getByName("Listbox")
 
 # get the list box item list
 ListBox.StringItemList
 
-# get the list box controller
-ListBoxCtrl = model.getCurrentController().getControl(ListBox)
+# get the list box view
+ListBoxView = model.getCurrentController().getControl(ListBox)
 
 # get the selected items:
-ListBoxCtrl.SelectedItems
+ListBoxView.SelectedItems
 {% endhighlight %}
 
 Please do not hesitate to do your contributions to my tutorial.

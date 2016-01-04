@@ -765,17 +765,25 @@ oDrawPage = accueil_sheet.DrawPage
 # count the number of form
 oDrawPage.getForms().getCount()
 
-# get the list box model of the control element
+# get the list box of the control element
 ListBox = oDrawPage.getForms().getByIndex(0).getByName("Listbox")
 
 # get the list box item list
 ListBox.StringItemList
 
-# get the list box view
-ListBoxView = model.getCurrentController().getControl(ListBox)
+# get the list box controller
+ListBoxCtrl = model.getCurrentController().getControl(ListBox)
 
 # get the selected items:
-ListBoxView.SelectedItems
+ListBoxCtrl.SelectedItems
+{% endhighlight %}
+
+If the list box view is not in the current active sheet, you can access it with :
+
+{% highlight python %}
+for i in range(1, accueil_sheet.DrawPage.getCount()):
+    if accueil_sheet.DrawPage.getByIndex(i).Control.Name == "ListBox":
+        ListBoxCtrl = accueil_sheet.DrawPage.getByIndex(i).Control
 {% endhighlight %}
 
 Please do not hesitate to do your contributions to my tutorial.

@@ -409,6 +409,8 @@ doc.getControl(oButtonModel).addActionListener(MyActionListener())
 
 *sheet.unprotect(password)*
 
+*sheet.isProtected()*
+
 **Get a cell**
 
 *sheet.getCellByPosition(col, row)*
@@ -451,6 +453,10 @@ You can also have a look at number formats, dates, ...
 *model.URL*
 
 **Named Ranges**
+
+Named ranges are like "alias" or shortcuts defining ranges in the document :
+
+![libreoffice named ranges]({{ site.url }}/img/libreoffice_namedranges.png)
 
 Set a named range :
 

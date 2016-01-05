@@ -509,6 +509,10 @@ Remove a named range :
 
 *sheet.getRows().removeByIndex(start_row,nb_rows)*
 
+**Data pilots (equivalent to Excel's data pivots)**
+
+*sheet.getDataPilotTables()*
+
 **Deal with enumerations**
 
 {% highlight python %}

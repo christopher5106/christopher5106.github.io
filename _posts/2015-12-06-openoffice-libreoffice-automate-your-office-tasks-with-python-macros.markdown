@@ -427,9 +427,9 @@ doc.getControl(oButtonModel).addActionListener(MyActionListener())
 
 *cell.getType()* cell type (in *from com.sun.star.table.CellContentType import TEXT, EMPTY, VALUE, FORMULA*)
 
-*cell.getValue() or cell.value*
+*cell.getValue() or cell.Value*
 
-*cell.getString() or cell.string*
+*cell.getString() or cell.String*
 
 *cell.getFormula() or cell.Formula*
 
@@ -504,6 +504,10 @@ Remove a named range :
 *range.Columns.getCount()* number of columns
 
 *range.getCellFormatRanges()*
+
+**delete rows**
+
+*sheet.getRows().removeByIndex(start_row,nb_rows)*
 
 **Deal with enumerations**
 

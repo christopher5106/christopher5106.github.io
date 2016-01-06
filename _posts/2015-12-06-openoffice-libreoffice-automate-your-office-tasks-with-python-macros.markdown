@@ -513,11 +513,15 @@ Remove a named range :
 
 *sheet.getDataPilotTables()*
 
+*sheet.DataPilotTables.getByIndex(0).refresh()*
+
 **Shapes**
 
 *sheet.DrawPage.getCount()*
 
 *sheet.DrawPage.getByIndex(0)*
+
+*sheet.DrawPage.getByIndex(17).Visible=False*
 
 **Deal with enumerations**
 

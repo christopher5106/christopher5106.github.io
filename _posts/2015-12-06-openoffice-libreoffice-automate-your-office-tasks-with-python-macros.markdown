@@ -399,9 +399,11 @@ doc.getControl(oButtonModel).addActionListener(MyActionListener())
 
 **Get a sheet**
 
-*model.Sheets.getByName(sheet_name)*
+*sheet = model.Sheets.getByName(sheet_name)*
 
-*model.Sheets.getByIndex(0)*
+*sheet = model.Sheets.getByIndex(0)*
+
+*model.getCurrentController.setActiveSheet(sheet)* set the sheet active
 
 **Protect / unprotect a sheet**
 
@@ -505,6 +507,11 @@ Remove a named range :
 
 *range.getCellFormatRanges()*
 
+**clear contents**
+
+*range.clearContents(4)* clears the cells with a String as value
+[other clearing flags](https://www.openoffice.org/api/docs/common/ref/com/sun/star/sheet/CellFlags.html)
+
 **delete rows**
 
 *sheet.getRows().removeByIndex(start_row,nb_rows)*
@@ -520,6 +527,17 @@ Remove a named range :
 *datapilot.SourceRange=*
 
 *datapilot.DataPilotFields*
+
+*sheet.DataPilotTables.getByIndex(0).refresh()*
+
+**Shapes**
+
+*sheet.DrawPage.getCount()*
+
+*sheet.DrawPage.getByIndex(0)*
+
+*sheet.DrawPage.getByIndex(17).Visible=False*
+
 
 **Deal with enumerations**
 
@@ -545,6 +563,53 @@ model.storeToURL('file:///tmp/test.pdf',tuple(properties))
 #less verbose :
 model.storeToURL('file:///tmp/test2.pdf',tuple([PropertyValue('FilterName',0,'calc_pdf_Export',0)]))
 {% endhighlight %}
+
+
+Add filter data options ([available options](https://wiki.openoffice.org/wiki/API/Tutorials/PDF_export)), such a page range :
+
+{% highlight python %}
+fdata = []
+fdata1 = PropertyValue()
+fdata1.Name = "PageRange"
+fdata1.Value = "2"
+fdata.append(fdata1)
+
+args = []
+arg1 = PropertyValue()
+arg1.Name = "FilterName"
+arg1.Value = "calc_pdf_Export"
+arg2 = PropertyValue()
+arg2.Name = "FilterData"
+arg2.Value = uno.Any("[]com.sun.star.beans.PropertyValue", tuple(fdata) )
+args.append(arg1)
+args.append(arg2)
+
+model.storeToURL('file:///tmp/test.pdf',tuple(args))
+{% endhighlight %}
+
+or a selection of cells "$A$1:$B$3"
+
+{% highlight python %}
+fdata = []
+fdata1 = PropertyValue()
+fdata1.Name = "Selection"
+oCellRange = param_sheet.getCellRangeByName("$A$1:$B$3")
+fdata1.Value =oCellRange
+fdata.append(fdata1)
+
+args = []
+arg1 = PropertyValue()
+arg1.Name = "FilterName"
+arg1.Value = "calc_pdf_Export"
+arg2 = PropertyValue()
+arg2.Name = "FilterData"
+arg2.Value = uno.Any("[]com.sun.star.beans.PropertyValue", tuple(fdata) )
+args.append(arg1)
+args.append(arg2)
+
+model.storeToURL('file:///tmp/test.pdf',tuple(args))
+{% endhighlight %}
+
 
 **Determining the used area**
 

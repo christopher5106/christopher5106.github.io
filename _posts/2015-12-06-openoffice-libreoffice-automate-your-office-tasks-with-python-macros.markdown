@@ -513,6 +513,14 @@ Remove a named range :
 
 *sheet.getDataPilotTables()*
 
+*datapilot = sheet.getDataPilotTables().getByIndex(0)*
+
+*datapilot.SourceRange*
+
+*datapilot.SourceRange=*
+
+*datapilot.DataPilotFields*
+
 **Deal with enumerations**
 
 {% highlight python %}

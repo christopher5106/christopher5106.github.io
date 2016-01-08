@@ -19,11 +19,11 @@ Lastly, when the model has been learned, it has to be deployed in production app
 
 Tensorflow comes with [Tensorboard](http://tensorflow.org/how_tos/summaries_and_tensorboard/index.md), which looks like the DIGITS interface from NVIDIA (see my tutorial [on Mac](http://christopher5106.github.io/big/data/2015/07/16/deep-learning-install-caffe-cudnn-cuda-for-digits-python-on-mac-osx.html) or [on Ubuntu](http://christopher5106.github.io/big/data/2015/07/16/deep-learning-install-caffe-cudnn-cuda-for-digits-python-on-ubuntu-14-04.html)), but with much more flexibility on the *events* to display in the reports :
 
-![Tensorboard](http://api.tensorflow.org/system/image/body/1675/mnist_tensorboard.png)
+![Tensorboard]({{ site.url }}/img/mnist_tensorboard.png)
 
 and a graph visualization tool, that works like our `python python/draw_net.py` command in Caffe, but with different informations ([see tutorial](http://christopher5106.github.io/deep/learning/2015/09/04/Deep-learning-tutorial-on-Caffe-Technology.html))
 
-![Tensorboard graph](http://api.tensorflow.org/system/image/body/1691/colorby_structure.png)
+![Tensorboard graph]({{ site.url }}/img/colorby_structure.png)
 
 I would say that Tensorflow brings nothing really new, but **the main advantage is that everything is in one place, and easy to install**, which is very nice.
 

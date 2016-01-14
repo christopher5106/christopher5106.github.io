@@ -67,13 +67,16 @@ Before creating your own macro, let's play with the Python shell and interact wi
 
 First launch LibreOffice Calc (Calc for spreadsheet open documents) with an open socket to communicate with from the shell on your Mac OS :
 
-    /Applications/LibreOffice.app/Contents/MacOS/soffice --calc --accept="socket,host=localhost,port=2002;urp;StarOffice.ServiceManager"
+    /Applications/LibreOffice.app/Contents/MacOS/soffice --calc \
+     --accept="socket,host=localhost,port=2002;urp;StarOffice.ServiceManager"
 
-(for the Windows command : `c:\Program Files\OpenOffice1.1\program\soffice "--calc --accept=socket,host=localhost,port=2002;urp;"` but if any trouble, have a look the [proposed workarounds](http://www.openoffice.org/udk/python/python-bridge.html)).
+(for the Windows command : `"C:\\Program Files (x86)\LibreOffice 5\program\soffice.exe" --calc --accept="socket,host=localhost,port=2002;urp;"` but if any trouble, have a look the [proposed workarounds](http://www.openoffice.org/udk/python/python-bridge.html)).
 
 and launch the Python shell
 
     /Applications/LibreOffice.app/Contents/MacOS/python
+
+(for the Windows command : `"C:\\Program Files (x86)\LibreOffice 5\program\python.exe"`).
 
 [Python-Uno](http://www.openoffice.org/udk/python/python-bridge.html), the library to communicate via Uno, is already in the LibreOffice Python's path.
 

@@ -99,7 +99,7 @@ And define where to output the logs :
 
 ![EMR logs]({{ site.url }}/img/emr_output.png)
 
-Once the cluster is terminated, you'll find your logs at :
+Once the cluster is terminated, you'll find your logs in the choosen S3 folder at :
 
 ![EMR logs]({{ site.url }}/img/emr_logs.png)
 

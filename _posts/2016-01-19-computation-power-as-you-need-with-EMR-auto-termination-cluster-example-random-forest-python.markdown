@@ -110,11 +110,12 @@ Giving the result in *stdout.gz* :
 
 (we should have a better output in case of production, such as having the script upload the result to a specific well-named S3 folder instead) and the timings in *stderr.gz* :
 
-    RandomForest:   init: 24.770976383
-    total: 285.036716695
-    findSplitsBins: 1.594676031
-    findBestSplits: 259.45936596
-    chooseSplits: 259.178970344
+    RandomForest:   
+      init: 24.770976383
+      total: 285.036716695
+      findSplitsBins: 1.594676031
+      findBestSplits: 259.45936596
+      chooseSplits: 259.178970344
 
 As you can see, the computation of the random forest regressor lasted less than **5 minutes** on 98 instances (instead of a few days on a single computer).
 

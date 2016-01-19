@@ -91,7 +91,7 @@ Last step, create a cluster with an **additional step** for the computation to e
 
 ![EMR additional step]({{ site.url }}/img/emr_add_step.png)
 
-The following options are :
+The spark-submit options are :
 
 - `--conf spark.executor.instances=98` because I will launch 98 EC2 instances
 
@@ -102,6 +102,10 @@ The following options are :
 - `--conf spark.task.maxFailures=50` defines the number of failures for a task that will cause the computation to fail, default is 4 which is a bit low.
 
 - `--conf spark.default.parallelism=390` defines the default minimum number of partitions in the `textFile` method, and should be set to about the number of cores, hence `4 x 98 = 382` (the program won't be able to [decrease the number of partitions specified here to a lower value](http://www.bigsynapse.com/spark-input-output))
+
+The application location is the S3 path to the Python script. Note that in this version of Spark, you do not need to specify `--class org.apache.spark.examples.SparkPi` option since Spark will detect the Python file.
+
+The argument is the S3 path to the CSV data file, used in the Python script.
 
 Be careful to select **auto-terminating** option to close the cluster automatically once the computation is done :
 

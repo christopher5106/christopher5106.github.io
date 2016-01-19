@@ -91,6 +91,17 @@ Last step, create a cluster with an **additional step** for the computation to e
 
 ![EMR additional step]({{ site.url }}/img/emr_add_step.png)
 
+The following options are :
+- `--conf spark.executor.instances=98` because I will launch 98 EC2 instances
+
+- `--conf spark.driver.memory=10g` since the *m3.xlarge* instance has 15G memory, and default spark.driver.cores is set to 1, it is possible to give 10G to the driver process on the master instance
+
+- `--conf spark.executor.cores=4 --conf spark.executor.memory=3g` to use all the 4 cores and 12 G of the 15G of memory of *m3.xlarge* instances for the slave instances (executors)
+
+- `--conf spark.task.maxFailures=50` defines the number of failures for a task that will cause the computation to fail, default is 4 which is a bit low.
+
+- `--conf spark.default.parallelism=90` is not necessary
+
 Be careful to select **auto-terminating** option to close the cluster automatically once the computation is done :
 
 ![EMR auto terminate]({{ site.url }}/img/emr_auto_termination.png)

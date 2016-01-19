@@ -105,7 +105,7 @@ Once the cluster is terminated, you'll find your logs in the choosen S3 folder a
 
 Giving the result in *stdout.gz* :
 
-    Opening s3://axard-encrypted/habitat/policies_with_geofeatures_and_knn.csv
+    Opening s3://____.csv
     Test Mean Squared Error = 11431.7565297
 
 (we should have a better output in case of production, such as uploading the result to a specific well-named S3 folder instead) and the timings in *stderr.gz* :

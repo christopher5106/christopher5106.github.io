@@ -9,7 +9,7 @@ One of the main advantage of the cloud is the possibility to rent a *temporary* 
 
 With **auto-terminating EMR cluster**, it is also possible to use a cluster periodically, for example every month, for a specific big data task, such as updating prediction models from the production.
 
-The cost of using a cluster of **100** *m3.xlarge* instances ($0.266 per hour per instance) for **1 hour** will be **$26**.
+The cost of using a cluster of **100** quadri-processor instances with 15G RAM ([*m3.xlarge* at $0.266 per hour per instance](https://aws.amazon.com/ec2/pricing/)) for **1 hour** will be **$26.6**.
 
 Let's see in practice with the computation of a Random Forest regressor on production data.
 
@@ -117,6 +117,6 @@ and the timings in *stderr.gz* :
     findBestSplits: 259.45936596
     chooseSplits: 259.178970344
 
-As you can see, the RFR lasted less than **5 minutes** on 98 instances (instead of a few days on a single computer). 
+As you can see, the RFR lasted less than **5 minutes** on 98 instances (instead of a few days on a single computer).
 
 **Well done!**

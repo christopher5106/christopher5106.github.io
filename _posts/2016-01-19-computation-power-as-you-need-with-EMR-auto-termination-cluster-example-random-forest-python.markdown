@@ -80,6 +80,10 @@ print('Test Mean Squared Error = ' + str(testMSE))
 
 {% endhighlight %}
 
+Before going further, test that the script works well locally on a small sample of data :
+
+    spark-submit --master local[4] compute_rf.py sample.csv
+
 
 A a third step, **upload to AWS S3** the CSV data file and the python script file *compute_rf.py*, so that the cluster will be able to access them.
 

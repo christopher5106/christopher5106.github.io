@@ -17,7 +17,7 @@ Computing a Random Forest regressor (RFR) on a high volume of data on a single c
 
 In the following case, preprocessed production data will be a 5.6 G CSV file, where each column is separated by a `;` character, the first column corresponding to the label to predict, and the following columns the data to use to make a prediction.
 
-To parallelize on 100 (one hundred) AWS EC2 instances, AWS first requires to **raise the initial account's EC2 limit** with [a form](https://aws.amazon.com/support/createCase?type=service_limit_increase&serviceLimitIncreaseType=ec2-instances).
+To parallelize on 100 (one hundred) AWS EC2 instances, AWS first requires to **raise the initial account's EC2 limit** by applying with [a form](https://aws.amazon.com/support/createCase?type=service_limit_increase&serviceLimitIncreaseType=ec2-instances).
 
 Computing a RFR on a cluster with Spark is as simple as with other libraries.
 
@@ -103,7 +103,20 @@ Once the cluster is terminated, you'll find your logs at :
 
 ![EMR logs]({{ site.url }}/img/emr_logs.png)
 
-Giving :
+Giving the result in *stdout.gz* :
 
-  Opening s3://axard-encrypted/habitat/policies_with_geofeatures_and_knn.csv
-  Test Mean Squared Error = 11431.7565297
+    Opening s3://axard-encrypted/habitat/policies_with_geofeatures_and_knn.csv
+    Test Mean Squared Error = 11431.7565297
+
+(we should upload the result to S3 instead)
+and the timings in *stderr.gz* :
+
+    RandomForest:   init: 24.770976383
+    total: 285.036716695
+    findSplitsBins: 1.594676031
+    findBestSplits: 259.45936596
+    chooseSplits: 259.178970344
+
+As you can see, the RFR lasted less than **5 minutes** on 98 instances (instead of 5 days on a single computer). 
+
+**Well done!**

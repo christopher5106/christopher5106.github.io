@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Computation power as you need with EMR auto-terminating clusters: example for a random forest evaluation in Python"
+title:  "Computation power as you need with EMR auto-terminating clusters: example for a random forest evaluation in Python with 100 instances"
 date:   2016-01-19 23:00:51
 categories: big data
 ---

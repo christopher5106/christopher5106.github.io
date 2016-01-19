@@ -117,6 +117,6 @@ and the timings in *stderr.gz* :
     findBestSplits: 259.45936596
     chooseSplits: 259.178970344
 
-As you can see, the RFR lasted less than **5 minutes** on 98 instances (instead of 5 days on a single computer). 
+As you can see, the RFR lasted less than **5 minutes** on 98 instances (instead of a few days on a single computer). 
 
 **Well done!**

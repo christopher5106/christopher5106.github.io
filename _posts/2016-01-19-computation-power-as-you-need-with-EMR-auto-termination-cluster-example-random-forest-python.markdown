@@ -108,7 +108,7 @@ Giving the result in *stdout.gz* :
     Opening s3://____.csv
     Test Mean Squared Error = 11431.7565297
 
-(we should have a better output in case of production, such as uploading the result to a specific well-named S3 folder instead) and the timings in *stderr.gz* :
+(we should have a better output in case of production, such as having the script upload the result to a specific well-named S3 folder instead) and the timings in *stderr.gz* :
 
     RandomForest:   init: 24.770976383
     total: 285.036716695

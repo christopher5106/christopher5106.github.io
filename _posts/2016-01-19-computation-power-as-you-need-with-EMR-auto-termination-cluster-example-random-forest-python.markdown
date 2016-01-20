@@ -101,7 +101,7 @@ The spark-submit options are :
 
 - `--conf spark.task.maxFailures=50` defines the number of failures for a task that will cause the computation to fail, default is 4 which is a bit low.
 
-- `--conf spark.default.parallelism=390` defines the default minimum number of partitions in the `textFile` method, and should be set to about the number of cores, hence `4 x 98 = 382` (the program won't be able to [decrease the number of partitions specified here to a lower value](http://www.bigsynapse.com/spark-input-output))
+- `--conf spark.default.parallelism=90` defines the default minimum number of partitions that will be used in the `textFile` method : the Spark's `textFile` method will divide the S3 file into splits that will be read by each executor concurrently. The parallelism should be set to about the number of cores, hence `4 x 98 = 392` (the program won't be able to [decrease the number of partitions specified here to a lower value](http://www.bigsynapse.com/spark-input-output)) but it might also divide the data file into too small splits, and take more time : one should experience different values for this parameter.
 
 The application location is the S3 path to the Python script. Note that in this version of Spark, you do not need to specify `--class org.apache.spark.examples.SparkPi` option since Spark will detect the Python file.
 

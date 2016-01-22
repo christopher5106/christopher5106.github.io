@@ -141,4 +141,4 @@ Have a look at the interview of George Hotz, who created a self-driving car with
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/KTrgRYa2wbI" frameborder="0" allowfullscreen></iframe>
 
-**Many of human brain abilities will be reproduced in artificial intelligence in the future (emotions, logic, attention, consciousness,...) and there is no reason for any limit about artificial intelligence possibilities : let's go forward.**
+**Many of human brain abilities will be reproduced in artificial intelligence in the future (emotions, logic, attention, consciousness,...) and the past has demonstrated that limits about artificial intelligence possibilities have always been pushed further.**

@@ -128,6 +128,13 @@ A first usage of recurrent nets for attention has been combined with spatial tra
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/yGFVO2B8gok" frameborder="0" allowfullscreen></iframe>
 
+A huge potential for the future is expected in the use of recurrent neural nets in IoT connected objects, where the past data is very important in the signal analysis to predict the correct reaction. For example, an IoT sonar device close to the bat's echolocation system, will have to remember previously emitted sonar calls when listening to the echoes :
+
+![recurrent neural net for IOT]({{ site.url }}/img/recurrent_neural_iot.png)
+
+<a href="http://deeplearning.cs.cmu.edu/notes/shaoweiwang.pdf">
+http://deeplearning.cs.cmu.edu/notes/shaoweiwang.pdf</a>
+
 
 # The new paradigm for computer programming
 

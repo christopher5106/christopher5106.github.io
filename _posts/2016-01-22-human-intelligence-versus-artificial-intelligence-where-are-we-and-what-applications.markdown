@@ -94,7 +94,7 @@ When you back-propagate errors on the input image rather than on the coefficient
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/a1On8Diw_Og" frameborder="0" allowfullscreen></iframe>
 
-If this video reminds you of your own dreams and/or terrifies you, one can consider this as a proof that neural nets are not so far from a real human brain :)
+One can consider the terrific impression of this video as a proof that neural nets are not so far from a real human brain.
 
 
 # Recurrent neural nets

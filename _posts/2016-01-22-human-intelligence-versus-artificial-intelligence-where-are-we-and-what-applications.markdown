@@ -90,6 +90,12 @@ That way, **an "experience of the world" is transformed into "learned" coefficie
 
 The results in classification are now so good that [computers can beat non-expert humans in image classification](http://www.eetimes.com/document.asp?doc_id=1325712).
 
+When back-propagation of errors is done on the input image rather than on the coefficients of the net, "hallucinations" of objects appear among the image. Have a look at how an artificial brain hallucinates :
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/a1On8Diw_Og" frameborder="0" allowfullscreen></iframe>
+
+If this video reminds you of your own dreams and/or terrifies you, one can consider it as a proof that neural nets are not so far from an real human brain :)
+
 
 # Recurrent neural nets
 

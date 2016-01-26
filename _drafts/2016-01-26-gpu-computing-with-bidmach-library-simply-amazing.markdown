@@ -11,10 +11,11 @@ Using Intel Parallel Studio,
 <iframe width="560" height="315" src="https://www.youtube.com/embed/G6pKqD8uXdk" frameborder="0" allowfullscreen></iframe>
 
 
-very great [BIDMach library](http://bid2.berkeley.edu/bid-data-project/download/)
-
+there is a very great [BIDMach library](http://bid2.berkeley.edu/bid-data-project/download/) with [very competitive results(see the benchmarks)](https://github.com/BIDData/BIDMach/wiki/Benchmarks).
 
 # Install on Mac OS
+
+As usual, it requires an iMac with a NVIDIA GPU and its CUDA library installed.
 
 Since I'm using CUDA 7.5 instead of 7.0, I had to recompile JCuda, BIDMat, and BIDMach.
 

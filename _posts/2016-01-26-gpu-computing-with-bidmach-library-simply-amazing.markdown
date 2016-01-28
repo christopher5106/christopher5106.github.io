@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "BIDMach library for GPU computing with Intel parallel studio XE: simply amazing [install on MacOS and EC2]"
-date:   2016-01-22 23:00:51
+date:   2016-01-26 23:00:51
 categories: parallel computing
 ---
 

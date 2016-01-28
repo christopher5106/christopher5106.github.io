@@ -39,11 +39,9 @@ I also had to change the memory options to `-Xmx2048m` (instead of 516m) in **C:
 
 - Download and compile Spark :
 
-
-
-    git clone
-    sbt package
-    sbt assembly
+        git clone
+        sbt package
+        sbt assembly
 
 that will create the Spark assembly JAR.
 

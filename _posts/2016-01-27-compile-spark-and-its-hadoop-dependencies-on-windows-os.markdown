@@ -9,7 +9,7 @@ Spark has become the main big data tool, very easy to use as well as very powerf
 
 Here I recompile Spark on Windows since it avoids problems one could encounter with Windows binaries, such as software version mismatches. Loading and compiling all the required dependencies on a slow network and with standard hardware may require a day or so. The steps are the following :
 
-- Download and install [Java Development Kit 7](http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downloads-1880260.html) in a path such as **C:\Java**.
+- Download and install [Java Development Kit 7](http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downloads-1880260.html) in a path such as **C:\Java** (it has to be a folder with spaces)
 
 - Download and install [Python 2.7.11](https://www.python.org/downloads/).
 
@@ -39,7 +39,7 @@ I also had to change the memory options to `-Xmx2048m` (instead of 516m) in **C:
 
 - Download and compile Spark :
 
-        git clone
+        git clone git://github.com/apache/spark.git
         sbt package
         sbt assembly
 

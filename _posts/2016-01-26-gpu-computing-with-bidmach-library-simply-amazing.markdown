@@ -176,6 +176,9 @@ Start BIDMach with `bidmach` command and you get :
     import BIDMach.causal.IPTW
     1 CUDA device found, CUDA version 6.5
 
+Let's download the data :
+
+    /opt/BIDMach/scripts/getdata.sh
 
 
 Stop the instance :

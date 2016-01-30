@@ -208,7 +208,9 @@ During training, you get
 - the times,
 - the consumed data gigabytes,
 - the megabytes per seconds, and
-- the occupied GPU memory :
+- the occupied GPU memory
+
+as here :
 
 
     corpus perplexity=14737,915077

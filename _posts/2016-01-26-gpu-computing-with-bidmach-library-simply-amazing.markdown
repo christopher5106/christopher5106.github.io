@@ -160,6 +160,12 @@ Connect to the instance  :
 
     ssh -i us-west2-keypair.pem ec2-user@ec2-XXX_DNS.us-west-2.compute.amazonaws.com
 
+Let's download the data :
+
+    /opt/BIDMach/scripts/getdata.sh
+    /opt/BIDMach/bidmach
+
+
 Start BIDMach with `bidmach` command and you get :
 
     Loading /opt/BIDMach/lib/bidmach_init.scala...
@@ -176,9 +182,23 @@ Start BIDMach with `bidmach` command and you get :
     import BIDMach.causal.IPTW
     1 CUDA device found, CUDA version 6.5
 
-Let's download the data :
 
-    /opt/BIDMach/scripts/getdata.sh
+Data should be available in **/opt/BIDMach/data/**. Let's load the data, partition it between train and test, train the model, predict on the test set and compute the accuracy :
+
+    val a = loadSMat("/opt/BIDMach/data/rcv1/docs.smat.lz4")
+    val c = loadFMat("/opt/BIDMach/data/rcv1/cats.fmat.lz4")
+    val inds = randperm(a.ncols)
+    val atest = a(?, inds(0->100000))
+    val atrain = a(?, inds(100000->a.ncols))
+    val ctest = c(?, inds(0->100000))
+    val ctrain = c(?, inds(100000->a.ncols))
+    val cx = zeros(ctest.nrows, ctest.ncols)
+    val (mm, mopts, nn, nopts) = GLM.learner(atrain, ctrain, atest, cx, 1)
+    mm.train
+    nn.predict
+    val p = ctest *@ cx + (1 - ctest) *@ (1 - cx)
+    mean(p, 2)
+
 
 
 Stop the instance :

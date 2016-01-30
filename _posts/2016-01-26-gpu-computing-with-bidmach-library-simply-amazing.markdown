@@ -199,6 +199,71 @@ Data should be available in **/opt/BIDMach/data/**. Let's load the data, partiti
     val p = ctest *@ cx + (1 - ctest) *@ (1 - cx)
     mean(p, 2)
 
+During training, you get
+
+
+- the percentage of consumed train data,
+- the negative log likelyhood,
+- the gigaflops,
+- the times,
+- the consumed data gigabytes,
+- the megabytes per seconds, and
+- the occupied GPU memory :
+
+
+    corpus perplexity=14737,915077
+    Predicting
+    3,00%, ll=-0,00783, gf=9,558, secs=0,0, GB=0,00, MB/s=436,75, GPUmem=0,70
+    6,00%, ll=-0,00806, gf=9,610, secs=0,0, GB=0,01, MB/s=439,78, GPUmem=0,70
+    10,00%, ll=-0,00804, gf=10,101, secs=0,0, GB=0,01, MB/s=462,40, GPUmem=0,70
+    13,00%, ll=-0,00802, gf=10,380, secs=0,0, GB=0,01, MB/s=475,39, GPUmem=0,70
+    16,00%, ll=-0,00813, gf=10,550, secs=0,0, GB=0,02, MB/s=483,29, GPUmem=0,70
+    20,00%, ll=-0,00804, gf=10,605, secs=0,0, GB=0,02, MB/s=485,10, GPUmem=0,70
+    23,00%, ll=-0,00793, gf=10,444, secs=0,0, GB=0,02, MB/s=477,68, GPUmem=0,70
+    26,00%, ll=-0,00820, gf=10,548, secs=0,1, GB=0,02, MB/s=482,65, GPUmem=0,70
+    30,00%, ll=-0,00797, gf=10,625, secs=0,1, GB=0,03, MB/s=486,27, GPUmem=0,70
+    33,00%, ll=-0,00798, gf=10,685, secs=0,1, GB=0,03, MB/s=489,04, GPUmem=0,70
+    36,00%, ll=-0,00795, gf=10,750, secs=0,1, GB=0,03, MB/s=492,29, GPUmem=0,70
+    40,00%, ll=-0,00769, gf=10,813, secs=0,1, GB=0,04, MB/s=495,43, GPUmem=0,70
+    43,00%, ll=-0,00811, gf=10,718, secs=0,1, GB=0,04, MB/s=491,17, GPUmem=0,70
+    46,00%, ll=-0,00824, gf=10,746, secs=0,1, GB=0,04, MB/s=492,30, GPUmem=0,70
+    50,00%, ll=-0,00798, gf=10,786, secs=0,1, GB=0,05, MB/s=494,21, GPUmem=0,70
+    53,00%, ll=-0,00784, gf=10,802, secs=0,1, GB=0,05, MB/s=494,82, GPUmem=0,70
+    56,00%, ll=-0,00809, gf=10,832, secs=0,1, GB=0,05, MB/s=496,25, GPUmem=0,70
+    60,00%, ll=-0,00817, gf=9,144, secs=0,1, GB=0,06, MB/s=418,94, GPUmem=0,70
+    63,00%, ll=-0,00765, gf=9,239, secs=0,1, GB=0,06, MB/s=423,33, GPUmem=0,70
+    66,00%, ll=-0,00818, gf=9,323, secs=0,1, GB=0,06, MB/s=427,19, GPUmem=0,70
+    70,00%, ll=-0,00779, gf=9,346, secs=0,2, GB=0,07, MB/s=428,33, GPUmem=0,70
+    73,00%, ll=-0,00782, gf=9,418, secs=0,2, GB=0,07, MB/s=431,64, GPUmem=0,70
+    76,00%, ll=-0,00761, gf=9,494, secs=0,2, GB=0,07, MB/s=435,24, GPUmem=0,70
+    80,00%, ll=-0,00806, gf=9,555, secs=0,2, GB=0,07, MB/s=438,00, GPUmem=0,70
+    83,00%, ll=-0,00791, gf=9,559, secs=0,2, GB=0,08, MB/s=438,16, GPUmem=0,70
+    86,00%, ll=-0,00812, gf=9,616, secs=0,2, GB=0,08, MB/s=440,77, GPUmem=0,70
+    90,00%, ll=-0,00817, gf=9,666, secs=0,2, GB=0,08, MB/s=443,01, GPUmem=0,70
+    93,00%, ll=-0,00797, gf=9,711, secs=0,2, GB=0,09, MB/s=445,04, GPUmem=0,70
+    96,00%, ll=-0,00817, gf=9,757, secs=0,2, GB=0,09, MB/s=447,12, GPUmem=0,70
+    100,00%, ll=-0,00799, gf=9,705, secs=0,2, GB=0,09, MB/s=444,77, GPUmem=0,70
+    Time=0,2090 secs, gflops=9,71
+
+
+The accuracies are :
+
+    0,99035
+    0,92883
+    0,98513
+    0,98612
+    0,95681
+    0,96348
+    ...
+
+To get the training options :
+
+    mopts.what
+
+
+Command `GPUmem` gives you percentage of used memory, free memory and memory capacity :
+
+    (Float, Long, Long) = (0.69568384,2987802624,4294770688)
 
 
 Stop the instance :

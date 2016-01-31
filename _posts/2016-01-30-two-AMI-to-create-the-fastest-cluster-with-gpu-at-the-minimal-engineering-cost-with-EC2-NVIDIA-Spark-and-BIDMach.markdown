@@ -1,11 +1,11 @@
 ---
 layout: post
-title:  "How to launch the fastest cluster of GPU for scientific computing at minimal engineering cost thanks to EC2, Spark, NVIDIA, and BIDMach technologies"
+title:  "2 AMI to launch the fastest cluster of GPU for scientific computing at minimal engineering cost thanks to EC2, Spark, NVIDIA, and BIDMach technologies"
 date:   2016-01-27 23:00:51
 categories: big data
 ---
 
-To create the world's fastest cluster in a minimal engineering cost, let's use:
+To create the world's fastest cluster at minimal engineering cost, let's use:
 
 - EC2 G2 instances, with NVIDIA GPU offering **1536 cores on a single instance**, the maximal power on a single cloud instance currently available so easily
 

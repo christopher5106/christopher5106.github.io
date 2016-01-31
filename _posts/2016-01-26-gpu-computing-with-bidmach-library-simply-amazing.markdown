@@ -22,47 +22,50 @@ Since I'm using CUDA 7.5 instead of 7.0, I had to recompile JCuda, BIDMat, and B
 
 First download Intel parallel studio.
 
-    mkdir ~/technologies/JCuda
-    cd ~/technologies/JCuda
-    git clone https://github.com/jcuda/jcuda-common.git
-    git clone https://github.com/jcuda/jcuda-main.git
-    git clone https://github.com/jcuda/jcuda.git
-    git clone https://github.com/jcuda/jcublas.git
-    git clone https://github.com/jcuda/jcufft.git
-    git clone https://github.com/jcuda/jcusparse.git
-    git clone https://github.com/jcuda/jcurand.git
-    git clone https://github.com/jcuda/jcusolver.git
-    cmake jcuda-main
-    make
-    cd jcuda-main
-    mvn install
+{% highlight bash %}
+mkdir ~/technologies/JCuda
+cd ~/technologies/JCuda
+git clone https://github.com/jcuda/jcuda-common.git
+git clone https://github.com/jcuda/jcuda-main.git
+git clone https://github.com/jcuda/jcuda.git
+git clone https://github.com/jcuda/jcublas.git
+git clone https://github.com/jcuda/jcufft.git
+git clone https://github.com/jcuda/jcusparse.git
+git clone https://github.com/jcuda/jcurand.git
+git clone https://github.com/jcuda/jcusolver.git
+cmake jcuda-main
+make
+cd jcuda-main
+mvn install
 
-    git clone https://github.com/BIDData/BIDMach.git
+git clone https://github.com/BIDData/BIDMach.git
 
-    #compiling for GPU
-    export PATH=$PATH:/usr/local/cuda/bin/
-    cd ~/technologies/BIDMach
-    cd jni/src
-    ./configure
-    make
-    make install
-    cd ../..
+#compiling for GPU
+export PATH=$PATH:/usr/local/cuda/bin/
+cd ~/technologies/BIDMach
+cd jni/src
+./configure
+make
+make install
+cd ../..
 
-    #compiling for CPU
-    cd src/main/C/newparse
-    ./configure
-    make
-    make install
-    cd ../../../..
+#compiling for CPU
+cd src/main/C/newparse
+./configure
+make
+make install
+cd ../../../..
 
-    ./getdevlibs.sh
-    rm lib/IScala.jar
-    cp ../JCuda/jcuda-main/target/* lib/
-    rm lib/jcu*0.7.0a.jar
-    cp ../BIDMat/lib/libbidmatcuda-apple-x86_64.dylib lib/
-    sbt compile
-    sbt package
-    ./bidmach
+./getdevlibs.sh
+rm lib/IScala.jar
+cp ../JCuda/jcuda-main/target/* lib/
+rm lib/jcu*0.7.0a.jar
+cp ../BIDMat/lib/libbidmatcuda-apple-x86_64.dylib lib/
+sbt compile
+sbt package
+./bidmach
+{% endhighlight %}
+
 
 which gives :
 
@@ -146,11 +149,13 @@ First, add an EC2 permission policy to your user :
 
 in order to create a EC2 security group `bidmach` and a keypair `us-west2-keypair` and start the instance, all in zone us-west-2 where the AMI lives :
 
-    aws ec2 create-security-group --group-name bidmach --description bidmach --region us-west-2
-    aws ec2 create-key-pair --key-name us-west2-keypair --region us-west-2
-    # Save the keypair to us-west2-keypair.pem and change its mode
-    sudo chmod 600 us-west2-keypair.pem
-    aws ec2 run-instances --image-id ami-71280941 --key-name us-west2-keypair --security-groups bidmach --instance-type g2.2xlarge --placement AvailabilityZone=us-west-2b --region us-west-2
+{% highlight bash %}
+aws ec2 create-security-group --group-name bidmach --description bidmach --region us-west-2
+aws ec2 create-key-pair --key-name us-west2-keypair --region us-west-2
+# Save the keypair to us-west2-keypair.pem and change its mode
+sudo chmod 600 us-west2-keypair.pem
+aws ec2 run-instances --image-id ami-71280941 --key-name us-west2-keypair --security-groups bidmach --instance-type g2.2xlarge --placement AvailabilityZone=us-west-2b --region us-west-2
+{% endhighlight %}
 
 Get your instance public DNS with
 
@@ -164,7 +169,6 @@ Let's download the data :
 
     /opt/BIDMach/scripts/getdata.sh
     /opt/BIDMach/bidmach
-
 
 Start BIDMach with `bidmach` command and you get :
 
@@ -181,7 +185,6 @@ Start BIDMach with `bidmach` command and you get :
     import BIDMach.updaters.{ADAGrad, Batch, BatchNorm, IncMult, IncNorm, Telescoping}
     import BIDMach.causal.IPTW
     1 CUDA device found, CUDA version 6.5
-
 
 Data should be available in **/opt/BIDMach/data/**. Let's load the data, partition it between train and test, train the model, predict on the test set and compute the accuracy :
 
@@ -270,4 +273,4 @@ Command `GPUmem` gives you percentage of used memory, free memory and memory cap
 
 Stop the instance :
 
-    aws ec2 terminate-instances --instance-ids i-XXX
+    aws ec2 terminate-instances --region us-west-2 --instance-ids i-XXX

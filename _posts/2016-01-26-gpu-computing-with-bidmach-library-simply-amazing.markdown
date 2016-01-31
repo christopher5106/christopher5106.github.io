@@ -274,3 +274,7 @@ Command `GPUmem` gives you percentage of used memory, free memory and memory cap
 Stop the instance :
 
     aws ec2 terminate-instances --region us-west-2 --instance-ids i-XXX
+
+To get an **updated AMI** with the new version of BIDMach and Cuda 7.5, have a look at my [article about new AMI]({{ site.url }}/big/data/2016/01/27/two-AMI-to-create-the-fastest-cluster-with-gpu-at-the-minimal-engineering-cost-with-EC2-NVIDIA-Spark-and-BIDMach.html).
+
+**Well done!**

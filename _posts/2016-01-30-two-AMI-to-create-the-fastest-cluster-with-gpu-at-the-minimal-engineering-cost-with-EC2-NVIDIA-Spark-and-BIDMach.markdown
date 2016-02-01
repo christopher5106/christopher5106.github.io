@@ -50,9 +50,8 @@ sudo bash cuda_7.5.18_linux.run --tmpdir /mnt/tmp
 
 Add /usr/local/cuda/bin to the path in the bash profile to have the NVCC compiler available.
 
-Let's create a public AMI : **ami-0ef6407d**.
+Let's create a public AMI : **ami-0ef6407d**. This AMI is useful to launch a cluster of GPU instances with NVIDIA Driver and CUDA 7.5 pre-installed.
 
-Now you can use this AMI to launch a cluster of G2 instances.
 
 # Compile JCUDA, BIDMat, BIDMach libraries
 
@@ -123,7 +122,7 @@ cd ../..
 
 {% endhighlight %}
 
-
+Let's create a public AMI : **ami-1ae15769**. This AMI is useful to launch a cluster of GPU instances with NVIDIA driver, CUDA 7.5, JCUDA, BIDMat, and BIDMach libraries installed.
 
 # Launch the cluster
 

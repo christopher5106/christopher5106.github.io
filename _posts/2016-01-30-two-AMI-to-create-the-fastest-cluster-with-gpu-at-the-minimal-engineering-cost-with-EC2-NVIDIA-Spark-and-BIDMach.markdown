@@ -50,7 +50,11 @@ sudo bash cuda_7.5.18_linux.run --tmpdir /mnt/tmp
 
 Add /usr/local/cuda/bin to the path in the bash profile to have the NVCC compiler available.
 
-Let's create a public AMI : **ami-0ef6407d**. This AMI is useful to launch a cluster of GPU instances with NVIDIA Driver and CUDA 7.5 pre-installed.
+Let's create a public AMI : **ami-0ef6407d**. This AMI can be used
+
+- to test any GPU-capable library on the cloud, such as Theano, Caffe, BIDMach, Tensorflow ...
+
+- to launch with Spark a cluster of GPU instances with NVIDIA Driver and CUDA 7.5 pre-installed, as we show in the last section.
 
 
 # Compile JCUDA, BIDMat, BIDMach libraries
@@ -122,7 +126,11 @@ cd ../..
 
 {% endhighlight %}
 
-Let's create a public AMI : **ami-1ae15769**. This AMI is useful to launch a cluster of GPU instances with NVIDIA driver, CUDA 7.5, JCUDA, BIDMat, and BIDMach libraries installed.
+Let's create a public AMI : **ami-1ae15769**. This AMI is useful
+
+- to get an instance with BIDMach pre-installed
+
+- to launch with Spark a cluster of GPU instances with NVIDIA driver, CUDA 7.5, JCUDA, BIDMat, and BIDMach libraries installed, as we show below.
 
 # Launch the cluster
 
@@ -131,6 +139,6 @@ Let's fork `https://github.com/amplab/spark-ec2` and create `https://github.com/
     ./ec2/spark-ec2 -k sparkclusterkey -i ~/sparkclusterkey.pem --region=eu-west-1 --copy-aws-credentials --instance-type=g2.2xlarge -s 1 --hadoop-major-version=2 --spark-ec2-git-repo=https://github.com/christopher5106/spark-ec2 launch spark-cluster
 
 
-Terminate :
+Terminate the cluster:
 
     ./ec2/spark-ec2 -k sparkclusterkey -i ~/sparkclusterkey.pem --region=eu-west-1  destroy spark-cluster

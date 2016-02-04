@@ -398,6 +398,13 @@ doc.getControl(oButtonModel)
 doc.getControl(oButtonModel).addActionListener(MyActionListener())
 {% endhighlight %}
 
+<a name="onloaded" />
+# Start a macro when document starts / opens / is loaded
+
+In the toolbar **Tools > Customize**, add the macro :
+
+[python macro on start]({{site.url}}/img/openoffice_macro_on_document_loaded.png)
+
 # Spreadsheet methods
 
 **Get a sheet**

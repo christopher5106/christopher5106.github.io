@@ -405,7 +405,7 @@ doc.getControl(oButtonModel).addActionListener(MyActionListener())
 
 In the toolbar **Tools > Customize**, add the macro :
 
-[python macro on start]({{site.url}}/img/openoffice_macro_on_document_loaded.png)
+![python macro on start]({{site.url}}/img/openoffice_macro_on_document_loaded.png)
 
 # Spreadsheet methods
 

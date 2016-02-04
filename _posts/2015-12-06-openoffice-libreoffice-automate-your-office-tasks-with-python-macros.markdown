@@ -428,7 +428,7 @@ You have the choice to save the preference
 
 - either in the document itself, in this case the macro will be executed whenever the document is opened on any computer
 
-- or in the LibreOffice install on your local computer, in this case the macro will execute for every opened document.
+- or in the LibreOffice install on your local computer, in this case the macro will be executed for every opened document.
 
 
 # Spreadsheet methods

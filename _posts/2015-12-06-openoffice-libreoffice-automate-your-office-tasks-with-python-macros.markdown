@@ -300,22 +300,39 @@ You'll get the following list of files and subdirectories in your extracted file
     ├── settings.xml
     └── styles.xml
 
-You can directly append your script to the file with the *zipfile library* :
+You can directly append your script to the file with the *zipfile library*. Let's create *include_macro.py* :
 
 {% highlight python %}
 import zipfile
-doc = zipfile.ZipFile("Documents/test.ods", 'a')
-doc.write("myscript.py", "Scripts/python/myscript.py")
+import shutil
+import os
+import sys
 
+print("Delete and create directory with_macro")
+shutil.rmtree("with_macro",True)
+os.mkdir("with_macro")
+
+filename = "with_macro/"+sys.argv[1]
+print("Open file " + sys.argv[1])
+shutil.copyfile(sys.argv[1],filename)
+
+doc = zipfile.ZipFile(filename,'a')
+doc.write("myscript.py", "Scripts/python/myscript.py")
 manifest = []
-for line in doc.open('META-INF/manifest.xml','r'):
+for line in doc.open('META-INF/manifest.xml'):
   if '</manifest:manifest>' in line.decode('utf-8'):
     for path in ['Scripts/','Scripts/python/','Scripts/python/myscript.py']:
       manifest.append(' <manifest:file-entry manifest:media-type="application/binary" manifest:full-path="%s"/>' % path)
   manifest.append(line.decode('utf-8'))
+
 doc.writestr('META-INF/manifest.xml', ''.join(manifest))
 doc.close()
+print("File created: "+filename)
 {% endhighlight %}
+
+such that to include your Python macro inside *document.ods*, just type command
+
+    python include_macro.py document.ods
 
 After enabling macros,
 

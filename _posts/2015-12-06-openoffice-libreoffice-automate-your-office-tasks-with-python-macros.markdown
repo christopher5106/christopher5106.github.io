@@ -399,6 +399,8 @@ doc.getControl(oButtonModel).addActionListener(MyActionListener())
 {% endhighlight %}
 
 <a name="onloaded" />
+
+
 # Start a macro when document starts / opens / is loaded
 
 In the toolbar **Tools > Customize**, add the macro :

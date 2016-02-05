@@ -162,6 +162,19 @@ Enable matrix caching :
 
     Mat.useCache = true
 
+There is also a great tool, the dictionaries, where counts is an optional argument :
+
+    val d = Dict(CSMat(1,2,Array("A","B")),IMat(1,2, Array(5,4)))
+    d(0) # value for index 0 : A
+    d("A") # index of A : 0
+    d.count("A") # counts : 5
+    d.count(0) # same
+    d.cstr #dictionary
+    d.counts # counts
+    d(IMat(1,2,Array(0,1))) # bulk retrieval
+    d(CSMat(1,2,Array("A","B)))
+
+
 # File I/O
 
 
@@ -201,7 +214,7 @@ BIDMach offers also
 
 - plot possibilities :
 
-    plot( 1\2\3\4\5,3.2\2.1\1.3\4.2\(-1.2))
+        plot( 1\2\3\4\5,3.2\2.1\1.3\4.2\(-1.2))
 
 
 ![]({{ site.url }}/img/bidmach_plot.png)

@@ -30,12 +30,12 @@ Access the number of columns, rows :
     fmat.ncols
     fmat.nrows
 
-Two ways to access element on (row 1, column 2), either by row x column tuple, or by index (column-oriented numbering) :
+Two ways to access element on (row 1, column 2), either by *row x column* tuple, or by *index* (column-oriented numbering) :
 
     fmat(0,1)
     fmat(2)
 
-Access all elements in one column :
+Access all elements as one column :
 
     fmat(?)
 

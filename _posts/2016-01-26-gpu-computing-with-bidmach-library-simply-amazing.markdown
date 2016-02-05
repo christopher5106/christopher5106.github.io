@@ -65,11 +65,9 @@ rm lib/jcu*0.7.0a.jar
 cp ../BIDMat/lib/libbidmatcuda-apple-x86_64.dylib lib/
 sbt compile
 sbt package
-./bidmach
 {% endhighlight %}
 
-
-which gives :
+In *bidmach* file, change the CUDA version to the current one `JCUDA_VERSION="0.7.5"` and start `./bidmach` command which gives :
 
     Loading /Users/christopher5106/technologies/BIDMach/lib/bidmach_init.scala...
     import BIDMat.{CMat, CSMat, DMat, Dict, FMat, FND, GMat, GDMat, GIMat, GLMat, GSMat, GSDMat, GND, HMat, IDict, Image, IMat, LMat, Mat, SMat, SBMat, SDMat}

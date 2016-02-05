@@ -226,3 +226,58 @@ BIDMach offers also
 
 
 ![]({{ site.url }}/img/bidmach_image_show.png)
+
+# Data sources
+
+A data source is an iterator, let's create 5 data with their respective label (0), and pull the data iteratively 2 by 2 :
+
+    val dataimat = irow(1 to 5)
+    val labelimat = izeros(1,5)
+
+    val dopts = new MatSource.Options
+    dopts.batchSize = 2
+    val m = new MatSource(Array(dataimat, labelimat),dopts)
+    m.init
+    m.hasNext
+    val value = m.next
+
+The output `m.next` is an array of 2 IMat, the first one is the data, the second the label. `dopts.what` will give you all options.
+
+Option `dopts.sample` enables to sample of fraction of the data, and `opts.addConstFeat` adds a feature with constant value to 1 to the data for regression bias.
+
+Data sources can also be used as a sink, to put back some data, such as the prediction value
+
+    dopts.putBack = 1  
+    val predimat = izeros(1,5)
+    val m = new MatSource(Array(dataimat, predimat),dopts)
+    m.init
+    val value = m.next
+    value(1)(1)=1
+    m.next
+    m.mats
+
+Let's now go further with file data sources : let's create
+
+    val fopts = new FileSource.Options
+
+    0 to 50 map( i => {
+       saveMat("data%02d.dmat.lz4" format i ,drand(2,100));
+       saveMat("label%02d.imat.lz4" format i, IMat(drand(1,100) > 0.5))
+    })
+
+    fopts.fnames = List( {i:Int => {"data%02d.dmat.lz4" format i}}, {i:Int => {"label%02d.imat.lz4" format i}} )
+    fopts.nstart = 0
+    fopts.nend = 5001
+    fopts.batchSize = 100
+
+    val fs = FileSource(fopts)
+
+    fs.init
+    fs.hasNext
+    val value = fs.next
+
+Let's check matrices are correctly saved with : `loadMat("data26.fmat.lz4")`
+
+With `fopts.order`, you can randomize the order. `fopts.what` will give you all options.
+
+Lastly, you'll have a look at SFileSource for sparse file data source.

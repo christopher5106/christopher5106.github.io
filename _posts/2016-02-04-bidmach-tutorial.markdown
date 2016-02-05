@@ -1,17 +1,19 @@
 ---
 layout: post
 title:  "Big data tutorial on BIDMach library : basic matrix operations and file IO. Example on a RandomForest computation"
-date:   2016-02-05 23:00:51
+date:   2016-02-04 23:00:51
 categories: big data
 ---
 
-BIDMach is a powerful library,
+BIDMach is a very powerful library,
 
 - on matrix operations, as powerful as Python Numpy library on CPU, and offering the fastest GPU equivalent.
 
 - on file i/o, in particular with [lz4 compression](https://github.com/Cyan4973/lz4).
 
-Let's put things in order :)
+Let's put things back in order :)
+
+First, we'll see basic matrices, then more complicated types, then how to prepare data and an example of random forest computation.
 
 # Basic matrices
 

@@ -146,9 +146,7 @@ cumsum(fmat)
 sort(fmat) // sorted values
 sortdown(fmat) // sorted values
 sort2(fmat) // sorted values and indices
-sortdown2(fmat) // sorted values and indices
-
-
+sortdown2(fmat) /* sorted values and indices */
 {% endhighlight %}
 
 The same statistics and operations per rows by adding a 2 param :

@@ -126,26 +126,28 @@ BIDMach team has compiled an EC2 AMI, available on the US west zone (Oregon).
 
 First, add an EC2 permission policy to your user :
 
-    {
-        "Version": "2012-10-17",
-        "Statement": [
-            {
-                "Sid": "StmtXXX",
-                "Effect": "Allow",
-                "Action": [
-                    "ec2:DescribeAvailabilityZones",
-                    "ec2:RunInstances",
-                    "ec2:TerminateInstances",
-                    "ec2:CreateSecurityGroup",
-                    "ec2:CreateKeyPair",
-                    "ec2:DescribeInstances"
-                ],
-                "Resource": [
-                    "*"
-                ]
-            }
-        ]
-    }
+{% highlight json %}
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "StmtXXX",
+            "Effect": "Allow",
+            "Action": [
+                "ec2:DescribeAvailabilityZones",
+                "ec2:RunInstances",
+                "ec2:TerminateInstances",
+                "ec2:CreateSecurityGroup",
+                "ec2:CreateKeyPair",
+                "ec2:DescribeInstances"
+            ],
+            "Resource": [
+                "*"
+            ]
+        }
+    ]
+}
+{% endhighlight %}
 
 in order to create a EC2 security group `bidmach` and a keypair `us-west2-keypair` and start the instance, all in zone us-west-2 where the AMI lives :
 
@@ -172,35 +174,39 @@ Let's download the data :
 
 Start BIDMach with `bidmach` command and you get :
 
-    Loading /opt/BIDMach/lib/bidmach_init.scala...
-    import BIDMat.{CMat, CSMat, DMat, Dict, FMat, FND, GMat, GDMat, GIMat, GLMat, GSMat, GSDMat, HMat, IDict, Image, IMat, LMat, Mat, SMat, SBMat, SDMat}
-    import BIDMat.MatFunctions._
-    import BIDMat.SciFunctions._
-    import BIDMat.Solvers._
-    import BIDMat.Plotting._
-    import BIDMach.Learner
-    import BIDMach.models.{DNN, FM, GLM, KMeans, KMeansw, LDA, LDAgibbs, Model, NMF, SFA, RandomForest}
-    import BIDMach.datasources.{DataSource, MatDS, FilesDS, SFilesDS}
-    import BIDMach.mixins.{CosineSim, Perplexity, Top, L1Regularizer, L2Regularizer}
-    import BIDMach.updaters.{ADAGrad, Batch, BatchNorm, IncMult, IncNorm, Telescoping}
-    import BIDMach.causal.IPTW
-    1 CUDA device found, CUDA version 6.5
+{% highlight scala %}
+Loading /opt/BIDMach/lib/bidmach_init.scala...
+import BIDMat.{CMat, CSMat, DMat, Dict, FMat, FND, GMat, GDMat, GIMat, GLMat, GSMat, GSDMat, HMat, IDict, Image, IMat, LMat, Mat, SMat, SBMat, SDMat}
+import BIDMat.MatFunctions._
+import BIDMat.SciFunctions._
+import BIDMat.Solvers._
+import BIDMat.Plotting._
+import BIDMach.Learner
+import BIDMach.models.{DNN, FM, GLM, KMeans, KMeansw, LDA, LDAgibbs, Model, NMF, SFA, RandomForest}
+import BIDMach.datasources.{DataSource, MatDS, FilesDS, SFilesDS}
+import BIDMach.mixins.{CosineSim, Perplexity, Top, L1Regularizer, L2Regularizer}
+import BIDMach.updaters.{ADAGrad, Batch, BatchNorm, IncMult, IncNorm, Telescoping}
+import BIDMach.causal.IPTW
+1 CUDA device found, CUDA version 6.5
+{% endhighlight %}
 
 Data should be available in **/opt/BIDMach/data/**. Let's load the data, partition it between train and test, train the model, predict on the test set and compute the accuracy :
 
-    val a = loadSMat("/opt/BIDMach/data/rcv1/docs.smat.lz4")
-    val c = loadFMat("/opt/BIDMach/data/rcv1/cats.fmat.lz4")
-    val inds = randperm(a.ncols)
-    val atest = a(?, inds(0->100000))
-    val atrain = a(?, inds(100000->a.ncols))
-    val ctest = c(?, inds(0->100000))
-    val ctrain = c(?, inds(100000->a.ncols))
-    val cx = zeros(ctest.nrows, ctest.ncols)
-    val (mm, mopts, nn, nopts) = GLM.learner(atrain, ctrain, atest, cx, 1)
-    mm.train
-    nn.predict
-    val p = ctest *@ cx + (1 - ctest) *@ (1 - cx)
-    mean(p, 2)
+{% highlight scala %}
+val a = loadSMat("/opt/BIDMach/data/rcv1/docs.smat.lz4")
+val c = loadFMat("/opt/BIDMach/data/rcv1/cats.fmat.lz4")
+val inds = randperm(a.ncols)
+val atest = a(?, inds(0->100000))
+val atrain = a(?, inds(100000->a.ncols))
+val ctest = c(?, inds(0->100000))
+val ctrain = c(?, inds(100000->a.ncols))
+val cx = zeros(ctest.nrows, ctest.ncols)
+val (mm, mopts, nn, nopts) = GLM.learner(atrain, ctrain, atest, cx, 1)
+mm.train
+nn.predict
+val p = ctest *@ cx + (1 - ctest) *@ (1 - cx)
+mean(p, 2)
+{% endhighlight %}
 
 During training, you get
 

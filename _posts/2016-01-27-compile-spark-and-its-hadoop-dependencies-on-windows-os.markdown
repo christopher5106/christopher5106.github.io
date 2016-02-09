@@ -17,16 +17,20 @@ Here I recompile Spark on Windows since it avoids problems one could encounter w
 
 Check everything works well :
 
-    where java
-    >C:\Java\bin\java.exe
-    >C:\Windows\System32\java.exe
+{% highlight bash %}
+where java
+>C:\Java\bin\java.exe
+>C:\Windows\System32\java.exe
+{% endhighlight %}
 
 our install arrives first
 
-    java -version
-    >java version "1.7.0_79"
-    >Java(TM) SE Runtime Environment (build 1.7.0_79-b15)
-    >Java Hotspot(TM) 64-Bit Server VM (build 24.79-b02, mixed mode)
+{% highlight bash %}
+java -version
+>java version "1.7.0_79"
+>Java(TM) SE Runtime Environment (build 1.7.0_79-b15)
+>Java Hotspot(TM) 64-Bit Server VM (build 24.79-b02, mixed mode)
+{% endhighlight %}
 
 Java should be 64bit to increase memory above 2G. Try javac
 

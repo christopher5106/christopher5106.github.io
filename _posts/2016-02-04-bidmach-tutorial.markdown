@@ -234,25 +234,35 @@ d(CSMat(1,2,Array("A","B)))
 
 Save the matrix `fmat` as a text file :
 
-    saveFMat("t2.txt",fmat,1)
+{% highlight scala %}
+saveFMat("t2.txt",fmat,1)
+{% endhighlight %}
 
 With gz compression :
 
-    saveFMat("t.gz",fmat)
+{% highlight scala %}
+saveFMat("t.gz",fmat)
+{% endhighlight %}
 
 With lz4 compression :
 
-    saveFMat("t.lz4",fmat)
+{% highlight scala %}
+saveFMat("t.lz4",fmat)
+{% endhighlight %}
 
 To load the file :
 
-    loadFMat("t.lz4")
+{% highlight scala %}
+loadFMat("t.lz4")
+{% endhighlight %}
 
 Have a look at load (and saveAs), loadLibSVM, loadIDX for HDF5, LibSVM and IDX format.
 
 For efficient I/O, convert the string matrices to sparce matrices of bytes with :
 
-    SBMat(smat)
+{% highlight scala %}
+SBMat(smat)
+{% endhighlight %}
 
 # Others
 
@@ -268,14 +278,15 @@ BIDMach offers also
 
 - plot possibilities :
 
-        plot( 1\2\3\4\5,3.2\2.1\1.3\4.2\(-1.2))
-
+{% highlight scala %}
+plot( 1\2\3\4\5,3.2\2.1\1.3\4.2\(-1.2))
+{% endhighlight %}
 
 ![]({{ site.url }}/img/bidmach_plot.png)
 
-
-    show(Image(IMat(2,2,Array(255,0,0,255)   ) kron ones(100,100) ))
-
+{% highlight scala %}
+show(Image(IMat(2,2,Array(255,0,0,255)   ) kron ones(100,100) ))
+{% endhighlight %}
 
 ![]({{ site.url }}/img/bidmach_image_show.png)
 
@@ -375,12 +386,15 @@ mm.train
 
 Instead of running `bidmach` command to launch a bidmach shell, let's run the same commands inside Spark in local mode, adding the BIDMat and BIDMach libraries to the classpath :
 
-    ./bin/spark-shell --jars ../BIDMat/BIDMat.jar,../BIDMach/BIDMach.jar
+{% highlight bash %}
+./bin/spark-shell --jars ../BIDMat/BIDMat.jar,../BIDMach/BIDMach.jar
+{% endhighlight %}
 
  and import the required libraries :
 
-    import BIDMach.models.RandomForest
-
+{% highlight scala %}
+import BIDMach.models.RandomForest
+{% endhighlight %}
 
 # Prepare the data and launch an hyperparameter tuning with Spark
 

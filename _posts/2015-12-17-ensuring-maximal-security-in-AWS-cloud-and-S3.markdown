@@ -107,88 +107,94 @@ In IAM > encryption keys panel, create an encryption key and allow a user to use
 
 To ensure everything in the bucket is encrypted :
 
-    {
-    "Version":"2012-10-17",
-    "Id":"PutObjPolicy",
-    "Statement":[{
-         "Sid":"DenyUnEncryptedObjectUploads",
-         "Effect":"Deny",
-         "Principal":"*",
-         "Action":"s3:PutObject",
-         "Resource":"arn:aws:s3:::MYSECUREBUCKET/*",
-         "Condition":{
-            "StringNotEquals":{
-               "s3:x-amz-server-side-encryption":"aws:kms"
-            }
-         }
-      }
-    ]
-    }
+{% highlight json %}
+{
+"Version":"2012-10-17",
+"Id":"PutObjPolicy",
+"Statement":[{
+     "Sid":"DenyUnEncryptedObjectUploads",
+     "Effect":"Deny",
+     "Principal":"*",
+     "Action":"s3:PutObject",
+     "Resource":"arn:aws:s3:::MYSECUREBUCKET/*",
+     "Condition":{
+        "StringNotEquals":{
+           "s3:x-amz-server-side-encryption":"aws:kms"
+        }
+     }
+  }
+]
+}
+{% endhighlight %}
 
 We can regret that policy grammar does not allow a `s3:x-amz-server-side-encryption-aws-kms-key-id` condition key which would be very nice [feature request](https://forums.aws.amazon.com/thread.jspa?messageID=609709).
 
 
 To give access to a computer or application, simply attach a policy to a group/role white list,
 
-    {
-        "Version": "2012-10-17",
-        "Statement": [
-            {
-                "Sid": "Stmt",
-                "Effect": "Allow",
-                "Action": [
-                    "s3:*"
-                ],
-                "Resource": [
-                    "arn:aws:s3:::MYBUCKET",
-                    "arn:aws:s3:::MYBUCKET/*",
-                    "arn:aws:s3:::MYBUCKET-encrypted",
-                    "arn:aws:s3:::MYBUCKET-encrypted/*"
-                ]
-            }
-        ]
-    }
+{% highlight json %}
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "Stmt",
+            "Effect": "Allow",
+            "Action": [
+                "s3:*"
+            ],
+            "Resource": [
+                "arn:aws:s3:::MYBUCKET",
+                "arn:aws:s3:::MYBUCKET/*",
+                "arn:aws:s3:::MYBUCKET-encrypted",
+                "arn:aws:s3:::MYBUCKET-encrypted/*"
+            ]
+        }
+    ]
+}
+{% endhighlight %}
 
 It is so easy to add an access to your bucket ! To avoid a misconfiguration, you can add a third security with a DENY statement to the bucket policy:
 
-    {
-    	"Version": "2012-10-17",
-    	"Id": "PutObjPolicy",
-    	"Statement": [
-    		{
-    			"Sid": "DenyUnEncryptedObjectUploads",
-    			"Effect": "Deny",
-    			"NotPrincipal": {
-    				"AWS": [
-              "arn:aws:iam::ACCOUNT_ID:root",
-              "arn:aws:iam::ACCOUNT_ID:user/USER_NAME"
-            ]
-    			},
-    			"Action": "s3:*",
-    			"Resource": [
-            "arn:aws:s3:::MYSECUREBUCKET-encrypted",
-            "arn:aws:s3:::MYSECUREBUCKET-encrypted/*"
-            ]
-    		},
-    		{
-    			"Sid": "DenyUnEncryptedObjectUploads",
-    			"Effect": "Deny",
-    			"Principal": {
-    				"AWS": [
-              "arn:aws:iam::ACCOUNT_ID:root",
-              "arn:aws:iam::ACCOUNT_ID:user/USER_NAME"
-            ]
-    			},
-    			"Action": "s3:PutObject",
-    			"Resource": "arn:aws:s3:::MYSECUREBUCKET-encrypted/*",
-    			"Condition": {
-    				"StringNotEquals": {
-    					"s3:x-amz-server-side-encryption": "aws:kms"
-    				}
-    			}
-    		}
-    	]
-    }
+{% highlight json %}
+{
+	"Version": "2012-10-17",
+	"Id": "PutObjPolicy",
+	"Statement": [
+		{
+			"Sid": "DenyUnEncryptedObjectUploads",
+			"Effect": "Deny",
+			"NotPrincipal": {
+				"AWS": [
+          "arn:aws:iam::ACCOUNT_ID:root",
+          "arn:aws:iam::ACCOUNT_ID:user/USER_NAME"
+        ]
+			},
+			"Action": "s3:*",
+			"Resource": [
+        "arn:aws:s3:::MYSECUREBUCKET-encrypted",
+        "arn:aws:s3:::MYSECUREBUCKET-encrypted/*"
+        ]
+		},
+		{
+			"Sid": "DenyUnEncryptedObjectUploads",
+			"Effect": "Deny",
+			"Principal": {
+				"AWS": [
+          "arn:aws:iam::ACCOUNT_ID:root",
+          "arn:aws:iam::ACCOUNT_ID:user/USER_NAME"
+        ]
+			},
+			"Action": "s3:PutObject",
+			"Resource": "arn:aws:s3:::MYSECUREBUCKET-encrypted/*",
+			"Condition": {
+				"StringNotEquals": {
+					"s3:x-amz-server-side-encryption": "aws:kms"
+				}
+			}
+		}
+	]
+}
+{% endhighlight %}
 
 The order in which the policies are evaluated has no effect on the outcome of the evaluation. DENY have priority on ALLOW statements. We have with this bucket policy a third white list, **bucket white list**.
 

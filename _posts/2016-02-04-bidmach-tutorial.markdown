@@ -400,24 +400,26 @@ Launch the Spark Shell and be sure to have only 1 core per GPU on each executor 
 
 Prepare your data with a first Spark job : Spark `saveAsTextFile` method is ideal to prepare data files for the BIDMach file data sources.
 
-    sc.hadoopConfiguration.set("fs.s3n.awsAccessKeyId", "XXX")
-    sc.hadoopConfiguration.set("fs.s3n.awsSecretAccessKey","YYY")
-    val file = sc.textFile("s3n://BUCKET/FILE.csv")
+{% highlight scala %}
+sc.hadoopConfiguration.set("fs.s3n.awsAccessKeyId", "XXX")
+sc.hadoopConfiguration.set("fs.s3n.awsSecretAccessKey","YYY")
+val file = sc.textFile("s3n://BUCKET/FILE.csv")
 
-    # remove header line
-    val header_line = file.first()
-    val tail_file = file.filter( _ != header_line)
+// remove header line
+val header_line = file.first()
+val tail_file = file.filter( _ != header_line)
 
-    data = tail_file.map( line => {
-      # proceed data to create a column of features
-    })
-    label = tail_file.map( line => {
-      # proceed data to create a column 1-hot encoding of the label
-    })
+data = tail_file.map( line => {
+  // proceed data to create a column of features
+})
+label = tail_file.map( line => {
+  // proceed data to create a column 1-hot encoding of the label
+})
 
-    import org.apache.hadoop.io.compress.GzipCodec
-    data.saveAsTextFile("s3n://BUCKET/data", classOf[GzipCodec])
-    label.saveAsTextFile("s3n://BUCKET/label", classOf[GzipCodec])
+import org.apache.hadoop.io.compress.GzipCodec
+data.saveAsTextFile("s3n://BUCKET/data", classOf[GzipCodec])
+label.saveAsTextFile("s3n://BUCKET/label", classOf[GzipCodec])
+{% endhighlight %}
 
 will create a list of compressed files named in the format **data/part-%05d.gz** and **label/part-%05d.gz**.
 

@@ -102,7 +102,7 @@ Element-wise matrix operations :
 a + b // element-wise addition
 a - b // element-wise subtraction
 b ∘ a // (a *@ b) multiplication
-b / a // element wise-division
+b / a /* element wise-division */
 {% endhighlight %}
 
 Matrix operation
@@ -111,20 +111,20 @@ Matrix operation
 a.t // transpose
 a * b // matrix multiplication
 a ^* b  // transpose first matrix before multiplication
-a *^ b  // transpose second matrix before multiplication
+a *^ b  /* transpose second matrix before multiplication */
 {% endhighlight %}
 
 Dot products
 
 {% highlight scala %}
 a ∙ b // (a dot b) Column-wise dot product
-a ∙→ b // (a dotr b) Row-wise dot product
+a ∙→ b /* (a dotr b) Row-wise dot product */
 {% endhighlight %}
 
 Cartesian product
 
 {% highlight scala %}
-a ⊗ b // (a kron b) Kronecker product
+a ⊗ b /* (a kron b) Kronecker product */
 {% endhighlight %}
 
 Statistics per column :
@@ -136,7 +136,7 @@ variance(fmat)
 maxi(fmat)
 maxi2(fmat) // returns max and argmax
 mini(fmat)
-mini2(fmat) // returns min and argmin
+mini2(fmat) /* returns min and argmin */
 {% endhighlight %}
 
 Other operations per column :
@@ -187,7 +187,7 @@ Convert to sparse format :
 val sfmat = SMat(fmat)
 val sfmat = sparse(fmat)
 SDmat(fmat) // sparse double
-GSMat(fmat) // sparse GPU
+GSMat(fmat) /* sparse GPU */
 {% endhighlight %}
 
 To convert it back to a dense matrix :
@@ -386,11 +386,13 @@ Instead of running `bidmach` command to launch a bidmach shell, let's run the sa
 
 Let's launch a cluster with 1 master and 2 g2.2xlarge instances with our [NVIDIA+CUDA+BIDMACH AMI for Spark](http://christopher5106.github.io/big/data/2016/01/27/two-AMI-to-create-the-fastest-cluster-with-gpu-at-the-minimal-engineering-cost-with-EC2-NVIDIA-Spark-and-BIDMach.html):
 
-    ./ec2/spark-ec2 -k sparkclusterkey -i ~/sparkclusterkey.pem --region=eu-west-1 \
-    --copy-aws-credentials --instance-type=g2.2xlarge -s 2 \
-    --hadoop-major-version=2  \
-    --spark-ec2-git-repo=https://github.com/christopher5106/spark-ec2 \
-    launch spark-cluster
+{% highlight bash %}
+./ec2/spark-ec2 -k sparkclusterkey -i ~/sparkclusterkey.pem --region=eu-west-1 \
+--copy-aws-credentials --instance-type=g2.2xlarge -s 2 \
+--hadoop-major-version=2  \
+--spark-ec2-git-repo=https://github.com/christopher5106/spark-ec2 \
+launch spark-cluster
+{% endhighlight %}
 
 
 And log in

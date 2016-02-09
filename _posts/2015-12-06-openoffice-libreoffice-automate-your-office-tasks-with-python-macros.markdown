@@ -267,6 +267,9 @@ For distribution of code, [OXT format](http://wiki.openoffice.org/wiki/Documenta
 [Other examples](http://api.libreoffice.org/examples/examples.html#python_examples)
 
 
+<a name="include_macro" />
+
+
 # Pack your script inside the document : the OpenDocument format
 
 OpenDocument files are zipped directories.

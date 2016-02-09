@@ -122,7 +122,9 @@ mm.train
 
 To clear the cache :
 
-    resetGPU; Mat.clearCaches
+{% highlight scala %}
+resetGPU; Mat.clearCaches
+{% endhighlight %}
 
 # EC2 launch
 
@@ -156,25 +158,36 @@ First, add an EC2 permission policy to your user :
 in order to create a EC2 security group `bidmach` and a keypair `us-west2-keypair` and start the instance, all in zone us-west-2 where the AMI lives :
 
 {% highlight bash %}
-aws ec2 create-security-group --group-name bidmach --description bidmach --region us-west-2
+aws ec2 create-security-group --group-name bidmach --description bidmach \
+--region us-west-2
+
 aws ec2 create-key-pair --key-name us-west2-keypair --region us-west-2
 # Save the keypair to us-west2-keypair.pem and change its mode
 sudo chmod 600 us-west2-keypair.pem
-aws ec2 run-instances --image-id ami-71280941 --key-name us-west2-keypair --security-groups bidmach --instance-type g2.2xlarge --placement AvailabilityZone=us-west-2b --region us-west-2
+
+aws ec2 run-instances --image-id ami-71280941 --key-name us-west2-keypair \
+--security-groups bidmach --instance-type g2.2xlarge \
+--placement AvailabilityZone=us-west-2b --region us-west-2
 {% endhighlight %}
 
 Get your instance public DNS with
 
-    aws ec2 describe-instances --region us-west-2
+{% highlight bash %}
+aws ec2 describe-instances --region us-west-2
+{% endhighlight %}
 
 Connect to the instance  :
 
-    ssh -i us-west2-keypair.pem ec2-user@ec2-XXX_DNS.us-west-2.compute.amazonaws.com
+{% highlight bash %}
+ssh -i us-west2-keypair.pem ec2-user@ec2-XXX_DNS.us-west-2.compute.amazonaws.com
+{% endhighlight %}
 
 Let's download the data :
 
-    /opt/BIDMach/scripts/getdata.sh
-    /opt/BIDMach/bidmach
+{% highlight bash %}
+/opt/BIDMach/scripts/getdata.sh
+/opt/BIDMach/bidmach
+{% endhighlight %}
 
 Start BIDMach with `bidmach` command and you get :
 

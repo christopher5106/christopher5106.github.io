@@ -387,7 +387,8 @@ Instead of running `bidmach` command to launch a bidmach shell, let's run the sa
 Let's launch a cluster with 1 master and 2 g2.2xlarge instances with our [NVIDIA+CUDA+BIDMACH AMI for Spark](http://christopher5106.github.io/big/data/2016/01/27/two-AMI-to-create-the-fastest-cluster-with-gpu-at-the-minimal-engineering-cost-with-EC2-NVIDIA-Spark-and-BIDMach.html):
 
 {% highlight bash %}
-./ec2/spark-ec2 -k sparkclusterkey -i ~/sparkclusterkey.pem --region=eu-west-1 \
+./ec2/spark-ec2 -k sparkclusterkey -i ~/sparkclusterkey.pem \
+--region=eu-west-1 \
 --copy-aws-credentials --instance-type=g2.2xlarge -s 2 \
 --hadoop-major-version=2  \
 --spark-ec2-git-repo=https://github.com/christopher5106/spark-ec2 \
@@ -397,14 +398,18 @@ launch spark-cluster
 
 And log in
 
-    ./ec2/spark-ec2 -k sparkclusterkey -i ~/sparkclusterkey.pem --region=eu-west-1 \
-    login spark-cluster
-
+{% highlight bash %}
+./ec2/spark-ec2 -k sparkclusterkey -i ~/sparkclusterkey.pem \
+--region=eu-west-1 \
+login spark-cluster
+{% endhighlight %}
 
 Launch the Spark Shell and be sure to have only 1 core per GPU on each executor :
 
-    ./spark/bin/spark-shell --conf spark.executor.cores=1 --jars \
-     /home/ec2-user/BIDMat/BIDMat.jar,/home/ec2-user/BIDMach/BIDMach.jar
+{% highlight bash %}
+./spark/bin/spark-shell --conf spark.executor.cores=1 --jars \
+ /home/ec2-user/BIDMat/BIDMat.jar,/home/ec2-user/BIDMach/BIDMach.jar
+{% endhighlight %}
 
 Prepare your data with a first Spark job : Spark `saveAsTextFile` method is ideal to prepare data files for the BIDMach file data sources.
 

@@ -319,7 +319,9 @@ Lastly, you can also, during a drag-and-drop of an image from another browser wi
 
 If the picture is taken from a mobile camera, then we need to correct the orientation of the data to get it the right way. This can be done with the exif library
 
-    bower install exif
+{% highlight bash %}
+bower install exif
+{% endhighlight %}
 
 and the following code snippet :
 
@@ -327,7 +329,7 @@ and the following code snippet :
 canvas.width = width;
 canvas.height = height;
 var ctx = canvas.getContext("2d");
-if(metaData.Orientation) {
+if(metaData && metaData.Orientation) {
   switch(metaData.Orientation){
     case 2:
         // horizontal flip

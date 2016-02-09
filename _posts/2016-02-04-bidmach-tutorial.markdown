@@ -147,6 +147,7 @@ sort(fmat) // sorted values
 sortdown(fmat) // sorted values
 sort2(fmat) // sorted values and indices
 sortdown2(fmat) // sorted values and indices
+
 {% endhighlight %}
 
 The same statistics and operations per rows by adding a 2 param :
@@ -218,10 +219,10 @@ There is also a great tool, the dictionaries, where counts is an optional argume
 
 {% highlight scala %}
 val d = Dict(CSMat(1,2,Array("A","B")),IMat(1,2, Array(5,4)))
-d(0) # value for index 0 : A
-d("A") # index of A : 0
-d.count("A") # counts : 5
-d.count(0) # same
+d(0) // value for index 0 : A
+d("A") // index of A : 0
+d.count("A") // counts : 5
+d.count(0) // same
 d.cstr // dictionary
 d.counts // counts
 d(IMat(1,2,Array(0,1))) // bulk retrieval

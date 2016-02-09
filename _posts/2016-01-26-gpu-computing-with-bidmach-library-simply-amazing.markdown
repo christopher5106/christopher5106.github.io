@@ -69,25 +69,27 @@ sbt package
 
 In *bidmach* file, change the CUDA version to the current one `JCUDA_VERSION="0.7.5"` and start `./bidmach` command which gives :
 
-    Loading /Users/christopher5106/technologies/BIDMach/lib/bidmach_init.scala...
-    import BIDMat.{CMat, CSMat, DMat, Dict, FMat, FND, GMat, GDMat, GIMat, GLMat, GSMat, GSDMat, GND, HMat, IDict, Image, IMat, LMat, Mat, SMat, SBMat, SDMat}
-    import BIDMat.MatFunctions._
-    import BIDMat.SciFunctions._
-    import BIDMat.Solvers._
-    import BIDMat.Plotting._
-    import BIDMach.Learner
-    import BIDMach.models.{Click, FM, GLM, KMeans, KMeansw, LDA, LDAgibbs, Model, NMF, SFA, RandomForest, SVD}
-    import BIDMach.networks.DNN
-    import BIDMach.datasources.{DataSource, MatSource, FileSource, SFileSource}
-    import BIDMach.datasinks.{DataSink, MatSink}
-    import BIDMach.mixins.{CosineSim, Perplexity, Top, L1Regularizer, L2Regularizer}
-    import BIDMach.updaters.{ADAGrad, Batch, BatchNorm, IncMult, IncNorm, Telescoping}
-    import BIDMach.causal.IPTW
-    1 CUDA device found, CUDA version 7.5
+{% highlight scala %}
+Loading /Users/christopher5106/technologies/BIDMach/lib/bidmach_init.scala...
+import BIDMat.{CMat, CSMat, DMat, Dict, FMat, FND, GMat, GDMat, GIMat, GLMat, GSMat, GSDMat, GND, HMat, IDict, Image, IMat, LMat, Mat, SMat, SBMat, SDMat}
+import BIDMat.MatFunctions._
+import BIDMat.SciFunctions._
+import BIDMat.Solvers._
+import BIDMat.Plotting._
+import BIDMach.Learner
+import BIDMach.models.{Click, FM, GLM, KMeans, KMeansw, LDA, LDAgibbs, Model, NMF, SFA, RandomForest, SVD}
+import BIDMach.networks.DNN
+import BIDMach.datasources.{DataSource, MatSource, FileSource, SFileSource}
+import BIDMach.datasinks.{DataSink, MatSink}
+import BIDMach.mixins.{CosineSim, Perplexity, Top, L1Regularizer, L2Regularizer}
+import BIDMach.updaters.{ADAGrad, Batch, BatchNorm, IncMult, IncNorm, Telescoping}
+import BIDMach.causal.IPTW
+1 CUDA device found, CUDA version 7.5
 
-    Welcome to Scala version 2.11.2 (Java HotSpot(TM) 64-Bit Server VM, Java 1.8.0_51).
-    Type in expressions to have them evaluated.
-    Type :help for more information.
+Welcome to Scala version 2.11.2 (Java HotSpot(TM) 64-Bit Server VM, Java 1.8.0_51).
+Type in expressions to have them evaluated.
+Type :help for more information.
+{% endhighlight %}
 
 
 Everything works well, my GPU is found correctly.
@@ -112,9 +114,11 @@ returns
 
 Let's continue on the [Quickstart tutorial](https://github.com/BIDData/BIDMach/wiki/Quickstart) :
 
-    val c = loadFMat("data/rcv1/cats.fmat.lz4")
-    val (mm, mopts) = GLM.learner(a, c, 1)
-    mm.train
+{% highlight scala %}
+val c = loadFMat("data/rcv1/cats.fmat.lz4")
+val (mm, mopts) = GLM.learner(a, c, 1)
+mm.train
+{% endhighlight %}
 
 To clear the cache :
 

@@ -19,10 +19,12 @@ First, we'll see basic matrices, then more complicated types, then how to prepar
 
 Let's create our first matrix of integers of size 2x2, then a matrix of floats of size 3x2, a matrix of double values of size 2x2 and a matrix of strings :
 
-    val imat = IMat(2,2, Array(1,2,3,4))
-    val fmat = FMat(2,3, Array(1,2,3,4,5,6))
-    val dmat = DMat(2,2)
-    val smat = CSMat(1,3, Array("you","and","me"))
+{% highlight scala %}
+val imat = IMat(2,2, Array(1,2,3,4))
+val fmat = FMat(2,3, Array(1,2,3,4,5,6))
+val dmat = DMat(2,2)
+val smat = CSMat(1,3, Array("you","and","me"))
+{% endhighlight %}
 
 Access the number of columns, rows :
 
@@ -85,10 +87,12 @@ Element-wise matrix operations :
 
 Matrix operation
 
-    a.t transpose
-    a * b matrix multiplication
-    a ^* b  transpose first matrix before multiplication
-    a *^ b  transpose second matrix before multiplication
+{% highlight scala %}
+a.t transpose
+a * b matrix multiplication
+a ^* b  transpose first matrix before multiplication
+a *^ b  transpose second matrix before multiplication
+{% endhighlight %}
 
 Dot products
 
@@ -101,21 +105,25 @@ Cartesian product
 
 Statistics per column :
 
-    sum(fmat)
-    mean(fmat)
-    variance(fmat)
-    maxi(fmat)
-    maxi2(fmat) # returns max and argmax
-    mini(fmat)
-    mini2(fmat) # returns min and argmin
+{% highlight scala %}
+sum(fmat)
+mean(fmat)
+variance(fmat)
+maxi(fmat)
+maxi2(fmat) # returns max and argmax
+mini(fmat)
+mini2(fmat) # returns min and argmin
+{% endhighlight %}
 
 Other operations per column :
 
-    cumsum(fmat)
-    sort(fmat) #sorted values
-    sortdown(fmat) #sorted values
-    sort2(fmat) #sorted values and indices
-    sortdown2(fmat) #sorted values and indices
+{% highlight scala %}
+cumsum(fmat)
+sort(fmat) //sorted values
+sortdown(fmat) #sorted values
+sort2(fmat) #sorted values and indices
+sortdown2(fmat) #sorted values and indices
+{% endhighlight %}
 
 The same statistics and operations per rows by adding a 2 param :
 
@@ -143,10 +151,12 @@ Create a generic type matrix :
 
 Convert to sparse format :
 
-    val sfmat = SMat(fmat)
-    val sfmat = sparse(fmat)
-    SDmat(fmat) # sparse double
-    GSMat(fmat) # sparse GPU
+{% highlight scala %}
+val sfmat = SMat(fmat)
+val sfmat = sparse(fmat)
+SDmat(fmat) # sparse double
+GSMat(fmat) # sparse GPU
+{% endhighlight %}
 
 To convert it back to a dense matrix :
 
@@ -166,15 +176,17 @@ Enable matrix caching :
 
 There is also a great tool, the dictionaries, where counts is an optional argument :
 
-    val d = Dict(CSMat(1,2,Array("A","B")),IMat(1,2, Array(5,4)))
-    d(0) # value for index 0 : A
-    d("A") # index of A : 0
-    d.count("A") # counts : 5
-    d.count(0) # same
-    d.cstr #dictionary
-    d.counts # counts
-    d(IMat(1,2,Array(0,1))) # bulk retrieval
-    d(CSMat(1,2,Array("A","B)))
+{% highlight scala %}
+val d = Dict(CSMat(1,2,Array("A","B")),IMat(1,2, Array(5,4)))
+d(0) # value for index 0 : A
+d("A") # index of A : 0
+d.count("A") # counts : 5
+d.count(0) # same
+d.cstr #dictionary
+d.counts # counts
+d(IMat(1,2,Array(0,1))) # bulk retrieval
+d(CSMat(1,2,Array("A","B)))
+{% endhighlight %}
 
 
 # File I/O
@@ -231,15 +243,17 @@ BIDMach offers also
 
 A data source is an iterator, let's create 5 data with their respective label (0), and pull the data iteratively 2 by 2 :
 
-    val dataimat = irow(1 to 5)
-    val labelimat = izeros(1,5)
+{% highlight scala %}
+val dataimat = irow(1 to 5)
+val labelimat = izeros(1,5)
 
-    val dopts = new MatSource.Options
-    dopts.batchSize = 2
-    val m = new MatSource(Array(dataimat, labelimat),dopts)
-    m.init
-    m.hasNext
-    val value = m.next
+val dopts = new MatSource.Options
+dopts.batchSize = 2
+val m = new MatSource(Array(dataimat, labelimat),dopts)
+m.init
+m.hasNext
+val value = m.next
+{% endhighlight %}
 
 The output `m.next` is an array of 2 IMat, the first one is the data, the second the label. `dopts.what` will give you all options.
 
@@ -247,37 +261,124 @@ Option `dopts.sample` enables to sample of fraction of the data, and `opts.addCo
 
 Data sources can also be used as a sink, to put back some data, such as the prediction value
 
-    dopts.putBack = 1  
-    val predimat = izeros(1,5)
-    val m = new MatSource(Array(dataimat, predimat),dopts)
-    m.init
-    val value = m.next
-    value(1)(1)=1
-    m.next
-    m.mats
+{% highlight scala %}
+dopts.putBack = 1  
+val predimat = izeros(1,5)
+val m = new MatSource(Array(dataimat, predimat),dopts)
+m.init
+val value = m.next
+value(1)(1)=1
+m.next
+m.mats
+{% endhighlight %}
 
-Let's now go further with file data sources : let's create
+Let's now go further with file data sources.
 
-    val fopts = new FileSource.Options
+For the purpose, let's create 50 files of data, 50 files of labels, with random values each for the demonstration :
 
-    0 to 50 map( i => {
-       saveMat("data%02d.dmat.lz4" format i ,drand(2,100));
-       saveMat("label%02d.imat.lz4" format i, IMat(drand(1,100) > 0.5))
+{% highlight scala %}
+0 to 50 map( i => {
+   saveMat("data%02d.dmat.lz4" format i ,drand(2,100));
+   saveMat("label%02d.imat.lz4" format i, IMat(drand(1,100) > 0.5))
+})
+{% endhighlight %}
+
+
+Check matrices are correctly saved with : `loadMat("data26.fmat.lz4")`. Now there are correctly saved, let's create a file data source :
+
+{% highlight scala %}
+val fopts = new FileSource.Options
+fopts.fnames = List( {i:Int => {"data%02d.dmat.lz4" format i}}, {i:Int => {"label%02d.imat.lz4" format i}} )
+fopts.nstart = 0
+fopts.nend = 5001
+fopts.batchSize = 100
+
+val fs = FileSource(fopts)
+
+fs.init
+fs.hasNext
+val value = fs.next
+{% endhighlight %}
+
+
+`fopts.order=1` randomize the order of the columns.
+
+`fopts.what` give all set options.
+
+Lastly, have a look at SFileSource for sparse file data source.
+
+
+# Run a Random Forest regressor
+
+
+On the files created previously, let's launch the random forest regressor :
+
+{% highlight scala %}
+val (mm,opts) = RandomForest.learner("data%02d.dmat.lz4","label%02d.imat.lz4")
+
+opts.batchSize = 100
+opts.nend = 5001
+
+opts.depth =  24
+opts.ntrees = 100
+opts.impurity = 0
+opts.nsamps = 12
+opts.nnodes = 50000
+opts.nbits = 16
+opts.gain = 0.001f
+
+mm.train
+{% endhighlight %}
+
+
+# Run BIDMach on Spark local mode
+
+Instead of running `bidmach` command to launch a bidmach shell, let's run the same commands inside Spark in local mode, adding the BIDMat and BIDMach libraries to the classpath :
+
+    ./bin/spark-shell --jars ../BIDMat/BIDMat.jar,../BIDMach/BIDMach.jar
+
+ and import the required libraries :
+
+    import BIDMach.models.RandomForest
+
+
+# Prepare the data and launch an hyperparameter tuning with Spark
+
+Let's launch a cluster with 1 master and 2 g2.2xlarge instances with our [NVIDIA+CUDA+BIDMACH AMI for Spark](http://christopher5106.github.io/big/data/2016/01/27/two-AMI-to-create-the-fastest-cluster-with-gpu-at-the-minimal-engineering-cost-with-EC2-NVIDIA-Spark-and-BIDMach.html):
+
+    ./ec2/spark-ec2 -k sparkclusterkey -i ~/sparkclusterkey.pem --region=eu-west-1 --copy-aws-credentials --instance-type=g2.2xlarge -s 2 --hadoop-major-version=2 --spark-ec2-git-repo=https://github.com/christopher5106/spark-ec2 launch spark-cluster
+
+
+And log in
+
+    ./ec2/spark-ec2 -k sparkclusterkey -i ~/sparkclusterkey.pem --region=eu-west-1 login spark-cluster
+
+
+Launch the Spark Shell and be sure to have only 1 core per GPU on each executor :
+
+    ./spark/bin/spark-shell --conf spark.executor.cores=1 --jars /home/ec2-user/BIDMat/BIDMat.jar,/home/ec2-user/BIDMach/BIDMach.jar
+
+Prepare your data with a first Spark job : Spark `saveAsTextFile` method is ideal to prepare data files for the BIDMach file data sources.
+
+    sc.hadoopConfiguration.set("fs.s3n.awsAccessKeyId", "XXX")
+    sc.hadoopConfiguration.set("fs.s3n.awsSecretAccessKey","YYY")
+    val file = sc.textFile("s3n://BUCKET/FILE.csv")
+
+    # remove header line
+    val header_line = file.first()
+    val tail_file = file.filter( _ != header_line)
+
+    data = tail_file.map( line => {
+      # proceed data to create a column of features
+    })
+    label = tail_file.map( line => {
+      # proceed data to create a column 1-hot encoding of the label
     })
 
-    fopts.fnames = List( {i:Int => {"data%02d.dmat.lz4" format i}}, {i:Int => {"label%02d.imat.lz4" format i}} )
-    fopts.nstart = 0
-    fopts.nend = 5001
-    fopts.batchSize = 100
+    import org.apache.hadoop.io.compress.GzipCodec
+    data.saveAsTextFile("s3n://BUCKET/data", classOf[GzipCodec])
+    label.saveAsTextFile("s3n://BUCKET/label", classOf[GzipCodec])
 
-    val fs = FileSource(fopts)
+will create a list of compressed files named in the format **data/part-%05d.gz** and **label/part-%05d.gz**.
 
-    fs.init
-    fs.hasNext
-    val value = fs.next
-
-Let's check matrices are correctly saved with : `loadMat("data26.fmat.lz4")`
-
-With `fopts.order`, you can randomize the order. `fopts.what` will give you all options.
-
-Lastly, you'll have a look at SFileSource for sparse file data source.
+Let's launch a hyperparameter tuning job using grid search.

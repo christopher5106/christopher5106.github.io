@@ -136,7 +136,7 @@ variance(fmat)
 maxi(fmat)
 maxi2(fmat) // returns max and argmax
 mini(fmat)
-mini2(fmat) // returns min and argmin
+mini2(fmat) //returns min and argmin
 {% endhighlight %}
 
 Other operations per column :

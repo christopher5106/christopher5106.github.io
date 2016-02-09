@@ -431,6 +431,40 @@ You have the choice to save the preference
 - or in the LibreOffice install on your local computer, in this case the macro will be executed for every opened document.
 
 
+# Add a listener when the cell content changes
+
+{% highlight python %}
+import uno, unohelper
+from com.sun.star.util import XModifyListener
+
+doc = XSCRIPTCONTEXT.getDocument()
+
+#get your sheet and cell
+cell = ..
+
+class myChange(XModifyListener,unohelper.Base):
+  def __init__(self,):
+    self.doc = None
+  def setDocument(self, doc):
+    self.doc = doc
+  def modified(self,oEvent):
+    yourFunction()
+  def disposing(self,oEvent):
+    pass
+
+def AddMyListener:
+  m = myChange()
+  m.setDocument(doc)
+  cell.addModifyListener(m)
+
+g_ImplementationHelper = unohelper.ImplementationHelper()
+g_ImplementationHelper.addImplementation(
+   myChange,
+   'com.sun.star.util.XModifyListener',()
+)
+g_exportedScripts = AddMyListener,
+{% endhighlight %}
+
 # Spreadsheet methods
 
 **Get a sheet**

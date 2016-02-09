@@ -19,17 +19,17 @@ Check everything works well :
 
 {% highlight bash %}
 where java
->C:\Java\bin\java.exe
->C:\Windows\System32\java.exe
+#C:\Java\bin\java.exe
+#C:\Windows\System32\java.exe
 {% endhighlight %}
 
 our install arrives first
 
 {% highlight bash %}
 java -version
->java version "1.7.0_79"
->Java(TM) SE Runtime Environment (build 1.7.0_79-b15)
->Java Hotspot(TM) 64-Bit Server VM (build 24.79-b02, mixed mode)
+#java version "1.7.0_79"
+#Java(TM) SE Runtime Environment (build 1.7.0_79-b15)
+#Java Hotspot(TM) 64-Bit Server VM (build 24.79-b02, mixed mode)
 {% endhighlight %}
 
 Java should be 64bit to increase memory above 2G. Try javac
@@ -38,14 +38,18 @@ Java should be 64bit to increase memory above 2G. Try javac
 
 I also had to change the memory options to `-Xmx2048m` (instead of 516m) in **C:\Program Files (x86)\sbt\conf\sbtconfig.txt**.
 
-    python --version
-    > Python 2.7.11
+{% highlight bash %}
+python --version
+# Python 2.7.11
+{% endhighlight %}
 
 - Download and compile Spark :
 
-        git clone git://github.com/apache/spark.git
-        sbt package
-        sbt assembly
+{% highlight bash %}
+git clone git://github.com/apache/spark.git
+sbt package
+sbt assembly
+{% endhighlight %}
 
 that will create the Spark assembly JAR.
 

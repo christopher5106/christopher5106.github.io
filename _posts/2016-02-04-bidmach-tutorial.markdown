@@ -28,49 +28,67 @@ val smat = CSMat(1,3, Array("you","and","me"))
 
 Access the number of columns, rows :
 
-    size(fmat)
-    fmat.dims
-    fmat.length
-    fmat.ncols
-    fmat.nrows
+{% highlight scala %}
+size(fmat)
+fmat.dims
+fmat.length
+fmat.ncols
+fmat.nrows
+{% endhighlight %}
 
 Two ways to access element on (row 1, column 2), either by *row x column* tuple, or by *index* (column-oriented numbering) :
 
-    fmat(0,1)
-    fmat(2)
+{% highlight scala %}
+fmat(0,1)
+fmat(2)
+{% endhighlight %}
 
 Access all elements as one column :
 
-    fmat(?)
+{% highlight scala %}
+fmat(?)
+{% endhighlight %}
 
 Access first column and first row :
 
-    fmat(?,0)
-    fmat(0,?)
+{% highlight scala %}
+fmat(?,0)
+fmat(0,?)
+{% endhighlight %}
 
 Access elements with indexes between 1 and 3 (not inclusive):
 
-    fmat(1->3)
+{% highlight scala %}
+fmat(1->3)
+{% endhighlight %}
 
 Create a Matrix of size 2x2, with 3rd element on first position, 4th on second, 2nd on third position and 5th on last position :
 
-    fmat(IMat(2,2,Array( 2,3,1,5 ) ))
+{% highlight scala %}
+fmat(IMat(2,2,Array( 2,3,1,5 ) ))
+{% endhighlight %}
 
 Create a random, full-one and full-zero matrices of shape 2x2 :
 
-    rand(2,2)
-    ones(2,2)
-    zeros(2,2)
+{% highlight scala %}
+rand(2,2)
+ones(2,2)
+zeros(2,2)
+{% endhighlight %}
 
 As a shortcut to `IMat(len, 1, Array(values))` to create a single-column matrix :
 
-    icol(1,2,3,4,5)
-    1 on 2 on 3 on 4 on 5
+{% highlight scala %}
+icol(1,2,3,4,5)
+1 on 2 on 3 on 4 on 5
+{% endhighlight %}
 
 The same for single-row matrices :
 
-    irow(1,2,3,4)
-    1 \ 2 \ 3 \ 4
+{% highlight scala %}
+irow(1,2,3,4)
+1 \ 2 \ 3 \ 4
+{% endhighlight %}
 
 As with Mat, you'll find `col`, `dcol`, `cscol`, and `row`, `drow`, `csrow` types.
 
@@ -80,28 +98,34 @@ To make a square matrix with a given diagonal : `mkdiag(1 on 2)`
 
 Element-wise matrix operations :
 
-    a + b element-wise addition
-    a - b element-wise subtraction
-    b ∘ a (a *@ b) multiplication
-    b / a element wise-division
+{% highlight scala %}
+a + b // element-wise addition
+a - b // element-wise subtraction
+b ∘ a // (a *@ b) multiplication
+b / a // element wise-division
+{% endhighlight %}
 
 Matrix operation
 
 {% highlight scala %}
-a.t transpose
-a * b matrix multiplication
-a ^* b  transpose first matrix before multiplication
-a *^ b  transpose second matrix before multiplication
+a.t // transpose
+a * b // matrix multiplication
+a ^* b  // transpose first matrix before multiplication
+a *^ b  // transpose second matrix before multiplication
 {% endhighlight %}
 
 Dot products
 
-    a ∙ b (a dot b) Column-wise dot product
-    a ∙→ b (a dotr b) Row-wise dot product
+{% highlight scala %}
+a ∙ b // (a dot b) Column-wise dot product
+a ∙→ b // (a dotr b) Row-wise dot product
+{% endhighlight %}
 
 Cartesian product
 
-    a ⊗ b (a kron b)       Kronecker product
+{% highlight scala %}
+a ⊗ b // (a kron b) Kronecker product
+{% endhighlight %}
 
 Statistics per column :
 
@@ -110,69 +134,85 @@ sum(fmat)
 mean(fmat)
 variance(fmat)
 maxi(fmat)
-maxi2(fmat) # returns max and argmax
+maxi2(fmat) // returns max and argmax
 mini(fmat)
-mini2(fmat) # returns min and argmin
+mini2(fmat) // returns min and argmin
 {% endhighlight %}
 
 Other operations per column :
 
 {% highlight scala %}
 cumsum(fmat)
-sort(fmat) //sorted values
-sortdown(fmat) #sorted values
-sort2(fmat) #sorted values and indices
-sortdown2(fmat) #sorted values and indices
+sort(fmat) // sorted values
+sortdown(fmat) // sorted values
+sort2(fmat) // sorted values and indices
+sortdown2(fmat) // sorted values and indices
 {% endhighlight %}
 
 The same statistics and operations per rows by adding a 2 param :
 
-    sum(fmat,2)
+{% highlight scala %}
+sum(fmat,2)
+{% endhighlight %}
 
 Have a look at unique(), unique3() and uniquerows().
 
 Endly, to reshape, you can convert it to a n-dimension array, reshape it, and convert the result array back to a FMat :
 
-    FND(fmat).reshape(3,2).toFMat(3,2)
+{% highlight scala %}
+FND(fmat).reshape(3,2).toFMat(3,2)
+{% endhighlight %}
 
 
 # More complicated matrices
 
 Convert to a GPU matrix :
 
-    GMat(fmat)
-    GIMat(imat)
+{% highlight scala %}
+GMat(fmat)
+GIMat(imat)
+{% endhighlight %}
 
 Create a generic type matrix :
 
-    var g:Mat = null
-    g = fmat
-    g = GMat(fmat)
+{% highlight scala %}
+var g:Mat = null
+g = fmat
+g = GMat(fmat)
+{% endhighlight %}
 
 Convert to sparse format :
 
 {% highlight scala %}
 val sfmat = SMat(fmat)
 val sfmat = sparse(fmat)
-SDmat(fmat) # sparse double
-GSMat(fmat) # sparse GPU
+SDmat(fmat) // sparse double
+GSMat(fmat) // sparse GPU
 {% endhighlight %}
 
 To convert it back to a dense matrix :
 
-    full(sfmat)
+{% highlight scala %}
+full(sfmat)
+{% endhighlight %}
 
 Create a sparse matrix with value 5 at position (2,4) and value 6 at position (3,4) :
 
-    sparse(1\2,3\3, 5\6 ,  4,4)
+{% highlight scala %}
+sparse(1\2,3\3, 5\6 ,  4,4)
+{% endhighlight %}
 
 Create an accumulator matrix of shape (3,3), by accumulating 5 and 4 on the same cell (3,2):
 
-    accum( (2\1) on (2\1), 5 on 4, 3,3)
+{% highlight scala %}
+accum( (2\1) on (2\1), 5 on 4, 3,3)
+{% endhighlight %}
 
 Enable matrix caching :
 
-    Mat.useCache = true
+{% highlight scala %}
+Mat.useCache = true
+{% endhighlight %}
 
 There is also a great tool, the dictionaries, where counts is an optional argument :
 

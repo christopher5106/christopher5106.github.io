@@ -21,11 +21,14 @@ Sadly, I cannot use AWS EMR to launch the cluster because I need to install nvid
 
 Let's launch an instance with AMI Id `ami-2ae0165d` given by [the AMI list for Spark](https://github.com/amplab/spark-ec2/blob/branch-1.5/ami-list/eu-west-1/hvm), for Europe :
 
-    aws ec2 run-instances --image-id ami-2ae0165d --instance-type g2.2xlarge  --key-name bidmach-keypair --security-groups bidmach
+{% highlight bash %}
+aws ec2 run-instances --image-id ami-2ae0165d --instance-type g2.2xlarge \
+--key-name bidmach-keypair --security-groups bidmach
+{% endhighlight %}
 
 and connect
 
-    ssh -i bidmach-keypair.pem ec2-user@ec2-54-229-72-6.eu-west-1.compute.amazonaws.com
+    ssh -i bidmach-keypair.pem ec2-user@ec2-XXX.eu-west-1.compute.amazonaws.com
 
 And install :
 
@@ -136,14 +139,26 @@ Let's create a public AMI : **ami-1ae15769**. This AMI is useful
 
 Let's fork `https://github.com/amplab/spark-ec2` and create `https://github.com/christopher5106/spark-ec2` repo where I can change the AMI for the previously created AMI `ami-1ae15769` and specify this repo to Spark for the creation of the cluster :
 
-    ./ec2/spark-ec2 -k sparkclusterkey -i ~/sparkclusterkey.pem --region=eu-west-1 --copy-aws-credentials --instance-type=g2.2xlarge -s 1 --hadoop-major-version=2 --spark-ec2-git-repo=https://github.com/christopher5106/spark-ec2 launch spark-cluster
+{% highlight bash %}
+./ec2/spark-ec2 -k sparkclusterkey -i ~/sparkclusterkey.pem \
+--region=eu-west-1 --copy-aws-credentials --instance-type=g2.2xlarge \
+-s 1 --hadoop-major-version=2 \
+--spark-ec2-git-repo=https://github.com/christopher5106/spark-ec2 \
+launch spark-cluster
+{% endhighlight %}
 
 And log in and start the shell :
 
-    ./ec2/spark-ec2 -k sparkclusterkey -i ~/sparkclusterkey.pem --region=eu-west-1 login spark-cluster
+{% highlight bash %}
+./ec2/spark-ec2 -k sparkclusterkey -i ~/sparkclusterkey.pem \
+--region=eu-west-1 login spark-cluster
 
-    ./spark/bin/spark-shell
+./spark/bin/spark-shell
+{% endhighlight %}
 
 Terminate the cluster:
 
-    ./ec2/spark-ec2 -k sparkclusterkey -i ~/sparkclusterkey.pem --region=eu-west-1  destroy spark-cluster
+{% highlight bash %}
+./ec2/spark-ec2 -k sparkclusterkey -i ~/sparkclusterkey.pem \
+--region=eu-west-1  destroy spark-cluster
+{% endhighlight %}

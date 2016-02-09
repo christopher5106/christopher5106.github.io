@@ -34,7 +34,9 @@ java -version
 
 Java should be 64bit to increase memory above 2G. Try javac
 
-    javac
+{% highlight bash %}
+javac
+{% endhighlight %}
 
 I also had to change the memory options to `-Xmx2048m` (instead of 516m) in **C:\Program Files (x86)\sbt\conf\sbtconfig.txt**.
 
@@ -55,4 +57,6 @@ that will create the Spark assembly JAR.
 
 Once created, launch Pypark:
 
-    bin\pyspark --master local[1]
+{% highlight bash %}
+bin\pyspark --master local[1]
+{% endhighlight %}

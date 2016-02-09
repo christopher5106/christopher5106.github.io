@@ -28,7 +28,9 @@ aws ec2 run-instances --image-id ami-2ae0165d --instance-type g2.2xlarge \
 
 and connect
 
-    ssh -i bidmach-keypair.pem ec2-user@ec2-XXX.eu-west-1.compute.amazonaws.com
+{% highlight bash %}
+ssh -i bidmach-keypair.pem ec2-user@ec2-XXX.eu-west-1.compute.amazonaws.com
+{% endhighlight %}
 
 And install :
 

@@ -222,9 +222,9 @@ d(0) # value for index 0 : A
 d("A") # index of A : 0
 d.count("A") # counts : 5
 d.count(0) # same
-d.cstr #dictionary
-d.counts # counts
-d(IMat(1,2,Array(0,1))) # bulk retrieval
+d.cstr // dictionary
+d.counts // counts
+d(IMat(1,2,Array(0,1))) // bulk retrieval
 d(CSMat(1,2,Array("A","B)))
 {% endhighlight %}
 

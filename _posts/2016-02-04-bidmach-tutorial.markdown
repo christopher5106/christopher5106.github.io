@@ -381,24 +381,36 @@ opts.gain = 0.001f
 mm.train
 {% endhighlight %}
 
+<a name="spark" />
 
-# Run BIDMach on Spark local mode
 
-Instead of running `bidmach` command to launch a bidmach shell, let's run the same commands inside Spark in local mode, adding the BIDMat and BIDMach libraries to the classpath :
+# Run BIDMach on Spark
 
-{% highlight bash %}
-./bin/spark-shell --jars ../BIDMat/BIDMat.jar,../BIDMach/BIDMach.jar
+Instead of running `bidmach` command to launch a bidmach shell, it is possible to run the same commands inside Spark shell in local mode, adding the BIDMat and BIDMach libraries to the classpath.
+
+To have Spark work with BIDMach, compile first in Scala 2.11
+
+{% highligth bash %}
+wget http://apache.crihan.fr/dist/spark/spark-1.6.0/spark-1.6.0.tgz
+tar xvzf spark-1.6.0.tgz
+cd spark-1.6.0
+./dev/change-scala-version.sh 2.11
+mvn -Pyarn -Phadoop-2.6 -Dscala-2.11 -DskipTests clean package
 {% endhighlight %}
 
- and import the required libraries :
+Download [Joda-time](https://sourceforge.net/projects/joda-time/files/joda-time/) and launch Spark with the Amazon SDK, Joda-time, and BIDMat / BIDMach jars :
+
+{% highlight bash %}
+$SPARK_HOME/bin/spark-shell --jars ~/Downloadsva-sdk-1.10.51/lib/aws-java-sdk-1.10.51.jar,../../technologies/BIDMat/BIDMat.jar,../../technologies/BIDMach2/BIDMach.jar,../../technologies/joda-time-2.4/joda-time-2.4.jar
+{% endhighlight %}
+
+Then you can import the required libraries :
 
 {% highlight scala %}
 import BIDMach.models.RandomForest
 {% endhighlight %}
 
-# Prepare the data and launch an hyperparameter tuning with Spark
-
-Let's launch a cluster with 1 master and 2 g2.2xlarge instances with our [NVIDIA+CUDA+BIDMACH AMI for Spark](http://christopher5106.github.io/big/data/2016/01/27/two-AMI-to-create-the-fastest-cluster-with-gpu-at-the-minimal-engineering-cost-with-EC2-NVIDIA-Spark-and-BIDMach.html):
+You can also launch a cluster with 1 master and 2 g2.2xlarge instances with our [NVIDIA+CUDA+BIDMACH AMI for Spark](http://christopher5106.github.io/big/data/2016/01/27/two-AMI-to-create-the-fastest-cluster-with-gpu-at-the-minimal-engineering-cost-with-EC2-NVIDIA-Spark-and-BIDMach.html):
 
 {% highlight bash %}
 ./ec2/spark-ec2 -k sparkclusterkey -i ~/sparkclusterkey.pem \
@@ -425,29 +437,79 @@ Launch the Spark Shell and be sure to have only 1 core per GPU on each executor 
  /home/ec2-user/BIDMat/BIDMat.jar,/home/ec2-user/BIDMach/BIDMach.jar
 {% endhighlight %}
 
-Prepare your data with a first Spark job : Spark `saveAsTextFile` method is ideal to prepare data files for the BIDMach file data sources.
+
+<a name="spark_prepare_data" />
+
+# Prepare the data and launch an hyperparameter tuning with Spark
+
+Prepare your data with a first Spark job : Spark is ideal to split very large data files into smaller splits for the BIDMach file data sources.
+
+Let's first create a function to upload to S3 :
 
 {% highlight scala %}
-sc.hadoopConfiguration.set("fs.s3n.awsAccessKeyId", "XXX")
-sc.hadoopConfiguration.set("fs.s3n.awsSecretAccessKey","YYY")
-val file = sc.textFile("s3n://BUCKET/FILE.csv")
+def upload_file_to_s3(filepath:String, bucket:String, directory:String) : Int = {
+  import java.io.File
+  import com.amazonaws.services.s3.AmazonS3Client
+  import com.amazonaws.services.s3.model.PutObjectRequest;
+  import com.amazonaws.AmazonClientException;
+  import com.amazonaws.AmazonServiceException;
 
-// remove header line
+  val S3Client = new AmazonS3Client()
+  val fileToUpload = new File(filepath)
+
+  try {
+    S3Client.putObject(new PutObjectRequest(bucket, directory + "/" + filepath.split("/").last, fileToUpload))
+  } catch {
+    case ex: AmazonServiceException =>{
+      println("Amazon Service Exception : "+ex.getMessage())
+      return -1
+    }
+    case ex: AmazonClientException => {
+      println("Amazon Client Exception + " + ex.getMessage())
+      return -1
+    }
+  }
+  return 0
+}
+{% endhighlight %}
+
+Then, I'll define a function to convert a line (String) of data from a CSV into an array of explicative features and the label :
+
+{% highligth scala %}
+def convert_line_to_Expl_Label_Tuple( line : String ) : (Array[Float],Float) = {
+  val values = line.split(";")
+
+  // process your line
+
+  (expl, label)
+}
+{% endhighlight %}
+
+Now ready to process the file :
+
+{% highlight scala %}
+val file = sc.textFile("myfile.csv")
 val header_line = file.first()
 val tail_file = file.filter( _ != header_line)
 
-data = tail_file.map( line => {
-  // proceed data to create a column of features
-})
-label = tail_file.map( line => {
-  // proceed data to create a column 1-hot encoding of the label
-})
+def upload_lz4_fmat_to_S3 ( index:Int, it:Iterator[String] ) : Iterator[Int] = {
+	import BIDMat.FMat
+	import BIDMat.MatFunctions._
+	val dataWithLabel = it.toArray.map( convert_line_to_Expl_Label_Tuple )
+	val data = dataWithLabel.flatMap( x => x._1)
+	val labels = dataWithLabel.map( x => x._2 )
+	val datafmat = FMat(nb_expl, data.length/nb_expl, data)
+	val labelfmat = FMat(1,labels.length, labels)
+	saveFMat("data%02d.lz4" format index, datafmat)
+	saveFMat("label%02d.lz4" format index, labelfmat)
+	Array( upload_file_to_s3("data%02d.lz4" format index,bucket, "out"),upload_file_to_s3("label%02d.lz4" format index,bucket, "out") ).iterator
+}
 
-import org.apache.hadoop.io.compress.GzipCodec
-data.saveAsTextFile("s3n://BUCKET/data", classOf[GzipCodec])
-label.saveAsTextFile("s3n://BUCKET/label", classOf[GzipCodec])
+val allData = tail_file.mapPartitionsWithIndex( upload_lz4_fmat_to_S3 )
+
+allData.collect()
 {% endhighlight %}
 
-will create a list of compressed files named in the format **data/part-%05d.gz** and **label/part-%05d.gz**.
+Adjust the parallelism to adjust the split size / number of lz4 files.
 
-Let's launch a hyperparameter tuning job using grid search.
+# Hyperparameter tuning job using grid search with Spark

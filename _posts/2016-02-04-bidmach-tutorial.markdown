@@ -328,20 +328,21 @@ Let's now go further with file data sources.
 For the purpose, let's create 50 files of data, 50 files of labels, with random values each for the demonstration :
 
 {% highlight scala %}
-0 to 50 map( i => {
-   saveMat("data%02d.dmat.lz4" format i ,drand(2,100));
+0 until 50 map( i => {
+   saveMat("data%02d.fmat.lz4" format i ,FMat(drand(2,100)));
    saveMat("label%02d.imat.lz4" format i, IMat(drand(1,100) > 0.5))
 })
 {% endhighlight %}
 
+Note the use of `until`, while `to` would create 51 values.
 
 Check matrices are correctly saved with : `loadMat("data26.fmat.lz4")`. Now there are correctly saved, let's create a file data source :
 
 {% highlight scala %}
 val fopts = new FileSource.Options
-fopts.fnames = List( {i:Int => {"data%02d.dmat.lz4" format i}}, {i:Int => {"label%02d.imat.lz4" format i}} )
+fopts.fnames = List( {i:Int => {"data%02d.fmat.lz4" format i}}, {i:Int => {"label%02d.imat.lz4" format i}} )
 fopts.nstart = 0
-fopts.nend = 5001
+fopts.nend = 51
 fopts.batchSize = 100
 
 val fs = FileSource(fopts)
@@ -365,10 +366,10 @@ Lastly, have a look at SFileSource for sparse file data source.
 On the files created previously, let's launch the random forest regressor :
 
 {% highlight scala %}
-val (mm,opts) = RandomForest.learner("data%02d.dmat.lz4","label%02d.imat.lz4")
+val (mm,opts) = RandomForest.learner("data%02d.fmat.lz4","label%02d.imat.lz4")
 
 opts.batchSize = 100
-opts.nend = 5001
+opts.nend = 50
 
 opts.depth =  24
 opts.ntrees = 100
@@ -377,6 +378,8 @@ opts.nsamps = 12
 opts.nnodes = 50000
 opts.nbits = 16
 opts.gain = 0.001f
+
+val rf = mm.model.asInstanceOf[RandomForest]
 
 mm.train
 {% endhighlight %}
@@ -523,3 +526,14 @@ def upload_lz4_fmat_to_S3 (index:Int, it:Iterator[String]) : Iterator[Int] = {
 # Hyperparameter tuning using grid search with Spark
 
 Hyperparameters are the parameters of the prediction model : number of trees, depth, number of bins... for example for a random forest regressor.
+
+Grid search consists in computing the model for a grid of combinations for the parameters, for example
+
+{% highlight scala %}
+val lrates = col(0.03f, 0.1f, 0.3f, 1f)        // 4 values
+val texps = col(0.3f, 0.4f, 0.5f, 0.6f, 0.7f)  // 5 values
+
+val lrateparams = ones(texps.nrows, 1) ⊗ lrates
+val texpparams = texps ⊗ ones(lrates.nrows,1)
+lrateparams \ texpparams
+{% endhighlight %}

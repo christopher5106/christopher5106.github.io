@@ -376,7 +376,7 @@ val (mm,opts) = RandomForest.learner("data%02d.fmat.lz4","label%02d.imat.lz4")
 opts.batchSize = 1000
 opts.nend = 50
 opts.depth =  5
-
+opts.ncats = 2 // number of categories of label
 opts.ntrees = 20
 opts.impurity = 0
 opts.nsamps = 12

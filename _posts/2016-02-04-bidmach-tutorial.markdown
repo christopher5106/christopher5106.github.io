@@ -396,6 +396,7 @@ tar xvzf spark-1.6.0.tgz
 cd spark-1.6.0
 ./dev/change-scala-version.sh 2.11
 mvn -Pyarn -Phadoop-2.6 -Dscala-2.11 -DskipTests clean package
+export SPARK_HOME=`pwd`
 {% endhighlight %}
 
 Download [Joda-time](https://sourceforge.net/projects/joda-time/files/joda-time/) and launch Spark in **local mode** with the Amazon SDK, Joda-time, and BIDMat / BIDMach jars :
@@ -413,14 +414,13 @@ import BIDMach.models.RandomForest
 You can also launch a **cluster of GPU**, for example 2 g2.2xlarge executor instances with our [NVIDIA+CUDA+BIDMACH AMI for Spark](http://christopher5106.github.io/big/data/2016/01/27/two-AMI-to-create-the-fastest-cluster-with-gpu-at-the-minimal-engineering-cost-with-EC2-NVIDIA-Spark-and-BIDMach.html):
 
 {% highlight bash %}
-./ec2/spark-ec2 -k sparkclusterkey -i ~/sparkclusterkey.pem \
+$SPARK_HOME/ec2/spark-ec2 -k sparkclusterkey -i ~/sparkclusterkey.pem \
 --region=eu-west-1 \
 --copy-aws-credentials --instance-type=g2.2xlarge -s 2 \
 --hadoop-major-version=2  \
 --spark-ec2-git-repo=https://github.com/christopher5106/spark-ec2 \
 launch spark-cluster
 {% endhighlight %}
-
 
 And log in
 
@@ -442,9 +442,21 @@ Launch the Spark Shell and be sure to have only 1 core per GPU on each executor 
 
 # Prepare the data with Spark
 
-Prepare your data with a first Spark job : Spark is ideal to split very large data files into smaller splits for the BIDMach file data sources.
+Spark is ideal to split very large data files into smaller parts that will be saved in BIDMach file format to be feed the BIDMach file data sources.
 
-Let's first create a function to upload to S3 :
+Spark naturally splits the input file into parts for each job, that are accessible with **mapPartitionsWithIndex** method which executes my custom function on each split, as shown here:
+
+{% highlight scala %}
+val file = sc.textFile("myfile.csv")
+val header_line = file.first()
+val tail_file = file.filter( _ != header_line)
+val allData = tail_file.mapPartitionsWithIndex( upload_lz4_fmat_to_S3 )
+allData.collect()
+{% endhighlight %}
+
+Adjusting the parallelism (number of partitions) will adjust the split size / number of lz4 files.
+
+To build the custom *upload_lz4_fmat_to_S3* method, let's first create a function to upload to S3 :
 
 {% highlight scala %}
 def upload_file_to_s3(filepath:String, bucket:String, directory:String) : Int = {
@@ -473,10 +485,10 @@ def upload_file_to_s3(filepath:String, bucket:String, directory:String) : Int = 
 }
 {% endhighlight %}
 
-Then, I'll define a function to convert a line (String) of data from a CSV into an array of explicative features and the label :
+Then, define a function to convert a line (String) of data from a CSV into an array of explicative features and the label :
 
 {% highlight scala %}
-def convert_line_to_Expl_Label_Tuple( line : String ) : (Array[Float],Float) = {
+def convert_line_to_Expl_Label_Tuple(line : String) : (Array[Float],Float) = {
   val values = line.split(";")
 
   // process your line
@@ -485,13 +497,9 @@ def convert_line_to_Expl_Label_Tuple( line : String ) : (Array[Float],Float) = {
 }
 {% endhighlight %}
 
-Now ready to process the file :
+Lastly, combine the functions to create  *upload_lz4_fmat_to_S3* method :
 
 {% highlight scala %}
-val file = sc.textFile("myfile.csv")
-val header_line = file.first()
-val tail_file = file.filter( _ != header_line)
-
 def upload_lz4_fmat_to_S3 ( index:Int, it:Iterator[String] ) : Iterator[Int] = {
 	import BIDMat.FMat
 	import BIDMat.MatFunctions._
@@ -504,12 +512,7 @@ def upload_lz4_fmat_to_S3 ( index:Int, it:Iterator[String] ) : Iterator[Int] = {
 	saveFMat("label%02d.lz4" format index, labelfmat)
 	Array( upload_file_to_s3("data%02d.lz4" format index,bucket, "out"),upload_file_to_s3("label%02d.lz4" format index,bucket, "out") ).iterator
 }
-
-val allData = tail_file.mapPartitionsWithIndex( upload_lz4_fmat_to_S3 )
-
-allData.collect()
 {% endhighlight %}
 
-Adjust the parallelism to adjust the split size / number of lz4 files.
 
 # Hyperparameter tuning job using grid search with Spark

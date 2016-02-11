@@ -434,7 +434,7 @@ Download [Joda-time](https://sourceforge.net/projects/joda-time/files/joda-time/
 {% highlight bash %}
 $SPARK_HOME/bin/spark-shell --jars \
 ~/technologies/aws-java-sdk-1.10.51/lib/aws-java-sdk-1.10.51.jar,\
-../../technologies/BIDMach/lib/BIDMat.jar,\
+../../technologies/BIDMach2/lib/BIDMat.jar,\
 ../../technologies/BIDMach2/BIDMach.jar,\
 ../../technologies/joda-time-2.4/joda-time-2.4.jar
 {% endhighlight %}

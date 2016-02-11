@@ -347,7 +347,7 @@ Check matrices are correctly saved with : `loadMat("data26.fmat.lz4")`. Now ther
 val fopts = new FileSource.Options
 fopts.fnames = List( {i:Int => {"data%02d.fmat.lz4" format i}}, {i:Int => {"label%02d.fmat.lz4" format i}} )
 fopts.nstart = 0
-fopts.nend = 51
+fopts.nend = 50
 fopts.batchSize = 100
 
 val fs = FileSource(fopts)

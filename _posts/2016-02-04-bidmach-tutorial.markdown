@@ -335,7 +335,7 @@ val params = drand(30,1)
 0 until 50 map( i => {
   val fmat = FMat(drand(30,100))
   saveMat("data%02d.fmat.lz4" format i, fmat);
-  saveMat("label%02d.fmat.lz4" format i, params ^* fmat)
+  saveMat("label%02d.imat.lz4" format i, IMat(params ^* fmat) > 7)
 })
 {% endhighlight %}
 
@@ -345,7 +345,7 @@ Check matrices are correctly saved with : `loadMat("data26.fmat.lz4")`. Now ther
 
 {% highlight scala %}
 val fopts = new FileSource.Options
-fopts.fnames = List( {i:Int => {"data%02d.fmat.lz4" format i}}, {i:Int => {"label%02d.fmat.lz4" format i}} )
+fopts.fnames = List( {i:Int => {"data%02d.fmat.lz4" format i}}, {i:Int => {"label%02d.imat.lz4" format i}} )
 fopts.nstart = 0
 fopts.nend = 50
 fopts.batchSize = 100
@@ -371,7 +371,7 @@ Lastly, have a look at SFileSource for sparse file data source.
 On the files created previously, let's launch the random forest regressor :
 
 {% highlight scala %}
-val (mm,opts) = RandomForest.learner("data%02d.fmat.lz4","label%02d.fmat.lz4")
+val (mm,opts) = RandomForest.learner("data%02d.fmat.lz4","label%02d.imat.lz4")
 
 opts.batchSize = 100
 opts.nend = 50
@@ -383,8 +383,6 @@ opts.nsamps = 12
 opts.nnodes = 50000
 opts.nbits = 16
 opts.gain = 0.001f
-
-val rf = mm.model.asInstanceOf[RandomForest]
 
 mm.train
 {% endhighlight %}

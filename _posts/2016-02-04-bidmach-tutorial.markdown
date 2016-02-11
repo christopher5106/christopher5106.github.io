@@ -390,7 +390,7 @@ Instead of running `bidmach` command to launch a bidmach shell, it is possible t
 
 To have Spark work with BIDMach, compile first in Scala 2.11
 
-{% highligth bash %}
+{% highlight bash %}
 wget http://apache.crihan.fr/dist/spark/spark-1.6.0/spark-1.6.0.tgz
 tar xvzf spark-1.6.0.tgz
 cd spark-1.6.0

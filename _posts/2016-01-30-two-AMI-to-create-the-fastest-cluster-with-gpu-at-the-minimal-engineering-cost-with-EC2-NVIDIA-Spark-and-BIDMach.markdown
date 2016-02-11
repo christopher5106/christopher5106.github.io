@@ -144,7 +144,7 @@ Let's create a public AMI : **ami-1ae15769**. This AMI is useful
 
 Let's first fork `https://github.com/amplab/spark-ec2` and create `https://github.com/christopher5106/spark-ec2` repo where I can change the AMI for the previously created AMI `ami-1ae15769`.
 
-Then create an IAM role named *spark-ec2* to later on be able to give access to resources to your Spark cluster (without having to deal with security credentials on the instances - avoid using `--copy-aws-credentials` option) and the permission to attribute this role to the user launching the spark-ec2 command :
+Then create an IAM role named *spark-ec2* to later on be able to give access to resources to the Spark cluster (without having to deal with security credentials on the instances - avoiding dangerous `--copy-aws-credentials` option) and add the permission to attribute this role to the user launching the spark-ec2 command :
 
 {% highlight json %}
 {

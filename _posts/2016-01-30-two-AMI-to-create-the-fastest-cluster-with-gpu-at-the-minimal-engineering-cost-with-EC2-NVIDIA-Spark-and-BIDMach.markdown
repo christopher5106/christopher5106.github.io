@@ -139,15 +139,38 @@ Let's create a public AMI : **ami-1ae15769**. This AMI is useful
 
 # Launch the cluster
 
-Let's fork `https://github.com/amplab/spark-ec2` and create `https://github.com/christopher5106/spark-ec2` repo where I can change the AMI for the previously created AMI `ami-1ae15769` and specify this repo to Spark for the creation of the cluster :
+Let's first fork `https://github.com/amplab/spark-ec2` and create `https://github.com/christopher5106/spark-ec2` repo where I can change the AMI for the previously created AMI `ami-1ae15769`.
+
+Then create an IAM rôle named *spark-ec2* to later on be able to give access to resources to your Spark cluster (without having to deal with security credentials on the instances - avoid using `--copy-aws-credentials` option) and the permission to attribute this role to the user launching the spark-ec2 command :
+
+{% highlight json %}
+{
+    "Version": "2012-10-17",
+    "Statement": [{
+      "Effect":"Allow",
+      "Action":["ec2:*"],
+      "Resource":"*"
+    },
+        {
+            "Effect": "Allow",
+            "Action": "iam:PassRole",
+            "Resource": "arn:aws:iam::ACCOUNT_ID:role/spark-ec2"
+        }
+    ]
+}
+{% endhighlight %}
+
+Create the cluster with the new repo and the instance profile  :
 
 {% highlight bash %}
 ./ec2/spark-ec2 -k sparkclusterkey -i ~/sparkclusterkey.pem \
---region=eu-west-1 --copy-aws-credentials --instance-type=g2.2xlarge \
+--region=eu-west-1 --instance-type=g2.2xlarge \
 -s 1 --hadoop-major-version=2 \
 --spark-ec2-git-repo=https://github.com/christopher5106/spark-ec2 \
+--instance-profile-name=spark-ec2 \
 launch spark-cluster
 {% endhighlight %}
+
 
 And log in and start the shell :
 

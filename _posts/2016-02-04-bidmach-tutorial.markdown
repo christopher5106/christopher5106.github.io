@@ -416,11 +416,14 @@ You can also launch a **cluster of GPU**, for example 2 g2.2xlarge executor inst
 {% highlight bash %}
 $SPARK_HOME/ec2/spark-ec2 -k sparkclusterkey -i ~/sparkclusterkey.pem \
 --region=eu-west-1 \
---copy-aws-credentials --instance-type=g2.2xlarge -s 2 \
+ --instance-type=g2.2xlarge -s 2 \
 --hadoop-major-version=2  \
 --spark-ec2-git-repo=https://github.com/christopher5106/spark-ec2 \
+--instance-profile-name=spark-ec2 \
 launch spark-cluster
 {% endhighlight %}
+
+Note that I launch the instances under an IAM rôle named *spark-ec2* to give them access to resources later on (without having to deal with security credentials on the instance - avoid using `--copy-aws-credentials` option), as [explained in my previous post](http://christopher5106.github.io/big/data/2016/01/27/two-AMI-to-create-the-fastest-cluster-with-gpu-at-the-minimal-engineering-cost-with-EC2-NVIDIA-Spark-and-BIDMach.html).
 
 And log in
 

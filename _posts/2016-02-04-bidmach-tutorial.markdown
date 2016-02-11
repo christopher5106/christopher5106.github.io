@@ -507,12 +507,12 @@ def upload_lz4_fmat_to_S3 (index:Int, it:Iterator[String]) : Iterator[Int] = {
   import BIDMat.MatFunctions._
   val dataWithLabel = it.toArray.map( convert_line_to_Expl_Label_Tuple )
   val data = dataWithLabel.flatMap( x => x._1)
-	val labels = dataWithLabel.map( x => x._2 )
-	val datafmat = FMat(nb_expl, data.length/nb_expl, data)
-	val labelfmat = FMat(1,labels.length, labels)
-	saveFMat("data%02d.lz4" format index, datafmat)
-	saveFMat("label%02d.lz4" format index, labelfmat)
-	Array( upload_file_to_s3("data%02d.lz4" format index,bucket, "out"),upload_file_to_s3("label%02d.lz4" format index,bucket, "out") ).iterator
+  val labels = dataWithLabel.map( x => x._2 )
+  val datafmat = FMat(nb_expl, data.length/nb_expl, data)
+  val labelfmat = FMat(1,labels.length, labels)
+  saveFMat("data%02d.lz4" format index, datafmat)
+  saveFMat("label%02d.lz4" format index, labelfmat)
+  Array( upload_file_to_s3("data%02d.lz4" format index,bucket, "out"),upload_file_to_s3("label%02d.lz4" format index,bucket, "out") ).iterator
 }
 {% endhighlight %}
 

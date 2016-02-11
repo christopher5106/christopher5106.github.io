@@ -386,9 +386,9 @@ mm.train
 
 # Run BIDMach on Spark
 
-Instead of running `bidmach` command to launch a bidmach shell, it is possible to run the same commands inside Spark shell in local mode, adding the BIDMat and BIDMach libraries to the classpath.
+Instead of running `bidmach` command to launch a bidmach shell, it is possible to run the same commands inside Spark shell, adding the BIDMat and BIDMach libraries to the classpath.
 
-To have Spark work with BIDMach, compile first in Scala 2.11
+To have Spark work with BIDMach, compile Spark with Scala 2.11 :
 
 {% highlight bash %}
 wget http://apache.crihan.fr/dist/spark/spark-1.6.0/spark-1.6.0.tgz
@@ -398,7 +398,7 @@ cd spark-1.6.0
 mvn -Pyarn -Phadoop-2.6 -Dscala-2.11 -DskipTests clean package
 {% endhighlight %}
 
-Download [Joda-time](https://sourceforge.net/projects/joda-time/files/joda-time/) and launch Spark with the Amazon SDK, Joda-time, and BIDMat / BIDMach jars :
+Download [Joda-time](https://sourceforge.net/projects/joda-time/files/joda-time/) and launch Spark in **local mode** with the Amazon SDK, Joda-time, and BIDMat / BIDMach jars :
 
 {% highlight bash %}
 $SPARK_HOME/bin/spark-shell --jars ~/Downloadsva-sdk-1.10.51/lib/aws-java-sdk-1.10.51.jar,../../technologies/BIDMat/BIDMat.jar,../../technologies/BIDMach2/BIDMach.jar,../../technologies/joda-time-2.4/joda-time-2.4.jar
@@ -410,7 +410,7 @@ Then you can import the required libraries :
 import BIDMach.models.RandomForest
 {% endhighlight %}
 
-You can also launch a cluster with 1 master and 2 g2.2xlarge instances with our [NVIDIA+CUDA+BIDMACH AMI for Spark](http://christopher5106.github.io/big/data/2016/01/27/two-AMI-to-create-the-fastest-cluster-with-gpu-at-the-minimal-engineering-cost-with-EC2-NVIDIA-Spark-and-BIDMach.html):
+You can also launch a **cluster of GPU**, for example 2 g2.2xlarge executor instances with our [NVIDIA+CUDA+BIDMACH AMI for Spark](http://christopher5106.github.io/big/data/2016/01/27/two-AMI-to-create-the-fastest-cluster-with-gpu-at-the-minimal-engineering-cost-with-EC2-NVIDIA-Spark-and-BIDMach.html):
 
 {% highlight bash %}
 ./ec2/spark-ec2 -k sparkclusterkey -i ~/sparkclusterkey.pem \
@@ -440,7 +440,7 @@ Launch the Spark Shell and be sure to have only 1 core per GPU on each executor 
 
 <a name="spark_prepare_data" />
 
-# Prepare the data and launch an hyperparameter tuning with Spark
+# Prepare the data with Spark
 
 Prepare your data with a first Spark job : Spark is ideal to split very large data files into smaller splits for the BIDMach file data sources.
 

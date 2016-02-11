@@ -375,19 +375,41 @@ val (mm,opts) = RandomForest.learner("data%02d.fmat.lz4","label%02d.imat.lz4")
 
 opts.batchSize = 1000
 opts.nend = 50
+opts.depth =  5
 
-opts.depth =  24
-opts.ntrees = 100
+opts.ntrees = 20
 opts.impurity = 0
 opts.nsamps = 12
 opts.nnodes = 50000
 opts.nbits = 16
 opts.gain = 0.001f
-
-opts.useGPU = false
-
 mm.train
+
 {% endhighlight %}
+
+Option `opts.useGPU = false` will disable use of GPU.
+
+    pass= 0
+    40,00%, ll=-0,02400, gf=0,250, secs=0,0, GB=0,00, MB/s= 9,92, GPUmem=0,971549
+    100,00%, ll=-0,02400, gf=0,407, secs=0,0, GB=0,00, MB/s=13,48, GPUmem=0,971549
+    purity gain 0,0632, fraction impure 1,000, nnew 2,0, nnodes 3,0
+    pass= 1
+    40,00%, ll=-0,02400, gf=0,302, secs=0,1, GB=0,00, MB/s=10,46, GPUmem=0,971549
+    100,00%, ll=-0,02400, gf=0,369, secs=0,1, GB=0,00, MB/s=12,16, GPUmem=0,971549
+    purity gain 0,0425, fraction impure 1,000, nnew 2,2, nnodes 5,2
+    pass= 2
+    40,00%, ll=-0,02400, gf=0,321, secs=0,1, GB=0,00, MB/s=10,86, GPUmem=0,971549
+    100,00%, ll=-0,02400, gf=0,367, secs=0,2, GB=0,00, MB/s=12,08, GPUmem=0,971549
+    purity gain 0,1401, fraction impure 0,834, nnew 4,1, nnodes 9,3
+    pass= 3
+    40,00%, ll=-0,00700, gf=0,334, secs=0,2, GB=0,00, MB/s=11,15, GPUmem=0,971549
+    100,00%, ll=-0,00700, gf=0,364, secs=0,2, GB=0,00, MB/s=11,92, GPUmem=0,971549
+    purity gain 0,1843, fraction impure 0,807, nnew 5,5, nnodes 14,8
+    pass= 4
+    40,00%, ll=-0,00300, gf=0,341, secs=0,2, GB=0,00, MB/s=11,32, GPUmem=0,971549
+    100,00%, ll=-0,00300, gf=0,365, secs=0,3, GB=0,00, MB/s=11,92, GPUmem=0,971549
+    purity gain 0,1463, fraction impure 0,599, nnew 4,9, nnodes 19,7
+    Time=0,2820 secs, gflops=0,34
 
 <a name="spark" />
 

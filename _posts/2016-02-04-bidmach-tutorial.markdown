@@ -329,7 +329,7 @@ For the purpose, let's create 50 files of data, 50 files of labels, with random 
 
 {% highlight scala %}
 0 until 50 map( i => {
-   saveMat("data%02d.fmat.lz4" format i ,FMat(drand(2,100)));
+   saveMat("data%02d.fmat.lz4" format i, FMat(drand(2,100)));
    saveMat("label%02d.imat.lz4" format i, IMat(drand(1,100) > 0.5))
 })
 {% endhighlight %}

@@ -128,7 +128,12 @@ resetGPU; Mat.clearCaches
 
 # EC2 launch
 
-BIDMach team has compiled an EC2 AMI, available on the US west zone (Oregon).
+
+To launch an EC2 G2 (GPU-enabled) instance with BIDMach, there exists AMI with BIDMach pre-installed :
+
+- in the US west zone (Oregon) : EC2 AMI created by BIDMach team
+
+- in EU west zone (Irland), I created an AMI that can also be launched by **spark-ec2**
 
 First, add an EC2 permission policy to your user :
 
@@ -155,32 +160,39 @@ First, add an EC2 permission policy to your user :
 }
 {% endhighlight %}
 
-in order to create a EC2 security group `bidmach` and a keypair `us-west2-keypair` and start the instance, all in zone us-west-2 where the AMI lives :
+Create a EC2 security group and a keypair and start the instance from an AMI, all in the zone where the AMI lives.
+
+In the **US west zone (Oregon)** :
 
 {% highlight bash %}
+#Create a security group
 aws ec2 create-security-group --group-name bidmach --description bidmach \
 --region us-west-2
 
+#Create key pair
 aws ec2 create-key-pair --key-name us-west2-keypair --region us-west-2
 # Save the keypair to us-west2-keypair.pem and change its mode
 sudo chmod 600 us-west2-keypair.pem
 
+#Launch instance
 aws ec2 run-instances --image-id ami-71280941 --key-name us-west2-keypair \
 --security-groups bidmach --instance-type g2.2xlarge \
 --placement AvailabilityZone=us-west-2b --region us-west-2
-{% endhighlight %}
 
-Get your instance public DNS with
-
-{% highlight bash %}
+#Get your instance public DNS with
 aws ec2 describe-instances --region us-west-2
-{% endhighlight %}
 
-Connect to the instance  :
-
-{% highlight bash %}
+#Connect to the instance
 ssh -i us-west2-keypair.pem ec2-user@ec2-XXX_DNS.us-west-2.compute.amazonaws.com
 {% endhighlight %}
+
+In the **EU west zone (Irland)** :
+
+{% highlight bash %}
+aws ec2 run-instances --image-id ami-1ae15769 --key-name sparkclusterkey \
+--instance-type g2.2xlarge --region eu-west-1 --security-groups bidmach
+{% endhighlight %}
+
 
 Let's download the data :
 

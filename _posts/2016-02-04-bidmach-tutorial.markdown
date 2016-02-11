@@ -333,7 +333,7 @@ For the purpose, let's create 50 files of data, 50 files of labels, with random 
 val params = drand(30,1)
 
 0 until 50 map( i => {
-  val fmat = FMat(drand(30,100))
+  val fmat = FMat(drand(30,1000))
   saveMat("data%02d.fmat.lz4" format i, fmat);
   saveMat("label%02d.imat.lz4" format i, IMat(params ^* fmat) > 7)
 })
@@ -348,7 +348,7 @@ val fopts = new FileSource.Options
 fopts.fnames = List( {i:Int => {"data%02d.fmat.lz4" format i}}, {i:Int => {"label%02d.imat.lz4" format i}} )
 fopts.nstart = 0
 fopts.nend = 50
-fopts.batchSize = 100
+fopts.batchSize = 1000
 
 val fs = FileSource(fopts)
 
@@ -373,7 +373,7 @@ On the files created previously, let's launch the random forest regressor :
 {% highlight scala %}
 val (mm,opts) = RandomForest.learner("data%02d.fmat.lz4","label%02d.imat.lz4")
 
-opts.batchSize = 100
+opts.batchSize = 1000
 opts.nend = 50
 
 opts.depth =  24
@@ -383,6 +383,8 @@ opts.nsamps = 12
 opts.nnodes = 50000
 opts.nbits = 16
 opts.gain = 0.001f
+
+opts.useGPU = false
 
 mm.train
 {% endhighlight %}

@@ -518,3 +518,5 @@ def upload_lz4_fmat_to_S3 (index:Int, it:Iterator[String]) : Iterator[Int] = {
 
 
 # Hyperparameter tuning using grid search with Spark
+
+Hyperparameters are the parameters of the prediction model : number of trees, depth, number of bins... for example for a random forest regressor.

@@ -442,9 +442,9 @@ Launch the Spark Shell and be sure to have only 1 core per GPU on each executor 
 
 # Prepare the data with Spark
 
-Spark is ideal to split very large data files into smaller parts that will be saved in BIDMach file format to be feed the BIDMach file data sources.
+Spark is ideal to split very large data files into smaller parts that will be saved in BIDMach file format to feed the BIDMach file data sources.
 
-Spark naturally splits the input file into parts for each job, that are accessible with **mapPartitionsWithIndex** method which executes my custom function on each split, as shown here:
+Spark naturally splits the input file into parts for each job, that are accessible via **mapPartitions** methods, in order to execute a custom function on each split, as for example :
 
 {% highlight scala %}
 val file = sc.textFile("myfile.csv")
@@ -485,13 +485,15 @@ def upload_file_to_s3(filepath:String, bucket:String, directory:String) : Int = 
 }
 {% endhighlight %}
 
+The Amazon SDK looks for the credentials available in the different contexts.
+
 Then, define a function to convert a line (String) of data from a CSV into an array of explicative features and the label :
 
 {% highlight scala %}
 def convert_line_to_Expl_Label_Tuple(line : String) : (Array[Float],Float) = {
   val values = line.split(";")
 
-  // process your line
+  // process your line HERE
 
   (expl, label)
 }
@@ -500,11 +502,11 @@ def convert_line_to_Expl_Label_Tuple(line : String) : (Array[Float],Float) = {
 Lastly, combine the functions to create  *upload_lz4_fmat_to_S3* method :
 
 {% highlight scala %}
-def upload_lz4_fmat_to_S3 ( index:Int, it:Iterator[String] ) : Iterator[Int] = {
-	import BIDMat.FMat
-	import BIDMat.MatFunctions._
-	val dataWithLabel = it.toArray.map( convert_line_to_Expl_Label_Tuple )
-	val data = dataWithLabel.flatMap( x => x._1)
+def upload_lz4_fmat_to_S3 (index:Int, it:Iterator[String]) : Iterator[Int] = {
+  import BIDMat.FMat
+  import BIDMat.MatFunctions._
+  val dataWithLabel = it.toArray.map( convert_line_to_Expl_Label_Tuple )
+  val data = dataWithLabel.flatMap( x => x._1)
 	val labels = dataWithLabel.map( x => x._2 )
 	val datafmat = FMat(nb_expl, data.length/nb_expl, data)
 	val labelfmat = FMat(1,labels.length, labels)
@@ -515,4 +517,4 @@ def upload_lz4_fmat_to_S3 ( index:Int, it:Iterator[String] ) : Iterator[Int] = {
 {% endhighlight %}
 
 
-# Hyperparameter tuning job using grid search with Spark
+# Hyperparameter tuning using grid search with Spark

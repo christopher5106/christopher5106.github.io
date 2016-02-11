@@ -423,7 +423,7 @@ $SPARK_HOME/ec2/spark-ec2 -k sparkclusterkey -i ~/sparkclusterkey.pem \
 launch spark-cluster
 {% endhighlight %}
 
-Note that I launch the instances under an IAM role named *spark-ec2* to give them access to resources later on (without having to deal with security credentials on the instance - avoid using `--copy-aws-credentials` option), as [explained in my previous post](http://christopher5106.github.io/big/data/2016/01/27/two-AMI-to-create-the-fastest-cluster-with-gpu-at-the-minimal-engineering-cost-with-EC2-NVIDIA-Spark-and-BIDMach.html).
+Note that I launch the instances under an IAM role named *spark-ec2* to give them access to resources later on (without having to deal with security credentials on the instance - avoid using `--copy-aws-credentials` option), as [explained in my previous post]({{ site.url }}/big/data/2016/01/27/two-AMI-to-create-the-fastest-cluster-with-gpu-at-the-minimal-engineering-cost-with-EC2-NVIDIA-Spark-and-BIDMach.html#launch_cluster).
 
 And log in
 

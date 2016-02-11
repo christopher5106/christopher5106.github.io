@@ -137,6 +137,9 @@ Let's create a public AMI : **ami-1ae15769**. This AMI is useful
 
 - to launch with Spark a cluster of GPU instances with NVIDIA driver, CUDA 7.5, JCUDA, BIDMat, and BIDMach libraries installed, as we show below.
 
+
+<a name="launch_cluster" />
+
 # Launch the cluster
 
 Let's first fork `https://github.com/amplab/spark-ec2` and create `https://github.com/christopher5106/spark-ec2` repo where I can change the AMI for the previously created AMI `ami-1ae15769`.

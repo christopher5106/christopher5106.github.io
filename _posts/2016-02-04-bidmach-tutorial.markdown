@@ -475,7 +475,7 @@ def upload_file_to_s3(filepath:String, bucket:String, directory:String) : Int = 
 
 Then, I'll define a function to convert a line (String) of data from a CSV into an array of explicative features and the label :
 
-{% highligth scala %}
+{% highlight scala %}
 def convert_line_to_Expl_Label_Tuple( line : String ) : (Array[Float],Float) = {
   val values = line.split(";")
 

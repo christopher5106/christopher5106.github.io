@@ -15,6 +15,8 @@ Let's put things back in order :)
 
 First, we'll see basic matrices, then more complicated types, then how to prepare data and an example of random forest computation.
 
+To launch BIDMach on your computer or instance, have a look [at my previous article]({{ site.url }}/parallel/computing/2016/01/26/gpu-computing-with-bidmach-library-simply-amazing.html).
+
 # Basic matrices
 
 Let's create our first matrix of integers of size 2x2, then a matrix of floats of size 3x2, a matrix of double values of size 2x2 and a matrix of strings :

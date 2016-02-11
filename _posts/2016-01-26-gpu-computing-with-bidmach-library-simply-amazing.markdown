@@ -133,7 +133,7 @@ To launch an EC2 G2 (GPU-enabled) instance with BIDMach, there exists AMI with B
 
 - in the US west zone (Oregon) : EC2 AMI created by BIDMach team
 
-- in EU west zone (Irland), I created an AMI that can also be launched by **spark-ec2**
+- in EU west zone (Irland), I created an [AMI that can also be launched by **spark-ec2**]({{ site.url }}/big/data/2016/01/27/two-AMI-to-create-the-fastest-cluster-with-gpu-at-the-minimal-engineering-cost-with-EC2-NVIDIA-Spark-and-BIDMach.html)
 
 First, add an EC2 permission policy to your user :
 

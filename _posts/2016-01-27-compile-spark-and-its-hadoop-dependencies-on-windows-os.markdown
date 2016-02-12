@@ -55,7 +55,7 @@ sbt assembly
 
 that will create the Spark assembly JAR.
 
-
+<a name="workaround" />
 
 - There is a small bug for Pyspark
 

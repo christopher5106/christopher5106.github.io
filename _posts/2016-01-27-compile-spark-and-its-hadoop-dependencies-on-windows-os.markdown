@@ -55,7 +55,23 @@ sbt assembly
 
 that will create the Spark assembly JAR.
 
-Once created, launch Pypark:
+
+
+- There is a small bug for Pyspark
+
+In the *main function* in **python/pyspark/worker.py**, add the two last lines to the *process function* :
+
+{% highlight python %}
+def process():
+  iterator = deserializer.load_stream(infile)
+  serializer.dump_stream(func(split_index, iterator), outfile)
+  for obj in iterator:
+    pass
+{% endhighlight %}
+
+Rebuild the pyspark.zip in the python/lib folder or [download it here]({{ site.url }}/img/pyspark.zip).
+
+Now it's done. Launch Pypark:
 
 {% highlight bash %}
 bin\pyspark --master local[1]

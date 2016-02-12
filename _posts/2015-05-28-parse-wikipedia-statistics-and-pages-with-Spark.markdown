@@ -8,7 +8,7 @@ categories: bigdata
 ![RoadTeller App]({{ site.url }}/img/roadtellerapp.jpg)
 Let's see what's my backend work behind our **RoadTeller app** at Hackathon [CarConnectivity](http://mirrorlinkhackathon.com)
 
-#Launch of a Spark cluster on EC2
+# Launch of a Spark cluster on EC2
 
 Let's launch a cluster of 5 AWS EC2 instances (1 master and 4 slaves) of type m1.large with Spark.
 
@@ -17,8 +17,8 @@ To prepare
 - download the latest version of [Spark](https://spark.apache.org/downloads.html)
 
 {% highlight bash %}
-wget http://apache.crihan.fr/dist/spark/spark-1.5.2/spark-1.5.2-bin-hadoop2.6.tgz
-tar xvzf spark-1.5.2-bin-hadoop2.6.tgz
+wget http://wwwftp.ciril.fr/pub/apache/spark/spark-1.6.0/spark-1.6.0-bin-hadoop2.6.tgz
+tar xvzf spark-1.6.0-bin-hadoop2.6.tgz
 {% endhighlight %}
 
 - create an AWS account, and get your credentials, if you don't have one already
@@ -39,11 +39,14 @@ export AWS_ACCESS_KEY_ID=...
 export AWS_SECRET_ACCESS_KEY=...
 
 #launch the cluster with --copy-aws-credentials option to enable S3 access.
-cd spark-1.5.2-bin-hadoop2.6
-./ec2/spark-ec2 -k sparkclusterkey -i ~/sparkclusterkey.pem --region=eu-west-1 --copy-aws-credentials --instance-type=m1.large -s 4 --hadoop-major-version=2 launch spark-cluster
+cd spark-1.6.0-bin-hadoop2.6
+./ec2/spark-ec2 -k sparkclusterkey -i ~/sparkclusterkey.pem \
+--region=eu-west-1 --copy-aws-credentials --instance-type=m1.large \
+-s 4 --hadoop-major-version=2 launch spark-cluster
 
 #connect to the master
-./ec2/spark-ec2 -k sparkclusterkey -i ~/sparkclusterkey.pem --region=eu-west-1 login spark-cluster
+./ec2/spark-ec2 -k sparkclusterkey -i ~/sparkclusterkey.pem \
+--region=eu-west-1 login spark-cluster
 
 #launch the shell
 ./spark/bin/spark-shell
@@ -57,7 +60,7 @@ Spark master web interface will be available on the master node on port `4040`.
 
 **We're now ready !**
 
-#Analyze the top ranking pages from October 2008 to February 2010 with Wikipedia statistics
+# Analyze the top ranking pages from October 2008 to February 2010 with Wikipedia statistics
 
 Let's use the [dataset prepared by AWS](http://aws.amazon.com/datasets/4182) where lines are looking like :
 
@@ -82,7 +85,7 @@ Be careful to change "s3" on "s3**n**".
 
 **That's it! 63 seconds to get all the data ranked !**
 
-#Analyze the principal concepts in the Wikipedia pages
+# Analyze the principal concepts in the Wikipedia pages
 
 By default, it's the ephemeral HDFS that has been started, with 3.43 TB capacity and  a web interface available on port `50070`.
 
@@ -238,7 +241,7 @@ Here is an example concept we get :
     Concept docs: Saint-Laurent-des-Bois, District autonome de Iamalo-Nenetsie, Saint-Aubin-sur-Mer, Bourbach, Saint-Cr?ac, Saint-Remimont, Pont-la-Ville, Saint-Amans, Lavau, Districts de l'île de Man
 
 
-#Index Wikipedia pages with Elasticsearch to search the points of interests by category around a position
+# Index Wikipedia pages with Elasticsearch to search the points of interests by category around a position
 
 Let's launch an ElasticSearch Cluster with AWS Opsworks creating a [very small Chef repository](https://github.com/christopher5106/hackathon-carconnectivity) and a layer with `awscli` `apt` `ark` `elasticsearch` `java` `scala` `sbt-extras` as recipes.
 
@@ -407,15 +410,20 @@ curl -XGET http://52.17.250.224:9200/map2/poi/_search -d '{
 {% endhighlight %}
 
 
-#Stop, restart or destroy the cluster
+# Stop, restart or destroy the cluster
 
 {% highlight bash %}
+
+
 #stop
-./ec2/spark-ec2 -k sparkclusterkey -i ~/sparkclusterkey.pem --region=eu-west-1  stop spark-cluster
+./ec2/spark-ec2 -k sparkclusterkey -i ~/sparkclusterkey.pem \
+   --region=eu-west-1 stop spark-cluster
 #restart
-./ec2/spark-ec2 -k sparkclusterkey -i ~/sparkclusterkey.pem --region=eu-west-1  start spark-cluster
+./ec2/spark-ec2 -k sparkclusterkey -i ~/sparkclusterkey.pem \
+   --region=eu-west-1 start spark-cluster
 #destroy
-./ec2/spark-ec2 -k sparkclusterkey -i ~/sparkclusterkey.pem --region=eu-west-1  destroy spark-cluster
+./ec2/spark-ec2 -k sparkclusterkey -i ~/sparkclusterkey.pem \
+   --region=eu-west-1  destroy spark-cluster
 {% endhighlight %}
 
 **Well done !**

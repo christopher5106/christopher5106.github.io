@@ -5,7 +5,7 @@ date:   2015-07-03 23:00:51
 categories: big data
 ---
 
-###Which notebooks for my computations ?
+### Which notebooks for my computations ?
 
 [iPython](http://ipython.org/notebook.html) was the first shell to introduce this great feature called "notebook", that enables a nice display of your computations in a web server instead of a standard shell :
 
@@ -29,46 +29,75 @@ But the most promising one is [Zeppelin](http://zeppelin.incubator.apache.org/) 
 
 **Let's launch a Spark cluster on EC2 and do some computations in our Zeppelin notebook**
 
-###Launch of the Spark Cluster on EC2
+### Launch of the Spark Cluster on EC2
 
 You need a AWS account, with an EC2 key pair, and credentials with `AmazonEC2FullAccess` policy.
 
 {% highlight bash %}
 #download last Spark version for Hadoop 2
-wget http://wwwftp.ciril.fr/pub/apache/spark/spark-1.4.0/spark-1.4.0-bin-hadoop2.6.tgz
-tar xvzf spark-1.4.0-bin-hadoop2.6.tgz
+wget http://wwwftp.ciril.fr/pub/apache/spark/spark-1.6.0/spark-1.6.0-bin-hadoop2.6.tgz
+tar xvzf spark-1.6.0-bin-hadoop2.6.tgz
 rm spark-1.4.0-bin-hadoop2.6.tgz
+
 #export the AWS credentials
 export AWS_ACCESS_KEY_ID=...
 export AWS_SECRET_ACCESS_KEY=...
+
 #verify the permissions of the keypair
 chmod 600 sparkclusterkey.pem
+
 #launch the cluster with --copy-aws-credentials option to enable S3 access.
-./spark-1.4.0-bin-hadoop2.6/ec2/spark-ec2 -k sparkclusterkey -i sparkclusterkey.pem --region=eu-west-1 --copy-aws-credentials --instance-type=m1.large -s 4 --hadoop-major-version=2 launch spark-cluster
+cd spark-1.6.0-bin-hadoop2.6
+./ec2/spark-ec2 -k sparkclusterkey -i sparkclusterkey.pem \
+--region=eu-west-1 --copy-aws-credentials --instance-type=m1.large \
+-s 4 --hadoop-major-version=2 launch spark-cluster
 {% endhighlight %}
 
 Your master cluster hostname should appear in the logs :
 
     Generating cluster's SSH key on master...
-    Warning: Permanently added 'ec2-52-18-32-219.eu-west-1.compute.amazonaws.com,52.18.32.219' (RSA) to the list of known hosts.
+    Warning: Permanently added 'ec2-XX-XX-XX-XXX.eu-west-1.compute.amazonaws.com,XX.XX.XX.XXX' (RSA) to the list of known hosts.
 
-In order to access your cluster's master from Zeppelin notebook, open port `7077` in the master's EC2 security group (which is the name of the cluster with '-master' appended, in our case `spark-cluster-master`) to be accessible from the instance where you will install your notebook (your IP if it's on your computer).
+Be sure to have following ports open in the master's EC2 security group (the master security group name is the name of the cluster with '-master' appended, in our case `spark-cluster-master`) :
 
-###Zeppelin install
+- `8080` : the Spark master web interface is where the jobs (as well as Spark shells which are long term jobs) are displayed.
+
+- `7077` : the TCP interface to submit jobs,
+
+both to open for access from the instance on which will be installed the Zeppelin notebook.
+
+
+### Zeppelin install
+
+Download and compile Zeppelin:
 
 {% highlight bash %}
-#download and compile Zeppelin
 git clone https://github.com/apache/incubator-zeppelin
-cd incubator-zeppelin
-mvn install -DskipTests -Dspark.version=1.4.0 -Dhadoop.version=2.6.0
-cd ..
-#launch Zeppelin web server
-incubator-zeppelin/bin/zeppelin-daemon.sh start
+mv incubator-zeppelin zeppelin-0.5.6
+cd zeppelin-0.5.6
+mvn clean package -Pspark-1.6 -Phadoop-2.6 -DskipTests
+mv conf/zeppelin-env.sh.template conf/zeppelin-env.sh
+vim conf/zeppelin-env.sh
 {% endhighlight %}
 
-Now Zeppelin interface is available at `http://localhost:8080/`.
+Add the line :
 
-###Configure your EC2 Spark Cluster in Zeppelin
+    export MASTER=spark://ec2-XX-XX-XX-XXX.eu-west-1.compute.amazonaws.com:7077
+
+
+Now it's time to start (or restart) Zeppelin web server
+
+{% highlight bash %}
+./bin/zeppelin-daemon.sh start
+{% endhighlight %}
+
+Zeppelin interface is available at `http://localhost:8080/`.
+
+### Configure your EC2 Spark Cluster in Zeppelin
+
+
+
+
 
 Go to the interpreter `http://localhost:8080/#/interpreter`.
 
@@ -80,7 +109,7 @@ Go to the interpreter `http://localhost:8080/#/interpreter`.
 
 **Now you're ready for computation**
 
-###Computations
+### Computations
 
 Create a new Note and open it.
 
@@ -101,10 +130,12 @@ You can see your Zeppelin shell running as an application in the Spark cluster a
 
 ![Zeppelin Shell Example]({{ site.url }}/img/zeppelin-shell.png)
 
-###Close
+### Close
 {% highlight bash %}
 #destroy the cluster
-./spark-1.4.0-bin-hadoop2.6/ec2/spark-ec2 -k sparkclusterkey -i sparkclusterkey.pem --region=eu-west-1 destroy spark-cluster
+./spark-1.4.0-bin-hadoop2.6/ec2/spark-ec2 -k sparkclusterkey -i sparkclusterkey.pem \
+--region=eu-west-1 destroy spark-cluster
+
 #stop zeppelin web server
 incubator-zeppelin/bin/zeppelin-daemon.sh stop
 {% endhighlight %}

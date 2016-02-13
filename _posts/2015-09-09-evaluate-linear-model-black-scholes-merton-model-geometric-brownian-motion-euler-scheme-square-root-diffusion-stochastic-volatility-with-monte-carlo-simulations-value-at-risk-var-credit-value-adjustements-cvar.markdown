@@ -15,7 +15,7 @@ In this document, estimates of the value at risk and credit value adjustments ar
 
 Let's see some well-known laws in practice :) ...
 
-#A linear model on normally distributed market factor returns
+# A linear model on normally distributed market factor returns
 
 It's a very simple model where the relation between market factors (such as indexes) and market returns of an instrument (such as stocks) is given by a linear model over the features of the market factors :
 
@@ -128,12 +128,12 @@ Be careful if you want to have multiple shell, you have to restrict the number o
 
     --total-executor-cores 4
 
-such as : 
+such as :
 
     ~/technologies/spark-1.4.1-bin-hadoop2.6/bin/spark-shell --master spark://ec2-52-19-187-119.eu-west-1.compute.amazonaws.com:7077 --driver-memory 1g --executor-memory 1g --driver-cores 1 --executor-cores 1 --total-executor-cores 4
 
-#Geometric brownian motion
+# Geometric brownian motion
 
-#Square-root diffusion
+# Square-root diffusion
 
-#Stochastic volatility
+# Stochastic volatility

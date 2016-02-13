@@ -12,7 +12,7 @@ The purpose of this article is to present my best pratice about redirecting the 
 Such a redirection might be more tricky than it seems. I will precise in this paper the technical constraints and possibilities for the different platforms, in particular Android and IOS.
 
 
-#Asking the question : install or open the app ?
+# Asking the question : install or open the app ?
 
 For a user that has already installed the app, the case of best and engaged users, it's quite annoying to ask her to download the app... a button "open the app" will better suit her situation and be less aggressive.
 
@@ -40,7 +40,7 @@ The choice is saved, and **the next times, the button "Install the app" will not
 
 In case the user has uninstalled the app or answered wrong, the 'open the app' action will not be that problematic as we'll see later : on Android it will just redirect to Google Play and on IOS a small error popup will appear shortly before redirecting to the Appstore also.
 
-#Detecting if the page is being viewed with a mobile device
+# Detecting if the page is being viewed with a mobile device
 
 Such a redirection can be simply done by a standalone script in Javascript, that will first detect if it's a mobile device.
 
@@ -57,7 +57,7 @@ IS_MOBILE = IS_IOS || IS_ANDROID;
 
 If the page is viewed under a mobile device, the script can take further actions.
 
-#Mapping URL between WWW and M web sites
+# Mapping URL between WWW and M web sites
 
 No need to say that the main advantage of keeping two separate web sites, one for PC, and one for mobile, is to offer different but better experiences, and that will usually lead to different URL.
 
@@ -74,7 +74,7 @@ But do we really need to define a parameter ?
 No, not really. We can combine it with the Applink tag in the HTML page, in the case **the mobile app and the mobile website have the same ergonomy**, for example in the case of an hybrid app.
 
 
-#Defining redirection parameters with Applinks
+# Defining redirection parameters with Applinks
 
 [Applinks](http://applinks.org/) allow a page, when shared on a social network, and seen in the feed of the social networks, to directly open the app if the app is installed, instead of the browser.
 
@@ -116,7 +116,7 @@ In conclusion, just insert the JS script in the HTML header of all the WWW pages
 
 **It's a re-use of the "Applink standard" in our JS to decide if there has to be a redirection on mobile, and where to redirect in such a case.**
 
-#Detecting and launching the app with custom URI schemes
+# Detecting and launching the app with custom URI schemes
 
 Custom URI schemes are the last step, to be able to open the right page inside the app (in the case of opening the app), but also to launch the app.
 

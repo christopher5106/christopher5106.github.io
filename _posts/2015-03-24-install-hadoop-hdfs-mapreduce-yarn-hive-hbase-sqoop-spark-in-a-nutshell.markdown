@@ -5,7 +5,7 @@ date:   2015-03-24 23:00:51
 categories: bigdata
 ---
 
-#Hadoop in pseudodistributed mode
+# Hadoop in pseudodistributed mode
 
 Pseudodistributed mode is the mode that enables you to create a Hadoop cluster of 1 node on your PC. Pseudodistributed mode is the step before going to the real distributed cluster.
 
@@ -31,7 +31,7 @@ To check, type `ssh localhost`.
 
 (On Mac OS activate **Settings > Sharing > Remote Login**)
 
-#HDFS
+# HDFS
 
 To use HDFS as default, in **conf/core-site.xml** :
 
@@ -69,7 +69,7 @@ To start HDFS :
 
 The namenode will be accessible at [http://localhost:50070/](http://localhost:50070/).
 
-#Mapreduce 1
+# Mapreduce 1
 
 
 **mapred-site.xml**
@@ -92,7 +92,7 @@ To start the MapReduce 1
 
 The jobtracker will be available at [http://localhost:50030/](http://localhost:50030/).
 
-#Mapreduce 2 (Yarn)
+# Mapreduce 2 (Yarn)
 
 In **conf/yarn-site.xml**
 
@@ -119,7 +119,7 @@ The resource manager will be available at [http://localhost:8088/](http://localh
 
 **Now you're ready to submit your first map reduce job !**
 
-#Hive
+# Hive
 
 Hive is the SQL-like engine based on Hadoop HDFS + MapReduce.
 
@@ -139,7 +139,7 @@ Just check everything works by creating your first table :
 
 **Now you're ready to query high volumes of data as if you were in MYSQL !**
 
-#Hbase
+# Hbase
 
 Hbase is a great NO-SQL database, based on Hadoop HDFS. To simplify, it is a database with only one key, that is ordered, and split into regions distributed over the cluster of nodes in a redundant way. It's particularly useful when you have millions of writes to perform simultanuously on billions of documents - where no traditional database can do the job - such as in the case of a social application with many users that like and comment many user-generated contents.
 
@@ -183,7 +183,7 @@ To launch the Hbase shell, type `hbase shell` and you can run your commands
     get 'table1', 'row1'
     disable 'table1'; drop 'table1'
 
-#Sqoop
+# Sqoop
 
 Sqoop is a great connector to perform import / export between a database and HDFS.
 
@@ -197,7 +197,7 @@ Sqoop is a great connector to perform import / export between a database and HDF
 
 To check it works, type `sqoop help`.
 
-#Spark
+# Spark
 
     wget http://d3kbcqa49mib13.cloudfront.net/spark-1.3.0-bin-hadoop1.tgz
     tar xvzf spark-1.3.0-bin-hadoop1.tgz

@@ -8,10 +8,10 @@ categories: big data
 
 Install on a AWS g2 instance, with Ubuntu 14.04.
 
-#Install Cuda and Cudnn
+# Install Cuda and Cudnn
 
 {% highlight bash %}
-#Install Cuda
+# Install Cuda
 wget http://developer.download.nvidia.com/compute/cuda/repos/ubuntu1404/x86_64/cuda-repo-ubuntu1404_7.0-28_amd64.deb
 sudo dpkg -i cuda-repo-ubuntu1404_7.0-28_amd64.deb
 sudo apt-get update
@@ -21,19 +21,19 @@ rm cuda-repo-ubuntu1404_7.0-28_amd64.deb
 /usr/local/cuda/bin/nvcc --version
 #> Cuda compilation tools, release 7.0, V7.0.27
 
-#Install Cudnn
+# Install Cudnn
 wget https://s3-eu-west-1.amazonaws.com/christopherbourez/public/cudnn-6.5-linux-x64-v2.tgz
 tar cudnn-6.5-linux-x64-v2.tgz
 rm xvzf cudnn-6.5-linux-x64-v2.tgz
 sudo cp cudnn-6.5-linux-x64-v2/cudnn.h /usr/local/cuda-7.5/include/
 sudo cp cudnn-6.5-linux-x64-v2/libcudnn* /usr/local/cuda-7.5/lib64/
 
-#Install Git
+# Install Git
 sudo apt-get -y install git
 {% endhighlight %}
 
 
-#Install Caffe alone
+# Install Caffe alone
 
 {% highlight bash %}
 git clone https://github.com/BVLC/caffe.git
@@ -84,7 +84,7 @@ sudo apt-get install linux-image-extra-$(uname -r)
 sudo reboot
 {% endhighlight %}
 
-#Install Digits with Digits'Caffe...
+# Install Digits with Digits'Caffe...
 
 {% highlight bash %}
 wget https://s3-eu-west-1.amazonaws.com/christopherbourez/public/digits-2.0.0-preview.gz
@@ -133,7 +133,7 @@ Q ?= @
 LIBRARY_NAME_SUFFIX := -nv
 {% endhighlight %}
 
-#... or simply launch an instance provisionned by Chef
+# ... or simply launch an instance provisionned by Chef
 
 You can launch instantly a g2 instance on AWS with my Chef deployment recipe ['digits-server-simple'](https://github.com/christopher5106/digits-server-simple).
 
@@ -143,7 +143,7 @@ Create an AWS Opsworks Stack with your repo and its deploy key. Add to your stac
 
 **That's it !** Now, whenever you want DIGITS, simply launch a g2 instance in one click, with the 'Add instance' button and it will configure itself.
 
-#Add a dataset to train on
+# Add a dataset to train on
 
 ![Add dataset]({{ site.url }}/img/digits_dataset.png)
 
@@ -152,12 +152,12 @@ and it will create it in the DB
 ![Classification]({{ site.url }}/img/digits_create_db.png)
 
 
-#Create the model
+# Create the model
 
 ![Classification]({{ site.url }}/img/digits_create_model.png)
 
 
-#The REST API
+# The REST API
 
 The Digits classification server offers a great [REST API](https://github.com/NVIDIA/DIGITS/blob/master/docs/API.md) in order to integrate it in a bigger IT process and global system.
 

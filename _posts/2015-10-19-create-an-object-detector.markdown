@@ -5,7 +5,7 @@ date:   2015-10-19 23:00:51
 categories: computer vision
 ---
 
-Let's create a detector. 
+Let's create a detector.
 
 I will train the classifier with training windows of size 50 x 42 :
 
@@ -151,7 +151,7 @@ and call the detector
 
 **Well done !**
 
-##more
+## more
 
 A few posts : [1](http://coding-robin.de/2013/07/22/train-your-own-opencv-haar-classifier.html)
 - [2](http://note.sonots.com/SciSoftware/haartraining.html)

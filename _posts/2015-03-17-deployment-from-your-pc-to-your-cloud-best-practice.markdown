@@ -36,7 +36,7 @@ It is true for any organization of any size, from the start-up with one develope
 
 
 
-#Choosing the right technology
+# Choosing the right technology
 
 When choosing a technology, it's good to think in terms of "standards" because the nightmare could come from
 
@@ -72,7 +72,7 @@ Chef is the common denominator. The same way to deploy everywhere, as shown in t
 **Note about Docker technology** : deploying with Docker requires to create a script for the Docker build (the `Dockerfile`), plus the [cookbook script to deploy the Docker](http://blogs.aws.amazon.com/application-management/post/Tx2FPK7NJS5AQC5/Running-Docker-on-AWS-OpsWorks), so it's two times more work, two scripts, much more complexity, and no good solution for parameter management (environments/stacks) and conf files (templates). In case you'd like to mutualise your cookbook and your Dockerfile, you can create a Bash script for the installation, that can be run by the [RUN command](https://docs.docker.com/reference/run/) in the Dockerfile, and by the [execute resource](https://docs.chef.io/resource_execute.html) in your cookbook.
 This will be certainly different when leading cloud providers will provide us Docker deployment specific interfaces, with cost reductions.
 
-#Chef, as our opensource standard
+# Chef, as our opensource standard
 
 Chef enables you to write "recipes" in Ruby to deploy your application/site. Recipes are like scripts to execute on the target machine.
 
@@ -146,7 +146,7 @@ For Vagrant you can create **Chef roles**, a role is a list of recipes to execut
 These differences are still small.
 
 
-#Vagrant for deployment on your local machine
+# Vagrant for deployment on your local machine
 
 First, install Vagrant, Chef-DK, VirtualBox on your PC/Macbook.
 
@@ -214,7 +214,7 @@ Or to replay the provisionning of your VM with Chef Solo + Bershelf :
 Quite easy !
 
 
-#Opsworks, for deployment on Amazon AWS cloud
+# Opsworks, for deployment on Amazon AWS cloud
 
 
 In your stack settings,
@@ -230,7 +230,7 @@ Not much more to say. To start an instance, click on the button !
 
 
 
-#Berkshelf and your first recipe
+# Berkshelf and your first recipe
 
 Oh, now it's time to write your first recipe.
 

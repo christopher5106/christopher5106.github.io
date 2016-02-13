@@ -5,7 +5,7 @@ date:   2015-09-01 23:00:51
 categories: optical character recognition
 ---
 
-#Training Tesseract on a new font
+# Training Tesseract on a new font
 
 First install Tesseract
 

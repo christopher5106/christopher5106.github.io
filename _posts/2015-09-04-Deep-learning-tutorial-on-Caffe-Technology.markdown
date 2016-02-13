@@ -9,14 +9,14 @@ categories: deep learning
 
 Let's try to put things into order, in order to get a good tutorial :).
 
-#Caffe
+# Caffe
 
-###Install
+### Install
 
 First install Caffe following my tutorials on [Ubuntu]({{ site.url }}/big/data/2015/07/16/deep-learning-install-caffe-cudnn-cuda-for-digits-python-on-ubuntu-14-04.html) or [Mac OS]({{ site.url }}/big/data/2015/07/16/deep-learning-install-caffe-cudnn-cuda-for-digits-python-on-mac-osx.html) with Python layers activated and pycaffe path correctly set `export PYTHONPATH=~/technologies/caffe/python/:$PYTHONPATH`.
 
 
-###Launch the python shell
+### Launch the python shell
 
 In the iPython shell in your Caffe repository, load the different libraries  :
 
@@ -40,7 +40,7 @@ caffe.set_device(0)
 caffe.set_mode_gpu()
 {% endhighlight %}
 
-###Define a network model
+### Define a network model
 
 Let's create first a very simple model with a single convolution composed of 3 convolutional neurons, with kernel of size 5x5 and stride of 1 :
 
@@ -130,7 +130,7 @@ This will print the following image :
 
 ![simple network]({{ site.url }}/img/simple_network.png)
 
-###Compute the net output on an image as input
+### Compute the net output on an image as input
 
 
 
@@ -161,7 +161,7 @@ To save the net parameters `net.params`, just call :
 net.save('mymodel.caffemodel')
 {% endhighlight %}
 
-###Load pretrained parameters to classify an image
+### Load pretrained parameters to classify an image
 
 In the previous net, weight and bias params have been initialiazed randomly.
 
@@ -238,7 +238,7 @@ It will print you the top classes detected for the images.
 
 
 
-###Learn : solve the params on training data
+### Learn : solve the params on training data
 
 It is now time to create your own model, and training the parameters on training data.
 
@@ -329,7 +329,7 @@ To run the full gradient descent :
     solver.solve()
 
 
-###Input data, train and test set
+### Input data, train and test set
 
 In order to learn a model, you usually set a training set and a test set.
 
@@ -370,7 +370,7 @@ The different input layer can be :
           }
         }
 
-###Compute accuracy of the model on the test data
+### Compute accuracy of the model on the test data
 
 Once solved,
 
@@ -388,14 +388,14 @@ print("Accuracy: {:.3f}".format(accuracy))
 
 **The higher the accuracy, the better !**
 
-###Parameter sharing
+### Parameter sharing
 
 [Parameter sharing between Siamese networks](http://caffe.berkeleyvision.org/gathered/examples/siamese.html)
 
 
-#Caffe in Python
+# Caffe in Python
 
-###Define a model in Python
+### Define a model in Python
 
 It is also possible to define the net model directly in Python, and save it to a prototxt files. Here are the commands :
 
@@ -529,7 +529,7 @@ will produce the prototxt file :
       top: "loss"
     }
 
-###Create your custom python layer
+### Create your custom python layer
 
 Let's create a layer to add a value.
 
@@ -582,7 +582,7 @@ net.blobs['data'].data[...] = im_input
 net.forward()
 {% endhighlight %}
 
-#Caffe in C++
+# Caffe in C++
 
 The **blob** ([blob.hpp](https://github.com/BVLC/caffe/blob/master/include/caffe/blob.hpp) and [blob.cpp](https://github.com/BVLC/caffe/blob/master/src/caffe/blob.cpp)) is a wrapper to manage memory independently of CPU/GPU choice, using [SyncedMemory class](https://github.com/BVLC/caffe/blob/master/src/caffe/syncedmem.cpp), and has a few functions like Arrays in Python, both for the data and the computed gradient (diff) arrays contained in the blob :
 

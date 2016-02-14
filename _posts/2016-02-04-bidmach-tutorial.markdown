@@ -362,6 +362,8 @@ val value = fs.next
 
 `fopts.what` give all set options.
 
+BatchSize should be kept smaller than ncols for the files. Ideally a submultiple. 
+
 Lastly, have a look at SFileSource for sparse file data source.
 
 

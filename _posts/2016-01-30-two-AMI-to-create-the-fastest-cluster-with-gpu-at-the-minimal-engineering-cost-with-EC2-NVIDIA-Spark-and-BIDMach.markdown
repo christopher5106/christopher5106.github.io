@@ -74,8 +74,9 @@ Let's create a public AMI : **ami-0ef6407d**. This AMI can be used
 - to launch with Spark a cluster of GPU instances with NVIDIA Driver and CUDA 7.5 pre-installed, as we show in the last section.
 
 
-# Compile JCUDA, BIDMat, BIDMach libraries
+# Creation of the AMI for G2+Spark with NVIDIA driver, CUDA 7.5, JCUDA, BIDMat and BIDMach libraries pre installed
 
+Compile JCUDA, BIDMat, BIDMach libraries on the previous instance :
 
 {% highlight bash %}
 

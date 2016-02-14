@@ -27,7 +27,7 @@ These AMI are also *Spark-compatible*. In the last section, I'll show how to use
 
 - Spark to launch many of these instances to parallelize the computing along hyperparemeter tuning. Hyperparameter tuning consists in repeating the same machine learning task with different hyperparemeters (parameters for the model). It is a kind of best practice to distribute machine learning computing this way, ie to parallelize along the hyperparemeter tuning (see also [Databricks example for Tensorflow](https://databricks.com/blog/2016/01/25/deep-learning-with-spark-and-tensorflow.html)), each instance will do the training for one set of hyperparameters, instead of distributing the machine learning algorithm itself, which would require a very ineffective data shuffling between instances.
 
-I cannot use AWS EMR to launch the cluster because I need to install nvidia and cuda, that would require a reboot of the instances.
+I cannot use AWS EMR to launch a GPU cluster because I need to install nvidia and cuda, that would require a reboot of the instances.
 
 # Creation of the AMI for G2+Spark with NVIDIA driver and CUDA 7.5 installed
 

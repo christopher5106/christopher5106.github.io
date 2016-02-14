@@ -504,7 +504,7 @@ Launch the Spark Shell and be sure to have only 1 core per GPU on each executor 
 
 {% highlight bash %}
 ./spark/bin/spark-shell --conf spark.executor.cores=1 --jars \
- /home/ec2-user/BIDMach/lib/BIDMat.jar,/home/ec2-user/BIDMach/BIDMach.jar
+ /home/ec2-user/BIDMach/lib/BIDMat.jar,/home/ec2-user/BIDMach/BIDMach.jar,/home/ec2-user/BIDMach/lib/jcuda-0.7.5.jar
 {% endhighlight %}
 
 
@@ -594,10 +594,17 @@ Hyperparameters are the parameters of the prediction model : number of trees, de
 Grid search consists in computing the model for a grid of combinations for the parameters, for example
 
 {% highlight scala %}
-val lrates = col(0.03f, 0.1f, 0.3f, 1f)        // 4 values
-val texps = col(0.3f, 0.4f, 0.5f, 0.6f, 0.7f)  // 5 values
+import BIDMat.{CMat, CSMat, DMat, Dict, FMat, FND, GMat, GDMat, GIMat, GLMat, GSMat, GSDMat, HMat, IDict, Image, IMat, LMat, Mat, SMat, SBMat, SDMat}
+import BIDMat.MatFunctions._
 
-val lrateparams = ones(texps.nrows, 1) ⊗ lrates
-val texpparams = texps ⊗ ones(lrates.nrows,1)
-lrateparams \ texpparams
+val ndepths = IMat(4,1, Array(5, 10, 20, 30))  // 4 values
+val ntrees = IMat(5,1, Array(5, 10, 20, 50, 100))  // 5 values
+
+val ndepthsparams = ones(ntrees.nrows, 1) ⊗ ndepths
+val ntreesparams = ntrees ⊗ ones(ndepths.nrows,1)
+ndepthsparams \ ntreesparams
 {% endhighlight %}
+
+opts.depth =  5
+opts.ncats = 2 // number of categories of label
+opts.ntrees = 20

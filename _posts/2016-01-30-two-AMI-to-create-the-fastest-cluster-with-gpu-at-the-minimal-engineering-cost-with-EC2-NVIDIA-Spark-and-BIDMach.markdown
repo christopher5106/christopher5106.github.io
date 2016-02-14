@@ -188,6 +188,7 @@ Create the cluster with the new repo and the instance profile  :
 launch spark-cluster
 {% endhighlight %}
 
+Be careful : if you intend to use BIDMach, you need to compile Spark for Scala 2.11. [Have a look here for more info](http://christopher5106.github.io/big/data/2016/02/04/bidmach-tutorial.html#spark).
 
 And log in and start the shell :
 

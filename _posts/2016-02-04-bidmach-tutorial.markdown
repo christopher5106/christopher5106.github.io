@@ -458,6 +458,7 @@ wget http://apache.crihan.fr/dist/spark/spark-1.6.0/spark-1.6.0.tgz
 tar xvzf spark-1.6.0.tgz
 cd spark-1.6.0
 ./dev/change-scala-version.sh 2.11
+export MAVEN_OPTS='-Xmx2g -XX:MaxPermSize=2g'
 mvn -Pyarn -Phadoop-2.6 -Dscala-2.11 -DskipTests clean package
 export SPARK_HOME=`pwd`
 {% endhighlight %}

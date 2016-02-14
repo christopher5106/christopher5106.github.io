@@ -18,7 +18,16 @@ there is a very great [BIDMach library](http://bid2.berkeley.edu/bid-data-projec
 
 **Having the library installed locally** presents the great advantage to develop and test on small datasets directly on the local computer, before renting an GPU-enabled instance in the cloud.
 
-As usual, it requires an iMac with a NVIDIA GPU and its CUDA library installed.
+For a **CPU-only install**
+
+{% highlight bash %}
+git clone https://github.com/BIDData/BIDMach.git
+cd BIDMach
+./getdevlibs.sh
+./sbt clean package
+{% endhighlight %}
+
+For a **GPU install**, it requires an iMac with a NVIDIA GPU and its CUDA library installed.
 
 Since I'm using CUDA 7.5 instead of 7.0, I had to recompile JCuda, BIDMat, and BIDMach.
 

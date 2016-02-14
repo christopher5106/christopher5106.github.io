@@ -7,9 +7,9 @@ categories: big data
 
 In this tutorial, I will create two AMI for AWS G2 instances (GPU-enabled), the first one with NVIDIA driver and Cuda 7.5 installed, the second one with NVIDIA  driver, Cuda 7.5 and BIDMach technologies.
 
-- **ami-0ef6407d**
+- **ami-0ef6407d** : NVIDIA driver + Cuda 7.5
 
-- **ami-18f5466b** or with more memory (some files removed): **ami-e2f74491**  
+- **ami-18f5466b** or with more memory (some files removed): **ami-e2f74491** : NVIDIA driver + Cuda 7.5 + BIDMach
 
 
 To run an instance from one of these AMI, just run :
@@ -144,12 +144,13 @@ cd ../..
 
 {% endhighlight %}
 
-Let's create a public AMI : **ami-e2f74491**. This AMI is useful
+Let's create a public AMI : **ami-18f5466b**. This AMI is useful
 
 - to get an instance with BIDMach pre-installed
 
 - to launch with Spark a cluster of GPU instances with NVIDIA driver, CUDA 7.5, JCUDA, BIDMat, and BIDMach libraries installed, as we show below.
 
+Let's delete BIDMat, BIDMach tutorials, Maven, JCuda, to get an AMI with more space and create **ami-e2f74491**, which is definitely the one you should choose.
 
 <a name="launch_cluster" />
 

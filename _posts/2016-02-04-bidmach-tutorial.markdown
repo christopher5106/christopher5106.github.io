@@ -411,6 +411,39 @@ Option `opts.useGPU = false` will disable use of GPU.
     purity gain 0,1463, fraction impure 0,599, nnew 4,9, nnodes 19,7
     Time=0,2820 secs, gflops=0,34
 
+
+Parameters are :
+
+- depth(20): Bound on the tree depth, also the number of passes over the dataset.
+
+- ntrees(20): Number of trees in the Forest.
+
+- nsamps(32): Number of random features to try to split each node.
+
+- nnodes(200000): Bound on the size of each tree (number of nodes).
+
+- nbits(16): Number of bits to use for feature values.
+
+- gain(0.01f): Lower bound on impurity gain in order to split a node.
+
+- catsPerSample(1f): Number of cats per sample for multilabel classification.
+
+- ncats(0): Number of cats or regression values. 0 means guess from datasource.
+
+- training(true): Run for training (true) or prediction (false)
+
+- impurity(0): Impurity type, 0=entropy, 1=Gini
+
+- regression(false): Build a regression Forest (true) or classification Forest (false).
+
+- seed(1): Random seed for selecting features. Use this to train distinct Forests in multiple runs.
+
+- useIfeats(false): An internal var, when true use explicit feature indices vs compute them.
+
+- MAE(true): true=Use Mean Absolute Error when reporting performance vs. false=Mean Squared Error
+
+- trace(0): level of debugging information to print (0,1,2).
+
 <a name="spark" />
 
 
@@ -471,7 +504,7 @@ Launch the Spark Shell and be sure to have only 1 core per GPU on each executor 
 
 {% highlight bash %}
 ./spark/bin/spark-shell --conf spark.executor.cores=1 --jars \
- /home/ec2-user/BIDMat/BIDMat.jar,/home/ec2-user/BIDMach/BIDMach.jar
+ /home/ec2-user/BIDMach/lib/BIDMat.jar,/home/ec2-user/BIDMach/BIDMach.jar
 {% endhighlight %}
 
 

@@ -54,9 +54,9 @@ cd spark-1.6.0-bin-hadoop2.6
 
 To persist the data when you close the cluster, you can add for example an EBS of 30G to each instance with option `--ebs-vol-size=30`, if the data you need to persist will require less than 150GB (5 x 30). You'll also need to change the HDFS for persistent (see below).
 
-Spark master web interface will be available on the master node on port `8080`.
+Spark master web interface will be available on the master node on port `8080`. The web UI lists all jobs, completed, failed, or running.
 
-Spark master web interface will be available on the master node on port `4040`.
+Clicking on a running job, for example a *spark-shell*, will lead to the "job web interface", named **application UI**, which are running on other ports `4040`, `4041`, ... and are executed in the job driver process, not the spark master process.
 
 **We're now ready !**
 

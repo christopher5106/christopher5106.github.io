@@ -189,7 +189,7 @@ ssh -i us-west2-keypair.pem ec2-user@ec2-XXX_DNS.us-west-2.compute.amazonaws.com
 In the **EU west zone (Irland)** :
 
 {% highlight bash %}
-aws ec2 run-instances --image-id ami-1ae15769 --key-name sparkclusterkey \
+aws ec2 run-instances --image-id ami-e2f74491 --key-name sparkclusterkey \
 --instance-type g2.2xlarge --region eu-west-1 --security-groups bidmach
 {% endhighlight %}
 

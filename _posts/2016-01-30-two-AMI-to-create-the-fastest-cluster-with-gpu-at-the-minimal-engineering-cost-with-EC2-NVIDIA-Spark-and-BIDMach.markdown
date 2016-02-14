@@ -19,7 +19,7 @@ aws ec2 run-instances --image-id ami-e2f74491 --key-name sparkclusterkey \
 --instance-type g2.2xlarge --region eu-west-1 --security-groups bidmach
 {% endhighlight %}
 
-These AMI are also Spark-compatible. In the last section, I'll show how to use them to launch the world's fastest cluster at minimal engineering cost:
+These AMI are also *Spark-compatible*. In the last section, I'll show how to use them to launch the world's fastest cluster at minimal engineering cost, that is :
 
 - EC2 G2 instances, with NVIDIA GPU offering **1536 cores on a single instance**, the maximal power on a single cloud instance currently available so easily
 

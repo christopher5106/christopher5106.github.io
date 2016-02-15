@@ -18,11 +18,11 @@ This AMI enables to create a cluster of GPU instances with BIDMach.
 
 To run an instance from one of these AMI, just run :
 
-{% highlight bash %}
+
+```bash
 aws ec2 run-instances --image-id ami-e2f74491 --key-name sparkclusterkey \
 --instance-type g2.2xlarge --region eu-west-1 --security-groups bidmach
-{% endhighlight %}
-
+```
 
 Placing many of these instances in a cluster make the world's fastest cluster at minimal engineering cost, that is :
 
@@ -39,20 +39,20 @@ I cannot use AWS EMR to launch a GPU cluster because I need to install nvidia an
 
 Let's launch an instance with AMI Id `ami-2ae0165d` given by [the AMI list for Spark](https://github.com/amplab/spark-ec2/blob/branch-1.5/ami-list/eu-west-1/hvm), for Europe :
 
-{% highlight bash %}
+```bash
 aws ec2 run-instances --image-id ami-2ae0165d --instance-type g2.2xlarge \
 --key-name bidmach-keypair --security-groups bidmach
-{% endhighlight %}
+```
 
 and connect
 
-{% highlight bash %}
+```bash
 ssh -i bidmach-keypair.pem ec2-user@ec2-XXX.eu-west-1.compute.amazonaws.com
-{% endhighlight %}
+```
 
 And install :
 
-{% highlight bash %}
+```bash
 sudo yum update -y
 sudo reboot
 sudo yum groupinstall -y "Development tools"
@@ -69,7 +69,7 @@ nvidia-smi -q | head
 sudo mkdir /mnt/tmp
 wget http://developer.download.nvidia.com/compute/cuda/7.5/Prod/local_installers/cuda_7.5.18_linux.run
 sudo bash cuda_7.5.18_linux.run --tmpdir /mnt/tmp
-{% endhighlight %}
+```
 
 Add /usr/local/cuda/bin to the path in the bash profile to have the NVCC compiler available.
 
@@ -87,7 +87,7 @@ To launch a cluster of this AMI :
 
 - create an IAM role named *spark-ec2* to later on be able to give access to resources to the Spark cluster (without having to deal with security credentials on the instances - avoiding dangerous `--copy-aws-credentials` option) and add the permission to attribute this role to the user launching the spark-ec2 command :
 
-{% highlight json %}
+```json
 {
     "Version": "2012-10-17",
     "Statement": [{
@@ -102,42 +102,42 @@ To launch a cluster of this AMI :
         }
     ]
 }
-{% endhighlight %}
+```
 
 - create the cluster with the new repo and the instance profile  :
 
-{% highlight bash %}
+```bash
 ./ec2/spark-ec2 -k sparkclusterkey -i ~/sparkclusterkey.pem \
 --region=eu-west-1 --instance-type=g2.2xlarge \
 -s 1 --hadoop-major-version=2 \
 --spark-ec2-git-repo=https://github.com/christopher5106/spark-ec2 \
 --instance-profile-name=spark-ec2 \
 launch spark-cluster
-{% endhighlight %}
+```
 
 
 And log in and start the shell :
 
-{% highlight bash %}
+```bash
 ./ec2/spark-ec2 -k sparkclusterkey -i ~/sparkclusterkey.pem \
 --region=eu-west-1 login spark-cluster
 
 ./spark/bin/spark-shell
-{% endhighlight %}
+```
 
 Terminate the cluster:
 
-{% highlight bash %}
+```bash
 ./ec2/spark-ec2 -k sparkclusterkey -i ~/sparkclusterkey.pem \
 --region=eu-west-1  destroy spark-cluster
-{% endhighlight %}
+```
 
 
 # Creation of the AMI for G2 with NVIDIA driver, CUDA 7.5, JCUDA, BIDMat and BIDMach libraries pre installed
 
 Compile JCUDA, BIDMat, BIDMach libraries on the previous instance :
 
-{% highlight bash %}
+```bash
 
 #install Cmake
 wget https://cmake.org/files/v3.4/cmake-3.4.3.tar.gz
@@ -201,11 +201,18 @@ make install
 cd ../..
 ./sbt clean package
 
-{% endhighlight %}
+```
 
 Let's create a public AMI : **ami-18f5466b**. This AMI is useful to get an instance with BIDMach pre-installed.
 
-Be careful : if you intend to use BIDMach, you need to compile Spark for Scala 2.11. See in the next section.
+Be careful :
+
+- before launching `bidmach` command, change the version and augment the memory in the *bidmach* file :
+
+    JCUDA_VERSION="0.7.5" # Fix if needed
+    MEMSIZE="-Xmx12G"
+
+- if you intend to use Spark, you need to compile BIDMach for Scala 2.10 (which is not supported), otherwise see in the next section (I compile Spark for Scala 2.11 and create a third AMI).
 
 Let's delete BIDMat, BIDMach tutorials, Maven, JCuda, to get an AMI with more space and create **ami-e2f74491**, which is definitely the one you should choose.
 
@@ -216,7 +223,7 @@ Let's delete BIDMat, BIDMach tutorials, Maven, JCuda, to get an AMI with more sp
 
 To have Spark work with BIDMach, let's compile Spark with Scala 2.11 :
 
-{% highlight bash %}
+```bash
 wget http://apache.crihan.fr/dist/spark/spark-1.6.0/spark-1.6.0.tgz
 tar xvzf spark-1.6.0.tgz
 cd spark-1.6.0
@@ -224,7 +231,7 @@ cd spark-1.6.0
 export MAVEN_OPTS='-Xmx2g -XX:MaxPermSize=2g'
 mvn -Pyarn -Phadoop-2.6 -Dscala-2.11 -DskipTests clean package
 export SPARK_HOME=`pwd`
-{% endhighlight %}
+```
 
 Let's create the AMI **ami-dbfa48a8** and launch two instances of them.
 
@@ -234,7 +241,7 @@ Let's connect to the first (the master) and create the *conf/slaves* file with o
 
 On both of them, let's create a directory */mnt/spark* with *ec2-user* as owner, and define *conf/spark-env.sh* file :
 
-{% highlight %}
+```
 #!/usr/bin/env bash
 
 export SPARK_LOCAL_DIRS="/mnt/spark"
@@ -259,7 +266,7 @@ if [ $(id -u) == "0" ]
 then
     ulimit -n 1000000
 fi
-{% endhighlight %}
+```
 
 On the master, launch the cluster with `sbin/start-all.sh`.
 
@@ -267,8 +274,8 @@ Set your master and slave security groups on the instances.
 
 Now it's time to launch a shell :
 
-{% highlight bash %}
+```bash
 sudo ./bin/spark-shell --master=spark://ec2-54-229-155-126.eu-west-1.compute.amazonaws.com:7077 --jars /home/ec2-user/BIDMach/BIDMach.jar,/home/ec2-user/BIDMach/lib/BIDMat.jar,/home/ec2-user/BIDMach/lib/jhdf5.jar,/home/ec2-user/BIDMach/lib/commons-math3-3.2.jar,/home/ec2-user/BIDMach/lib/lz4-1.3.jar,/home/ec2-user/BIDMach/lib/json-io-4.1.6.jar,/home/ec2-user/BIDMach/lib/jcommon-1.0.23.jar,/home/ec2-user/BIDMach/lib/jcuda-0.7.5.jar,/home/ec2-user/BIDMach/lib/jcublas-0.7.5.jar,/home/ec2-user/BIDMach/lib/jcufft-0.7.5.jar,/home/ec2-user/BIDMach/lib/jcurand-0.7.5.jar,/home/ec2-user/BIDMach/lib/jcusparse-0.7.5.jar --driver-library-path="/home/ec2-user/BIDMach/lib" --conf "spark.executor.extraLibraryPath=/home/ec2-user/BIDMach/lib"
-{% endhighlight %}
+```
 
 **Our cluster of GPU is ready!**

@@ -11,5 +11,6 @@ plusPageUrl: 115479606248104388213
 
 # Build settings
 markdown: kramdown
+highlighter: rouge
 gems:
   - jekyll-sitemap

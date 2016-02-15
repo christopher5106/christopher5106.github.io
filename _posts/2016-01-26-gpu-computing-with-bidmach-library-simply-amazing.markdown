@@ -76,7 +76,12 @@ sbt compile
 sbt package
 {% endhighlight %}
 
-In *bidmach* file, change the CUDA version to the current one `JCUDA_VERSION="0.7.5"` and start `./bidmach` command which gives :
+In *bidmach* file, change the CUDA version to the current one `JCUDA_VERSION="0.7.5"`, augment the memory
+
+    JCUDA_VERSION="0.7.5" # Fix if needed
+    MEMSIZE="-Xmx12G"
+
+and start `./bidmach` command which gives :
 
 {% highlight scala %}
 Loading /Users/christopher5106/technologies/BIDMach/lib/bidmach_init.scala...

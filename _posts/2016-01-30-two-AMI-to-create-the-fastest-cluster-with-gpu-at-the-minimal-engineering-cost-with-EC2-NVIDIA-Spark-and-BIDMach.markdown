@@ -5,7 +5,7 @@ date:   2016-01-27 23:00:51
 categories: big data
 ---
 
-In this tutorial, I will create three AMI for AWS G2 instances (GPU-enabled), the first one for any use of NVIDIA technologies, the second one for the use of BIDMach and the third one for the use of BIDMach and the creation of a cluster of GPU instances :
+In this tutorial, I will create three AMI for AWS G2 instances (GPU-enabled), the first one for any use of NVIDIA technologies, the second one for the use of [scala fast GPU library BIDMach](http://christopher5106.github.io/big/data/2016/02/04/bidmach-tutorial.html) and the third one for the creation of a cluster of GPU instances with BIDMach:
 
 - **ami-0ef6407d** : NVIDIA driver + Cuda 7.5
 This first AMI is *Spark-ec2 compatible*, it can be launched with *spark-ec2* command.

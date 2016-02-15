@@ -5,7 +5,7 @@ date:   2015-07-16 23:00:51
 categories: big data
 ---
 
-#Install on iMac, OS X 10.10.4
+# Install on iMac, OS X 10.10.4
 
 This install has been tested on
 
@@ -149,7 +149,7 @@ You can then [have fun with DIGITS as we did on Ubuntu]({{ site.url }}/big/data/
 
 [![Classification]({{ site.url }}/img/mac_digits_learn3.png)]({{ site.url }}/img/mac_digits_learn.png)
 
-#R-CNN Example
+# R-CNN Example
 
 Now it's easy to try the R-CNN example from Ross Girshick :
 

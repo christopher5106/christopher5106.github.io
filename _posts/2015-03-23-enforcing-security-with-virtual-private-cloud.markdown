@@ -25,7 +25,7 @@ Loadbalancers require two public subnets in order to assure redundancy, in case 
 All other instances will be launched in the two private subnets (`10.0.1.0/24` and `10.0.3.0/24`  - with an odd number for the third byte), not accessible directly from the web, and with no direct access to the web either. This security will protect them from unintended network activities.
 I create two private subnets because services, such as RDS instances, require two subnets in order to assure redundancy, in case one zone is not available due to failure.
 
-####Public subnets
+#### Public subnets
 
 Instances will be directly on Internet,
 
@@ -45,7 +45,7 @@ having an IP address and the standard internet gateway in their route table. For
   0.0.0.0/0  | *igw-\*, the internet gateway*
 
 
-####Private subnets
+#### Private subnets
 
 Security will be stronger : instances will have no IP, so it will not be possible to access them directly from the Internet and also for them to access the Internet directly.
 

@@ -5,7 +5,7 @@ date:   2015-08-25 23:00:51
 categories: databases
 ---
 
-#Anti-patterns with relational databases and Active Records
+# Anti-patterns with relational databases and Active Records
 
 It's been a long time since I prefer to avoid some aspects of relational databases and SQL queries.
 
@@ -23,7 +23,7 @@ The problem with relational databases comes with the `JOIN` statement with these
 
 - the **search approach**, with filters applied on fields of linked tables, is not that easy to implement on relational databases, and is not as effective as a search engine.
 
-#The document approach
+# The document approach
 
 To replace relational databases, the solution I used so far is to create "documents" stored by NoSQL databases and indexed by search engines. To avoid the growing number of tables:
 
@@ -33,7 +33,7 @@ To replace relational databases, the solution I used so far is to create "docume
 
 This solution is not a fully satisfying solution.
 
-#TinkerPop standardization effort
+# TinkerPop standardization effort
 
 The best solution to such a problem is certainly the use of a **technology** which will contain all the work in front of the databases, instead of writing your own code or use code frameworks.
 
@@ -61,7 +61,7 @@ Here is a great schema from AWS (thanks to @AWS) :
 
 ![SQL MCD](https://media.amazonwebservices.com/blog/2015/gr_the_parts_3.png)
 
-#Install, launch Gremlin and execute traversals on graphs
+# Install, launch Gremlin and execute traversals on graphs
 
 Install and launch TinkerPop3 Gremlin :
 

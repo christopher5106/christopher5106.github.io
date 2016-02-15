@@ -35,7 +35,7 @@ A a dataset, I labeled the letters on each images and I can easily extract the p
 
 So I will consider the output of the nets to predict the probability and regression of 5 anchors at 5 different scales / widths : 660x330 - 560x187 - 460x153 - 360x120 - 260x87 - 160x53 - 60x20.
 
-#Train net
+# Train net
 
 Here are the different steps for the train net :
 
@@ -61,7 +61,7 @@ Here are the different steps for the train net :
 6. data layer
 
 
-#Training set
+# Training set
 
 I will feed the data layer with extracted rectangles, and for each rectangle, the label and the rectangle coordinates x, y, w and o. Since order is preserved, I can simply add 4 new *repeated* fields to the **caffe::Datum** message format :
 
@@ -125,7 +125,7 @@ Once trained, I convert the innerproduct layers into the convolution layers to g
 ![Feature map]({{ site.url }}/img/caffe_immat_feature_map.png)
 
 
-#Test/deploy net
+# Test/deploy net
 
 On top of the feature map layer, add a NMS layer and a Top-N layer and a ROI pooling layer at the place of the dropout layer :
 

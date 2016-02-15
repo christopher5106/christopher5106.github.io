@@ -362,6 +362,8 @@ val value = fs.next
 
 `fopts.what` give all set options.
 
+BatchSize should be kept smaller than ncols for the files. Ideally a submultiple.
+
 Lastly, have a look at SFileSource for sparse file data source.
 
 
@@ -411,6 +413,39 @@ Option `opts.useGPU = false` will disable use of GPU.
     purity gain 0,1463, fraction impure 0,599, nnew 4,9, nnodes 19,7
     Time=0,2820 secs, gflops=0,34
 
+
+Parameters are :
+
+- depth(20): Bound on the tree depth, also the number of passes over the dataset.
+
+- ntrees(20): Number of trees in the Forest.
+
+- nsamps(32): Number of random features to try to split each node.
+
+- nnodes(200000): Bound on the size of each tree (number of nodes).
+
+- nbits(16): Number of bits to use for feature values.
+
+- gain(0.01f): Lower bound on impurity gain in order to split a node.
+
+- catsPerSample(1f): Number of cats per sample for multilabel classification.
+
+- ncats(0): Number of cats or regression values. 0 means guess from datasource.
+
+- training(true): Run for training (true) or prediction (false)
+
+- impurity(0): Impurity type, 0=entropy, 1=Gini
+
+- regression(false): Build a regression Forest (true) or classification Forest (false).
+
+- seed(1): Random seed for selecting features. Use this to train distinct Forests in multiple runs.
+
+- useIfeats(false): An internal var, when true use explicit feature indices vs compute them.
+
+- MAE(true): true=Use Mean Absolute Error when reporting performance vs. false=Mean Squared Error
+
+- trace(0): level of debugging information to print (0,1,2).
+
 <a name="spark" />
 
 
@@ -425,6 +460,7 @@ wget http://apache.crihan.fr/dist/spark/spark-1.6.0/spark-1.6.0.tgz
 tar xvzf spark-1.6.0.tgz
 cd spark-1.6.0
 ./dev/change-scala-version.sh 2.11
+export MAVEN_OPTS='-Xmx2g -XX:MaxPermSize=2g'
 mvn -Pyarn -Phadoop-2.6 -Dscala-2.11 -DskipTests clean package
 export SPARK_HOME=`pwd`
 {% endhighlight %}
@@ -470,8 +506,8 @@ login spark-cluster
 Launch the Spark Shell and be sure to have only 1 core per GPU on each executor :
 
 {% highlight bash %}
-./spark/bin/spark-shell --conf spark.executor.cores=1 --jars \
- /home/ec2-user/BIDMach/lib/BIDMat.jar,/home/ec2-user/BIDMach/BIDMach.jar
+sudo ./bin/spark-shell --master=spark://ec2-54-229-155-126.eu-west-1.compute.amazonaws.com:7077 --jars /home/ec2-user/BIDMach/BIDMach.jar,/home/ec2-user/BIDMach/lib/BIDMat.jar,/home/ec2-user/BIDMach/lib/jhdf5.jar,/home/ec2-user/BIDMach/lib/commons-math3-3.2.jar,/home/ec2-user/BIDMach/lib/lz4-1.3.jar,/home/ec2-user/BIDMach/lib/json-io-4.1.6.jar,/home/ec2-user/BIDMach/lib/jcommon-1.0.23.jar,/home/ec2-user/BIDMach/lib/jcuda-0.7.5.jar,/home/ec2-user/BIDMach/lib/jcublas-0.7.5.jar,/home/ec2-user/BIDMach/lib/jcufft-0.7.5.jar,/home/ec2-user/BIDMach/lib/jcurand-0.7.5.jar,/home/ec2-user/BIDMach/lib/jcusparse-0.7.5.jar --driver-library-path="/home/ec2-user/BIDMach/lib"
+
 {% endhighlight %}
 
 
@@ -561,10 +597,47 @@ Hyperparameters are the parameters of the prediction model : number of trees, de
 Grid search consists in computing the model for a grid of combinations for the parameters, for example
 
 {% highlight scala %}
-val lrates = col(0.03f, 0.1f, 0.3f, 1f)        // 4 values
-val texps = col(0.3f, 0.4f, 0.5f, 0.6f, 0.7f)  // 5 values
+import BIDMat.{CMat, CSMat, DMat, Dict, FMat, FND, GMat, GDMat, GIMat, GLMat, GSMat, GSDMat, HMat, IDict, Image, IMat, LMat, Mat, SMat, SBMat, SDMat}
+import BIDMat.MatFunctions._
+import BIDMat.SciFunctions._
+import BIDMach.models.RandomForest
 
-val lrateparams = ones(texps.nrows, 1) ⊗ lrates
-val texpparams = texps ⊗ ones(lrates.nrows,1)
-lrateparams \ texpparams
+val ndepths = icol(1, 2, 3, 4, 5)  // 5 values
+val ntrees = icol(5, 10, 20)  // 2 values
+
+val ndepthsparams = iones(ntrees.nrows, 1) ⊗ ndepths
+val ntreesparams = ntrees ⊗ iones(ndepths.nrows,1)
+val hyperparameters = ndepthsparams \ ntreesparams
+
+val hyperparamSeq = for( i <- Range(0, hyperparameters.nrows) ) yield(hyperparameters(i,?))
+val hyperparamRDD = sc.parallelize(hyperparamSeq,2)
+
+hyperparamRDD.mapPartitionsWithIndex(  (index: Int, it: Iterator[BIDMat.IMat]) => {
+  it.toList.map(x => {
+    val params = drand(30,1)
+    0 until 50 map( i => {
+      val fmat = FMat(drand(30,1000))
+      saveMat("data%02d.fmat.lz4" format i, fmat);
+      saveMat("label%02d.imat.lz4" format i, IMat(params ^* fmat) > 7)
+    })
+    val (mm,opts) = RandomForest.learner("data%02d.fmat.lz4","label%02d.imat.lz4")
+    opts.batchSize = 1000
+    opts.nend = 50
+    opts.depth =  x(0,0)
+    opts.ncats = 2
+    opts.ntrees = x(0,1)
+    opts.impurity = 0
+    opts.nsamps = 12
+    opts.nnodes = 50000
+    opts.nbits = 16
+    opts.gain = 0.001f
+    mm.train
+    index + ": ndepth "+x(0,0) + " & ntrees "+x(0,1)
+    } ).iterator
+  }).collect
 {% endhighlight %}
+
+    res17: Array[String] = Array(0: ndepth 1 & ntrees 5, 0: ndepth 2 & ntrees 5, 0: ndepth 3 & ntrees 5, 0: ndepth 4 & ntrees 5, 0: ndepth 5 & ntrees 5, 0: ndepth 1 & ntrees 10, 0: ndepth 2 & ntrees 10, 1: ndepth 3 & ntrees 10, 1: ndepth 4 & ntrees 10, 1: ndepth 5 & ntrees 10, 1: ndepth 1 & ntrees 20, 1: ndepth 2 & ntrees 20, 1: ndepth 3 & ntrees 20, 1: ndepth 4 & ntrees 20, 1: ndepth 5 & ntrees 20)
+
+
+    distData: org.apache.spark.rdd.RDD[BIDMat.FMat] = ParallelCollectionRDD[1] at parallelize at <console>:40

@@ -615,4 +615,6 @@ The hyperparameters have been placed in a RDD (Spark resilient dataset) distribu
 
     hyperparamRDD: org.apache.spark.rdd.RDD[BIDMat.IMat] = ParallelCollectionRDD[1] at parallelize at <console>:40
 
+In the last directory */home/ec2-user/spark-1.6.0/work/app-20160215174421-0026/0/* I can find all the temporary files linked to the job. Up to you to set all that in a better directory such as on the other mount for example `/mnt`... ! My demo is done.
+
 **Well done!**

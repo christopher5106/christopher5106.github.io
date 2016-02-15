@@ -471,7 +471,7 @@ Launch the Spark Shell and be sure to have only 1 core per GPU on each executor 
 
 {% highlight bash %}
 ./spark/bin/spark-shell --conf spark.executor.cores=1 --jars \
- /home/ec2-user/BIDMat/BIDMat.jar,/home/ec2-user/BIDMach/BIDMach.jar
+ /home/ec2-user/BIDMach/lib/BIDMat.jar,/home/ec2-user/BIDMach/BIDMach.jar
 {% endhighlight %}
 
 

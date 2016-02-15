@@ -22,7 +22,7 @@ As usual, it requires an iMac with a NVIDIA GPU and its CUDA library installed.
 
 Since I'm using CUDA 7.5 instead of 7.0, I had to recompile JCuda, BIDMat, and BIDMach.
 
-First download Intel parallel studio.
+First download Intel parallel studio (if you need to uninstall it, run command `for i in `rpm -qa | grep intel` ; do sudo rpm -e $i ; done` a few times).
 
 {% highlight bash %}
 mkdir ~/technologies/JCuda

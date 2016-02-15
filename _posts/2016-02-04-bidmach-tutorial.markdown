@@ -474,8 +474,11 @@ import BIDMach.models.RandomForest
 Launch the Spark Shell and be sure to have only 1 core per GPU on each executor :
 
 ```bash
-sudo ./bin/spark-shell --master=spark://ec2-54-229-155-126.eu-west-1.compute.amazonaws.com:7077 --jars /home/ec2-user/BIDMach/BIDMach.jar,/home/ec2-user/BIDMach/lib/BIDMat.jar,/home/ec2-user/BIDMach/lib/jhdf5.jar,/home/ec2-user/BIDMach/lib/commons-math3-3.2.jar,/home/ec2-user/BIDMach/lib/lz4-1.3.jar,/home/ec2-user/BIDMach/lib/json-io-4.1.6.jar,/home/ec2-user/BIDMach/lib/jcommon-1.0.23.jar,/home/ec2-user/BIDMach/lib/jcuda-0.7.5.jar,/home/ec2-user/BIDMach/lib/jcublas-0.7.5.jar,/home/ec2-user/BIDMach/lib/jcufft-0.7.5.jar,/home/ec2-user/BIDMach/lib/jcurand-0.7.5.jar,/home/ec2-user/BIDMach/lib/jcusparse-0.7.5.jar --driver-library-path="/home/ec2-user/BIDMach/lib"
-
+sudo ./bin/spark-shell \
+--master=spark://ec2-54-229-155-126.eu-west-1.compute.amazonaws.com:7077 \
+--jars /home/ec2-user/BIDMach/BIDMach.jar,/home/ec2-user/BIDMach/lib/BIDMat.jar,/home/ec2-user/BIDMach/lib/jhdf5.jar,/home/ec2-user/BIDMach/lib/commons-math3-3.2.jar,/home/ec2-user/BIDMach/lib/lz4-1.3.jar,/home/ec2-user/BIDMach/lib/json-io-4.1.6.jar,/home/ec2-user/BIDMach/lib/jcommon-1.0.23.jar,/home/ec2-user/BIDMach/lib/jcuda-0.7.5.jar,/home/ec2-user/BIDMach/lib/jcublas-0.7.5.jar,/home/ec2-user/BIDMach/lib/jcufft-0.7.5.jar,/home/ec2-user/BIDMach/lib/jcurand-0.7.5.jar,/home/ec2-user/BIDMach/lib/jcusparse-0.7.5.jar \
+--driver-library-path="/home/ec2-user/BIDMach/lib" \
+--conf "spark.executor.extraLibraryPath=/home/ec2-user/BIDMach/lib"
 ```
 
 
@@ -609,12 +612,12 @@ which should give you :
 
     res17: Array[String] = Array(0: ndepth 1 & ntrees 5, 0: ndepth 2 & ntrees 5, 0: ndepth 3 & ntrees 5, 0: ndepth 4 & ntrees 5, 0: ndepth 5 & ntrees 5, 0: ndepth 1 & ntrees 10, 0: ndepth 2 & ntrees 10, 1: ndepth 3 & ntrees 10, 1: ndepth 4 & ntrees 10, 1: ndepth 5 & ntrees 10, 1: ndepth 1 & ntrees 20, 1: ndepth 2 & ntrees 20, 1: ndepth 3 & ntrees 20, 1: ndepth 4 & ntrees 20, 1: ndepth 5 & ntrees 20)
 
-It is a very simple example, to show how to set up a cluster of GPU powered by BIDMach, but a normal hyperparameter tuning would evaluate the results of each set of hyperparameter and gather back the answer.
+It is a very simple example, to show how to set up a cluster of GPU powered by BIDMach, but a normal hyperparameter tuning would evaluate the results for each set of hyperparameter and gather back the answer.
 
 The hyperparameters have been placed in a RDD (Spark resilient dataset) distributed across the cluster :
 
     hyperparamRDD: org.apache.spark.rdd.RDD[BIDMat.IMat] = ParallelCollectionRDD[1] at parallelize at <console>:40
 
-In the last directory */home/ec2-user/spark-1.6.0/work/app-20160215174421-0026/0/* I can find all the temporary files linked to the job. Up to you to set all that in a better directory such as on the other mount for example `/mnt`... ! My demo is done.
+In the last directory */home/ec2-user/spark-1.6.0/work/app-20160215174421-0026/0/* I can find all the temporary files linked to the job. Up to you to set all that in a more appropriate directory such as `/mnt`... ! My demo is done.
 
 **Well done!**

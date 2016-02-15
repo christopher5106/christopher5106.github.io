@@ -5,7 +5,7 @@ date:   2016-02-04 23:00:51
 categories: big data
 ---
 
-BIDMach is a very powerful library for Scala,
+BIDMach is a very powerful library in Scala,
 
 - on matrix operations, as powerful as Python Numpy library on CPU, but offering to possibility to work on CPU and GPU indifferently.
 
@@ -453,19 +453,7 @@ Parameters are :
 
 Instead of running `bidmach` command to launch a bidmach shell, it is possible to run the same commands inside Spark shell, adding the BIDMat and BIDMach libraries to the classpath.
 
-To have Spark work with BIDMach, compile Spark with Scala 2.11 :
-
-{% highlight bash %}
-wget http://apache.crihan.fr/dist/spark/spark-1.6.0/spark-1.6.0.tgz
-tar xvzf spark-1.6.0.tgz
-cd spark-1.6.0
-./dev/change-scala-version.sh 2.11
-export MAVEN_OPTS='-Xmx2g -XX:MaxPermSize=2g'
-mvn -Pyarn -Phadoop-2.6 -Dscala-2.11 -DskipTests clean package
-export SPARK_HOME=`pwd`
-{% endhighlight %}
-
-Download [Joda-time](https://sourceforge.net/projects/joda-time/files/joda-time/) and launch Spark in **local mode** with the Amazon SDK, Joda-time, and BIDMat / BIDMach jars :
+- in **local mode**, download [Joda-time](https://sourceforge.net/projects/joda-time/files/joda-time/), compile Spark for Scala 2.10 and  launch :
 
 {% highlight bash %}
 $SPARK_HOME/bin/spark-shell --jars \
@@ -481,27 +469,7 @@ Then you can import the required libraries :
 import BIDMach.models.RandomForest
 {% endhighlight %}
 
-You can also launch a **cluster of GPU**, for example 2 g2.2xlarge executor instances with our [NVIDIA+CUDA+BIDMACH AMI for Spark](http://christopher5106.github.io/big/data/2016/01/27/two-AMI-to-create-the-fastest-cluster-with-gpu-at-the-minimal-engineering-cost-with-EC2-NVIDIA-Spark-and-BIDMach.html):
-
-{% highlight bash %}
-$SPARK_HOME/ec2/spark-ec2 -k sparkclusterkey -i ~/sparkclusterkey.pem \
---region=eu-west-1 \
- --instance-type=g2.2xlarge -s 2 \
---hadoop-major-version=2  \
---spark-ec2-git-repo=https://github.com/christopher5106/spark-ec2 \
---instance-profile-name=spark-ec2 \
-launch spark-cluster
-{% endhighlight %}
-
-Note that I launch the instances under an IAM role named *spark-ec2* to give them access to resources later on (without having to deal with security credentials on the instance - avoid using `--copy-aws-credentials` option), as [explained in my previous post]({{ site.url }}/big/data/2016/01/27/two-AMI-to-create-the-fastest-cluster-with-gpu-at-the-minimal-engineering-cost-with-EC2-NVIDIA-Spark-and-BIDMach.html#launch_cluster).
-
-And log in
-
-{% highlight bash %}
-./ec2/spark-ec2 -k sparkclusterkey -i ~/sparkclusterkey.pem \
---region=eu-west-1 \
-login spark-cluster
-{% endhighlight %}
+- as **cluster of GPU**, for example 2 g2.2xlarge executor instances with our [NVIDIA+CUDA+BIDMACH AMI for Spark](http://christopher5106.github.io/big/data/2016/01/27/two-AMI-to-create-the-fastest-cluster-with-gpu-at-the-minimal-engineering-cost-with-EC2-NVIDIA-Spark-and-BIDMach.html#cluster_of_gpu):
 
 Launch the Spark Shell and be sure to have only 1 core per GPU on each executor :
 
@@ -603,7 +571,7 @@ import BIDMat.SciFunctions._
 import BIDMach.models.RandomForest
 
 val ndepths = icol(1, 2, 3, 4, 5)  // 5 values
-val ntrees = icol(5, 10, 20)  // 2 values
+val ntrees = icol(5, 10, 20)  // 3 values
 
 val ndepthsparams = iones(ntrees.nrows, 1) ⊗ ndepths
 val ntreesparams = ntrees ⊗ iones(ndepths.nrows,1)
@@ -637,7 +605,14 @@ hyperparamRDD.mapPartitionsWithIndex(  (index: Int, it: Iterator[BIDMat.IMat]) =
   }).collect
 {% endhighlight %}
 
+which should give you :
+
     res17: Array[String] = Array(0: ndepth 1 & ntrees 5, 0: ndepth 2 & ntrees 5, 0: ndepth 3 & ntrees 5, 0: ndepth 4 & ntrees 5, 0: ndepth 5 & ntrees 5, 0: ndepth 1 & ntrees 10, 0: ndepth 2 & ntrees 10, 1: ndepth 3 & ntrees 10, 1: ndepth 4 & ntrees 10, 1: ndepth 5 & ntrees 10, 1: ndepth 1 & ntrees 20, 1: ndepth 2 & ntrees 20, 1: ndepth 3 & ntrees 20, 1: ndepth 4 & ntrees 20, 1: ndepth 5 & ntrees 20)
 
+It is a very simple example, to show how to set up a cluster of GPU powered by BIDMach, but a normal hyperparameter tuning would evaluate the results of each set of hyperparameter and gather back the answer.
 
-    distData: org.apache.spark.rdd.RDD[BIDMat.FMat] = ParallelCollectionRDD[1] at parallelize at <console>:40
+The hyperparameters have been placed in a RDD (Spark resilient dataset) distributed across the cluster :
+
+    hyperparamRDD: org.apache.spark.rdd.RDD[BIDMat.IMat] = ParallelCollectionRDD[1] at parallelize at <console>:40
+
+**Well done!**

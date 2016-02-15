@@ -50,7 +50,7 @@ and connect
 ssh -i bidmach-keypair.pem ec2-user@ec2-XXX.eu-west-1.compute.amazonaws.com
 ```
 
-And install :
+And install NVIDIA driver and CUDA 7.5 :
 
 ```bash
 sudo yum update -y
@@ -71,21 +71,21 @@ wget http://developer.download.nvidia.com/compute/cuda/7.5/Prod/local_installers
 sudo bash cuda_7.5.18_linux.run --tmpdir /mnt/tmp
 ```
 
-Add /usr/local/cuda/bin to the path in the bash profile to have the NVCC compiler available.
+Add */usr/local/cuda/bin* to the PATH variable in the bash profile to have the NVCC compiler available.
 
 Let's create a public AMI : **ami-0ef6407d**. This AMI can be used
 
-- to test any GPU-capable library on the cloud, such as Theano, Caffe, BIDMach, Tensorflow ...
+- to use any GPU-capable library on the cloud, such as Theano, Caffe, BIDMach, Tensorflow ...
 
-- to launch with Spark a cluster of GPU instances with NVIDIA Driver and CUDA 7.5 pre-installed, as we show in the last section.
+- to launch with Spark a cluster of GPU instances with NVIDIA Driver and CUDA 7.5 pre-installed, as we show now:
 
 <a name="launch_cluster" />
 
 To launch a cluster of this AMI :
 
--  first fork `https://github.com/amplab/spark-ec2` and create `https://github.com/christopher5106/spark-ec2` repo where I can change the AMI for the previously created AMI `ami-e2f74491`.
+-  first fork `https://github.com/amplab/spark-ec2` and in the newly created `https://github.com/christopher5106/spark-ec2` repo, I change the AMI for the previously created AMI `ami-e2f74491`
 
-- create an IAM role named *spark-ec2* to later on be able to give access to resources to the Spark cluster (without having to deal with security credentials on the instances - avoiding dangerous `--copy-aws-credentials` option) and add the permission to attribute this role to the user launching the spark-ec2 command :
+- then create an IAM role named *spark-ec2* to later on be able to give access to resources to the Spark cluster (without having to deal with security credentials on the instances - avoiding dangerous `--copy-aws-credentials` option) and add the permission to attribute this role to the user launching the spark-ec2 command :
 
 ```json
 {
@@ -138,7 +138,6 @@ Terminate the cluster:
 Compile JCUDA, BIDMat, BIDMach libraries on the previous instance :
 
 ```bash
-
 #install Cmake
 wget https://cmake.org/files/v3.4/cmake-3.4.3.tar.gz
 tar xvzf cmake-3.4.3.tar.gz
@@ -156,7 +155,6 @@ export PATH=$PATH:/home/ec2-user/apache-maven-3.3.9/bin #not a best practice!
 # install Intel Parallel Studio
 wget LLLLL/parallel_studio_xe_2016_composer_edition_for_cpp_update1.tgz
 tar xvzf parallel_studio_xe_2016_composer_edition_for_cpp_update1.tgz
-
 
 #compile JCuda
 mkdir JCuda
@@ -209,19 +207,21 @@ Be careful :
 
 - before launching `bidmach` command, change the version and augment the memory in the *bidmach* file :
 
+    ```bash
     JCUDA_VERSION="0.7.5" # Fix if needed
     MEMSIZE="-Xmx12G"
+    ```
 
 - if you intend to use Spark, you need to compile BIDMach for Scala 2.10 (which is not supported), otherwise see in the next section (I compile Spark for Scala 2.11 and create a third AMI).
 
-Let's delete BIDMat, BIDMach tutorials, Maven, JCuda, to get an AMI with more space and create **ami-e2f74491**, which is definitely the one you should choose.
+Let's delete BIDMat, BIDMach tutorials, Maven, JCuda, to create a more efficient AMI with more space **ami-e2f74491**, which is definitely the one you should choose.
 
 
 <a name="cluster_of_gpu" />
 
 # Creation of the AMI for a cluster of GPU G2 with Spark and NVIDIA driver, CUDA 7.5, JCUDA, BIDMat, BIDMach libraries pre installed
 
-To have Spark work with BIDMach, let's compile Spark with Scala 2.11 :
+To have Spark work with BIDMach, I compile Spark with Scala 2.11, since BIDMach is only supported for Scala 2.11 :
 
 ```bash
 wget http://apache.crihan.fr/dist/spark/spark-1.6.0/spark-1.6.0.tgz
@@ -275,7 +275,11 @@ Set your master and slave security groups on the instances.
 Now it's time to launch a shell :
 
 ```bash
-sudo ./bin/spark-shell --master=spark://ec2-54-229-155-126.eu-west-1.compute.amazonaws.com:7077 --jars /home/ec2-user/BIDMach/BIDMach.jar,/home/ec2-user/BIDMach/lib/BIDMat.jar,/home/ec2-user/BIDMach/lib/jhdf5.jar,/home/ec2-user/BIDMach/lib/commons-math3-3.2.jar,/home/ec2-user/BIDMach/lib/lz4-1.3.jar,/home/ec2-user/BIDMach/lib/json-io-4.1.6.jar,/home/ec2-user/BIDMach/lib/jcommon-1.0.23.jar,/home/ec2-user/BIDMach/lib/jcuda-0.7.5.jar,/home/ec2-user/BIDMach/lib/jcublas-0.7.5.jar,/home/ec2-user/BIDMach/lib/jcufft-0.7.5.jar,/home/ec2-user/BIDMach/lib/jcurand-0.7.5.jar,/home/ec2-user/BIDMach/lib/jcusparse-0.7.5.jar --driver-library-path="/home/ec2-user/BIDMach/lib" --conf "spark.executor.extraLibraryPath=/home/ec2-user/BIDMach/lib"
+sudo ./bin/spark-shell \
+--master=spark://ec2-54-229-155-126.eu-west-1.compute.amazonaws.com:7077 \
+--jars /home/ec2-user/BIDMach/BIDMach.jar,/home/ec2-user/BIDMach/lib/BIDMat.jar,/home/ec2-user/BIDMach/lib/jhdf5.jar,/home/ec2-user/BIDMach/lib/commons-math3-3.2.jar,/home/ec2-user/BIDMach/lib/lz4-1.3.jar,/home/ec2-user/BIDMach/lib/json-io-4.1.6.jar,/home/ec2-user/BIDMach/lib/jcommon-1.0.23.jar,/home/ec2-user/BIDMach/lib/jcuda-0.7.5.jar,/home/ec2-user/BIDMach/lib/jcublas-0.7.5.jar,/home/ec2-user/BIDMach/lib/jcufft-0.7.5.jar,/home/ec2-user/BIDMach/lib/jcurand-0.7.5.jar,/home/ec2-user/BIDMach/lib/jcusparse-0.7.5.jar \
+--driver-library-path="/home/ec2-user/BIDMach/lib" \
+--conf "spark.executor.extraLibraryPath=/home/ec2-user/BIDMach/lib"
 ```
 
-**Our cluster of GPU is ready!**
+**Our cluster of GPU is ready!**. Go on with a [Random forest computation on the cluster](http://christopher5106.github.io/big/data/2016/02/04/bidmach-tutorial.html).

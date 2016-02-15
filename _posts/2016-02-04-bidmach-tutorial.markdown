@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Big data tutorial on BIDMach library : basic matrix operations and file I/O. Example on a RandomForest computation"
+title:  "Big data tutorial on BIDMach library : basic matrix operations and file I/O. Example on a RandomForest computation in a cluster of GPU"
 date:   2016-02-04 23:00:51
 categories: big data
 ---

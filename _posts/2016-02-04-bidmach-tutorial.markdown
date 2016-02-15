@@ -612,12 +612,12 @@ which should give you :
 
     res17: Array[String] = Array(0: ndepth 1 & ntrees 5, 0: ndepth 2 & ntrees 5, 0: ndepth 3 & ntrees 5, 0: ndepth 4 & ntrees 5, 0: ndepth 5 & ntrees 5, 0: ndepth 1 & ntrees 10, 0: ndepth 2 & ntrees 10, 1: ndepth 3 & ntrees 10, 1: ndepth 4 & ntrees 10, 1: ndepth 5 & ntrees 10, 1: ndepth 1 & ntrees 20, 1: ndepth 2 & ntrees 20, 1: ndepth 3 & ntrees 20, 1: ndepth 4 & ntrees 20, 1: ndepth 5 & ntrees 20)
 
-It is a very simple example, to show how to set up a cluster of GPU powered by BIDMach, but a normal hyperparameter tuning would evaluate the results for each set of hyperparameter and gather back the answer.
-
-The hyperparameters have been placed in a RDD (Spark resilient dataset) distributed across the cluster :
+The hyperparameters have been distributed across the cluster with a RDD (Spark resilient dataset) :
 
     hyperparamRDD: org.apache.spark.rdd.RDD[BIDMat.IMat] = ParallelCollectionRDD[1] at parallelize at <console>:40
 
-In the last directory */home/ec2-user/spark-1.6.0/work/app-20160215174421-0026/0/* I can find all the temporary files linked to the job. Up to you to set all that in a more appropriate directory such as `/mnt`... ! My demo is done.
+It is a very simple example, to show how to set up a cluster of GPU powered by BIDMach, but a normal hyperparameter tuning would evaluate the results for each set of hyperparameter and push them in the result RDD.
+
+In the directory */home/ec2-user/spark-1.6.0/work/app-20160215174421-0026/0/*, I get all the temporary files linked to the job. Up to you to set all that in a more appropriate directory such as `/mnt`, `/tmp` ... ! My demo is done.
 
 **Well done!**

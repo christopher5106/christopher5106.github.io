@@ -21,76 +21,76 @@ To launch BIDMach on your computer or instance, have a look [at my previous arti
 
 Let's create our first matrix of integers of size 2x2, then a matrix of floats of size 3x2, a matrix of double values of size 2x2 and a matrix of strings :
 
-{% highlight scala %}
+```scala
 val imat = IMat(2,2, Array(1,2,3,4))
 val fmat = FMat(2,3, Array(1,2,3,4,5,6))
 val dmat = DMat(2,2)
 val smat = CSMat(1,3, Array("you","and","me"))
-{% endhighlight %}
+```
 
 Access the number of columns, rows :
 
-{% highlight scala %}
+```scala
 size(fmat)
 fmat.dims
 fmat.length
 fmat.ncols
 fmat.nrows
-{% endhighlight %}
+```
 
 Two ways to access element on (row 1, column 2), either by *row x column* tuple, or by *index* (column-oriented numbering) :
 
-{% highlight scala %}
+```scala
 fmat(0,1)
 fmat(2)
-{% endhighlight %}
+```
 
 Access all elements as one column :
 
-{% highlight scala %}
+```scala
 fmat(?)
-{% endhighlight %}
+```
 
 Access first column and first row :
 
-{% highlight scala %}
+```scala
 fmat(?,0)
 fmat(0,?)
-{% endhighlight %}
+```
 
 Access elements with indexes between 1 and 3 (not inclusive):
 
-{% highlight scala %}
+```scala
 fmat(1->3)
-{% endhighlight %}
+```
 
 Create a Matrix of size 2x2, with 3rd element on first position, 4th on second, 2nd on third position and 5th on last position :
 
-{% highlight scala %}
+```scala
 fmat(IMat(2,2,Array( 2,3,1,5 ) ))
-{% endhighlight %}
+```
 
 Create a random, full-one and full-zero matrices of shape 2x2 :
 
-{% highlight scala %}
+```scala
 rand(2,2)
 ones(2,2)
 zeros(2,2)
-{% endhighlight %}
+```
 
 As a shortcut to `IMat(len, 1, Array(values))` to create a single-column matrix :
 
-{% highlight scala %}
+```scala
 icol(1,2,3,4,5)
 1 on 2 on 3 on 4 on 5
-{% endhighlight %}
+```
 
 The same for single-row matrices :
 
-{% highlight scala %}
+```scala
 irow(1,2,3,4)
 1 \ 2 \ 3 \ 4
-{% endhighlight %}
+```
 
 As with Mat, you'll find `col`, `dcol`, `cscol`, and `row`, `drow`, `csrow` types.
 
@@ -100,38 +100,38 @@ To make a square matrix with a given diagonal : `mkdiag(1 on 2)`
 
 Element-wise matrix operations :
 
-{% highlight scala %}
+```scala
 a + b // element-wise addition
 a - b // element-wise subtraction
 b ∘ a // (a *@ b) multiplication
 b / a /* element wise-division */
-{% endhighlight %}
+```
 
 Matrix operation
 
-{% highlight scala %}
+```scala
 a.t // transpose
 a * b // matrix multiplication
 a ^* b  // transpose first matrix before multiplication
 a *^ b  /* transpose second matrix before multiplication */
-{% endhighlight %}
+```
 
 Dot products
 
-{% highlight scala %}
+```scala
 a ∙ b // (a dot b) Column-wise dot product
 a ∙→ b /* (a dotr b) Row-wise dot product */
-{% endhighlight %}
+```
 
 Cartesian product
 
-{% highlight scala %}
+```scala
 a ⊗ b /* (a kron b) Kronecker product */
-{% endhighlight %}
+```
 
 Statistics per column :
 
-{% highlight scala %}
+```scala
 sum(fmat)
 mean(fmat)
 variance(fmat)
@@ -139,86 +139,86 @@ maxi(fmat)
 maxi2(fmat) // returns max and argmax
 mini(fmat)
 mini2(fmat) /* returns min and argmin */
-{% endhighlight %}
+```
 
 Other operations per column :
 
-{% highlight scala %}
+```scala
 cumsum(fmat)
 sort(fmat) // sorted values
 sortdown(fmat) // sorted values
 sort2(fmat) // sorted values and indices
 sortdown2(fmat) /* sorted values and indices */
-{% endhighlight %}
+```
 
 The same statistics and operations per rows by adding a 2 param :
 
-{% highlight scala %}
+```scala
 sum(fmat,2)
-{% endhighlight %}
+```
 
 Have a look at unique(), unique3() and uniquerows().
 
 Endly, to reshape, you can convert it to a n-dimension array, reshape it, and convert the result array back to a FMat :
 
-{% highlight scala %}
+```scala
 FND(fmat).reshape(3,2).toFMat(3,2)
-{% endhighlight %}
+```
 
 
 # More complicated matrices
 
 Convert to a GPU matrix :
 
-{% highlight scala %}
+```scala
 GMat(fmat)
 GIMat(imat)
-{% endhighlight %}
+```
 
 Create a generic type matrix :
 
-{% highlight scala %}
+```scala
 var g:Mat = null
 g = fmat
 g = GMat(fmat)
-{% endhighlight %}
+```
 
 Convert to sparse format :
 
-{% highlight scala %}
+```scala
 val sfmat = SMat(fmat)
 val sfmat = sparse(fmat)
 SDmat(fmat) // sparse double
 GSMat(fmat) /* sparse GPU */
-{% endhighlight %}
+```
 
 To convert it back to a dense matrix :
 
-{% highlight scala %}
+```scala
 full(sfmat)
-{% endhighlight %}
+```
 
 Create a sparse matrix with value 5 at position (2,4) and value 6 at position (3,4) :
 
-{% highlight scala %}
+```scala
 sparse(1\2,3\3, 5\6 ,  4,4)
-{% endhighlight %}
+```
 
 Create an accumulator matrix of shape (3,3), by accumulating 5 and 4 on the same cell (3,2):
 
-{% highlight scala %}
+```scala
 accum( (2\1) on (2\1), 5 on 4, 3,3)
-{% endhighlight %}
+```
 
 Enable matrix caching :
 
-{% highlight scala %}
+```scala
 Mat.useCache = true
-{% endhighlight %}
+```
 
 There is also a great tool, the dictionaries, where counts is an optional argument :
 
-{% highlight scala %}
+```scala
 val d = Dict(CSMat(1,2,Array("A","B")),IMat(1,2, Array(5,4)))
 d(0) // value for index 0 : A
 d("A") // index of A : 0
@@ -228,7 +228,7 @@ d.cstr // dictionary
 d.counts // counts
 d(IMat(1,2,Array(0,1))) // bulk retrieval
 d(CSMat(1,2,Array("A","B)))
-{% endhighlight %}
+```
 
 
 # File I/O
@@ -236,35 +236,35 @@ d(CSMat(1,2,Array("A","B)))
 
 Save the matrix `fmat` as a text file :
 
-{% highlight scala %}
+```scala
 saveFMat("t2.txt",fmat,1)
-{% endhighlight %}
+```
 
 With gz compression :
 
-{% highlight scala %}
+```scala
 saveFMat("t.gz",fmat)
-{% endhighlight %}
+```
 
 With lz4 compression :
 
-{% highlight scala %}
+```scala
 saveFMat("t.lz4",fmat)
-{% endhighlight %}
+```
 
 To load the file :
 
-{% highlight scala %}
+```scala
 loadFMat("t.lz4")
-{% endhighlight %}
+```
 
 Have a look at load (and saveAs), loadLibSVM, loadIDX for HDF5, LibSVM and IDX format.
 
 For efficient I/O, convert the string matrices to sparce matrices of bytes with :
 
-{% highlight scala %}
+```scala
 SBMat(smat)
-{% endhighlight %}
+```
 
 # Others
 
@@ -280,15 +280,15 @@ BIDMach offers also
 
 - plot possibilities :
 
-{% highlight scala %}
+```scala
 plot( 1\2\3\4\5,3.2\2.1\1.3\4.2\(-1.2))
-{% endhighlight %}
+```
 
 ![]({{ site.url }}/img/bidmach_plot.png)
 
-{% highlight scala %}
+```scala
 show(Image(IMat(2,2,Array(255,0,0,255)   ) kron ones(100,100) ))
-{% endhighlight %}
+```
 
 ![]({{ site.url }}/img/bidmach_image_show.png)
 
@@ -296,7 +296,7 @@ show(Image(IMat(2,2,Array(255,0,0,255)   ) kron ones(100,100) ))
 
 A data source is an iterator, let's create 5 data with their respective label (0), and pull the data iteratively 2 by 2 :
 
-{% highlight scala %}
+```scala
 val dataimat = irow(1 to 5)
 val labelimat = izeros(1,5)
 
@@ -306,7 +306,7 @@ val m = new MatSource(Array(dataimat, labelimat),dopts)
 m.init
 m.hasNext
 val value = m.next
-{% endhighlight %}
+```
 
 The output `m.next` is an array of 2 IMat, the first one is the data, the second the label. `dopts.what` will give you all options.
 
@@ -314,7 +314,7 @@ Option `dopts.sample` enables to sample of fraction of the data, and `opts.addCo
 
 Data sources can also be used as a sink, to put back some data, such as the prediction value
 
-{% highlight scala %}
+```scala
 dopts.putBack = 1  
 val predimat = izeros(1,5)
 val m = new MatSource(Array(dataimat, predimat),dopts)
@@ -323,13 +323,13 @@ val value = m.next
 value(1)(1)=1
 m.next
 m.mats
-{% endhighlight %}
+```
 
 Let's now go further with file data sources.
 
 For the purpose, let's create 50 files of data, 50 files of labels, with random values for the explicative variables, and a weighted sum for the label, for the demonstration :
 
-{% highlight scala %}
+```scala
 val params = drand(30,1)
 
 0 until 50 map( i => {
@@ -337,13 +337,13 @@ val params = drand(30,1)
   saveMat("data%02d.fmat.lz4" format i, fmat);
   saveMat("label%02d.imat.lz4" format i, IMat(params ^* fmat) > 7)
 })
-{% endhighlight %}
+```
 
 Note the use of `until`, while `to` would create 51 values.
 
 Check matrices are correctly saved with : `loadMat("data26.fmat.lz4")`. Now there are correctly saved, let's create a file data source :
 
-{% highlight scala %}
+```scala
 val fopts = new FileSource.Options
 fopts.fnames = List( {i:Int => {"data%02d.fmat.lz4" format i}}, {i:Int => {"label%02d.imat.lz4" format i}} )
 fopts.nstart = 0
@@ -355,7 +355,7 @@ val fs = FileSource(fopts)
 fs.init
 fs.hasNext
 val value = fs.next
-{% endhighlight %}
+```
 
 
 `fopts.order=1` randomize the order of the columns.
@@ -372,7 +372,7 @@ Lastly, have a look at SFileSource for sparse file data source.
 
 On the files created previously, let's launch the random forest regressor :
 
-{% highlight scala %}
+```scala
 val (mm,opts) = RandomForest.learner("data%02d.fmat.lz4","label%02d.imat.lz4")
 
 opts.batchSize = 1000
@@ -387,7 +387,7 @@ opts.nbits = 16
 opts.gain = 0.001f
 mm.train
 
-{% endhighlight %}
+```
 
 Option `opts.useGPU = false` will disable use of GPU.
 
@@ -455,28 +455,28 @@ Instead of running `bidmach` command to launch a bidmach shell, it is possible t
 
 - in **local mode**, download [Joda-time](https://sourceforge.net/projects/joda-time/files/joda-time/), compile Spark for Scala 2.10 and  launch :
 
-{% highlight bash %}
+```bash
 $SPARK_HOME/bin/spark-shell --jars \
 ~/technologies/aws-java-sdk-1.10.51/lib/aws-java-sdk-1.10.51.jar,\
 ../../technologies/BIDMach2/lib/BIDMat.jar,\
 ../../technologies/BIDMach2/BIDMach.jar,\
 ../../technologies/joda-time-2.4/joda-time-2.4.jar
-{% endhighlight %}
+```
 
 Then you can import the required libraries :
 
-{% highlight scala %}
+```scala
 import BIDMach.models.RandomForest
-{% endhighlight %}
+```
 
 - as **cluster of GPU**, for example 2 g2.2xlarge executor instances with our [NVIDIA+CUDA+BIDMACH AMI for Spark](http://christopher5106.github.io/big/data/2016/01/27/two-AMI-to-create-the-fastest-cluster-with-gpu-at-the-minimal-engineering-cost-with-EC2-NVIDIA-Spark-and-BIDMach.html#cluster_of_gpu):
 
 Launch the Spark Shell and be sure to have only 1 core per GPU on each executor :
 
-{% highlight bash %}
+```bash
 sudo ./bin/spark-shell --master=spark://ec2-54-229-155-126.eu-west-1.compute.amazonaws.com:7077 --jars /home/ec2-user/BIDMach/BIDMach.jar,/home/ec2-user/BIDMach/lib/BIDMat.jar,/home/ec2-user/BIDMach/lib/jhdf5.jar,/home/ec2-user/BIDMach/lib/commons-math3-3.2.jar,/home/ec2-user/BIDMach/lib/lz4-1.3.jar,/home/ec2-user/BIDMach/lib/json-io-4.1.6.jar,/home/ec2-user/BIDMach/lib/jcommon-1.0.23.jar,/home/ec2-user/BIDMach/lib/jcuda-0.7.5.jar,/home/ec2-user/BIDMach/lib/jcublas-0.7.5.jar,/home/ec2-user/BIDMach/lib/jcufft-0.7.5.jar,/home/ec2-user/BIDMach/lib/jcurand-0.7.5.jar,/home/ec2-user/BIDMach/lib/jcusparse-0.7.5.jar --driver-library-path="/home/ec2-user/BIDMach/lib"
 
-{% endhighlight %}
+```
 
 
 <a name="spark_prepare_data" />
@@ -487,19 +487,19 @@ Spark is ideal to split very large data files into smaller parts that will be sa
 
 Spark naturally splits the input file into parts for each job, that are accessible via **mapPartitions** methods, in order to execute a custom function on each split, as for example :
 
-{% highlight scala %}
+```scala
 val file = sc.textFile("myfile.csv")
 val header_line = file.first()
 val tail_file = file.filter( _ != header_line)
 val allData = tail_file.mapPartitionsWithIndex( upload_lz4_fmat_to_S3 )
 allData.collect()
-{% endhighlight %}
+```
 
 Adjusting the parallelism (number of partitions) will adjust the split size / number of lz4 files.
 
 To build the custom *upload_lz4_fmat_to_S3* method, let's first create a function to upload to S3 :
 
-{% highlight scala %}
+```scala
 def upload_file_to_s3(filepath:String, bucket:String, directory:String) : Int = {
   import java.io.File
   import com.amazonaws.services.s3.AmazonS3Client
@@ -524,13 +524,13 @@ def upload_file_to_s3(filepath:String, bucket:String, directory:String) : Int = 
   }
   return 0
 }
-{% endhighlight %}
+```
 
 The Amazon SDK looks for the credentials available in the different contexts.
 
 Then, define a function to convert a line (String) of data from a CSV into an array of explicative features and the label :
 
-{% highlight scala %}
+```scala
 def convert_line_to_Expl_Label_Tuple(line : String) : (Array[Float],Float) = {
   val values = line.split(";")
 
@@ -538,11 +538,11 @@ def convert_line_to_Expl_Label_Tuple(line : String) : (Array[Float],Float) = {
 
   (expl, label)
 }
-{% endhighlight %}
+```
 
 Lastly, combine the functions to create  *upload_lz4_fmat_to_S3* method :
 
-{% highlight scala %}
+```scala
 def upload_lz4_fmat_to_S3 (index:Int, it:Iterator[String]) : Iterator[Int] = {
   import BIDMat.FMat
   import BIDMat.MatFunctions._
@@ -555,7 +555,7 @@ def upload_lz4_fmat_to_S3 (index:Int, it:Iterator[String]) : Iterator[Int] = {
   saveFMat("label%02d.lz4" format index, labelfmat)
   Array( upload_file_to_s3("data%02d.lz4" format index,bucket, "out"),upload_file_to_s3("label%02d.lz4" format index,bucket, "out") ).iterator
 }
-{% endhighlight %}
+```
 
 
 # Hyperparameter tuning using grid search with Spark
@@ -564,7 +564,7 @@ Hyperparameters are the parameters of the prediction model : number of trees, de
 
 Grid search consists in computing the model for a grid of combinations for the parameters, for example
 
-{% highlight scala %}
+```scala
 import BIDMat.{CMat, CSMat, DMat, Dict, FMat, FND, GMat, GDMat, GIMat, GLMat, GSMat, GSDMat, HMat, IDict, Image, IMat, LMat, Mat, SMat, SBMat, SDMat}
 import BIDMat.MatFunctions._
 import BIDMat.SciFunctions._
@@ -603,7 +603,7 @@ hyperparamRDD.mapPartitionsWithIndex(  (index: Int, it: Iterator[BIDMat.IMat]) =
     index + ": ndepth "+x(0,0) + " & ntrees "+x(0,1)
     } ).iterator
   }).collect
-{% endhighlight %}
+```
 
 which should give you :
 

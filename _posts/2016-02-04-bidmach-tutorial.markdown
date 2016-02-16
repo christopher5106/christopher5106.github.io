@@ -15,7 +15,7 @@ Let's put things back in order :)
 
 First, we'll see basic matrices, then more complicated types, then how to prepare data and an example of random forest computation.
 
-To launch BIDMach on your computer or instance, have a look [at my previous article]({{ site.url }}/parallel/computing/2016/01/26/gpu-computing-with-bidmach-library-simply-amazing.html).
+To launch BIDMach on a computer or instance, have a look [at my previous article]({{ site.url }}/parallel/computing/2016/01/26/gpu-computing-with-bidmach-library-simply-amazing.html). It's also possible to create a [cluster of GPU with BIDMach]({{ site.url }}/big/data/2016/01/27/two-AMI-to-create-the-fastest-cluster-with-gpu-at-the-minimal-engineering-cost-with-EC2-NVIDIA-Spark-and-BIDMach.html#cluster_of_gpu). 
 
 # Basic matrices
 

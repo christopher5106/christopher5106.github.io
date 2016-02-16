@@ -121,6 +121,7 @@ launch spark-cluster
 --region=eu-west-1  destroy spark-cluster
 ```
 
+<a name="ami_bidmach" />
 
 # Creation of the AMI for G2 with NVIDIA driver, CUDA 7.5, JCUDA, BIDMat and BIDMach libraries pre installed
 

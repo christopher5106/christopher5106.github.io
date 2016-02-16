@@ -24,13 +24,13 @@ aws ec2 run-instances --image-id ami-e2f74491 --key-name sparkclusterkey \
 --instance-type g2.2xlarge --region eu-west-1 --security-groups bidmach
 ```
 
-Placing many of these instances in a cluster make the world's fastest cluster at minimal engineering cost, that is :
+Placing many of these instances in a cluster make the fastest cluster at minimal engineering cost, that is :
 
 - EC2 G2 instances, with NVIDIA GPU offering **1536 cores on a single instance**, the maximal power on a single cloud instance currently available so easily
 
-- [BIDMach library](http://christopher5106.github.io/parallel/computing/2016/01/26/gpu-computing-with-bidmach-library-simply-amazing.html) that unleashes the speed of GPU computing algorithms to **compute on a single instance the equivalent of a cluster** of 8 to 30 instances, depending on the type of machine learning task [[benchmarks](https://github.com/BIDData/BIDMach/wiki/Benchmarks)].
+- [BIDMach library](http://christopher5106.github.io/parallel/computing/2016/01/26/gpu-computing-with-bidmach-library-simply-amazing.html) that unleashes the speed of GPU computing algorithms to **compute on a single instance at the speed of a cluster** of 8 to 30 instances, depending on the type of machine learning task [[benchmarks](https://github.com/BIDData/BIDMach/wiki/Benchmarks)].
 
-- Spark to launch many of these instances to parallelize the computing along hyperparemeter tuning. Hyperparameter tuning consists in repeating the same machine learning task with different hyperparemeters (parameters for the model). It is a kind of best practice to distribute machine learning computing this way, ie to parallelize along the hyperparemeter tuning (see also [Databricks example for Tensorflow](https://databricks.com/blog/2016/01/25/deep-learning-with-spark-and-tensorflow.html)), each instance will do the training for one set of hyperparameters, instead of distributing the machine learning algorithm itself, which would require a very ineffective data shuffling between instances.
+- Spark to launch many of these instances and parallelize the computing along hyperparemeter tuning. Hyperparameter tuning consists in repeating the exact same machine learning task but with different parameters for the model (the *hyperparemeters*). It is a kind of best practice to distribute machine learning computing along hyperparemeter tuning (each instance does the training for a set of hyperparameters), instead of distributing the training task itself (see also [Databricks example for Tensorflow](https://databricks.com/blog/2016/01/25/deep-learning-with-spark-and-tensorflow.html)), because it splits the computation in jobs (training) that do not need to communicate and avoids this way the ineffective data shuffling between instances.
 
 I cannot use AWS EMR to launch a GPU cluster because I need to install nvidia and cuda, that would require a reboot of the instances.
 

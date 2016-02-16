@@ -445,6 +445,8 @@ Parameters are :
 
 - trace(0): level of debugging information to print (0,1,2).
 
+**Note:** regression forests (`opts.regression=true`) expect integer targets. You should scale a continuous target value to a range 0..k. The predictions will be continuous, and the intention is they should get scaled back to the original range.
+
 <a name="spark" />
 
 

@@ -13,7 +13,7 @@ Using Intel Parallel Studio,
 
 there is a very great [BIDMach library](http://bid2.berkeley.edu/bid-data-project/download/) with [very competitive results(see the benchmarks)](https://github.com/BIDData/BIDMach/wiki/Benchmarks): on some tasks, **one can achieve on a single GPU instance the speed of a cluster of a few hundred instances, at a cost 10 to 1000 times lower**.
 
-We'll see in this article how to install it on Mac OS, or run an EC2 instance with it, as well as a few operations. For a [deeper tutorial : my next article](http://christopher5106.github.io/big/data/2016/02/04/bidmach-tutorial.html).
+We'll see in this article how to install the library on Mac OS, or run an EC2 instance with the library, as well as a few first operations. For a [deeper tutorial : my next article](http://christopher5106.github.io/big/data/2016/02/04/bidmach-tutorial.html).
 
 # Install on Mac OS
 

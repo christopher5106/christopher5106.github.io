@@ -202,14 +202,14 @@ MEMSIZE="-Xmx12G"
 
 - if you intend to use Spark, you need to compile BIDMach for Scala 2.10 (which is not supported), otherwise see in the next section (I compile Spark for Scala 2.11 and create a third AMI).
 
-Let's delete BIDMat, BIDMach tutorials, Maven, JCuda, to create a more efficient AMI with more space **ami-e2f74491**, which is definitely the one you should choose.
+Let's delete BIDMat, BIDMach tutorials, Maven, JCuda, to create an AMI with more space **ami-e2f74491**, which is definitely the one you should choose for your work.
 
 
 <a name="cluster_of_gpu" />
 
 # Creation of the AMI for a cluster of GPU G2 with Spark and NVIDIA driver, CUDA 7.5, JCUDA, BIDMat, BIDMach libraries pre installed
 
-To have Spark work with BIDMach, I compile Spark with Scala 2.11, since BIDMach is only supported for Scala 2.11 :
+To have Spark work with BIDMach, compile Spark with Scala 2.11, since BIDMach right now is only supported for Scala 2.11 :
 
 ```bash
 wget http://apache.crihan.fr/dist/spark/spark-1.6.0/spark-1.6.0.tgz
@@ -227,7 +227,9 @@ Let's connect to the first (the master) and create the *conf/slaves* file with o
 
     ec2-54-229-106-189.eu-west-1.compute.amazonaws.com
 
-On both of them, let's create a directory */mnt/spark* with *ec2-user* as owner, and define *conf/spark-env.sh* file :
+Add the ssh key to the ssh-agent of the master.
+
+On both master and slave instances, let's create a directory */mnt/spark* with *ec2-user* as owner, and define *conf/spark-env.sh* file :
 
 ```
 #!/usr/bin/env bash

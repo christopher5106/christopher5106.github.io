@@ -5,7 +5,7 @@ date:   2016-02-04 23:00:51
 categories: big data
 ---
 
-BIDMach is a very powerful computation library in Scala,
+BIDMach is a very powerful computation library in Scala [see benchmarks](https://github.com/BIDData/BIDMach/wiki/Benchmarks),
 
 - on matrix operations, as powerful as Python Numpy library on CPU, but offering to work on CPU and GPU indifferently.
 

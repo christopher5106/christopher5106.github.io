@@ -272,4 +272,4 @@ sudo ./bin/spark-shell \
 --conf "spark.executor.extraLibraryPath=/home/ec2-user/BIDMach/lib"
 ```
 
-**Our cluster of GPU is ready!** Go on with a [Random forest computation on the cluster](http://christopher5106.github.io/big/data/2016/02/04/bidmach-tutorial.html).
+**Our cluster of GPU is ready!** Go on with a [data preparation and a Random forest computation on the cluster](http://christopher5106.github.io/big/data/2016/02/04/bidmach-tutorial.html).

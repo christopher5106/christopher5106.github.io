@@ -386,7 +386,6 @@ opts.nnodes = 50000
 opts.nbits = 16
 opts.gain = 0.001f
 mm.train
-
 ```
 
 Option `opts.useGPU = false` will disable use of GPU.

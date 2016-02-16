@@ -37,22 +37,16 @@ I cannot use AWS EMR to launch a GPU cluster because I need to install nvidia an
 
 # Creation of the AMI for G2+Spark with NVIDIA driver and CUDA 7.5 installed
 
-Let's begin with an instance from AMI Id `ami-2ae0165d` from [the AMI list for Spark](https://github.com/amplab/spark-ec2/blob/branch-1.5/ami-list/eu-west-1/hvm), for Europe :
+Let's begin with an instance from AMI Id `ami-2ae0165d` from [the AMI list for Spark for Europe](https://github.com/amplab/spark-ec2/blob/branch-1.5/ami-list/eu-west-1/hvm), that I will customize to the needs :
 
 ```bash
 aws ec2 run-instances --image-id ami-2ae0165d --instance-type g2.2xlarge \
 --key-name bidmach-keypair --security-groups bidmach
-```
 
-and connect
-
-```bash
+# connect
 ssh -i bidmach-keypair.pem ec2-user@ec2-XXX.eu-west-1.compute.amazonaws.com
-```
 
-And install NVIDIA driver and CUDA 7.5 :
-
-```bash
+# install NVIDIA driver and CUDA 7.5 :
 sudo yum update -y
 sudo reboot
 sudo yum groupinstall -y "Development tools"

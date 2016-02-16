@@ -7,7 +7,7 @@ categories: big data
 
 BIDMach is a very powerful computation library in Scala,
 
-- on matrix operations, as powerful as Python Numpy library on CPU, but offering to possibility to work on CPU and GPU indifferently.
+- on matrix operations, as powerful as Python Numpy library on CPU, but offering to work on CPU and GPU indifferently.
 
 - on file i/o, in particular with [lz4 compression](https://github.com/Cyan4973/lz4).
 
@@ -15,7 +15,7 @@ Let's put things back in order :)
 
 First, we'll see basic matrices, then more complicated types, then how to prepare data and an example of random forest computation.
 
-To launch BIDMach on a computer or instance, have a look [at my previous article]({{ site.url }}/parallel/computing/2016/01/26/gpu-computing-with-bidmach-library-simply-amazing.html). It's also possible to create a [cluster of GPU with BIDMach]({{ site.url }}/big/data/2016/01/27/two-AMI-to-create-the-fastest-cluster-with-gpu-at-the-minimal-engineering-cost-with-EC2-NVIDIA-Spark-and-BIDMach.html#cluster_of_gpu). 
+To launch BIDMach on a computer or instance, have a look [at my previous article]({{ site.url }}/parallel/computing/2016/01/26/gpu-computing-with-bidmach-library-simply-amazing.html). It's also possible to create a [cluster of GPU with BIDMach]({{ site.url }}/big/data/2016/01/27/two-AMI-to-create-the-fastest-cluster-with-gpu-at-the-minimal-engineering-cost-with-EC2-NVIDIA-Spark-and-BIDMach.html#cluster_of_gpu).
 
 # Basic matrices
 

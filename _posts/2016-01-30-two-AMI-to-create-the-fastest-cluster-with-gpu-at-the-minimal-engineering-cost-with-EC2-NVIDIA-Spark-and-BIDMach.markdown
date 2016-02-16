@@ -109,14 +109,14 @@ To launch a cluster of this AMI :
 --instance-profile-name=spark-ec2 \
 launch spark-cluster
 
-# Log in
+# log in
 ./ec2/spark-ec2 -k sparkclusterkey -i ~/sparkclusterkey.pem \
 --region=eu-west-1 login spark-cluster
 
-# Launch the shell
+# launch the shell
 ./spark/bin/spark-shell
 
-# Terminate the cluster
+# terminate the cluster
 ./ec2/spark-ec2 -k sparkclusterkey -i ~/sparkclusterkey.pem \
 --region=eu-west-1  destroy spark-cluster
 ```
@@ -187,7 +187,6 @@ make
 make install
 cd ../..
 ./sbt clean package
-
 ```
 
 Let's create a public AMI : **ami-18f5466b**. This AMI is useful to get an instance with BIDMach pre-installed.
@@ -272,4 +271,4 @@ sudo ./bin/spark-shell \
 --conf "spark.executor.extraLibraryPath=/home/ec2-user/BIDMach/lib"
 ```
 
-**Our cluster of GPU is ready!**. Go on with a [Random forest computation on the cluster](http://christopher5106.github.io/big/data/2016/02/04/bidmach-tutorial.html).
+**Our cluster of GPU is ready!** Go on with a [Random forest computation on the cluster](http://christopher5106.github.io/big/data/2016/02/04/bidmach-tutorial.html).

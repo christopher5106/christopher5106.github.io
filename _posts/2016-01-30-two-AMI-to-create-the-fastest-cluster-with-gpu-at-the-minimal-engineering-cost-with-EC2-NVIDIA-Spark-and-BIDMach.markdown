@@ -56,6 +56,7 @@ sudo yum install kernel-devel-`uname -r`
 wget http://us.download.nvidia.com/XFree86/Linux-x86_64/352.79/NVIDIA-Linux-x86_64-352.79.run
 sudo /bin/bash NVIDIA-Linux-x86_64-352.79.run
 sudo reboot
+
 # check if it works
 nvidia-smi -q | head
 
@@ -79,7 +80,7 @@ To launch a cluster of this AMI :
 
 -  first fork `https://github.com/amplab/spark-ec2` and in the newly created `https://github.com/christopher5106/spark-ec2` repo, I change the AMI for the previously created AMI `ami-e2f74491`
 
-- then create an IAM role named *spark-ec2* to later on be able to give access to resources to the Spark cluster (without having to deal with security credentials on the instances - avoiding dangerous `--copy-aws-credentials` option) and add the permission to attribute this role to the user launching the spark-ec2 command :
+- create an IAM role named *spark-ec2* to be able to manage access to resources for the Spark cluster (without having to deal with security credentials on the instances - avoiding dangerous `--copy-aws-credentials` option) and add the permission to attribute this role to the user launching the spark-ec2 command :
 
 ```json
 {
@@ -107,21 +108,15 @@ To launch a cluster of this AMI :
 --spark-ec2-git-repo=https://github.com/christopher5106/spark-ec2 \
 --instance-profile-name=spark-ec2 \
 launch spark-cluster
-```
 
-
-And log in and start the shell :
-
-```bash
+# Log in
 ./ec2/spark-ec2 -k sparkclusterkey -i ~/sparkclusterkey.pem \
 --region=eu-west-1 login spark-cluster
 
+# Launch the shell
 ./spark/bin/spark-shell
-```
 
-Terminate the cluster:
-
-```bash
+# Terminate the cluster
 ./ec2/spark-ec2 -k sparkclusterkey -i ~/sparkclusterkey.pem \
 --region=eu-west-1  destroy spark-cluster
 ```
@@ -200,11 +195,10 @@ Let's create a public AMI : **ami-18f5466b**. This AMI is useful to get an insta
 Be careful :
 
 - before launching `bidmach` command, change the version and augment the memory in the *bidmach* file :
-
-    ```bash
-    JCUDA_VERSION="0.7.5" # Fix if needed
-    MEMSIZE="-Xmx12G"
-    ```
+```bash
+JCUDA_VERSION="0.7.5" # Fix if needed
+MEMSIZE="-Xmx12G"
+```
 
 - if you intend to use Spark, you need to compile BIDMach for Scala 2.10 (which is not supported), otherwise see in the next section (I compile Spark for Scala 2.11 and create a third AMI).
 

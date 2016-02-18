@@ -523,6 +523,16 @@ You can also have a look at number formats, dates, ...
 *cell.setFormula(formula) or cell.Formula=formula*
 (example : cell.setFormula("=A1"))
 
+**Cell background color (hexadecimal)**
+
+*cell.CellBackColor=-1* (no color)
+
+*cell.CellBackColor=0* (black)
+
+*cell.CellBackColor=255* (blue)
+
+*cell.CellBackColor=0xFF0000* (red)
+
 **Get range value as an array**
 
 *range.getDataArray()*

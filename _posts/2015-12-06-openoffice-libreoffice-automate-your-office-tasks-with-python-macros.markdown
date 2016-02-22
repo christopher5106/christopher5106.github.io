@@ -578,6 +578,10 @@ Remove a named range :
 
 *cell.getCellAddress().Row*
 
+**get cell sheet**
+
+*cell.getCellAddress().Sheet**
+
 **get range column and rowstart/end start/end/count**
 
 *cell/range.getRangeAddress().StartRow*

@@ -228,6 +228,8 @@ and copy it to the Macro directory for LibreOffice :
 
 	cp myscript.py /Applications/LibreOffice.app/Contents/Resources/Scripts/python/
 
+(under Windows it is `C:\Program Files (x86)\LibreOffice 5\share\Scripts\python` directory).
+
 Open a new text document and run it from the menu :
 
 ![LibreOffice Python Macro Directory]({{ site.url }}/img/libreoffice_python_macro_script.png)

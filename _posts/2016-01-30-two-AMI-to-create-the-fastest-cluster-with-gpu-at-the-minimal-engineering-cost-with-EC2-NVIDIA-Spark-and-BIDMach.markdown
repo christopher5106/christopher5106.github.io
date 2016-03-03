@@ -1,14 +1,17 @@
 ---
 layout: post
-title:  "3 AMI to run the fastest cluster of GPU for scientific computing at minimal engineering cost thanks to EC2, Spark, NVIDIA, and BIDMach technologies"
+title:  "4 AMI to run the fastest cluster of GPU for scientific computing at minimal engineering cost thanks to EC2, Spark, NVIDIA, BIDMach technologies and Caffe"
 date:   2016-01-27 23:00:51
 categories: big data
 ---
 
-In this tutorial, I will create three AMI for AWS G2 instances (GPU-enabled), the first one for any use of NVIDIA technologies, the second one for the use of [scala fast GPU library BIDMach](http://christopher5106.github.io/big/data/2016/02/04/bidmach-tutorial.html) and the third one for the creation of a cluster of GPU instances with BIDMach:
+In this tutorial, I will create four AMI for AWS G2 instances (GPU-enabled), the first one for any use of NVIDIA technologies, the second with Caffe and CUDNN, the third one for the use of [scala fast GPU library BIDMach](http://christopher5106.github.io/big/data/2016/02/04/bidmach-tutorial.html) and the fourth one for the creation of a cluster of GPU instances with BIDMach:
 
 - **ami-0ef6407d** : NVIDIA driver + Cuda 7.5
 This first AMI is *Spark-ec2 compatible*, it can be launched with *spark-ec2* command.
+
+- **ami-9af54ce9** : NVIDIA driver + Cuda 7.5 + CUDNN + Caffe
+This second AMI is *Spark-ec2 compatible*, it can be launched with *spark-ec2* command.
 
 - **ami-18f5466b** (or **ami-e2f74491** for a memory efficient AMI - some unnecessary files removed): NVIDIA driver + Cuda 7.5 + BIDMach
 Since Spark-ec2 installs Spark for Scala 2.10, this AMI cannot be used with *spark-ec2* command.
@@ -121,11 +124,114 @@ launch spark-cluster
 --region=eu-west-1  destroy spark-cluster
 ```
 
+# Creation of the AMI for G2 with NVIDIA driver, CUDA 7.5, CUDNN and Caffe
+
+Let's add to the previous instance Caffe.
+
+```bash
+# protobuf, snappy, boost
+sudo yum install protobuf-devel snappy-devel boost-devel
+
+# HDF5
+wget http://www.hdfgroup.org/ftp/HDF5/current/src/hdf5-1.8.16.tar
+tar xvf hdf5-1.8.16.tar
+cd hdf5-1.8.16
+./configure --prefix=/usr/local/hdf5
+make
+sudo make install
+
+# glog
+wget https://google-glog.googlecode.com/files/glog-0.3.3.tar.gz
+tar zxvf glog-0.3.3.tar.gz
+cd glog-0.3.3
+./configure
+make
+sudo make install
+
+# gflags
+wget https://github.com/schuhschuh/gflags/archive/master.zip
+unzip master.zip
+cd gflags-master
+mkdir build && cd build
+export CXXFLAGS="-fPIC" && cmake .. && make VERBOSE=1
+make
+sudo make install
+
+# lmdb
+git clone https://github.com/LMDB/lmdb
+cd lmdb/libraries/liblmdb
+make
+sudo make install
+
+# atlas
+sudo yum install atlas-devel
+
+# Python
+sudo yum install the python-devel
+
+# Opencv
+git clone https://github.com/Itseez/opencv.git
+cd opencv
+mkdir release
+cd release
+cmake -D WITH_CUDA=OFF -D CMAKE_BUILD_TYPE=RELEASE -D CMAKE_INSTALL_PREFIX=/usr/local ..
+make
+sudo make install
+
+# Caffe
+git clone https://github.com/BVLC/caffe.git
+cd caffe
+vi Makefile.config
+```
+
+And edit the *Makefile.config* with :
+
+```
+USE_LEVELDB := 0
+OPENCV_VERSION := 3
+CUDA_DIR := /usr/local/cuda
+CUDA_ARCH := -gencode arch=compute_20,code=sm_20 \
+                -gencode arch=compute_20,code=sm_21 \
+                -gencode arch=compute_30,code=sm_30 \
+                -gencode arch=compute_35,code=sm_35 \
+                -gencode arch=compute_50,code=sm_50 \
+                -gencode arch=compute_50,code=compute_50
+BLAS := atlas
+BLAS_LIB := /usr/lib64/atlas
+PYTHON_INCLUDE := /usr/include/python2.6 \
+                /usr/lib/python2.6/dist-packages/numpy/core/include
+
+PYTHON_LIB := /usr/lib64/
+INCLUDE_DIRS := $(PYTHON_INCLUDE) /usr/local/hdf5/include /usr/local/include
+LIBRARY_DIRS := $(PYTHON_LIB) /usr/local/lib  /usr/local/hdf5/lib /usr/lib
+BUILD_DIR := build
+DISTRIBUTE_DIR := distribute
+TEST_GPUID := 0
+Q ?= @
+```
+
+In the Makefile, also change the python lib version from 2.7 to 2.6.
+
+Now ready for compilation :
+
+```bash
+make all
+make pycaffe
+make test
+
+echo "export LD_LIBRARY_PATH=/usr/local/cuda/lib64:/usr/local/lib/:/usr/local/hdf5/lib:$LD_LIBRARY_PATH" >> ~/.bashrc
+make runtest
+```
+
+Let's create a public AMI : **ami-9af54ce9**.
+
+As the previous one, this AMI can be launched to use Caffe on a single instance or as part of a  Spark cluster.
+
 <a name="ami_bidmach" />
 
 # Creation of the AMI for G2 with NVIDIA driver, CUDA 7.5, JCUDA, BIDMat and BIDMach libraries pre installed
 
-Compile JCUDA, BIDMat, BIDMach libraries on the previous instance :
+Compile JCUDA, BIDMat, BIDMach libraries on the first instance :
 
 ```bash
 #install Cmake

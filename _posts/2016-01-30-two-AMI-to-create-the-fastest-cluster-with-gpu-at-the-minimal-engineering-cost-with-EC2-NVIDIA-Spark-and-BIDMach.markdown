@@ -29,7 +29,7 @@ aws ec2 run-instances --image-id ami-e2f74491 --key-name sparkclusterkey \
 
 Placing many of these instances in a cluster make the fastest cluster at minimal engineering cost, that is :
 
-- EC2 G2 instances, with NVIDIA GPU offering **1536 cores on a single instance**, the maximal power on a single cloud instance currently available so easily
+- EC2 G2 instances, with a [NVIDIA GRID K520](http://www.nvidia.com/object/cloud-gaming-gpu-boards.html), made of 2 GPU offering 1536 cores each, hence **3072 cores on a single instance**, the maximal power on a single cloud instance currently available so easily
 
 - [BIDMach library](http://christopher5106.github.io/parallel/computing/2016/01/26/gpu-computing-with-bidmach-library-simply-amazing.html) that unleashes the speed of GPU computing algorithms to **compute on a single instance at the speed of a cluster** of 8 to 30 instances, depending on the type of machine learning task [[benchmarks](https://github.com/BIDData/BIDMach/wiki/Benchmarks)].
 

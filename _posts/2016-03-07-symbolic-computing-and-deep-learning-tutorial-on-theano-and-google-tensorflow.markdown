@@ -9,21 +9,16 @@ I gave a short presentation about [Google Tensorflow](http://christopher5106.git
 
 Let's put things in order to have a great tutorial with mixed code and explanations and learn **twice faster** with mixed Theano and Tensorflow examples in one tutorial :)
 
-First launch a iPython session and import the two libraries :
+First launch a iPython session and import the two libraries. For Tensorflow, we have to create a session to run the operations in :
 
 ```python
 import tensorflow as tf
+sess = tf.Session()
 import theano
 import theano.tensor as th
 ```
 
 Instructions beginning with **tf** will be Tensorflow code, with **th** Theano code.
-
-For Tensorflow, we have to create a session :
-
-```python
-sess = tf.Session()
-```
 
 # Symbolic computation
 
@@ -44,8 +39,8 @@ sess.run(a+b, feed_dict={a: 10, b: 32})
 and the same in Theano :
 
 ```python
-a = th.iscalar('a')
-b = th.iscalar('b')
+a = th.iscalar()
+b = th.iscalar()
 f = theano.function([a, b], a + b)
 f(10,32)
 ```
@@ -53,7 +48,7 @@ f(10,32)
 a and b are not classical programming variable, and are named **symbols** or **placeholders**. They are much more like *mathematical variable*. The second advantage of symbolic computing is the **automatic differentiation**, useful to compute gradients. For example let's differentiate the function $$ x \rightarrow x^2 $$ in Theano :
 
 ```python
-a = th.dscalar('a')
+a = th.dscalar()
 ga = th.grad(a ** 2,a)
 f = theano.function([a], ga)
 ga(2)
@@ -78,6 +73,30 @@ and go to [http://localhost:6006/](http://localhost:6006/) under Graph tab to se
 
 ![]({{ site.url }}/img/tensorflow_tutorial_add.png)
 
+
+As you can see, our symbols are not named, it is possible possible to name them in Tensorflow
+
+```python
+a = tf.placeholder(tf.int8, name="a")
+b = tf.placeholder(tf.int8, name="b")
+
+with tf.name_scope("addition") as scope:
+  my_addition = a+b
+
+sess.run(my_addition, feed_dict={a: 10, b: 32})
+writer = tf.train.SummaryWriter("/tmp/mytutorial_logs", sess.graph_def)
+```
+
+or in Theano for debugging :
+
+```python
+a = th.iscalar('a')
+b = th.iscalar('b')
+f = theano.function([a, b], a + b)
+f(10,32)
+```
+
+![]({{ site.url }}/img/tensorflow_tutorial_named_add.png)
 
 # Define a first network
 

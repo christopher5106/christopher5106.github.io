@@ -7,6 +7,8 @@ categories: deep learning
 
 TensorFlow comes as a library such as other deep learning libraries, [Caffe](http://caffe.berkeleyvision.org/), [Theano](http://deeplearning.net/software/theano/), or [Torch](http://torch.ch/). I've already written a lot on Caffe before.
 
+This article is a global overview. To learn in detail symbolic computing, have a look at my [new tutorial to understand Tensorflow and Theano symbolic computing](http://christopher5106.github.io/big/data/2016/03/06/symbolic-computing-and-deep-learning-tutorial-on-theano-and-google-tensorflow.html).
+
 # The main advantage of Tensorflow
 
 Such as Caffe, TensorFlow comes with an [API](http://tensorflow.org/api_docs) in both Python and C++ languages.
@@ -223,5 +225,7 @@ And in Tensorboard (at *http://localhost:6006/*)
 ![png]({{ site.url }}/img/tensorboard.png)
 
 ![png]({{ site.url }}/img/tensorboard_graph.png)
+
+Have a look at my [tutorial about symbolic programming in Tensorflow or Theano](http://christopher5106.github.io/big/data/2016/03/06/symbolic-computing-and-deep-learning-tutorial-on-theano-and-google-tensorflow.html).
 
 **Well done!**

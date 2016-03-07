@@ -7,7 +7,7 @@ categories: big data
 
 I gave a short presentation about [Google Tensorflow](http://christopher5106.github.io/deep/learning/2015/11/11/tensorflow-google-deeplearning-library.html) previously, with install instructions. For Theano, it is as simple as a `pip install theano`.
 
-Let's put things in order to have a great tutorial with mixed code and explanations and learn **twice faster** with mixed Theano and Tensorflow examples in one tutorial :)
+Let's put things in order to have a great tutorial with mixed code and explanations and learn **twice faster** with mixed Theano and Tensorflow examples in one tutorial :) You'll discover how close the two libraries are.
 
 First launch a iPython session and import the two libraries. For Tensorflow, we have to create a session to run the operations in :
 
@@ -29,9 +29,9 @@ Symbolic computation is a very different way of programming.
 
 Classical programming defines **variables** that hold values, and operations to modify their values.
 
-In symbolic programming, it's more about building a graph of operations, that will be compiled later for execution. Such an architecture enables the code to be executed indifferently on **CPU** or **GPU** for example.
+In symbolic programming, it's more about building a graph of operations, that will be compiled later for execution. Such an architecture enables the code to be executed indifferently on **CPU** or **GPU** for example. Symbols are an abstraction of where it is executed.
 
-The second aspect of symbolic computing is that it is much more like *mathematical function*, for example let's define an addition :
+The second aspect of symbolic computing is that it is much more like *mathematical functions or formulas*, that can be added, multiplied, differentiated, ... to give other math functions. For example let's define an addition :
 
 ```python
 # tensorflow
@@ -46,7 +46,7 @@ f = theano.function([a, b], a + b)
 f(10,32)
 ```
 
-a and b are not classical programming variable, and are named **symbols** or **placeholders** or **tensors**. They are much more like *mathematical variable*. The second advantage of symbolic computing is the **automatic differentiation**, useful to compute gradients. For example let's differentiate the function $$ x \rightarrow x^2 $$ in Theano :
+a and b are not classical programming variables, and are named **symbols** or **placeholders** or **tensors** or **symbolic variables**. They are much more like *mathematical variables*. The second advantage of symbolic computing is the **automatic differentiation**, useful to compute gradients. For example let's differentiate the function $$ x \rightarrow x^2 $$ in Theano :
 
 ```python
 # theano
@@ -72,7 +72,7 @@ with sess.as_default():
 # or z.eval(feed_dict={a: 10, b: 32})
 ```
 
-Tensors have a type and a shape as in Numpy ([Tensorflow types and shapes](https://www.tensorflow.org/versions/r0.7/resources/dims_types.html) - [Theano types](http://deeplearning.net/software/theano/library/tensor/basic.html)).
+Tensors have a type and a shape as in Numpy (their full specification : [Tensorflow types and shapes](https://www.tensorflow.org/versions/r0.7/resources/dims_types.html) - [Theano types](http://deeplearning.net/software/theano/library/tensor/basic.html)).
 
 # Naming tensors in the graph of operations
 
@@ -81,6 +81,7 @@ Tensorboard, part of Tensorflow, offers us to follow the graph construction stat
 ```python
 # tensorflow
 writer = tf.train.SummaryWriter("/tmp/mytutorial_logs", sess.graph_def)
+writer.flush()
 ```
 
 and launch Tensorboard :
@@ -95,17 +96,18 @@ Go to [http://localhost:6006/](http://localhost:6006/) under Graph tab to see ou
 ![]({{ site.url }}/img/tensorflow_tutorial_add.png)
 
 
-As you can see, our addition operation is present but symbols are not named, it is possible possible to name them
+As you can see, our addition operation is present but symbols are not named, it is possible to name them
 
 ```python
-# tensorflow for tensorboard
+# tensorflow
 a = tf.placeholder(tf.int8, name="a")
 b = tf.placeholder(tf.int8, name="b")
 addition = tf.add(a, b, name="addition")
 sess.run(addition, feed_dict={a: 10, b: 32})
 writer = tf.train.SummaryWriter("/tmp/mytutorial_logs", sess.graph_def)
+writer.flush()
 
-# theano for debugging
+# theano (for debugging)
 a = th.iscalar('a')
 b = th.iscalar('b')
 f = theano.function([a, b], a + b, name='addition')
@@ -126,6 +128,7 @@ with tf.name_scope("addition") as scope:
 
 sess.run(my_addition, feed_dict={a: 10, b: 32})
 writer = tf.train.SummaryWriter("/tmp/mytutorial_logs", sess.graph_def)
+writer.flush()
 ```
 ![]({{ site.url }}/img/tensorflow_tutorial_named_add.png)
 
@@ -143,12 +146,16 @@ For that purpose, Tensorflow created *Variables*, that add an operation to the g
 # tensorflow
 x = tf.placeholder(tf.float32, [None, 784])
 
-weights = tf.Variable(tf.random_normal([5, 5, 1, 3], stddev=0.1)))
-bias = tf.Variable(tf.constant(0.1, shape=[3]))
+weights = tf.Variable(tf.random_normal([5, 5, 1, 3], stddev=0.1))
+bias = tf.Variable(tf.constant(0.1, shape=[1,3]))
 
-z = tf.nn.conv2d(x, weights, strides=[1, 1, 1, 1], padding='SAME') + bias
+x_image = tf.reshape(x, [-1,28,28,1])
+
+z = tf.nn.conv2d(x_image, weights, strides=[1, 1, 1, 1], padding='SAME') + bias
 
 sess.run(tf.initialize_all_variables())
+writer = tf.train.SummaryWriter("/tmp/mytutorial_logs", sess.graph_def)
+writer.flush()
 ```
 
 and Theano *shared variables*
@@ -158,13 +165,17 @@ and Theano *shared variables*
 
 ```
 
-
+![]({{ site.url }}/img/tensorflow_tutorial_first_net.png)
 
 Save the variable
 
 
+# Conclusion
+
 With this simple introduction to symbolic programming, you're now ready to go further and check out [Tensorflow net examples](https://www.tensorflow.org/versions/r0.7/tutorials/index.html) and [Theano net examples](http://deeplearning.net/tutorial/) !
 
 A very nice library that is built on top of Theano and simplifies the use of Theano is [Lasagne](http://lasagne.readthedocs.org/en/latest/).
+
+Concepts such as Tensors are very close to Numpy or [BIDMach, a very nice CPU/GPU library for Scala and Spark](http://christopher5106.github.io/big/data/2016/02/04/bidmach-tutorial.html).
 
 **Hopefully you enjoyed !**

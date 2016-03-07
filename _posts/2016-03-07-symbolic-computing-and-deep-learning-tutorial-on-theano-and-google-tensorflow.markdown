@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Symbolic computing and deep learning tutorial on Tensorflow and Theano"
+title:  "Symbolic computing and deep learning tutorial with Tensorflow / Theano : 2 for the price of 1"
 date:   2016-03-06 23:00:51
 categories: big data
 ---
@@ -20,7 +20,7 @@ import theano.tensor as th
 
 Instructions beginning with **tf** will be Tensorflow code, with **th** Theano code.
 
-# Symbolic computation
+# Symbols in symbolic computing
 
 Symbolic computation is a very different way of programming.
 
@@ -54,9 +54,27 @@ f = theano.function([a], ga)
 ga(2)
 ```
 
-This is great since it does not require to be able to know how to differentiate a function.
+This is great since it does not require to be able to know how to differentiate a function. As you can see, both in Theano and Tensorflow, the ` z = a + b ` is of type Tensor as `a` and `b`.
 
-Let's also follow the graph construction of the tutorial in Tensorboard :
+Tensors are not variables and have no value, but can be evaluated which will launch the operations in a session run as before or directly written :
+
+```python
+# in theano
+z = a + b
+z.eval({a : 10, b : 32})
+
+# in tensorflow
+with sess.as_default():
+    print z.eval({a: 10, b: 32})
+
+# or z.eval(feed_dict={a: 10, b: 32})
+```
+
+Tensors have a type and a shape as in Numpy ([Tensorflow types and shapes](https://www.tensorflow.org/versions/r0.7/resources/dims_types.html) - [Theano types](http://deeplearning.net/software/theano/library/tensor/basic.html)).
+
+# Naming tensors in the graph of operations
+
+Tensorboard, part of Tensorflow, offers us to follow the graph construction state, which is a good idea in parallel of this tutorial. Let's first write the data :
 
 ```python
 writer = tf.train.SummaryWriter("/tmp/mytutorial_logs", sess.graph_def)
@@ -68,13 +86,13 @@ and launch Tensorboard :
 tensorboard --logdir=/tmp/mytutorial_logs
 ```
 
-and go to [http://localhost:6006/](http://localhost:6006/) under Graph tab to see our first graph :
+Go to [http://localhost:6006/](http://localhost:6006/) under Graph tab to see our first graph :
 
 
 ![]({{ site.url }}/img/tensorflow_tutorial_add.png)
 
 
-As you can see, our symbols are not named, it is possible possible to name them in Tensorflow
+As you can see, our addition operation is present but symbols are not named, it is possible possible to name them in Tensorflow
 
 ```python
 a = tf.placeholder(tf.int8, name="a")
@@ -98,21 +116,40 @@ f(10,32)
 
 ![]({{ site.url }}/img/tensorflow_tutorial_named_add.png)
 
-Last, it is also possible to eval a tensor directly :
+Tensorflow scopes add a scope prefix to all tensors declared inside the scope, and Tensorboard displays them under a single node that can be expanded in the interface by clicking on it. Scopes can be hierarchical also.
 
-```python
-# in theano
-z = a + b
-z.eval({a : 10, b : 32})
+# Share the variables in a first example of network
 
-# in tensorflow
-with sess.as_default():
-    print z.eval({a: 10, b: 32})
-```
-
-
-# Define a first network
-
-Let's go a bit further by defining a first neuron in symbolic computing :
+Let's go a bit further by defining in symbolic computing a first layer of 3 neurons acting on MNIST images (size `28x28=784`, 1 channel) with zero padding, stride 1 and weights initialized with a normal distribution.
 
 ![](http://christopher5106.github.io/img/simple_network.png)
+
+As I said about symbolic computation, we use tensors that are abstraction objects of the objets in the memory of the CPU or the GPU, simplifying manipulation, but how can we access their values outside from the result values of a session run ?
+
+For that purpose, Tensorflow created *Variables*, that add an operation to the graph,
+
+```python
+x = tf.placeholder(tf.float32, [None, 784])
+weights = tf.Variable(tf.random_normal([5, 5, 1, 3], stddev=0.1)))
+bias = tf.Variable(tf.constant(0.1, shape=[3]))
+z = tf.nn.conv2d(x, weights, strides=[1, 1, 1, 1], padding='SAME') + bias
+```
+
+and Theano *shared variables*
+
+```python
+
+```
+
+None
+sess.run(tf.initialize_all_variables())
+
+
+Save the variable
+
+
+With this simple introduction to symbolic programming, you're now ready to go further and check out [Tensorflow](https://www.tensorflow.org/versions/r0.7/tutorials/index.html) and [Theano](http://deeplearning.net/tutorial/) network examples!
+
+A very nice library that is built on Theano and simplifies the use of Theano is [Lasagne](http://lasagne.readthedocs.org/en/latest/).
+
+**Well done!**

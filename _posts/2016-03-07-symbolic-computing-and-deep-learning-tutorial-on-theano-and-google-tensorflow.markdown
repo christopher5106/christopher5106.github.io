@@ -45,7 +45,7 @@ f = theano.function([a, b], a + b)
 f(10,32)
 ```
 
-a and b are not classical programming variable, and are named **symbols** or **placeholders**. They are much more like *mathematical variable*. The second advantage of symbolic computing is the **automatic differentiation**, useful to compute gradients. For example let's differentiate the function $$ x \rightarrow x^2 $$ in Theano :
+a and b are not classical programming variable, and are named **symbols** or **placeholders** or **tensors**. They are much more like *mathematical variable*. The second advantage of symbolic computing is the **automatic differentiation**, useful to compute gradients. For example let's differentiate the function $$ x \rightarrow x^2 $$ in Theano :
 
 ```python
 a = th.dscalar()
@@ -92,12 +92,27 @@ or in Theano for debugging :
 ```python
 a = th.iscalar('a')
 b = th.iscalar('b')
-f = theano.function([a, b], a + b)
+f = theano.function([a, b], a + b, name='addition')
 f(10,32)
 ```
 
 ![]({{ site.url }}/img/tensorflow_tutorial_named_add.png)
 
+Last, it is also possible to eval a tensor directly :
+
+```python
+# in theano
+z = a + b
+z.eval({a : 10, b : 32})
+
+# in tensorflow
+with sess.as_default():
+    print z.eval({a: 10, b: 32})
+```
+
+
 # Define a first network
+
+Let's go a bit further by defining a first neuron in symbolic computing :
 
 ![](http://christopher5106.github.io/img/simple_network.png)

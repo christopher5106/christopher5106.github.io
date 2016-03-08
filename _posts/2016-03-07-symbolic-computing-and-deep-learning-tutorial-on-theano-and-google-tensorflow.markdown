@@ -30,7 +30,7 @@ Symbolic computation is a very different way of programming.
 
 Classical programming defines **variables** that hold values, and operations to modify their values.
 
-In symbolic programming, it's more about building a graph of operations, that will be compiled later for execution. Such an architecture enables the code to be executed indifferently on **CPU** or **GPU** for example. Symbols are an abstraction of where it is executed.
+In symbolic programming, it's more about building a graph of operations, that will be compiled later for execution. Such an architecture enables the code to be compiled and executed indifferently on **CPU** or **GPU** for example. Symbols are an abstraction that does not require to know where it will be executed.
 
 The second aspect of symbolic computing is that it is much more like *mathematical functions or formulas*, that can be added, multiplied, differentiated, ... to give other math functions. For example let's define an addition :
 
@@ -79,7 +79,7 @@ Tensors have a type and a shape as in Numpy (their full specification : [Tensorf
 
 # Naming tensors in the graph of operations
 
-Tensorboard, part of Tensorflow, offers us to follow the graph construction state, which is a good idea in parallel of this tutorial. Let's first write the data :
+Tensorboard, part of Tensorflow, offers us to follow the graph construction state, which is a good idea in parallel of this tutorial. Let's first write the definition of the graph to the log file :
 
 ```python
 # tensorflow
@@ -93,7 +93,7 @@ and launch Tensorboard :
 tensorboard --logdir=/tmp/mytutorial_logs
 ```
 
-Go to [http://localhost:6006/](http://localhost:6006/) under Graph tab to see our first graph :
+Go to [http://localhost:6006/](http://localhost:6006/) and under the graph tab to see the first graph :
 
 
 ![]({{ site.url }}/img/tensorflow_tutorial_add.png)

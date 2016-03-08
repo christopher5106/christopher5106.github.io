@@ -15,7 +15,8 @@ First launch a iPython session and import the two libraries. For Tensorflow, we 
 # tensorflow
 import tensorflow as tf
 sess = tf.Session()
-
+```
+```python
 # theano
 import theano
 import theano.tensor as th
@@ -38,7 +39,8 @@ The second aspect of symbolic computing is that it is much more like *mathematic
 a = tf.placeholder(tf.int8)
 b = tf.placeholder(tf.int8)
 sess.run(a+b, feed_dict={a: 10, b: 32})
-
+```
+```python
 # theano
 a = th.iscalar()
 b = th.iscalar()
@@ -61,12 +63,13 @@ This is great since it does not require to know how to differentiate a function.
 Tensors are not variables and have no value, but can be evaluated which will launch the operations in a session run as before or directly written :
 
 ```python
-z = a + b
-
 # theano
+z = a + b
 print z.eval({a : 10, b : 32})
-
+```
+```python
 # tensorflow
+z = a + b
 with sess.as_default():
     print z.eval({a: 10, b: 32})
 # or z.eval(feed_dict={a: 10, b: 32})
@@ -96,7 +99,7 @@ Go to [http://localhost:6006/](http://localhost:6006/) under Graph tab to see ou
 ![]({{ site.url }}/img/tensorflow_tutorial_add.png)
 
 
-As you can see, our addition operation is present but symbols are not named, it is possible to name them
+As you can see, our addition operation is present but symbols are not named, it is possible to name them for debugging or display in Tensorboard :
 
 ```python
 # tensorflow
@@ -104,10 +107,9 @@ a = tf.placeholder(tf.int8, name="a")
 b = tf.placeholder(tf.int8, name="b")
 addition = tf.add(a, b, name="addition")
 sess.run(addition, feed_dict={a: 10, b: 32})
-writer = tf.train.SummaryWriter("/tmp/mytutorial_logs", sess.graph_def)
-writer.flush()
-
-# theano (for debugging)
+```
+```python
+# theano
 a = th.iscalar('a')
 b = th.iscalar('b')
 f = theano.function([a, b], a + b, name='addition')
@@ -127,8 +129,6 @@ with tf.name_scope("addition") as scope:
   my_addition = a+b
 
 sess.run(my_addition, feed_dict={a: 10, b: 32})
-writer = tf.train.SummaryWriter("/tmp/mytutorial_logs", sess.graph_def)
-writer.flush()
 ```
 ![]({{ site.url }}/img/tensorflow_tutorial_named_add.png)
 
@@ -154,8 +154,6 @@ x_image = tf.reshape(x, [-1,28,28,1])
 z = tf.nn.conv2d(x_image, weights, strides=[1, 1, 1, 1], padding='SAME') + bias
 
 sess.run(tf.initialize_all_variables())
-writer = tf.train.SummaryWriter("/tmp/mytutorial_logs", sess.graph_def)
-writer.flush()
 ```
 
 and Theano *shared variables*

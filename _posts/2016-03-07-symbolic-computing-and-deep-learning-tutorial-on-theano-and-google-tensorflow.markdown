@@ -140,7 +140,7 @@ Let's go a bit further and define in symbolic computing (as I did in my [Caffe t
 
 In symbolic computation, tensors are abstraction objects of the objets in the memory of the CPU or the GPU, simplifying manipulation, but how can we access their values outside from the result values of a session run ?
 
-For that purpose, Tensorflow created *Variables*, that add an operation to the graph, are initiated with a Tensor and have to be initialized before the run (`None` in the shape definition defines any size for this dimension) :
+For that purpose, Tensorflow created *Variables*, that add an operation to the graph, are initiated with a tensor and have to be initialized before the run (`None` in the shape definition defines any size for this dimension) :
 
 ```python
 # tensorflow
@@ -182,6 +182,6 @@ With this simple introduction to symbolic programming, you're now ready to go fu
 
 A very nice library that is built on top of Theano and simplifies the use of Theano is [Lasagne](http://lasagne.readthedocs.org/en/latest/).
 
-Concepts such as Tensors are very close to Numpy or [BIDMach, a very nice CPU/GPU library for Scala and Spark](http://christopher5106.github.io/big/data/2016/02/04/bidmach-tutorial.html).
+Concepts such as tensors are very close to Numpy or [BIDMach, a very nice CPU/GPU library for Scala and Spark](http://christopher5106.github.io/big/data/2016/02/04/bidmach-tutorial.html).
 
 **Hopefully you enjoyed !**

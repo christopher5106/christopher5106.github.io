@@ -163,12 +163,12 @@ and Theano *shared variables*
 import numpy as np
 from theano.tensor.nnet import conv
 
-input = th.tensor4(name='input', dtype='float64')
-weights = theano.shared( 0.1 * np.random.randn(5,5,1,3), name ='W')
-bias = theano.shared( np.asarray([0.1,0.1,0.1], dtype='float64'), name ='b')
+x = th.tensor4(name='input', dtype='float64')
+weights = theano.shared( 0.1 * np.random.randn(5,5,1,3), name ='weights')
+bias = theano.shared( np.asarray([0.1,0.1,0.1], dtype='float64'), name ='bias')
 
-output = conv.conv2d(input, weights) +  bias
-f = theano.function([input], output)
+output = conv.conv2d(x, weights) +  bias
+f = theano.function([x], output)
 ```
 
 ![]({{ site.url }}/img/tensorflow_tutorial_first_net.png)
@@ -180,8 +180,10 @@ With this simple introduction to symbolic programming, you're now ready to go fu
 
 A very nice library that is built on top of Theano and simplifies the use of Theano is [Lasagne](http://lasagne.readthedocs.org/en/latest/).
 
-Concepts such as tensors are very close to Numpy or [BIDMach, a very nice CPU/GPU library for Scala and Spark](http://christopher5106.github.io/big/data/2016/02/04/bidmach-tutorial.html).
+Concepts such as tensors are very close to the Numpy arrays or [BIDMach matrices, a very nice CPU/GPU abstraction for Scala](http://christopher5106.github.io/big/data/2016/02/04/bidmach-tutorial.html).
 
-Spark programming is also symbolic, with a graph of operations that will be compiled and executed in a session when an output is required. I'm eager to see the **next symbolic library** that will go one step further, combining the graph of CPU/GPU computing as Tensorflow/Theano/BIDMach do, and the graph of cluster computing as Spark does, into **one single graph that can be executed on a CPU, a GPU, or a cluster of instances** indifferently.
+Spark programming is also symbolic, with a graph of operations that will be compiled and executed in a session on the cluster of instances when an output is demanded.
+
+I'm eager to see the **next symbolic library** that will go one step further, combining the graph of CPU/GPU computing as Tensorflow/Theano/BIDMach do, and the graph of cluster computing as Spark does, into **one single graph that can be executed anywhere, on a CPU, a GPU, or a cluster of instances** indifferently.
 
 **Hopefully you enjoyed !**

@@ -46,7 +46,7 @@ f = theano.function([a, b], a + b)
 f(10,32)
 ```
 
-a and b are not classical programming variables, and are named **symbols** or **placeholders** or **tensors** or **symbolic variables**. They are much more like *mathematical variables*. The second advantage of symbolic computing is the **automatic differentiation**, useful to compute gradients. For example let's differentiate the function $$ x \rightarrow x^2 $$ in Theano :
+a and b are not classical programming variables, but **symbols** or **placeholders** or **tensors** or **symbolic variables**. They are much more like *mathematical variables*. The second advantage of symbolic computing is the **automatic differentiation**, useful to compute gradients. For example let's differentiate the function $$ x \rightarrow x^2 $$ in Theano :
 
 ```python
 # theano
@@ -56,7 +56,7 @@ f = theano.function([a], ga)
 ga(2)
 ```
 
-This is great since it does not require to be able to know how to differentiate a function. As you can see, both in Theano and Tensorflow, the ` z = a + b ` is of type Tensor as `a` and `b`.
+This is great since it does not require to know how to differentiate a function. As you can see, both in Theano and Tensorflow, the `z = a + b` is of type Tensor as `a` and `b`.
 
 Tensors are not variables and have no value, but can be evaluated which will launch the operations in a session run as before or directly written :
 
@@ -138,7 +138,7 @@ Let's go a bit further and define in symbolic computing (as I did in my [Caffe t
 
 ![](http://christopher5106.github.io/img/simple_network.png)
 
-In symbolic computation, tensors are abstraction objects of the objets in the memory of the CPU or the GPU, simplifying manipulation, but how can we access their values outside from the result values of a session run ?
+In symbolic computation, tensors are abstraction objects of the operations and objets in the memory of the CPU or the GPU, simplifying manipulation, but how can we access their values outside from the result values of a session run ?
 
 For that purpose, Tensorflow created *Variables*, that add an operation to the graph, are initiated with a tensor and have to be initialized before the run (`None` in the shape definition defines any size for this dimension) :
 
@@ -178,10 +178,12 @@ f = theano.function([input], output)
 
 # Conclusion
 
-With this simple introduction to symbolic programming, you're now ready to go further and check out [Tensorflow net examples](https://www.tensorflow.org/versions/r0.7/tutorials/index.html) and [Theano net examples](http://deeplearning.net/tutorial/) !
+With this simple introduction to symbolic programming, you're now ready to go further and check out [Tensorflow net examples](https://www.tensorflow.org/versions/r0.7/tutorials/index.html) and [Theano net examples](http://deeplearning.net/tutorial/logreg.html) !
 
 A very nice library that is built on top of Theano and simplifies the use of Theano is [Lasagne](http://lasagne.readthedocs.org/en/latest/).
 
 Concepts such as tensors are very close to Numpy or [BIDMach, a very nice CPU/GPU library for Scala and Spark](http://christopher5106.github.io/big/data/2016/02/04/bidmach-tutorial.html).
+
+Spark programming is also symbolic, with a graph of operations that will be compiled and executed in a session when an output is required. I'm eager to see the **next symbolic library** that will go one step further, combining the graph of CPU/GPU computing as Tensorflow/Theano/BIDMach do, and the graph of cluster computing as Spark does, into **one single graph that can be executed on a CPU, a GPU, or a cluster of instances** indifferently.
 
 **Hopefully you enjoyed !**

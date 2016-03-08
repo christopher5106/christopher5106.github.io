@@ -166,10 +166,10 @@ import numpy as np
 from theano.tensor.nnet import conv
 
 input = th.tensor4(name='input', dtype='float64')
-W = theano.shared( 0.1 * np.random.randn(5,5,1,3), name ='W')
-b = theano.shared( np.asarray([0.1,0.1,0.1], dtype='float64'), name ='b')
+weights = theano.shared( 0.1 * np.random.randn(5,5,1,3), name ='W')
+bias = theano.shared( np.asarray([0.1,0.1,0.1], dtype='float64'), name ='b')
 
-output = conv.conv2d(input, W) +  b
+output = conv.conv2d(input, weights) +  bias
 f = theano.function([input], output)
 ```
 

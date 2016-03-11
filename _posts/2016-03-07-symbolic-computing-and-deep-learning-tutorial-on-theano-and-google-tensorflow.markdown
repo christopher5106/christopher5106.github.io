@@ -7,7 +7,7 @@ categories: big data
 
 I gave a short presentation about [Google Tensorflow](http://christopher5106.github.io/deep/learning/2015/11/11/tensorflow-google-deeplearning-library.html) previously, with install instructions. For Theano, it is as simple as a `pip install theano`.
 
-Let's put things in order to have a great tutorial with mixed code and explanations and learn **twice faster** with mixed Theano and Tensorflow examples in one tutorial :) You'll discover how close the two libraries are.
+Let's put things in order to have a great tutorial with mixed code and explanations and learn **twice faster** with mixed Theano and Tensorflow examples in one tutorial :) You'll discover how close the two libraries are. You can also use this tutorial to make your choice between the two libraries.
 
 First launch a iPython session and import the two libraries. For Tensorflow, we have to create a session to run the operations in :
 
@@ -156,7 +156,7 @@ z = tf.nn.conv2d(x_image, weights, strides=[1, 1, 1, 1], padding='SAME') + bias
 sess.run(tf.initialize_all_variables())
 ```
 
-and Theano *shared variables*
+and Theano *shared variables*, initialized with Numpy arrays :
 
 ```python
 # theano

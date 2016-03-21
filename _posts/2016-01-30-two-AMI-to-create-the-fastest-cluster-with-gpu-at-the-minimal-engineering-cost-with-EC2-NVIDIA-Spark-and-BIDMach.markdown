@@ -136,7 +136,7 @@ sudo yum install protobuf-devel snappy-devel boost-devel
 wget http://www.hdfgroup.org/ftp/HDF5/current/src/hdf5-1.8.16.tar
 tar xvf hdf5-1.8.16.tar
 cd hdf5-1.8.16
-./configure --prefix=/usr/local/hdf5
+./configure --prefix=/usr/local
 make
 sudo make install
 
@@ -178,9 +178,19 @@ cmake -D WITH_CUDA=OFF -D CMAKE_BUILD_TYPE=RELEASE -D CMAKE_INSTALL_PREFIX=/usr/
 make
 sudo make install
 
+# for python 2.7
+sudo yum update
+sudo alternatives --set python /usr/bin/python2.7
+sudo yum install python27-pip
+sudo yum install python27-virtualenv
+sudo yum install libpng-devel
+sudo yum -y install freetype-devel
+sudo yum install libjpeg-devel
+
 # Caffe
 git clone https://github.com/BVLC/caffe.git
 cd caffe
+sudo pip install -r python/requirements.txt
 vi Makefile.config
 ```
 
@@ -202,8 +212,9 @@ PYTHON_INCLUDE := /usr/include/python2.6 \
                 /usr/lib/python2.6/dist-packages/numpy/core/include
 
 PYTHON_LIB := /usr/lib64/
-INCLUDE_DIRS := $(PYTHON_INCLUDE) /usr/local/hdf5/include /usr/local/include
-LIBRARY_DIRS := $(PYTHON_LIB) /usr/local/lib  /usr/local/hdf5/lib /usr/lib
+PYTHON_INCLUDE += /usr/local/lib64/python2.7/site-packages/numpy/core/include
+INCLUDE_DIRS := $(PYTHON_INCLUDE) /usr/local/include
+LIBRARY_DIRS := $(PYTHON_LIB) /usr/local/lib /usr/lib
 BUILD_DIR := build
 DISTRIBUTE_DIR := distribute
 TEST_GPUID := 0
@@ -216,12 +227,12 @@ Now ready for compilation :
 
 ```bash
 make all
-make pycaffe
 make test
-
-echo "export LD_LIBRARY_PATH=/usr/local/cuda/lib64:/usr/local/lib/:/usr/local/hdf5/lib:$LD_LIBRARY_PATH" >> ~/.bashrc
+make pycaffe
+echo "export LD_LIBRARY_PATH=/usr/local/cuda/lib64:/usr/local/lib/:$LD_LIBRARY_PATH" >> ~/.bashrc
 make runtest
 ```
+
 
 Let's create a public AMI : **ami-9af54ce9**.
 

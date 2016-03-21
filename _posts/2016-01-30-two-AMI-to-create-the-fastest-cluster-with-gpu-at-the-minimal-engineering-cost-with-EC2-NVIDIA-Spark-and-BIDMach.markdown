@@ -234,7 +234,7 @@ make runtest
 ```
 
 
-Let's create a public AMI : **ami-9af54ce9**.
+Let's create a public AMI : **ami-e5c84c96**.
 
 As the previous one, this AMI can be launched to use Caffe on a single instance or as part of a  Spark cluster.
 

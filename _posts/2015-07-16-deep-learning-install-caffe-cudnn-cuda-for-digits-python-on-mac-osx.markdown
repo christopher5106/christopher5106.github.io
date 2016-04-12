@@ -74,7 +74,7 @@ which python
 
     mkdir technologies
     cd technologies
-    git clone  --branch digits-2.0 https://github.com/BVLC/caffe.git
+    git clone https://github.com/BVLC/caffe.git
     cd caffe
     vi Makefile.config
 
@@ -132,7 +132,7 @@ Here is the result of the [runtest run]({{ site.url }}/img/make_runtest_result.t
 
 {% highlight bash %}
 export CUDA_HOME=/usr/local/cuda
-git clone https://github.com/NVIDIA/DIGITS.git digits-2.0
+git clone --branch digits-2.0 https://github.com/NVIDIA/DIGITS.git digits-2.0
 cd digits-2.0/digits/
 pip install -r requirements.txt
 export CAFFE_HOME=../caffe

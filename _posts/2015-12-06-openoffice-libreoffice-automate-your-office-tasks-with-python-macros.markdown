@@ -603,7 +603,7 @@ Remove a named range :
 **clear contents**
 
 *range.clearContents(4)* clears the cells with a String as value
-[other clearing flags](https://www.openoffice.org/api/docs/common/ref/com/sun/star/sheet/CellFlags.html)
+[other clearing flags](http://api.libreoffice.org/docs/idl/ref/namespacecom_1_1sun_1_1star_1_1sheet_1_1CellFlags.html)
 
 **delete rows**
 

@@ -145,13 +145,13 @@ text.insertString( cursor, "Hello World", 0 )
 
 Here is a schema for what we've just done : the shell communicates with the LibreOffice runtime to command actions inside the current document.
 
-![Python Uno mode ipc](http://www.openoffice.org/udk/python/images/mode_ipc.png)
+![Python Uno mode ipc]({{ site.url }}images/mode_ipc.png)
 
 # Create your first macro
 
 It is the other mode, the macro is called from inside the Libreoffice program :
 
-![Python Uno mode component](http://www.openoffice.org/udk/python/images/mode_component.png)
+![Python Uno mode component]({{ site.url }}/images/mode_component.png)
 
 OpenOffice.org does not offer a way to edit Python scripts. You have to use your own text editor (such as Sublim, Atom...) and your own commands.
 

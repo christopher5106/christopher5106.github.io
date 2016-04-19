@@ -192,14 +192,43 @@ Once trained, let's have a look at our predictions :
 
 Let's add our SPN in front of our [MNIST neural net for which we had a 98% success rate on plate letter identification](http://christopher5106.github.io/computer/vision/2015/09/14/comparing-tesseract-and-deep-learning-for-ocr-optical-character-recognition.html) and train it on a more difficult database of digits, with clutter and noise in translation, on which I only have 95% of good detection.
 
+I just need to change the last innerproduct layer to predict the 6 coordinates of $$ \theta $$ :
+
+```
+layer {
+  name: "loc_reg"
+  type: "InnerProduct"
+  bottom: "loc_ip1"
+  top: "theta"
+  inner_product_param {
+    num_output: 6
+    weight_filler {
+      type: "constant"
+      value: 0
+    }
+    bias_filler {
+      type: "file"
+      file: "bias_init.txt"
+    }
+  }
+}
+```
+
+with bias initialized at `1 0 0 0 1 0`.
+
 ![centering character before recognition]({{ site.url }}/img/spn_recenter_digit.png)
 
 The SPN helps **stabilize** the detection, by centering the image on the digit before the recognition. The rate comes back to 98%.
 
 
+# Unsupervised learning for document localization
 
+Let's try with 2 GoogLeNet, one in the SPN to prediction the affine transformation, and one after for object classification.
 
+![spn document input]({{ site.url }}/img/spn_document_input.png)
 
+The SPN repositions the document around the same place roughly : 
 
+![spn document affine transformation]({{ site.url }}/img/spn_document_localization.png)
 
 **Well done!**

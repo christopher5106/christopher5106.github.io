@@ -101,6 +101,8 @@ I updated [Caffe with Carey Mo implementation](https://github.com/christopher510
 
 Compile Caffe following my tutorial on [Mac OS](http://christopher5106.github.io/big/data/2015/07/16/deep-learning-install-caffe-cudnn-cuda-for-digits-python-on-mac-osx.html) or [Ubuntu](http://christopher5106.github.io/big/data/2015/07/16/deep-learning-install-caffe-cudnn-cuda-for-digits-python-on-ubuntu-14-04.html).
 
+# Play with the theta parameters
+
 Let's create our first SPN to see how it works. Let's fix a zoom factor of 2, and leave the possibility of a translation only :
 
 $$ \left[ \begin{array}{ccc}  \theta_{11} \ \theta_{12} \ \theta_{13} \\ \theta_{21} \ \theta_{22} \ \theta_{23}  \end{array} \right] =  \left[ \begin{array}{ccc}  0.5 \ 0.0 \ \theta_{13} \\ 0.0 \ 1.0 \ \theta_{23}  \end{array} \right] $$
@@ -144,7 +146,6 @@ caffe.set_mode_gpu()
 net = caffe.Net('sp_train.prototxt',caffe.TEST)
 image = caffe.io.load_image("cat-227.jpg")
 plt.imshow(image)
-
 ```
 
 [('data', (1, 3, 227, 227)),
@@ -154,7 +155,7 @@ plt.imshow(image)
 
 ![]({{ site.url }}/img/cat-227.jpg)
 
-and translate :
+and translate in diagonal :
 
 ```python
 transformer = caffe.io.Transformer({'data': net.blobs['data'].data.shape})
@@ -173,4 +174,30 @@ for i in range(9):
     plt.axis('off')
 ```
 
-![]({{ site.url }}/img/cat-spn-test.png)
+![play with theta on spatial transformer]({{ site.url }}/img/cat-spn-test.png)
+
+**OK, great, it works.**
+
+# Supervised learning of the affine transformation for document orientation / localization
+
+Given a dataset of 2000 annotated documents, I'm using my extraction tool to create 50 000 annotated documents by adding a random rotation noise of +/- 180 degrees.
+
+I train a GoogLeNet to predict the $$ \theta $$ parameters.
+
+Once trained, let's have a look at our predictions :
+
+![document orientation / localization with googlenet]({{ site.url }}/img/googlenet_document_orientation.jpg)
+
+# Unsupervised learning of spatial transformer to center the character during reading
+
+Let's add our SPN in front of our [MNIST neural net for which we had a 98% success rate on plate letter identification](http://christopher5106.github.io/computer/vision/2015/09/14/comparing-tesseract-and-deep-learning-for-ocr-optical-character-recognition.html) and train it on a more difficult database of digits, with clutter and noise in translation, on which I only have 95% of good detection.
+
+![centering character before recognition]({{ site.url }}/img/spn_recenter_digit.png)
+
+The SPN helps **stabilize** the detection, by centering the image on the digit before the recognition. The rate comes back to 98%.
+
+
+
+
+
+**Well done!**

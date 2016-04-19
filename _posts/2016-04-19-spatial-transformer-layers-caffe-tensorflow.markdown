@@ -99,7 +99,7 @@ I updated [Caffe with Carey Mo implementation](https://github.com/christopher510
 
     git clone https://github.com/christopher5106/last_caffe_with_stn.git
 
-Compile Caffe following my tutorial on [Mac OS](http://christopher5106.github.io/big/data/2015/07/16/deep-learning-install-caffe-cudnn-cuda-for-digits-python-on-mac-osx.html) or [Ubuntu](http://christopher5106.github.io/big/data/2015/07/16/deep-learning-install-caffe-cudnn-cuda-for-digits-python-on-ubuntu-14-04.html).
+Compile it as you compile Caffe usually (following my tutorial on [Mac OS](http://christopher5106.github.io/big/data/2015/07/16/deep-learning-install-caffe-cudnn-cuda-for-digits-python-on-mac-osx.html) or [Ubuntu](http://christopher5106.github.io/big/data/2015/07/16/deep-learning-install-caffe-cudnn-cuda-for-digits-python-on-ubuntu-14-04.html) ).
 
 # Play with the theta parameters
 
@@ -227,7 +227,7 @@ Let's try with 2 GoogLeNet, one in the SPN to prediction the affine transformati
 
 ![spn document input]({{ site.url }}/img/spn_document_input.png)
 
-The SPN repositions the document around the same place roughly : 
+The SPN repositions the document around the same place roughly :
 
 ![spn document affine transformation]({{ site.url }}/img/spn_document_localization.png)
 

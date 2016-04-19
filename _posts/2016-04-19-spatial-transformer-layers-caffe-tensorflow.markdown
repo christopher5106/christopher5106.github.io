@@ -8,7 +8,7 @@ categories: big data
 
 # Spatial Transformer Networks
 
-Spatial Transformer Networks (SPN) is a network invented by [Max Jaderberg, Karen Simonyan, Andrew Zisserman, Koray Kavukcuoglu](http://arxiv.org/pdf/1506.02025v3.pdf) at Google DeepMind artifical intelligence lab in London.
+Spatial Transformer Networks (SPN) is a network invented by [Max Jaderberg, Karen Simonyan, Andrew Zisserman, Koray Kavukcuoglu](http://arxiv.org/pdf/1506.02025v3.pdf) at Google DeepMind artificial intelligence lab in London.
 
 The use of a SPN is
 

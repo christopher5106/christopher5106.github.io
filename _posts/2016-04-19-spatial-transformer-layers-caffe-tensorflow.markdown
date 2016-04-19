@@ -188,13 +188,15 @@ Once trained, let's have a look at our predictions :
 
 ![document orientation / localization with googlenet]({{ site.url }}/img/googlenet_document_orientation.jpg)
 
-# Unsupervised learning of spatial transformer to center the character during reading
+# Unsupervised learning of the spatial transformation to center the character during reading
 
 Let's add our SPN in front of our [MNIST neural net for which we had a 98% success rate on plate letter identification](http://christopher5106.github.io/computer/vision/2015/09/14/comparing-tesseract-and-deep-learning-for-ocr-optical-character-recognition.html) and train it on a more difficult database of digits, with clutter and noise in translation, on which I only have 95% of good detection.
 
 ![centering character before recognition]({{ site.url }}/img/spn_recenter_digit.png)
 
 The SPN helps **stabilize** the detection, by centering the image on the digit before the recognition. The rate comes back to 98%.
+
+
 
 
 

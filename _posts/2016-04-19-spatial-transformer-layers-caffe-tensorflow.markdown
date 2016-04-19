@@ -101,7 +101,7 @@ I updated [Caffe with Carey Mo implementation](https://github.com/christopher510
 
 Compile Caffe following my tutorial on [Mac OS](http://christopher5106.github.io/big/data/2015/07/16/deep-learning-install-caffe-cudnn-cuda-for-digits-python-on-mac-osx.html) or [Ubuntu](http://christopher5106.github.io/big/data/2015/07/16/deep-learning-install-caffe-cudnn-cuda-for-digits-python-on-ubuntu-14-04.html).
 
-Let's create our first SPN to see how it works. For that, I'll fix 4 of the parameters and test the translation params :
+Let's create our first SPN to see how it works. Let's fix a zoom factor of 2, and leave the possibility of a translation only :
 
 $$ \left[ \begin{array}{ccc}  \theta_{11} \ \theta_{12} \ \theta_{13} \\ \theta_{21} \ \theta_{22} \ \theta_{23}  \end{array} \right] =  \left[ \begin{array}{ccc}  0.5 \ 0.0 \ \theta_{13} \\ 0.0 \ 1.0 \ \theta_{23}  \end{array} \right] $$
 
@@ -137,11 +137,40 @@ layer {
 }
 ```
 
-Let's load in Python :
+Lets load our cat :
 
 ```python
-
-caffe.set_mode_cpu()
+caffe.set_mode_gpu()
 net = caffe.Net('sp_train.prototxt',caffe.TEST)
+image = caffe.io.load_image("cat-227.jpg")
+plt.imshow(image)
 
 ```
+
+[('data', (1, 3, 227, 227)),
+ ('theta', (1, 2)),
+ ('transformed', (1, 3, 227, 227))]
+
+
+![]({{ site.url }}/img/cat-227.jpg)
+
+and translate :
+
+```python
+transformer = caffe.io.Transformer({'data': net.blobs['data'].data.shape})
+transformer.set_transpose('data', (2,0,1))  # move image channels to outermost dimension
+#transformer.set_mean('data', mu)            # subtract the dataset-mean value in each channel
+transformer.set_raw_scale('data', 255)      # rescale from [0, 1] to [0, 255]
+transformer.set_channel_swap('data', (2,1,0))  # swap channels from RGB to BGR
+transformed_image = transformer.preprocess('data', image)
+net.blobs['data'].data[...] = transformed_image
+for i in range(9):
+    plt.subplot(1,10,i+2)
+    theta_tt = -0.5 + 0.1 * float(i)
+    net.blobs['theta'].data[...] = (theta_tt, theta_tt)
+    output = net.forward()
+    plt.imshow(transformer.deprocess('data',output['transformed']))
+    plt.axis('off')
+```
+
+![]({{ site.url }}/img/cat-spn-test.png)

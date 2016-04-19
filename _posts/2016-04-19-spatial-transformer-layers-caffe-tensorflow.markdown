@@ -223,7 +223,7 @@ The SPN helps **stabilize** the detection, by centering the image on the digit b
 
 # Unsupervised learning for document localization
 
-Let's try with 2 GoogLeNet, one in the SPN to prediction the affine transformation, and one after for object classification.
+Let's try with 2 GoogLeNet, one in the SPN to predict the affine transformation, and the other one after for object classification.
 
 ![spn document input]({{ site.url }}/img/spn_document_input.png)
 

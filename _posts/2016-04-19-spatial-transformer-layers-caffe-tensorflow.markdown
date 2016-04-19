@@ -136,3 +136,12 @@ layer {
   }
 }
 ```
+
+Let's load in Python :
+
+```python
+
+caffe.set_mode_cpu()
+net = caffe.Net('sp_train.prototxt',caffe.TEST)
+
+```

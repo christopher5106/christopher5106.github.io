@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Supervised learning, unsupervised learning with Spatial Transformer Networks tutorial in Caffe and Tensorflow : improve document classifier and character reading"
+title:  "Supervised learning, unsupervised learning with Spatial Transformer Networks tutorial in Caffe and Tensorflow : improve document classification and character reading"
 date:   2016-04-18 23:00:51
 categories: big data
 ---
@@ -45,7 +45,7 @@ $$
 
 \left( \begin{array}{c} x_{in} \\ y_{in} \end{array} \right) =
 
-\left[ \begin{array}{cc} 0 & 0 & t_{x} \\ 0 & 0 & t_{y} \end{array} \right]
+\left[ \begin{array}{cc} 1 & 0 & t_{x} \\ 0 & 1 & t_{y} \end{array} \right]
 
 \left( \begin{array}{c} x_{out} \\ y_{out} \\ 1 \end{array} \right)
 
@@ -99,12 +99,15 @@ I updated [Caffe with Carey Mo implementation](https://github.com/christopher510
 
     git clone https://github.com/christopher5106/last_caffe_with_stn.git
 
-Compile Caffe following my tutorial on [iOS](http://christopher5106.github.io/big/data/2015/07/16/deep-learning-install-caffe-cudnn-cuda-for-digits-python-on-mac-osx.html) or [Ubuntu](http://christopher5106.github.io/big/data/2015/07/16/deep-learning-install-caffe-cudnn-cuda-for-digits-python-on-ubuntu-14-04.html).
+Compile Caffe following my tutorial on [Mac OS](http://christopher5106.github.io/big/data/2015/07/16/deep-learning-install-caffe-cudnn-cuda-for-digits-python-on-mac-osx.html) or [Ubuntu](http://christopher5106.github.io/big/data/2015/07/16/deep-learning-install-caffe-cudnn-cuda-for-digits-python-on-ubuntu-14-04.html).
 
-Let's create our first SPN to see how it works :
+Let's create our first SPN to see how it works. For that, I'll fix 4 of the parameters and test the translation params :
+
+$$ \left[ \begin{array}{ccc}  \theta_{11} \ \theta_{12} \ \theta_{13} \\ \theta_{21} \ \theta_{22} \ \theta_{23}  \end{array} \right] =  \left[ \begin{array}{ccc}  0.5 \ 0.0 \ \theta_{13} \\ 0.0 \ 1.0 \ \theta_{23}  \end{array} \right] $$
+
+For that, let's write a *st_train.prototxt* file :
 
 ```
-
 name: "stn"
 input: "data"
 input_shape {
@@ -132,44 +135,4 @@ layer {
     theta_2_2: 0.5
   }
 }
-
-```
-
-```
-
-name: "stn"
-
-layer {
-  name: "data"
-  type: "ImageData"
-  top: "data"
-  top: "label"
-  image_data_param {
-    source: "results.csv"
-    batch_size: 1
-  }
-}
-input: "theta"
-input_shape {
-  dim: 1
-  dim: 2
-}
-
-layer {
-  name: "st_1"
-  type: "SpatialTransformer"
-  bottom: "data"
-  bottom: "theta"
-  top: "transformed"
-  st_param {
-    to_compute_dU: false
-    output_H: 224
-    output_W: 224
-    theta_1_1: 0.5
-    theta_1_2: 0
-    theta_2_1: 0
-    theta_2_2: 0.5
-  }
-}
-
 ```

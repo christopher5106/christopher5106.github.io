@@ -584,10 +584,16 @@ net.forward()
 
 # Caffe in C++
 
-The **blob** ([blob.hpp](https://github.com/BVLC/caffe/blob/master/include/caffe/blob.hpp) and [blob.cpp](https://github.com/BVLC/caffe/blob/master/src/caffe/blob.cpp)) is a wrapper to manage memory independently of CPU/GPU choice, using [SyncedMemory class](https://github.com/BVLC/caffe/blob/master/src/caffe/syncedmem.cpp), and has a few functions like Arrays in Python, both for the data and the computed gradient (diff) arrays contained in the blob :
+The **blob** ([blob.hpp](https://github.com/BVLC/caffe/blob/master/include/caffe/blob.hpp) and [blob.cpp](https://github.com/BVLC/caffe/blob/master/src/caffe/blob.cpp)) is a wrapper to manage memory independently of CPU/GPU choice, using [SyncedMemory class](https://github.com/BVLC/caffe/blob/master/src/caffe/syncedmem.cpp), and has a few functions like Arrays in Python, both for the data and the computed gradient (diff) arrays contained in the blob.
+
+To initiate a blob :
+
+    Blob(const vector<int>& shape)
+
+Methods on the blob :
 
 - `shape()` and `shape_string()` to get the shape, or `shape(i)` to get the size of the i-th dimension, or `shapeEquals()` to compare shape equality
-- `reshape()` or `reshapeLike()` another blob
+- `Reshape(const vector<int>& shape)` or `reshapeLike(const Blob& other)` another blob
 - `count()` the number of elements (`shape(0)*shape(1)*...`)
 - `offset()` to get the c++ index in the array
 - `CopyFrom()` to copy the blob

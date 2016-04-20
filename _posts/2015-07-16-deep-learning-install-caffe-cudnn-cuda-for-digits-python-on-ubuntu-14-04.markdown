@@ -6,7 +6,9 @@ categories: big data
 ---
 ![Classification]({{ site.url }}/img/digits.png)
 
-Install on a AWS g2 instance, with Ubuntu 14.04.
+Install procedure on a AWS g2 instance, with Ubuntu 14.04.
+
+You can find my public AMI **ami-2d4bc75e**, tested on g2.2xlarge and t2.large instances.
 
 # Install Cuda and Cudnn
 

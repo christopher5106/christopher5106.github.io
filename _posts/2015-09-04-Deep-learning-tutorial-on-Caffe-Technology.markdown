@@ -20,25 +20,25 @@ First install Caffe following my tutorials on [Ubuntu]({{ site.url }}/big/data/2
 
 In the iPython shell in your Caffe repository, load the different libraries  :
 
-{% highlight python %}
+```python
 import numpy as np
 import matplotlib.pyplot as plt
 from PIL import Image
 import caffe
-{% endhighlight %}
+```
 
 Set the computation mode CPU
 
-{% highlight python %}
+```python
 caffe.set_mode_cpu()
-{% endhighlight %}
+```
 
 or GPU
 
-{% highlight python %}
+```python
 caffe.set_device(0)
 caffe.set_mode_gpu()
-{% endhighlight %}
+```
 
 ### Define a network model
 
@@ -50,43 +50,48 @@ This net will produce 3 output maps from an input map.
 
 The output map for a convolution given receptive field size has a dimension given by the following equation :
 
-    output = (input - kernel_size) / stride + 1
-
+```
+output = (input - kernel_size) / stride + 1
+```
 
 Create a first file `conv.prototxt` describing the neuron network :
 
-    name: "convolution"
-    input: "data"
-    input_dim: 1
-    input_dim: 1
-    input_dim: 100
-    input_dim: 100
-    layer {
-      name: "conv"
-      type: "Convolution"
-      bottom: "data"
-      top: "conv"
-      convolution_param {
-        num_output: 3
-        kernel_size: 5
-        stride: 1
-        weight_filler {
-          type: "gaussian"
-          std: 0.01
-        }
-        bias_filler {
-          type: "constant"
-          value: 0
-        }
-      }
+```protobuf
+name: "convolution"
+input: "data"
+input_dim: 1
+input_dim: 1
+input_dim: 100
+input_dim: 100
+layer {
+  name: "conv"
+  type: "Convolution"
+  bottom: "data"
+  top: "conv"
+  convolution_param {
+    num_output: 3
+    kernel_size: 5
+    stride: 1
+    weight_filler {
+      type: "gaussian"
+      std: 0.01
     }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+```
 
 with one layer, a convolution, from the [Catalog of available layers](http://caffe.berkeleyvision.org/tutorial/layers.html)
 
 
 Load the net
 
-    net = caffe.Net('conv.prototxt', caffe.TEST)
+```python
+net = caffe.Net('conv.prototxt', caffe.TEST)
+```
 
 The names of input layers of the net are given by `print net.inputs`.
 
@@ -117,14 +122,16 @@ The net contains two ordered dictionaries
 
 Blobs are memory abstraction objects (with execution depending on the mode), and data is contained in the field *data* as an array :
 
-{% highlight python %}
+```python
 print net.blobs['conv'].data.shape
-{% endhighlight %}
+```
 
 To draw the network, a simle python command :
 
-    python python/draw_net.py examples/net_surgery/conv.prototxt my_net.png
-    open my_net.png
+```
+python python/draw_net.py examples/net_surgery/conv.prototxt my_net.png
+open my_net.png
+```
 
 This will print the following image :
 
@@ -133,33 +140,32 @@ This will print the following image :
 ### Compute the net output on an image as input
 
 
-
 Let's load a gray image of size 1x360x480 (channel x height x width) into the previous net :
 
 ![Gray cat]({{ site.url }}/img/cat_gray.jpg)
 
 We need to reshape the data blob (1, 1, 100, 100) to the new size (1, 1, 360, 480) to fit the image :
 
-{% highlight python %}
+```python
 im = np.array(Image.open('examples/images/cat_gray.jpg'))
 im_input = im[np.newaxis, np.newaxis, :, :]
 net.blobs['data'].reshape(*im_input.shape)
 net.blobs['data'].data[...] = im_input
-{% endhighlight %}
+```
 
 Let's compute the blobs given this input
 
-{% highlight python %}
+```python
 net.forward()
-{% endhighlight %}
+```
 
 Now `net.blobs['conv']` is filled with data, and the 3 pictures inside each of the 3 neurons (`net.blobs['conv'].data[0,i]`) can be plotted easily.
 
 To save the net parameters `net.params`, just call :
 
-{% highlight python %}
+```python
 net.save('mymodel.caffemodel')
-{% endhighlight %}
+```
 
 ### Load pretrained parameters to classify an image
 
@@ -178,14 +184,14 @@ where <dirname> is the gist directory (by default the gist is saved in the *mode
 
 Let's download the CaffeNet model and the labels corresponding to the classes :
 
-{% highlight bash %}
+```bash
 ./scripts/download_model_binary.py models/bvlc_reference_caffenet
 ./data/ilsvrc12/get_ilsvrc_aux.sh
 
 #have a look at the model
 python python/draw_net.py models/bvlc_reference_caffenet/deploy.prototxt caffenet.png
 open caffenet.png
-{% endhighlight %}
+```
 
 ![CaffeNet model]({{ site.url }}/img/caffenet_model.png)
 
@@ -195,7 +201,7 @@ This model has been trained on processed images, so you need to preprocess the i
 
 That is, in the python shell :
 
-{% highlight python %}
+```python
 #load the model
 net = caffe.Net('models/bvlc_reference_caffenet/deploy.prototxt',
                 'models/bvlc_reference_caffenet/bvlc_reference_caffenet.caffemodel',
@@ -228,7 +234,7 @@ print out['prob'].argmax()
 labels = np.loadtxt("data/ilsvrc12/synset_words.txt", str, delimiter='\t')
 top_k = net.blobs['prob'].data[0].flatten().argsort()[-1:-6:-1]
 print labels[top_k]
-{% endhighlight %}
+```
 
 It will print you the top classes detected for the images.
 
@@ -307,27 +313,37 @@ Data can also be set directly in Python.
 
 Load the solver in python
 
-    solver = caffe.get_solver('models/bvlc_reference_caffenet/solver.prototxt')
+```python
+solver = caffe.get_solver('models/bvlc_reference_caffenet/solver.prototxt')
+```
 
 By default it is the SGD solver. It's possible to specify another `solver_type` in the prototxt solver file ([ADAGRAD or NESTEROV](http://caffe.berkeleyvision.org/tutorial/solver.html)). It's also possible to load directly
 
-    solver = caffe.SGDSolver('models/bvlc_reference_caffenet/solver.prototxt')
+```python
+solver = caffe.SGDSolver('models/bvlc_reference_caffenet/solver.prototxt')
+```
 
 but be careful since `SGDSolver` will use SGDSolver whatever is configured in the prototxt file... so it is less reliable.
 
 Now, it's time to begin to see if everything works well and to fill the layers in a forward propagation in the net :
 
-    solver.net.forward()  # train net
-    solver.test_nets[0].forward()  # test net (there can be more than one)
+```python
+solver.net.forward()  # train net
+solver.test_nets[0].forward()  # test net (there can be more than one)
+```
 
 To launch one step of the gradient descent :
 
-    solver.step(1)
+```python
+solver.step(1)
+```
 
 To run the full gradient descent :
 
-    solver.solve()
+```python
+solver.solve()
 
+```
 
 ### Input data, train and test set
 
@@ -374,7 +390,7 @@ The different input layer can be :
 
 Once solved,
 
-{% highlight python %}
+```python
 accuracy = 0
 batch_size = solver.test_nets[0].blobs['data'].num
 test_iters = int(len(Xt) / batch_size)
@@ -384,7 +400,7 @@ for i in range(test_iters):
 accuracy /= test_iters
 
 print("Accuracy: {:.3f}".format(accuracy))
-{% endhighlight %}
+```
 
 **The higher the accuracy, the better !**
 
@@ -399,7 +415,7 @@ print("Accuracy: {:.3f}".format(accuracy))
 
 It is also possible to define the net model directly in Python, and save it to a prototxt files. Here are the commands :
 
-{% highlight python %}
+```python
 from caffe import layers as L
 from caffe import params as P
 
@@ -424,7 +440,7 @@ with open('examples/mnist/lenet_auto_train.prototxt', 'w') as f:
 with open('examples/mnist/lenet_auto_test.prototxt', 'w') as f:
     f.write(str(lenet('examples/mnist/mnist_test_lmdb', 100)))
 
-{% endhighlight %}
+```
 
 will produce the prototxt file :
 
@@ -549,7 +565,7 @@ Add a custom python layer to your `conv.prototxt` file :
 
 and create a `mypythonlayer.py` file that has to to be in the current directory or in the PYTHONPATH :
 
-{% highlight python %}
+```python
 import caffe
 import numpy as np
 import yaml
@@ -569,26 +585,30 @@ class MyLayer(caffe.Layer):
 
     def backward(self, top, propagate_down, bottom):
         pass
-{% endhighlight %}
+```
 
 This layer will simply add a value
 
-{% highlight python %}
+```python
 net = caffe.Net('conv.prototxt',caffe.TEST)
 im = np.array(Image.open('cat_gray.jpg'))
 im_input = im[np.newaxis, np.newaxis, :, :]
 net.blobs['data'].reshape(*im_input.shape)
 net.blobs['data'].data[...] = im_input
 net.forward()
-{% endhighlight %}
+```
 
 # Caffe in C++
+
+#### The blob
 
 The **blob** ([blob.hpp](https://github.com/BVLC/caffe/blob/master/include/caffe/blob.hpp) and [blob.cpp](https://github.com/BVLC/caffe/blob/master/src/caffe/blob.cpp)) is a wrapper to manage memory independently of CPU/GPU choice, using [SyncedMemory class](https://github.com/BVLC/caffe/blob/master/src/caffe/syncedmem.cpp), and has a few functions like Arrays in Python, both for the data and the computed gradient (diff) arrays contained in the blob.
 
 To initiate a blob :
 
-    Blob(const vector<int>& shape)
+```cpp
+Blob(const vector<int>& shape)
+```
 
 Methods on the blob :
 
@@ -600,7 +620,29 @@ Methods on the blob :
 - `data_at()` and `diff_at()`
 - `asum_data()` and `asum_diff()` their L1 norm
 - `sumsq_data()` and `sumsq_diff()` their L1 norm
-- `scale_data()` and `scale_diff()` to multilply the data by a factor
+- `scale_data()` and `scale_diff()` to multiply the data by a factor
+
+To access the data in the blob, from the CPU code :
+
+```cpp
+const Dtype* cpu_data();
+Dtype* mutable_cpu_data();
+const Dtype* cpu_diff();
+Dtype* mutable_cpu_diff();
+```
+
+and from the GPU code :
+
+```cpp
+const Dtype* gpu_data();
+Dtype* mutable_gpu_data();
+const Dtype* gpu_diff();
+Dtype* mutable_gpu_diff();
+```
+
+Data transfer between GPU and CPU will be dealt automatically.
+
+#### The layer
 
 A **layer**, such as the [SoftmaxWithLoss layer](https://github.com/BVLC/caffe/blob/master/src/caffe/layers/softmax_loss_layer.cpp), will need a few functions working with arguments top blobs and bottom blobs :
 

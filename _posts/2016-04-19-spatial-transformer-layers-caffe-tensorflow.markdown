@@ -24,7 +24,7 @@ The use of a SPN is
 
 ![]({{ site.url }}/img/spatial_transformer_networks.png)
 
-The second important thing about SPN is that they are **trainable** :  to predict the transformation, SPN can **retropropagate gradients** inside its own layers.
+The second important thing about SPN is that it is **trainable** :  to predict the transformation, SPN can **retropropagate gradients** inside its own layers.
 
 Lastly, SPN can also retropropagate gradients to the image or previous layer it operates on, so they **can be placed anywhere inside a neural net**.
 

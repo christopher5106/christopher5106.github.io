@@ -24,7 +24,9 @@ The use of a SPN is
 
 ![]({{ site.url }}/img/spatial_transformer_networks.png)
 
-The second important thing about SPN is that they are **trainable** :  to predict the transformation, SPN can **retropropagate gradients**.
+The second important thing about SPN is that they are **trainable** :  to predict the transformation, SPN can **retropropagate gradients** inside its own layers.
+
+Lastly, SPN can also retropropagate gradients to the image or previous layer it operates on, so they **can be placed anywhere inside a neural net**.
 
 
 # The maths
@@ -110,6 +112,8 @@ which is easily differentiable
 - in position $$ \frac{\partial bilinear}{\partial X }  $$ which enables to learn the $$ \theta $$ parameters because
 
     $$ I_{out}( x_{out}, y_{out} )  = bilinear( \tau_{\theta} ( x_{out}, y_{out} ), I_{in} ) $$
+
+    $$ \frac{\partial I_{out}}{\partial \theta }   =  \frac{\partial bilinear}{\partial X } \times  \frac{\partial \tau_{x}}{\partial \theta }  $$
 
 - in image $$ \frac{\partial bilinear}{\partial I }  $$ which enables to put the SPN on top of other SPN or other layers such as convolutions, and retropropagate the gradients to them (set `to_compute_dU` option in layer params to `true`).
 

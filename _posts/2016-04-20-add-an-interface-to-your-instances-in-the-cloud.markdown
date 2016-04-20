@@ -51,9 +51,11 @@ To secure the connection, create a SSH tunnel :
 
     ssh -f USER@SERVER-IP -L 8443:localhost:5901 -N
 
+and connect at your tunnel :
+
 ![]({{ site.url }}/img/vnc_viewer_secure.png)    
 
-On Windows, you can create the tunnel with PuTTY :
+On Windows, you can also create the tunnel with PuTTY :
 
 ![]({{ site.url }}/img/vnc_viewer_secure_putty.png)  
 

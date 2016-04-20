@@ -131,7 +131,7 @@ Compile it as you compile Caffe usually (following my tutorial on [Mac OS](http:
 
 Let's create our first SPN to see how it works. Let's fix a zoom factor of 2, and leave the possibility of a translation only :
 
-$$ \left[ \begin{array}{ccc}  \theta_{11} \ \theta_{12} \ \theta_{13} \\ \theta_{21} \ \theta_{22} \ \theta_{23}  \end{array} \right] =  \left[ \begin{array}{ccc}  0.5 \ 0.0 \ \theta_{13} \\ 0.0 \ 1.0 \ \theta_{23}  \end{array} \right] $$
+$$ \left[ \begin{array}{ccc}  \theta_{11} \ \theta_{12} \ \theta_{13} \\ \theta_{21} \ \theta_{22} \ \theta_{23}  \end{array} \right] =  \left[ \begin{array}{ccc}  0.5 \ 0.0 \ \theta_{13} \\ 0.0 \ 0.5 \ \theta_{23}  \end{array} \right] $$
 
 For that, let's write a *st_train.prototxt* file :
 

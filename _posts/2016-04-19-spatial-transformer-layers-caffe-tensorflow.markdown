@@ -20,12 +20,14 @@ The use of a SPN is
 
 - to locate objects in an image without supervision
 
-
-# The maths
-
 **SPN predicts the coefficients of an affine transformation** :
 
 ![]({{ site.url }}/img/spatial_transformer_networks.png)
+
+The second important thing about SPN is that they are **trainable** :  to predict the transformation, SPN can **retropropagate gradients**.
+
+
+# The maths
 
 If $$ (x,y) $$ are normalized coordinates, $$ (x,y) \in [-1,1] \times [-1,1]  $$, an affine transformation is given by a matrix multiplication :
 
@@ -87,11 +89,31 @@ $$
 
 $$
 
+So, I have an easily differentiable function $$ \tau $$ (multiplications and additions) to get the corresponding position in the input image for a given position in the output image :
+
+$$  ( x_{in}, y_{in} )  =  \tau_{\theta} ( x_{out}, y_{out} ) $$
+
+and, to compute the pixel value in our output image of the SPN, I can just take the value in the input image at the right place
+
+$$ I_{out}( x_{out}, y_{out} ) = I_{in} ( x_{in}, y_{in} ) = I_{in} ( \tau_{\theta} ( x_{out}, y_{out} )) $$
+
+But usually, $$ \tau ( x_{out}, y_{out} ) $$ is not an integer value (on the image grid), so we need to interpolate it :
+
+![](http://i30.tinypic.com/w1xnk5.png)
+
+There exists many ways to interpolate : nearest-neighbor, bilinear, bicubic, ... (have a look at OpenCV and Photoshop interpolation options as an example), but the best is to use a differentiable one. For example, the bilinear interpolation function for any continuous position in the input image $$ (X,Y) \in [0,M] \times [0,N] $$
+
+$$ bilinear(X,Y, I_{in}) = \sum_{m=0}^{M} \sum_{n=0}^{N} I_{in}(m,n) \times \max(1-\left| X - m \right|,0) \times \max(1-\left|Y-n\right|, 0 ) $$
+
+which is easily differentiable
+
+- in position $$ \frac{\partial bilinear}{\partial X }  $$ which enables to learn the $$ \theta $$ parameters because
+
+    $$ I_{out}( x_{out}, y_{out} )  = bilinear( \tau_{\theta} ( x_{out}, y_{out} ), I_{in} ) $$
+
+- in image $$ \frac{\partial bilinear}{\partial I }  $$ which enables to put the SPN on top of other SPN or other layers such as convolutions, and retropropagate the gradients to them (set `to_compute_dU` option in layer params to `true`).
+
 Now we have all the maths !
-
-The second important thing about SPN is that they are **trainable** : to learn the parameters to predict the transformation, SPN can **retropropagate gradients**.
-
-
 
 # Spatial Transformer Networks in Caffe
 

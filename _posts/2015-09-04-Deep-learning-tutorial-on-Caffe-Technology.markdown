@@ -338,7 +338,7 @@ For the computation of the gradients :
 solver.net.backward()
 ```
 
-To launch one step of the gradient descent, that is a forward, a backward and the update of the net params given the gradients :
+To launch one step of the gradient descent, that is a forward propagation (computation of `net.blobs[k].data` from input layer untill the loss layer), a backward propagation (computation of the `net.blobs[k].diff` from the loss layer until input layer) and the update of the net params given the gradients :
 
 ```python
 solver.step(1)

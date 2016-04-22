@@ -338,7 +338,7 @@ For the computation of the gradients :
 solver.net.backward()
 ```
 
-To launch one step of the gradient descent, that is a forward propagation (computation of `net.blobs[k].data` from input layer untill the loss layer), a backward propagation (computation of the `net.blobs[k].diff` from the loss layer until input layer) and the update of the net params given the gradients :
+To launch one step of the gradient descent, that is a forward propagation (computation of `net.blobs[k].data` from input layer until the loss layer), a backward propagation (computation of the `net.blobs[k].diff` and `net.params[k][j].diff` from the loss layer until input layer) and the update of the net params given the gradients (update of the `net.params[k][j].data`) :
 
 ```python
 solver.step(1)
@@ -348,8 +348,8 @@ To run the full gradient descent, that is the `max_iter` steps :
 
 ```python
 solver.solve()
-
 ```
+
 
 ### Input data, train and test set
 

@@ -648,6 +648,22 @@ Dtype* mutable_gpu_diff();
 
 Data transfer between GPU and CPU will be dealt automatically.
 
+Caffe provides abstraction methods to deal with data :
+
+- `caffe_axpy()` and `caffe_gpu_axpy()` for $$ y \leftarrow a x + y $$
+
+- `caffe_scal()` and `caffe_gpu_scal()` for $$ x \leftarrow a x $$
+
+- `caffe_cpu_sign()` and `caffe_gpu_sign()` for $$ y \leftarrow  \text{sign} (x) $$
+
+- `caffe_cpu_axpby()` and `caffe_cpu_axpby` for $$ y \leftarrow a \times x + b \times y $$
+
+- `caffe_copy()` to deep copy
+
+- `caffe_cpu_gemm()` and `caffe_gpu_gemm()` for matrix multiplication $$ C \leftarrow \alpha A \times B + \beta C $$
+
+... and so on.
+
 #### The layer
 
 A **layer**, such as the [SoftmaxWithLoss layer](https://github.com/BVLC/caffe/blob/master/src/caffe/layers/softmax_loss_layer.cpp), will need a few functions working with arguments top blobs and bottom blobs :

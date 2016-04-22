@@ -651,6 +651,8 @@ Data transfer between GPU and CPU will be dealt automatically.
 
 Caffe provides abstraction methods to deal with data :
 
+- `caffe_set()` and `caffe_gpu_set()` to initialize the data with a value
+
 - `caffe_axpy()` and `caffe_gpu_axpy()` for $$ y \leftarrow a x + y $$
 
 - `caffe_scal()` and `caffe_gpu_scal()` for $$ x \leftarrow a x $$

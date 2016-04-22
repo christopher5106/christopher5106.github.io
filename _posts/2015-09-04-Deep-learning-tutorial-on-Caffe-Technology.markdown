@@ -325,20 +325,20 @@ solver = caffe.SGDSolver('models/bvlc_reference_caffenet/solver.prototxt')
 
 but be careful since `SGDSolver` will use SGDSolver whatever is configured in the prototxt file... so it is less reliable.
 
-Now, it's time to begin to see if everything works well and to fill the layers in a forward propagation in the net :
+Now, it's time to begin to see if everything works well and to fill the layers in a forward propagation in the net (computation of `net.blobs[k].data` from input layer until the loss layer) :
 
 ```python
 solver.net.forward()  # train net
 solver.test_nets[0].forward()  # test net (there can be more than one)
 ```
 
-For the computation of the gradients :
+For the computation of the gradients (computation of the `net.blobs[k].diff` and `net.params[k][j].diff` from the loss layer until input layer) :
 
 ```python
 solver.net.backward()
 ```
 
-To launch one step of the gradient descent, that is a forward propagation (computation of `net.blobs[k].data` from input layer until the loss layer), a backward propagation (computation of the `net.blobs[k].diff` and `net.params[k][j].diff` from the loss layer until input layer) and the update of the net params given the gradients (update of the `net.params[k][j].data`) :
+To launch one step of the gradient descent, that is a forward propagation, a backward propagation and the update of the net params given the gradients (update of the `net.params[k][j].data`) :
 
 ```python
 solver.step(1)

@@ -415,6 +415,12 @@ print("Accuracy: {:.3f}".format(accuracy))
 [Parameter sharing between Siamese networks](http://caffe.berkeleyvision.org/gathered/examples/siamese.html)
 
 
+### Spatial transformer layers
+
+[![]({{ site.url }}/img/spatial_transformer_networks.png)]({{ site.url }}/big/data/2016/04/18/spatial-transformer-layers-caffe-tensorflow.html)
+
+[Improve classification with spatial transformer layers](http://christopher5106.github.io/big/data/2016/04/18/spatial-transformer-layers-caffe-tensorflow.html)
+
 # Caffe in Python
 
 ### Define a model in Python
@@ -665,7 +671,7 @@ Caffe provides abstraction methods to deal with data :
 
 - `caffe_cpu_gemm()` and `caffe_gpu_gemm()` for matrix multiplication $$ C \leftarrow \alpha A \times B + \beta C $$
 
-- `caffe_gpu_atomic_add()` when you need to update a value in an atomic way (such as requests in ACID databases but for gpu threads in this case) 
+- `caffe_gpu_atomic_add()` when you need to update a value in an atomic way (such as requests in ACID databases but for gpu threads in this case)
 
 ... and so on.
 

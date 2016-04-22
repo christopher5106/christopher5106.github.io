@@ -332,13 +332,19 @@ solver.net.forward()  # train net
 solver.test_nets[0].forward()  # test net (there can be more than one)
 ```
 
-To launch one step of the gradient descent :
+For the computation of the gradients :
+
+```python
+solver.net.backward()
+```
+
+To launch one step of the gradient descent, that is a forward, a backward and the update of the net params given the gradients :
 
 ```python
 solver.step(1)
 ```
 
-To run the full gradient descent :
+To run the full gradient descent, that is the `max_iter` steps :
 
 ```python
 solver.solve()

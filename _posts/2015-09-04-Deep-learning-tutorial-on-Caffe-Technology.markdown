@@ -627,6 +627,7 @@ Methods on the blob :
 - `asum_data()` and `asum_diff()` their L1 norm
 - `sumsq_data()` and `sumsq_diff()` their L1 norm
 - `scale_data()` and `scale_diff()` to multiply the data by a factor
+- `Update()` to update `data` array given `diff` array
 
 To access the data in the blob, from the CPU code :
 

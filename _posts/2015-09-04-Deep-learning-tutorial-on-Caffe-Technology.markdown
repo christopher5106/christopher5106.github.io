@@ -419,7 +419,7 @@ print("Accuracy: {:.3f}".format(accuracy))
 
 [![]({{ site.url }}/img/spatial_transformer_networks.png)]({{ site.url }}/big/data/2016/04/18/spatial-transformer-layers-caffe-tensorflow.html)
 
-[Improve classification with spatial transformer layers](http://christopher5106.github.io/big/data/2016/04/18/spatial-transformer-layers-caffe-tensorflow.html)
+[my tutorial about improving classification with spatial transformer layers](http://christopher5106.github.io/big/data/2016/04/18/spatial-transformer-layers-caffe-tensorflow.html)
 
 # Caffe in Python
 

@@ -257,4 +257,9 @@ The SPN repositions the document around the same place roughly :
 
 ![spn document affine transformation]({{ site.url }}/img/spn_document_localization.png)
 
+
+# Spatial tranformer networks in Tensorflow
+
+Have a look at [David Dao implementation here](https://github.com/daviddao/spatial-transformer-tensorflow).
+
 **Well done!**

@@ -659,6 +659,8 @@ Caffe provides abstraction methods to deal with data :
 
 - `caffe_set()` and `caffe_gpu_set()` to initialize the data with a value
 
+- `caffe_add_scalar()` and `caffe_gpu_add_scalar()` to add a scalar to data
+
 - `caffe_axpy()` and `caffe_gpu_axpy()` for $$ y \leftarrow a x + y $$
 
 - `caffe_scal()` and `caffe_gpu_scal()` for $$ x \leftarrow a x $$

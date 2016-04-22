@@ -665,6 +665,8 @@ Caffe provides abstraction methods to deal with data :
 
 - `caffe_cpu_gemm()` and `caffe_gpu_gemm()` for matrix multiplication $$ C \leftarrow \alpha A \times B + \beta C $$
 
+- `caffe_gpu_atomic_add()` when you need to update a value in an atomic way (such as requests in ACID databases but for gpu threads in this case) 
+
 ... and so on.
 
 #### The layer

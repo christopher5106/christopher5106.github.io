@@ -5,6 +5,7 @@ date:   2016-04-18 23:00:51
 categories: big data
 ---
 
+![]({{ site.url }}/img/mnist_distorted.png)
 
 # Spatial Transformer Networks
 

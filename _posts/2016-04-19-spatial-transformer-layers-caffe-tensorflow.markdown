@@ -260,6 +260,6 @@ The SPN repositions the document around the same place roughly :
 
 # Spatial tranformer networks in Tensorflow
 
-Have a look at [David Dao implementation here](https://github.com/daviddao/spatial-transformer-tensorflow).
+Have a look at [Tensorflow implementation](https://github.com/tensorflow/models/tree/master/transformer).
 
 **Well done!**

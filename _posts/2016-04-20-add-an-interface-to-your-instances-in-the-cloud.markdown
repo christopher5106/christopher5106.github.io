@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Add an interface to Ubuntu EC2 instances"
+title:  "Add an interface to Ubuntu instances"
 date:   2016-04-20 10:00:51
 categories: cloud
 ---

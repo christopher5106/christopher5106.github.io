@@ -41,6 +41,11 @@ vncserver
 
 In the inbound configuration panel of the security group of your EC2 instance, add TCP 5901.
 
+I would strongly advise you to use VNC for Chrome
+
+[![VNC for Chrome]({{ site.url }}/img/vnc_for_chrome.png)](https://chrome.google.com/webstore/detail/vnc%C2%AE-viewer-for-google-ch/iabmpiboiopbgfabjmgeedhcmjenhbla?hl=en)
+
+
 Download a VNC viewer on your computer, such as [realvnc vnc viewer](https://www.realvnc.com/download/viewer/).
 
 Choose the right IP and port :

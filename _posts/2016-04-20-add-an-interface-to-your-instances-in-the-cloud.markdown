@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Add an interface to Ubuntu instances"
+title:  "Add an interface to remote Ubuntu instances in the cloud"
 date:   2016-04-20 10:00:51
 categories: cloud
 ---
@@ -68,4 +68,4 @@ An alternative VNC client for Windows is TightVNC :
 
 ![]({{ site.url }}/img/tightvnc_viewer.png)
 
-**You're done!**
+**Well done!**

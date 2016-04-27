@@ -191,7 +191,10 @@ aws lambda update-function-code --function-name sendNewsletter \
 Provided you have already created the `lambda_basic_execution` role for your lambdas, or know which IAM/EC2 role to use, you can also directly create it from command line :  
 
 ```
-aws lambda create-function --function-name test --runtime  nodejs --role arn:aws:iam::ACCOUNT_ID:role/lambda_basic_execution --handler send_newsletter.handler --timeout 80 --zip-file fileb://mylambda.zip
+aws lambda create-function --function-name test --runtime nodejs \
+      --role arn:aws:iam::ACCOUNT_ID:role/lambda_basic_execution \
+      --handler send_newsletter.handler --timeout 80 \
+      --zip-file fileb://mylambda.zip
 ```
 
 Configure the correct **module name, memory, and execution time** :

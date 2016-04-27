@@ -54,7 +54,7 @@ Subscription can be integrated very easily into the website with [MailChimp Sign
 
 Let us create a lambda function in Javascript using [MailJet NodeJS Wrapper](https://github.com/mailjet/mailjet-apiv3-nodejs) :
 
-{% highlight bash %}
+```
 mkdir mylambda
 cd mylambda
 npm install node-mailjet
@@ -140,12 +140,12 @@ exports.handler = function(event, context) {
     req.on('error', context.fail);
     req.end();
 };
-{% endhighlight %}
+```
 
 
 In order to test our script **locally on the computer**, let's write the following *test.js* script :
 
-{% highlight javascript %}
+```javascript
 var send_newsletter = require('./send_newsletter.js');
 
 var event = {};
@@ -158,13 +158,13 @@ context.succeed = function( res) {
 }
 
 send_newsletter.handler(event,context)
-{% endhighlight %}
+```
 
 and try it :
 
-{% highlight bash %}
+```
 node test.js
-{% endhighlight %}
+```
 
 If everything works fine, let's upload it to AWS.
 
@@ -173,9 +173,9 @@ If everything works fine, let's upload it to AWS.
 
 Since I used node modules, I need to package everything in a zip *mylambda.zip* :
 
-{% highlight bash %}
+```
 zip -r mylambda *
-{% endhighlight %}
+```
 
 that I can directly upload to the console :
 
@@ -183,13 +183,16 @@ that I can directly upload to the console :
 
 or with AWS CLI, provided you attached a Lambda:CreateFunction policy to your current AWS CLI user:
 
-{% highlight bash %}
+```
 aws lambda update-function-code --function-name sendNewsletter \
       --zip-file fileb://mylambda.zip
-{% endhighlight %}
+```
 
 Provided you have already created the `lambda_basic_execution` role for your lambdas, or know which IAM/EC2 role to use, you can also directly create it from command line :  
-    aws lambda create-function --function-name test --runtime  nodejs --role arn:aws:iam::ACCOUNT_ID:role/lambda_basic_execution --handler send_newsletter.handler --timeout 80 --zip-file fileb://mylambda.zip
+
+```
+aws lambda create-function --function-name test --runtime  nodejs --role arn:aws:iam::ACCOUNT_ID:role/lambda_basic_execution --handler send_newsletter.handler --timeout 80 --zip-file fileb://mylambda.zip
+```
 
 Configure the correct **module name, memory, and execution time** :
 
@@ -208,9 +211,9 @@ Have a look at the **max used memory** to check if you selected the right memory
 
 You can also invoke your lambda with AWS CLI :
 
-{% highlight bash %}
+```
 aws lambda invoke --function-name sendNewsletter results.json
-{% endhighlight %}
+```
 
 Meanwhile, you'll certainly received the result in your mail box :
 

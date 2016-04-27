@@ -60,11 +60,11 @@ cd mylambda
 npm install node-mailjet
 npm install xml2js
 vi send_newsletter.js
-{% endhighlight %}
+```
 
 and write the following javascript module, named *send_newsletter.js*, with the mission to get all articles being published the last week, and send their titles with their links in a newsletter :
 
-{% highlight javascript %}
+```javascript
 var Mailjet = require('node-mailjet').connect('API KEY', 'API SECRET');
 var blog_hostname = 'YOUR BLOG HOSTNAME';
 var blog_path: '/feed.xml';

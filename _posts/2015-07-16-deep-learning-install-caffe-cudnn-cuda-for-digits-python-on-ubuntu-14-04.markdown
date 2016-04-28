@@ -10,6 +10,8 @@ Install procedure on a AWS g2 instance, with Ubuntu 14.04.
 
 You can find my public AMI **ami-2d4bc75e**, tested on g2.2xlarge and t2.large instances.
 
+The same AMI with OpenCV 3 : **ami-e3169890**.
+
 # Install Cuda and Cudnn
 
 {% highlight bash %}

@@ -5,6 +5,7 @@ date:   2016-04-18 23:00:51
 categories: big data
 ---
 
+![]({{ site.url }}/img/mnist_distorted.png)
 
 # Spatial Transformer Networks
 
@@ -256,5 +257,10 @@ Let's try with 2 GoogLeNet, one in the SPN to predict the affine transformation,
 The SPN repositions the document around the same place roughly :
 
 ![spn document affine transformation]({{ site.url }}/img/spn_document_localization.png)
+
+
+# Spatial tranformer networks in Tensorflow
+
+Have a look at [Tensorflow implementation](https://github.com/tensorflow/models/tree/master/transformer).
 
 **Well done!**

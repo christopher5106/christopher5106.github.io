@@ -325,25 +325,31 @@ solver = caffe.SGDSolver('models/bvlc_reference_caffenet/solver.prototxt')
 
 but be careful since `SGDSolver` will use SGDSolver whatever is configured in the prototxt file... so it is less reliable.
 
-Now, it's time to begin to see if everything works well and to fill the layers in a forward propagation in the net :
+Now, it's time to begin to see if everything works well and to fill the layers in a forward propagation in the net (computation of `net.blobs[k].data` from input layer until the loss layer) :
 
 ```python
 solver.net.forward()  # train net
 solver.test_nets[0].forward()  # test net (there can be more than one)
 ```
 
-To launch one step of the gradient descent :
+For the computation of the gradients (computation of the `net.blobs[k].diff` and `net.params[k][j].diff` from the loss layer until input layer) :
+
+```python
+solver.net.backward()
+```
+
+To launch one step of the gradient descent, that is a forward propagation, a backward propagation and the update of the net params given the gradients (update of the `net.params[k][j].data`) :
 
 ```python
 solver.step(1)
 ```
 
-To run the full gradient descent :
+To run the full gradient descent, that is the `max_iter` steps :
 
 ```python
 solver.solve()
-
 ```
+
 
 ### Input data, train and test set
 
@@ -408,6 +414,12 @@ print("Accuracy: {:.3f}".format(accuracy))
 
 [Parameter sharing between Siamese networks](http://caffe.berkeleyvision.org/gathered/examples/siamese.html)
 
+
+### Spatial transformer layers
+
+[![]({{ site.url }}/img/spatial_transformer_networks.png)]({{ site.url }}/big/data/2016/04/18/spatial-transformer-layers-caffe-tensorflow.html)
+
+[my tutorial about improving classification with spatial transformer layers](http://christopher5106.github.io/big/data/2016/04/18/spatial-transformer-layers-caffe-tensorflow.html)
 
 # Caffe in Python
 
@@ -621,6 +633,7 @@ Methods on the blob :
 - `asum_data()` and `asum_diff()` their L1 norm
 - `sumsq_data()` and `sumsq_diff()` their L1 norm
 - `scale_data()` and `scale_diff()` to multiply the data by a factor
+- `Update()` to update `data` array given `diff` array
 
 To access the data in the blob, from the CPU code :
 
@@ -641,6 +654,28 @@ Dtype* mutable_gpu_diff();
 ```
 
 Data transfer between GPU and CPU will be dealt automatically.
+
+Caffe provides abstraction methods to deal with data :
+
+- `caffe_set()` and `caffe_gpu_set()` to initialize the data with a value
+
+- `caffe_add_scalar()` and `caffe_gpu_add_scalar()` to add a scalar to data
+
+- `caffe_axpy()` and `caffe_gpu_axpy()` for $$ y \leftarrow a x + y $$
+
+- `caffe_scal()` and `caffe_gpu_scal()` for $$ x \leftarrow a x $$
+
+- `caffe_cpu_sign()` and `caffe_gpu_sign()` for $$ y \leftarrow  \text{sign} (x) $$
+
+- `caffe_cpu_axpby()` and `caffe_cpu_axpby` for $$ y \leftarrow a \times x + b \times y $$
+
+- `caffe_copy()` to deep copy
+
+- `caffe_cpu_gemm()` and `caffe_gpu_gemm()` for matrix multiplication $$ C \leftarrow \alpha A \times B + \beta C $$
+
+- `caffe_gpu_atomic_add()` when you need to update a value in an atomic way (such as requests in ACID databases but for gpu threads in this case)
+
+... and so on.
 
 #### The layer
 

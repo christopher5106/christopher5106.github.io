@@ -49,7 +49,8 @@ Technical work done by Google is always very great.
 
 Let's install [Tensorflow](http://tensorflow.org/get_started/os_setup.md) on an iMac :
 
-    pip install https://storage.googleapis.com/tensorflow/mac/tensorflow-0.5.0-py2-none-any.whl
+    #pip install https://storage.googleapis.com/tensorflow/mac/tensorflow-0.5.0-py2-none-any.whl
+    pip install --upgrade https://storage.googleapis.com/tensorflow/mac/tensorflow-0.8.0-py2-none-any.whl
 
 You will need protobuf version above 3.0  (otherwise you'll get a `TypeError: __init__() got an unexpected keyword argument 'syntax'`) :
 

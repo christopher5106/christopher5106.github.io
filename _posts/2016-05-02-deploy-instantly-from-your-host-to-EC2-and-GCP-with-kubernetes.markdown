@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Deploying with Kubernetes - from your PC to AWS EC2, Google cloud or any private servers : tutorial"
-date:   2016-05-03 23:00:51
+date:   2016-05-02 23:00:51
 categories: continous deployment
 ---
 

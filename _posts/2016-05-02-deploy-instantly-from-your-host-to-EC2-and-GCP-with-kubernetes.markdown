@@ -9,6 +9,8 @@ You might have read my first post about [deployment with Chef technology](http:/
 
 1 year later, things have changed a bit, become easier, in particular with the arrival of the opensource technology **Kubernetes** from Google.
 
+# The needs for deployment
+
 The needs are still the same :
 
 - Deploy applications quickly and predictably
@@ -26,6 +28,8 @@ The solution against technological dependency might be
 - the "standard" principle, meaning to use a technology if it is widely adopted by a **real** sufficient number of customers,
 
 - the "open-source" principle, where the community will provide lot's of advantages such as the wide adoption, the reliability, the number of features and extensions, the availability of developers and support, and a long term life cycle.
+
+# The shift in methodology
 
 Old methods use **dedicated servers**
 
@@ -59,4 +63,23 @@ Let's see in practice how to deploy on your machine, and on VM in the AWS EC2 an
 
 # Create an app and package it in a container
 
-Let's create a very
+Let's create a very simple nodeJS app as explained in [Kubernetes Hellonode example](http://kubernetes.io/docs/hellonode/) with one file **server.js** :
+
+```javascript
+var http = require('http');
+var handleRequest = function(request, response) {
+  response.writeHead(200);
+  response.end("Hello World!");
+}
+var www = http.createServer(handleRequest);
+www.listen(8080);
+```
+
+and a Dockerfile :
+
+```bash
+FROM node:0.12
+EXPOSE 8080
+COPY server.js .
+CMD node server.js
+```

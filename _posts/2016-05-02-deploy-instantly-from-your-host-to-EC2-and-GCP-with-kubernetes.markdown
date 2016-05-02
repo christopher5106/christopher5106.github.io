@@ -15,9 +15,11 @@ The needs are still the same :
 
 - Deploy applications quickly and predictably
 - Scale applications
-- Deploy continuouly (*continuous deployment*)
+- Deploy continuously new features (*continuous deployment*)
 - Optimize cost
-- Be independent : deploy on multiple providers
+- Be independent : be able to deploy on multiple providers
+
+This is the last point I will show in practice in this tutorial.
 
 The main problematic is the lack of support from main providers, the absence of warranties, and changes in specifications without consultation (modification or removal of some specifications) which lead you to adapt to all the changes of their platforms - quite unevitable.
 

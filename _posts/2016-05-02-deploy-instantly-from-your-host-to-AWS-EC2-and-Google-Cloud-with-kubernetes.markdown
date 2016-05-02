@@ -25,7 +25,7 @@ The main problematic is the lack of support from main providers, the absence of 
 
 The solution against technological dependency might be
 
-- the "oakham razor" principle : build specifically for what you need, without superflu. Performance, and work efficency will be better, but in case of an unprecise need, you'll finish at end having re-implemented every functionality of some market solutions,
+- the "oakham razor" principle : build specifically for what you need, without the superfluous. Performance, and work efficency will be better, but in case of an unprecise need, you'll finish at end having re-implemented every functionality of some market solutions,
 
 - the "standard" principle, meaning to use a technology if it is widely adopted by a **real** sufficient number of customers,
 
@@ -39,7 +39,7 @@ Old methods use **dedicated servers**
 
 - *Performance guarantees*
 
-Current methods use **virtual servers** : the build occurs during deployment, with deployment scripts, and update scrits, inside the virtual machine, and for all applications at the same time. These current methods brought the benefits of *scalability* and *reproducibility*.
+Current methods use **virtual servers** : the build occurs during deployment, with deployment scripts, and update scripts, inside the virtual machine, and for all applications at the same time. These methods, brought by technologies such as Chef, Puppet or Ansible, have the benefits of *scalability* and *reproducibility*.
 
 ![]({{ site.url }}/img/current_deployment_methods.png)
 
@@ -61,7 +61,7 @@ Docker and deployment platform technologies have enabled new deployment methods,
 
 Each container can have its own IP.
 
-Let's see in practice how to deploy on your machine, and on VM in the AWS EC2 and Google Cloud.
+Let's see in practice how to deploy on a cluster on your machine, and on clusters of VM in the AWS EC2 and Google Cloud.
 
 # Create an app and package it in a container
 
@@ -77,11 +77,32 @@ var www = http.createServer(handleRequest);
 www.listen(8080);
 ```
 
-and a Dockerfile :
+and a **Dockerfile** :
 
 ```bash
 FROM node:0.12
 EXPOSE 8080
 COPY server.js .
 CMD node server.js
+```
+
+and build it (require to have Docker installed) :
+
+```bash
+# start the default Docker VM
+docker-machine start
+
+# Google : use the project ID in your cloud console
+docker build -t gcr.io/PROJECT_ID/hello-node:v1 .
+```
+
+
+# Launch the cluster of VM
+
+
+
+# Scale the number of replicas
+
+```bash
+kubectl scale deployment hello-node --replicas=4
 ```

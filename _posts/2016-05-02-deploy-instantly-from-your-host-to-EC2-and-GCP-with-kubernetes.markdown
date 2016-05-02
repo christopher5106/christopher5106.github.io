@@ -1,13 +1,13 @@
 ---
 layout: post
-title:  "Deploying with Kubernetes - from your PC to AWS EC2, Google cloud or any private servers : tutorial"
+title:  "Deploying with Docker and Kubernetes - tutorial from your PC to AWS EC2, Google cloud or any private servers"
 date:   2016-05-02 23:00:51
 categories: continous deployment
 ---
 
 You might have read my first post about [deployment with Chef technology](http://christopher5106.github.io/continous/deployment/2015/03/17/deployment-from-your-pc-to-your-cloud-best-practice.html) one year ago.
 
-1 year later, things have changed a bit, become easier, in particular with the arrival of the opensource technology **Kubernetes**.
+1 year later, things have changed a bit, become easier, in particular with the arrival of the opensource technology **Kubernetes** from Google.
 
 The needs are still the same :
 
@@ -57,4 +57,6 @@ Each container can have its own IP.
 
 Let's see in practice how to deploy on your machine, and on VM in the AWS EC2 and Google Cloud.
 
-# Create an app
+# Create an app and package it in a container
+
+Let's create a very

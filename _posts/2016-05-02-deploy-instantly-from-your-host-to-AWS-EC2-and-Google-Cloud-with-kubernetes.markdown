@@ -67,29 +67,38 @@ Let's see in practice how to deploy on a cluster on your machine, and on cluster
 
 Install [Docker](https://docs.docker.com/engine/installation/),
 
-Install the SDK for your cloud provider if you want to deploy to one of them :
+Install and configure the SDK for your cloud provider if you want to deploy to one of them :
 
 - [AWS CLI](http://docs.aws.amazon.com/cli/latest/userguide/installing.html) with an AWS account,
 
-- [GLOUD](https://cloud.google.com/sdk/) with a Google Cloud account and a new project,
+In the AWS console, add a policy for your user to access the AWS ECR :
 
-Install KubeCtl :
+```json
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "St",
+            "Effect": "Allow",
+            "Action": [
+                "ecr:*"
+            ],
+            "Resource": [
+                "*"
+            ]
+        }
+    ]
+}
+```
+
+- [GLOUD](https://cloud.google.com/sdk/) with a Google Cloud account and a new project, and set
 
 ```bash
-export KUBERNETES_PROVIDER=YOUR_PROVIDER; wget -q -O - https://get.k8s.io | bash
+gcloud config set compute/zone eu-central1-b
+#or
+gcloud config set compute/zone europe-west1-c
 ```
 
-replacing the `YOUR_PROVIDER` variable with the provider (the [complete list](https://github.com/kubernetes/kubernetes/tree/release-1.2/cluster)) :
-
-```
-gce - Google Compute Engine [default]
-gke - Google Container Engine
-aws - Amazon EC2
-azure - Microsoft Azure
-vagrant - Vagrant (on local virtual machines)
-vsphere - VMWare VSphere
-rackspace - Rackspace
-```
 
 # Create an app, package it in a container and publish to a Docker registry
 
@@ -114,29 +123,61 @@ COPY server.js .
 CMD node server.js
 ```
 
-and build it :
+Docker will play a central role. Build it :
 
 ```bash
 # start the default Docker VM
 docker-machine start
 
-# Google : use the project ID of your project in your Google cloud console
-docker build -t gcr.io/PROJECT_ID/hello-node:v1 .
-docker push gcr.io/PROJECT_ID/hello-node:v1
+# build your Docker image
+docker build -t hello-node:v1 .
 ```
 
+Publish your image to a container registry (Docker, Google or AWS):
 
-# Launch the cluster of VM
+```bash
+# Google : use the project ID of your project in your Google cloud console
+docker tag hello-node:v1 gcr.io/PROJECT_ID/hello-node:v1
+gcloud docker push gcr.io/PROJECT_ID/hello-node:v1
 
-Launch a cluster of VM
+# AWS
+aws ecr create-repository --repository-name hello-node
+$(aws ecr get-login)
+docker tag hello-node:v1 AWS_ACCOUNT_ID.dkr.ecr.REGION.amazonaws.com/hello-node:latest
+docker push AWS_ACCOUNT_ID.dkr.ecr.us-east-1.amazonaws.com/hello-node:latest
+```
+
+# Install Kubernetes and launch the cluster of VM
+
+
+On Google Compute Engine, it's quite easy to install Kubernetes and launch a cluster of VM :
 
 ```bash
 # Google cloud
+gcloud components install kubectl
 gcloud container clusters create cluster-1
 gcloud config set container/cluster cluster-1
 gcloud container clusters get-credentials cluster-1
 gcloud container clusters list
 ```
+
+For other providers, install Kubernetes and launch a cluster with the following scripts :
+
+```bash
+# Google
+export KUBERNETES_PROVIDER=gke; wget -q -O - https://get.k8s.io | bash
+
+# AWS
+export KUBERNETES_PROVIDER=aws; wget -q -O - https://get.k8s.io | bash
+
+# vagrant (on local virtual machines)
+export KUBERNETES_PROVIDER=vagrant; wget -q -O - https://get.k8s.io | bash
+```
+
+A [complete list of available providers](https://github.com/kubernetes/kubernetes/tree/release-1.2/cluster)) includes Microsoft Azure, ... and others.
+
+For AWS, you can also deploy your Docker using ECS interface, but I'll prefer to use Kubernetes as "standard" layer above all cloud providers.
+
 
 # Run your container on the cluster
 
@@ -174,6 +215,11 @@ Modify `v1` with `v2` and save. Updates will occur automatically.
 # Delete
 
 ```bash
+# Google
 kubectl delete service,deployment hello-node
 gcloud container clusters delete cluster-1
+
+
+# AWS
+aws ecr delete-repository --repository-name hello-node --force
 ```

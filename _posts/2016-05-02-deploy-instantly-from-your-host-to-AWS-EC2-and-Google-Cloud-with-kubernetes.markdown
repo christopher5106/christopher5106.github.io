@@ -164,9 +164,6 @@ gcloud container clusters list
 For other providers, install Kubernetes and launch a cluster with the following scripts :
 
 ```bash
-# Google
-export KUBERNETES_PROVIDER=gke; wget -q -O - https://get.k8s.io | bash
-
 # AWS
 export KUBERNETES_PROVIDER=aws; wget -q -O - https://get.k8s.io | bash
 
@@ -174,7 +171,7 @@ export KUBERNETES_PROVIDER=aws; wget -q -O - https://get.k8s.io | bash
 export KUBERNETES_PROVIDER=vagrant; wget -q -O - https://get.k8s.io | bash
 ```
 
-A [complete list of available providers](https://github.com/kubernetes/kubernetes/tree/release-1.2/cluster)) includes Microsoft Azure, ... and others.
+A [complete list of available providers](https://github.com/kubernetes/kubernetes/tree/release-1.2/cluster) includes Microsoft Azure, ... and others.
 
 For AWS, you can also deploy your Docker using ECS interface, but I'll prefer to use Kubernetes as "standard" layer above all cloud providers.
 

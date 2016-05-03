@@ -21,7 +21,7 @@ The needs are still the same :
 
 This is the last point I will show in practice in this tutorial.
 
-The main problematic is the lack of support from main providers, the absence of warranties, and changes in specifications without consultation (modification or removal of some specifications) which lead you to adapt to all the changes of their platforms - quite unevitable.
+The main problem is the lack of support from main providers, the absence of warranties, and changes in specifications without consultation (modification or removal of some specifications) which lead you to adapt to all the changes of their platforms - quite unevitable.
 
 The solution against technological dependency might be
 

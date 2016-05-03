@@ -91,7 +91,7 @@ In the AWS console, add a policy for your user to access the AWS ECR :
 }
 ```
 
-- [GLOUD](https://cloud.google.com/sdk/) with a Google Cloud account and a new project, and set
+- [GLOUD CLI](https://cloud.google.com/sdk/) with a Google Cloud account and a new project, and set
 
 ```bash
 gcloud config set compute/zone eu-central1-b
@@ -174,7 +174,7 @@ export KUBERNETES_PROVIDER=aws; wget -q -O - https://get.k8s.io | bash
 export KUBERNETES_PROVIDER=vagrant; wget -q -O - https://get.k8s.io | bash
 ```
 
-A [complete list of available providers](https://github.com/kubernetes/kubernetes/tree/release-1.2/cluster)) includes Microsoft Azure, ... and others.
+A [complete list of available providers](https://github.com/kubernetes/kubernetes/tree/release-1.2/cluster) includes Microsoft Azure, ... and others.
 
 For AWS, you can also deploy your Docker using ECS interface, but I'll prefer to use Kubernetes as "standard" layer above all cloud providers.
 

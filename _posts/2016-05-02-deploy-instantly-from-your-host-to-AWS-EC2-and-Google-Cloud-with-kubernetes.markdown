@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Deploying with Docker and Kubernetes - tutorial from your PC to AWS EC2, Google cloud or any private servers"
+title:  "Deploying with Docker and Kubernetes - tutorial from your PC to AWS EC2, Google cloud, Microsoft Azure or any private servers"
 date:   2016-05-02 23:00:51
 categories: continous deployment
 ---
@@ -55,7 +55,7 @@ Docker and deployment platform technologies have enabled new deployment methods,
 
 - the slow process of launching a VM occurs only once, and deploying an app means in this case managing containers, which leads to better *agility*
 
-- containers can be deployed on different provider, this is *portability*
+- containers can be deployed on different provider, or even on-promise instances, this is *portability*
 
 ![]({{ site.url }}/img/new_deployment_methods.png)
 
@@ -63,7 +63,35 @@ Each container can have its own IP.
 
 Let's see in practice how to deploy on a cluster on your machine, and on clusters of VM in the AWS EC2 and Google Cloud.
 
-# Create an app and package it in a container
+# Pre-requisites
+
+Install [Docker](https://docs.docker.com/engine/installation/),
+
+Install the SDK for your cloud provider if you want to deploy to one of them :
+
+- [AWS CLI](http://docs.aws.amazon.com/cli/latest/userguide/installing.html) with an AWS account,
+
+- [GLOUD](https://cloud.google.com/sdk/) with a Google Cloud account and a new project,
+
+Install KubeCtl :
+
+```bash
+export KUBERNETES_PROVIDER=YOUR_PROVIDER; wget -q -O - https://get.k8s.io | bash
+```
+
+replacing the `YOUR_PROVIDER` variable with the provider (the [complete list](https://github.com/kubernetes/kubernetes/tree/release-1.2/cluster)) :
+
+```
+gce - Google Compute Engine [default]
+gke - Google Container Engine
+aws - Amazon EC2
+azure - Microsoft Azure
+vagrant - Vagrant (on local virtual machines)
+vsphere - VMWare VSphere
+rackspace - Rackspace
+```
+
+# Create an app, package it in a container and publish to a Docker registry
 
 Let's create a very simple nodeJS app as explained in [Kubernetes Hellonode example](http://kubernetes.io/docs/hellonode/) with one file **server.js** :
 
@@ -86,23 +114,66 @@ COPY server.js .
 CMD node server.js
 ```
 
-and build it (require to have Docker installed) :
+and build it :
 
 ```bash
 # start the default Docker VM
 docker-machine start
 
-# Google : use the project ID in your cloud console
+# Google : use the project ID of your project in your Google cloud console
 docker build -t gcr.io/PROJECT_ID/hello-node:v1 .
+docker push gcr.io/PROJECT_ID/hello-node:v1
 ```
 
 
 # Launch the cluster of VM
 
+Launch a cluster of VM
 
+```bash
+# Google cloud
+gcloud container clusters create cluster-1
+gcloud config set container/cluster cluster-1
+gcloud container clusters get-credentials cluster-1
+gcloud container clusters list
+```
 
-# Scale the number of replicas
+# Run your container on the cluster
+
+```bash
+kubectl run hello-node --image=gcr.io/PROJECT_ID/hello-node:v1 --port=8080
+kubectl get deployment hello-node
+```
+
+Scale the number of replicas
 
 ```bash
 kubectl scale deployment hello-node --replicas=4
+kubectl get deployment hello-node
+```
+
+Replicas will be added automatically.
+
+Expose your deployment to Internet with the creation of a loadbalancer
+
+```bash
+kubectl expose deployment hello-node --type="LoadBalancer"
+kubectl get services hello-node
+```
+
+External IP will be displaid after a few minutes.
+
+# Deploy an update
+
+```bash
+kubectl edit deployment hello-node
+```
+
+Modify `v1` with `v2` and save. Updates will occur automatically.
+
+# Delete
+
+```bash
+kubectl delete service,deployment hello-node
+gcloud container clusters delete cluster-1
 ```

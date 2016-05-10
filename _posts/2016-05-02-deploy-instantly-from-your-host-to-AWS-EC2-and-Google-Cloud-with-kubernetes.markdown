@@ -7,7 +7,7 @@ categories: continous deployment
 
 You might have read my first post about [deployment with Chef technology](http://christopher5106.github.io/continous/deployment/2015/03/17/deployment-from-your-pc-to-your-cloud-best-practice.html) one year ago.
 
-1 year later, things have changed a bit, become easier, in particular with the arrival of the opensource technology **Kubernetes** from Google.
+1 year later, things have changed a bit, become easier, in particular with the arrival of the opensource technology **Kubernetes (K8s)** from Google, a very comprehensive framework.
 
 # The needs for deployment
 
@@ -131,6 +131,9 @@ docker-machine start
 
 # build your Docker image
 docker build -t hello-node:v1 .
+
+# check if your image is correctly there
+docker images
 ```
 
 Publish your image to a container registry (Docker, Google or AWS):
@@ -161,9 +164,12 @@ gcloud container clusters get-credentials cluster-1
 gcloud container clusters list
 ```
 
-For other providers, install Kubernetes and launch a cluster with the following scripts :
+If you want to install Kubernetes and launch a Kubernetes cluster directly, you can with the following scripts :
 
 ```bash
+# Google
+export KUBERNETES_PROVIDER=gke; wget -q -O - https://get.k8s.io | bash
+
 # AWS
 export KUBERNETES_PROVIDER=aws; wget -q -O - https://get.k8s.io | bash
 
@@ -174,6 +180,7 @@ export KUBERNETES_PROVIDER=vagrant; wget -q -O - https://get.k8s.io | bash
 A [complete list of available providers](https://github.com/kubernetes/kubernetes/tree/release-1.2/cluster) includes Microsoft Azure, ... and others.
 
 For AWS, you can also deploy your Docker using ECS interface, but I'll prefer to use Kubernetes as "standard" layer above all cloud providers.
+
 
 
 # Run your container on the cluster
@@ -211,12 +218,40 @@ Modify `v1` with `v2` and save. Updates will occur automatically.
 
 # Delete
 
+
 ```bash
 # Google
 kubectl delete service,deployment hello-node
 gcloud container clusters delete cluster-1
-
+# in case of a cluster launched by Kubernetes script
+#and not gcloud sdk, use cluster/kube-down.sh command
+gsutil rm -r gs://artifacts.<PROJECT_ID>.appspot.com/
+gsutil ls
 
 # AWS
 aws ecr delete-repository --repository-name hello-node --force
+aws ecr describe-repositories
 ```
+
+# Last
+
+Kubernetes offer many more possibilities:
+
+- creating `namespaces` to isolate users of a cluster, defining quotas, ...
+
+- creating a secure proxy from your localhost to a pod
+
+```
+kubectl port-forward POD_NAME PORT:LOCAL_PORT
+```
+
+- autoscaling
+
+```
+# number of pods between 2 to 10, target average CPU utilization at 80%
+kubectl autoscale deployment DEPLOYMENT_NAME --min=2 --max=10 --cpu-percent=80
+```
+
+Kubernetes simplifies the deployment of apps in a uniform way: on any infrastructure where Kubernetes is installed, you can launch your apps the same way.
+
+Have a look at a [Spark deployment with Kubernetes for example](http://blog.kubernetes.io/2016/03/using-Spark-and-Zeppelin-to-process-Big-Data-on-Kubernetes.html) which enables to have Spark and your apps run in the same environment.

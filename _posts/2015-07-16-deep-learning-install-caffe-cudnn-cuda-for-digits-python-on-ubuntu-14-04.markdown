@@ -8,9 +8,14 @@ categories: big data
 
 Install procedure on a AWS g2 instance, with Ubuntu 14.04.
 
-You can find my public AMI **ami-2d4bc75e**, tested on g2.2xlarge and t2.large instances.
+You can find my public AWS AMI **ami-2d4bc75e**, tested on g2.2xlarge and t2.large instances.
 
 The same AMI with OpenCV 3 : **ami-e3169890**.
+
+You can download my public Docker image as well :
+
+    docker pull christopher5106/caffe:stn
+
 
 # Install Cuda and Cudnn
 

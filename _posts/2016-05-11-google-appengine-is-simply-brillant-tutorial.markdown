@@ -7,11 +7,11 @@ categories: continous deployment
 
 AppEngine is simply tremendous and extraordinary. Its web interface is simply beautifully designed, fluid and effective.
 
-AppEngine has been for a while, but since june 2014 it supports Docker technology, the open container standard, and is named ["the flexible environment"](https://cloud.google.com/appengine/docs/flexible/custom-runtimes/).
+AppEngine has been for a while, but since june 2014 it supports Docker technology, the open container standard, under the name o ["the flexible environment"](https://cloud.google.com/appengine/docs/flexible/custom-runtimes/), which offers the ability to do almost anything...
 
-**AppEngine is the kind of service "fully-managed".**
+**... in a very "fully-managed" way.** Much further than the traditional meaning of fully-managed : once you've created your Docker, you do not have to think anymore about deployment :)
 
-But it provides also the option to go for more customization : it is the purpose of Google Container Engine, which offers more functions. Google Container Engine is based on an opensource technology (K8s or Kubernetes) that can be installed anywhere.
+AppEngine provides also the option to go for more customization : it is the purpose of Google Container Engine, which offers more functions. Google Container Engine is based on an opensource technology (K8s or Kubernetes) that can be installed anywhere.
 
 Google Container Engine could be limitating in some ways. It is based on Google Compute Engine, which provides even more flexibility.
 

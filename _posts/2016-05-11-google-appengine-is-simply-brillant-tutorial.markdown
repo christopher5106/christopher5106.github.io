@@ -109,7 +109,7 @@ In the same way, you can decide on each service on which version to serve reques
 
 # Queues
 
-AppEngine comes queues :
+AppEngine comes with queues :
 
 - pull queues, from which your code needs to dequeue tasks, by leasing them then deleting them, thanks to a [Task Queue API](https://cloud.google.com/appengine/docs/python/taskqueue/rest/). If the lease expires, the task returns back into the queue.
 

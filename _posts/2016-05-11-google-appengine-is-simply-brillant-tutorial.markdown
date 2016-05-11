@@ -28,7 +28,7 @@ Just in case you need more. Just in case you do not want to be dependant on Goog
 But do we really need more than what AppEngine provides ? What are the benefits of AppEngine ? Are you sure to know all about its functions ? Let's have a look.
 
 
-# Configuring
+# Configuring in one command line
 
 After having installed the Gcloud SDK, simply create a project in the [Google Cloud console](https://console.cloud.google.com) and configure your SDK:
 

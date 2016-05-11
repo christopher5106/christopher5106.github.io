@@ -69,7 +69,7 @@ A specified version will also be available under the `https://VERSION_ID-dot-PRO
 
 The first two parameters of the previous **app.yaml** file are necessary to be in the "custom runtime + flexible environment" case.
 
-Almost anything is possible with such a configuration file that can define whatever we need, such as the [autoscaling](https://cloud.google.com/appengine/docs/python/config/appref#scaling_elements). In the case of a simple demo, I had no need for redondancy and wanted with `min_num_instances : 1` parameter only 1 instance rather than 2 to be active during idle times (low traffic), in order to reduce the costs. It still provides the autoscaling function in case of a higher traffic :
+Such a configuration file offers so many customization that will suit your need. For example, the [autoscaling](https://cloud.google.com/appengine/docs/python/config/appref#scaling_elements). In the case of a simple demo, I had no need for redondancy and wanted with `min_num_instances : 1` parameter only 1 instance rather than 2 during idle times (low traffic), in order to reduce the costs. It still provides the autoscaling function in case of a higher traffic :
 
 ![autoscaling with one instance in iddle times]({{site.url}}/img/appengine_instances.png)
 

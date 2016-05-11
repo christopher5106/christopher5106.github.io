@@ -23,7 +23,11 @@ So with Google Cloud, as your needs evolve, you can gain in flexibility, from fu
 
   **AppEngine > Container Engine > Compute Engine or Kubernetes on-premise**
 
-Just in case you need more, not to be stuck by some technical limitations. Just in case you do not want to be dependant on Google, not to stick to AppEngine API only.
+- to begin simple
+
+- just in case you need more later on, not to be stuck by some technical limitations.
+
+- just to be sure not to be entirely dependant of Google, not to stick to AppEngine API only.
 
 But do we really need more than what AppEngine provides ? What are the benefits of AppEngine ? Are you sure to know all about its functions ? Let's have a look.
 
@@ -68,13 +72,13 @@ The first two parameters of the previous **app.yaml** file are necessary to be i
 
 # Revert to a previous version in just one clic
 
-It might be that you uploaded a unstable version of the Docker, in this case it's time to revert to the previous version :
+It might be that you uploaded a unstable version of the Docker, in this case it's time to revert to the previous version by selecting it under the *Versions section* and migrating traffic to it :
 
 ![]({{ site.url }}/img/appengine_revert.png)
 
 # A/B testing in just one clic
 
-Under the *version section*, it is so easy to set up an A/B testing between two uploaded docker versions :
+You would have never imagine how easy this could have been. Under the *Versions section*, click on the "Split Traffic" button to set up an A/B testing between two uploaded docker versions :
 
 ![]({{ site.url }}/img/appengine_abtesting.png)
 

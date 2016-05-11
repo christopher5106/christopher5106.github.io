@@ -93,11 +93,11 @@ You can divide the traffic between more than 2 different versions.
 
 # Other
 
-You can add more than one service, forward ports, ... by configuring correctly the **app.yaml**.
+Add more than one service, forward ports, ... by configuring correctly the **app.yaml**.
 
-Instead of an URL in `https://PROJECT_ID.appspot.com`, you can add your **custom DNS domains and their SSL certificates**.
+Instead of an URL in `https://PROJECT_ID.appspot.com`, add your **custom DNS domains and their SSL certificates**.
 
-AppEngine provides you a **memcache** to share keys between instances and a **blobstore** to store data objects.
+AppEngine provides a **memcache** to share keys between instances and a **blobstore** to store data objects.
 
 Lastly, AppEngine offers a **security scanner** that you can run on a daily, weekly, every-2-week or every-4-week basis, to check a list of URL against potential vunerabilities.
 

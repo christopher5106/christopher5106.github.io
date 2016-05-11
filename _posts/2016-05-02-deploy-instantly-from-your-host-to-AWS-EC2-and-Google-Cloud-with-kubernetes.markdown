@@ -7,7 +7,17 @@ categories: continous deployment
 
 You might have read my first post about [deployment with Chef technology](http://christopher5106.github.io/continous/deployment/2015/03/17/deployment-from-your-pc-to-your-cloud-best-practice.html) one year ago.
 
-1 year later, things have changed a bit, become easier, in particular with the arrival of the opensource technology **Kubernetes (K8s)** from Google, a very comprehensive framework.
+1 year later, things have changed a bit, become easier, in particular with the arrival of the opensource technology **Kubernetes (K8s)** from Google, a very comprehensive framework based on Docker technology.
+
+Before going deep into the motivations for the shift and the generalization, just keep in mind that deploying any Docker container on Google Cloud is just 2 command lines :
+
+```bash
+gcloud config set project PROJECT_ID
+gcloud preview app deploy app.yaml
+```
+
+It is a very good first step in any project. Now we'll see why this is the first step of a bigger concept that generalizes to deployment of all your apps, anywhere.
+
 
 # The needs for deployment
 

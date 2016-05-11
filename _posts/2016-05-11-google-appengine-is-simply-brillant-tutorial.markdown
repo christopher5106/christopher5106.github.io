@@ -27,9 +27,9 @@ So with Google Cloud, as your needs evolve, you can gain in flexibility, from fu
 
 - to begin simple
 
-- just in case you need more later on, not to be stuck by some technical limitations.
+- in case you need more later on, you're not stuck by some technical limitations.
 
-- just to be sure not to be entirely dependant of Google, not to stick to AppEngine API only.
+- to stay independant of Google future, not to stick to AppEngine API only.
 
 But do we really need more than what AppEngine provides ? What are the benefits of AppEngine ? Are you sure to know all about its functions ? Let's have a look.
 

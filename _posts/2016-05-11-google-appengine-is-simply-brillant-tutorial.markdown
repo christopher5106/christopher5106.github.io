@@ -90,7 +90,7 @@ You can divide the traffic between more than 2 different versions.
 
 # Other
 
-You can add more than one service, forward ports, ... by configuring correctly the **
+You can add more than one service, forward ports, ... by configuring correctly the **app.yaml**.
 
 Instead of an URL in `https://PROJECT_ID.appspot.com`, you can add your **custom DNS domains and their SSL certificates**.
 

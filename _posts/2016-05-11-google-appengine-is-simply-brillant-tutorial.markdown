@@ -11,6 +11,8 @@ AppEngine has been for a while, but since june 2014 it supports Docker technolog
 
 **... in a very "fully-managed" way.** Much further than the traditional meaning of "fully-managed service" : once you've created your Docker, you do not have to think anymore about deployment :)
 
+AppEngine is today still in *beta*, but it reminds me of Gmail which has been in *beta* for a long while also, and has the same potential as Gmail... having everybody switch to AppEngine in the near future.
+
 AppEngine provides also the option to go for more customization : it is the purpose of **Google Container Engine**, which offers more functions.
 
 If Google Container Engine could be limitating in some ways, Google Container Engine is based
@@ -88,7 +90,9 @@ Select the versions and choose how much traffic to deliver in percentage on each
 
 You can divide the traffic between more than 2 different versions.
 
-# Other services
+# Other
+
+You can add more than one service, forward ports, ... by configuring correctly the **
 
 Instead of an URL in `https://PROJECT_ID.appspot.com`, you can add your **custom DNS domains and their SSL certificates**.
 

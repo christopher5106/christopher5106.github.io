@@ -57,7 +57,7 @@ in the same directory as the Dockerfile and running :
 
 Once the deployment has finished, your app will be directly available under the URL `https://PROJECT_ID.appspot.com`.
 
-You can re-run the publish command later on to publish a newer version : you'll see the version number simply incrementing under the "default service" under *Services section* :
+You can re-run the publish command later on to publish a newer version : you'll see the version number simply incrementing under the "default service" in the *Services section* of the web console :
 
 ![AppEngine services]({{site.url}}/img/appengine_versions.png)
 

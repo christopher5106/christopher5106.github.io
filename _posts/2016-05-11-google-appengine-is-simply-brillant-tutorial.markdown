@@ -11,15 +11,21 @@ AppEngine has been for a while, but since june 2014 it supports Docker technolog
 
 **... in a very "fully-managed" way.** Much further than the traditional meaning of fully-managed : once you've created your Docker, you do not have to think anymore about deployment :)
 
-AppEngine provides also the option to go for more customization : it is the purpose of **Google Container Engine**, which offers more functions. Google Container Engine is based on an opensource technology (K8s or Kubernetes) that can be installed anywhere.
+AppEngine provides also the option to go for more customization : it is the purpose of **Google Container Engine**, which offers more functions.
 
-If Google Container Engine could be limitating in some ways, it is based on **Google Compute Engine**, which provides even more flexibility. So with Google products, as your needs evolve, you can gain in flexibility, from fully-managed to completely manually managed virtual instances, each offer based on the more customizable previous one :
+If Google Container Engine could be limitating in some ways, Google Container Engine is based
 
-  **AppEngine > Container Engine > Compute Engine**
+- on an opensource technology (K8s or **Kubernetes**) that can be installed anywhere, in particular locally or on-promise.
 
-Just in case you need more.
+- on **Google Compute Engine**, which provides even more flexibility.
 
-But do we really need more than what AppEngine provides ? What are the benefits of AppEngine ? Are you sure to know all functions ? Let's see in practice.
+So with Google products, as your needs evolve, you can gain in flexibility, from full management to complete manual setup of public or private instances, each offer based on the more customizable previous one :
+
+  **AppEngine > Container Engine > Compute Engine or Kubernetes on-promise**
+
+Just in case you need more. Just in case you do not want to be dependant on Google.
+
+But do we really need more than what AppEngine provides ? What are the benefits of AppEngine ? Are you sure to know all about its functions ? Let's have a look.
 
 
 # Configuring

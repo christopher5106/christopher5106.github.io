@@ -13,7 +13,7 @@ AppEngine has been for a while, but since june 2014 it supports Docker technolog
 
 AppEngine provides also the option to go for more customization : it is the purpose of **Google Container Engine**, which offers more functions. Google Container Engine is based on an opensource technology (K8s or Kubernetes) that can be installed anywhere.
 
-If Google Container Engine could be limitating in some ways, it is based on **Google Compute Engine**, which provides even more flexibility. So with Google products, as your needs evolve, you can gain in flexibility, from fully-managed to completely manually managed virtual instances :
+If Google Container Engine could be limitating in some ways, it is based on **Google Compute Engine**, which provides even more flexibility. So with Google products, as your needs evolve, you can gain in flexibility, from fully-managed to completely manually managed virtual instances, each offer based on the more customizable previous one :
 
   **AppEngine > Container Engine > Compute Engine**
 

@@ -97,11 +97,13 @@ You can add more than one service, forward ports, ... by configuring correctly t
 
 Instead of an URL in `https://PROJECT_ID.appspot.com`, you can add your **custom DNS domains and their SSL certificates**.
 
-AppEngine provides you a **memcache** to share keys between instances, a **blobstore** to store data objects.
+AppEngine provides you a **memcache** to share keys between instances and a **blobstore** to store data objects.
 
 Lastly, AppEngine offers a **security scanner** that you can run on a daily, weekly, every-2-week or every-4-week basis, to check a few URL against potential vunerabilities.
 
-Why not shifting ?
+![appengine security scan]({{ site.url }}/img/appengine_securityscan.png)
+
+Why not shifting to AppEngine ?
 
 
 **Well done Google!**

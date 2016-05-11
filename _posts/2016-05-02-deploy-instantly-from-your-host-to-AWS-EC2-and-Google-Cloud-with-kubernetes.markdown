@@ -9,14 +9,14 @@ You might have read my first post about [deployment with Chef technology](http:/
 
 1 year later, things have changed a bit, become easier, in particular with the arrival of the opensource technology **Kubernetes (K8s)** from Google, a very comprehensive framework based on Docker technology.
 
-Before going deep into the motivations for the shift and the generalization, just keep in mind that deploying any Docker container on Google Cloud is just 2 command lines :
+Before going deep into the motivations for the shift and the generalization, just keep in mind that deploying any Docker container on Google Cloud AppEngine is just 2 command lines :
 
 ```bash
 gcloud config set project PROJECT_ID
 gcloud preview app deploy app.yaml
 ```
 
-It is a very good first step in any project. Now we'll see why this is the first step of a bigger concept that generalizes to deployment of all your apps, anywhere.
+It is a very good first step in any project. Now we'll see why AppEngine is the first step of a bigger concept that generalizes to deployment of all your apps, anywhere.
 
 
 # The needs for deployment
@@ -263,5 +263,7 @@ kubectl autoscale deployment DEPLOYMENT_NAME --min=2 --max=10 --cpu-percent=80
 ```
 
 Kubernetes simplifies the deployment of apps in a uniform way: on any infrastructure where Kubernetes is installed, you can launch your apps the same way.
+
+Remember also the AppEngine cluster launch in 2 command lines in the introduction of this post : the difference is that AppEngine clusters are fully-managed by Google, with few options controlled via the `app.yaml` file or in the AppEngine console web interface. In many cases, AppEngine will be sufficient to cover your needs at the start of a project.
 
 Have a look at a [Spark deployment with Kubernetes for example](http://blog.kubernetes.io/2016/03/using-Spark-and-Zeppelin-to-process-Big-Data-on-Kubernetes.html) which enables to have Spark and your apps run in the same environment.

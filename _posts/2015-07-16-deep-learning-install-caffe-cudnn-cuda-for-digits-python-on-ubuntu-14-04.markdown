@@ -15,6 +15,8 @@ The same AMI with OpenCV 3 : **ami-e3169890**.
 You can download my public Docker image as well :
 
     docker pull christopher5106/caffe:stn
+    # with OpenCV 3:
+    docker pull christopher5106/caffe:stn3
 
 
 # Install Cuda and Cudnn

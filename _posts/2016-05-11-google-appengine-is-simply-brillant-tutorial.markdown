@@ -85,7 +85,7 @@ You would have never imagine how easy this could have been. Under the *Versions 
 
 ![]({{ site.url }}/img/appengine_abtesting.png)
 
-Select the versions and choose how much traffic to deliver in percentage on each version :
+Select the versions and how much traffic to deliver in percentage on each version :
 
 ![]({{ site.url }}/img/appengine_split_traffic.png)
 

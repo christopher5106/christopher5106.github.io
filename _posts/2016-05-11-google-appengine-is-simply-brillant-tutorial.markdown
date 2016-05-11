@@ -99,11 +99,11 @@ Instead of an URL in `https://PROJECT_ID.appspot.com`, you can add your **custom
 
 AppEngine provides you a **memcache** to share keys between instances and a **blobstore** to store data objects.
 
-Lastly, AppEngine offers a **security scanner** that you can run on a daily, weekly, every-2-week or every-4-week basis, to check a few URL against potential vunerabilities.
+Lastly, AppEngine offers a **security scanner** that you can run on a daily, weekly, every-2-week or every-4-week basis, to check a list of URL against potential vunerabilities.
 
 ![appengine security scan]({{ site.url }}/img/appengine_securityscan.png)
 
-Why not shifting to AppEngine ?
+Why not shifting all your services to AppEngine ?
 
 
 **Well done Google!**

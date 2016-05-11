@@ -66,9 +66,12 @@ In my case, I submitted 5 times. Under *Versions section* I get the same but wit
 ![AppEngine versions]({{site.url}}/img/appengine_versions2.png)
 
 
-The first two parameters of the previous **app.yaml** file are necessary to be in the flexible environment case, but almost anything is possible with such a configuration file which defines whatever we need, such as the [autoscaling](https://cloud.google.com/appengine/docs/python/config/appref#scaling_elements). In my case of a simple demo, I had no need for redondancy and wanted to have only one instance rather than 2 to reduce my costs. It still provides me the autoscaling in case of a higher traffic :
+The first two parameters of the previous **app.yaml** file are necessary to be in the "custom runtime + flexible environment" case.
+
+Almost anything is possible with such a configuration file that can define whatever we need, such as the [autoscaling](https://cloud.google.com/appengine/docs/python/config/appref#scaling_elements). In my case of a simple demo, I had no need for redondancy and wanted during idle times (low traffic) to have only 1 instance rather than 2, in order to reduce the costs. It still provides me the autoscaling function in case of a higher traffic :
 
 ![autoscaling with one instance in iddle times]({{site.url}}/img/appengine_instances.png)
+
 
 # Revert to a previous version in just one clic
 

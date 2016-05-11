@@ -25,7 +25,7 @@ So with Google Cloud, as your needs evolve, you can gain in flexibility, from fu
 
 - to begin simple
 
-- in case you need more later on, not to be stuck in some technical limitations.
+- in case you need more later on, not to be stuck in some technical limitations
 
 - to stay independant of Google future, not to stick to AppEngine API only.
 
@@ -38,7 +38,7 @@ After having installed the Gcloud SDK, simply create a project in the [Google Cl
 
     gcloud init
 
-You can re-run this command later to change your configuration (switch from one project to another one for example).
+You can re-run this command later on to change your configuration (switch from one project to another one for example).
 
 # Publishing in one command line
 
@@ -55,15 +55,15 @@ in the same directory as the Dockerfile and running :
 
     gcloud preview app deploy app.yaml
 
-Once the deployment finished, your app will be available under the URL `https://PROJECT_ID.appspot.com`.
+Once the deployment has finished, your app will be directly available under the URL `https://PROJECT_ID.appspot.com`.
 
-You can re-run this command later to publish a newer version and see the version number simply incrementing under the "default service" under *Services section* :
+You can re-run the publish command later on to publish a newer version : you'll see the version number simply incrementing under the "default service" under *Services section* :
 
 ![AppEngine services]({{site.url}}/img/appengine_versions.png)
 
 In my case, I submitted 5 times. Under *Versions section* I get the same but with the history :
 
-![AppEngine versions]({{site.url}}/img/appengine_versions.png)
+![AppEngine versions]({{site.url}}/img/appengine_versions2.png)
 
 
 The first two parameters of the previous **app.yaml** file are necessary to be in the flexible environment case, but almost anything is possible with such a configuration file which defines whatever we need, such as the [autoscaling](https://cloud.google.com/appengine/docs/python/config/appref#scaling_elements). In my case of a simple demo, I had no need for redondancy and wanted to have only one instance rather than 2 to reduce my costs. It still provides me the autoscaling in case of a higher traffic :

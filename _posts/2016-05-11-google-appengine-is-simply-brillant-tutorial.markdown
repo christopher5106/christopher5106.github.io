@@ -61,7 +61,7 @@ You can re-run the publish command later on to publish a newer version : you'll 
 
 ![AppEngine services]({{site.url}}/img/appengine_versions.png)
 
-In my case, I submitted 5 times. Under *Versions section* I get the same but with the history :
+In my case, I submitted 5 times. Under the *Versions section*, I get the list of submitted versions and on which one the requests (traffic) are served :
 
 ![AppEngine versions]({{site.url}}/img/appengine_versions2.png)
 
@@ -75,7 +75,7 @@ Almost anything is possible with such a configuration file that can define whate
 
 # Revert to a previous version in just one clic
 
-It might be that you uploaded a unstable version of the Docker, in this case it's time to revert to the previous version by selecting it under the *Versions section* and migrating traffic to it :
+It might be that you uploaded an unstable version of the Docker image, in this case it's time to revert to the previous version rapidly by selecting the previous version in the *Versions section* and migrating traffic to it :
 
 ![]({{ site.url }}/img/appengine_revert.png)
 

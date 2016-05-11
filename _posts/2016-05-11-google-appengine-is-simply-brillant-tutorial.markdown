@@ -7,15 +7,15 @@ categories: continous deployment
 
 **AppEngine** is simply tremendous and extraordinary. Its web interface is simply beautifully designed, fluid and effective.
 
-AppEngine has been existing for a while, but since june 2014 it supports Docker technology, the open container standard, under the name of ["custom runtimes in the flexible environment"](https://cloud.google.com/appengine/docs/flexible/custom-runtimes/), which offers the ability to do almost anything **... in a very "fully-managed" way.** Much further than the traditional meaning of "fully-managed service" : once you've created your Docker, you do not have to think anymore about deployment :)
+AppEngine has been existing for a while, but since june 2014 it supports Docker technology, the open container standard, under the name of ["custom runtimes in the flexible environment"](https://cloud.google.com/appengine/docs/flexible/custom-runtimes/), which offers the ability to do almost anything **... in a very "fully-managed" way.** Much further than the traditional meaning of "the fully-managed service" : once you've created your Docker, you do not have to think anymore about deployment :)
 
-AppEngine is today still in *beta*, but it reminds me of Gmail which has been in *beta* for a long while also, and AppEngine might convert everybody switch to it in the near future as did Gmail with mailboxes. While still in *beta*, AppEngine operates on the VM in the US regions, which will soon change.
+AppEngine is today still in *beta*, but it reminds me of Gmail which has been in *beta* for a long while also, and AppEngine might convert everybody to switch to it in the near future as did Gmail with mailboxes. While still in *beta*, AppEngine, available on european Google accounts, operates on VM located in the US regions for now.
 
-Google Cloud provides also the option to go for more customization : it is the purpose of **Google Container Engine**, which extends AppEngine with more functions, less management, more customization of the containers, services, instances, ...
+Google Cloud provides also the option to go for more customization : it is the purpose of **Google Container Engine**, which extends AppEngine with more functions, less management, a better customization of the containers, services, instances, ... just in case.
 
-If Google Container Engine could be limitating in some ways, Google Container Engine is based
+If Google Container Engine could be limitating in some ways also, keep in mind that Google Container Engine is based
 
-- on an opensource technology (K8s or **Kubernetes**) that can be installed anywhere, in particular on local or on-premise servers that can become the providers of the same interface as Google Container Engine.
+- on an opensource technology (K8s or **Kubernetes**) that can be installed anywhere, in particular on local or on-premise servers that can become the providers of the same interface for your Docker as the Google Container Engine does ([tutorial](http://christopher5106.github.io/continous/deployment/2016/05/02/deploy-instantly-from-your-host-to-AWS-EC2-and-Google-Cloud-with-kubernetes.html)). 
 
 - on **Google Compute Engine**, the naked VM, that can be useful in a big project for the use of very specific technologies.
 

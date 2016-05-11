@@ -65,6 +65,7 @@ In my case, I submitted 5 times. Under the *Versions section*, I get the list of
 
 ![AppEngine versions]({{site.url}}/img/appengine_versions2.png)
 
+A specified version will also be available under the `https://VERSION_ID-dot-PROJECT_ID.appspot.com` URL.
 
 The first two parameters of the previous **app.yaml** file are necessary to be in the "custom runtime + flexible environment" case.
 
@@ -91,9 +92,34 @@ Select the versions and how much traffic to deliver in percentage on each versio
 
 You can divide the traffic between more than 2 different versions.
 
-# Other
+# Deploy multiple services
 
-Add more than one service, forward ports, ... by configuring correctly the **app.yaml**.
+Another architectural pattern is the organization into **microservices**.
+
+Simply put each microservice into a separate directory, with a Dockerfile and a **app.yaml** file. Provide the name of the service in each **app.yaml** file with the attribute `service: XXX`. Publish each service with the same publishing command. The service will be give the DNS `https://XXX-dot-PROJECT_ID.appspot.com`.  
+
+As an example, the publication of a second service under the name "test"
+
+![]({{ site.url }}/img/appengine_service.png)
+
+In the same way, you can decide on each service on which version to serve requests :
+
+![]({{ site.url }}/img/appengine_service_version.png)
+
+
+# Queues
+
+AppEngine comes queues :
+
+- pull queues, from which your code needs to dequeue tasks, by leasing them then deleting them, thanks to a [Task Queue API](https://cloud.google.com/appengine/docs/python/taskqueue/rest/). If the lease expires, the task returns back into the queue.
+
+- push queues, to execute tasks (registered as "URL" on services) at a specified rate. The queue is "pushing" the tasks to the services. You'll define a strategy to deal with failure (retry, ...).
+
+- cron, to execute tasks at specified times with a certain recurrence
+
+# Other possible actions
+
+Define port forwarding other than default (Port 8080), tags, network to be attached, CPU, disk & memory capacity, scaling, health checks, multi threading, environment variables... by configuring correctly the **app.yaml**.
 
 Instead of an URL in `https://PROJECT_ID.appspot.com`, add your **custom DNS domains and their SSL certificates**.
 

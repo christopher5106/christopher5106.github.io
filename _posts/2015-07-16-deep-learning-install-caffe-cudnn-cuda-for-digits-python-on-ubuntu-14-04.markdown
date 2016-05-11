@@ -14,14 +14,15 @@ The same AMI with OpenCV 3 : **ami-e3169890**.
 
 You can download my public Docker image as well :
 
-    docker pull christopher5106/caffe:stn
-    # with OpenCV 3:
-    docker pull christopher5106/caffe:stn3
-
+````bash
+docker pull christopher5106/caffe:stn
+# with OpenCV 3:
+docker pull christopher5106/caffe:stn3
+```
 
 # Install Cuda and Cudnn
 
-{% highlight bash %}
+```bash
 # Install Cuda
 wget http://developer.download.nvidia.com/compute/cuda/repos/ubuntu1404/x86_64/cuda-repo-ubuntu1404_7.0-28_amd64.deb
 sudo dpkg -i cuda-repo-ubuntu1404_7.0-28_amd64.deb
@@ -41,12 +42,12 @@ sudo cp cudnn-6.5-linux-x64-v2/libcudnn* /usr/local/cuda-7.5/lib64/
 
 # Install Git
 sudo apt-get -y install git
-{% endhighlight %}
+```
 
 
 # Install Caffe alone
 
-{% highlight bash %}
+```bash
 git clone https://github.com/BVLC/caffe.git
 cd caffe
 sudo apt-get install libprotobuf-dev libleveldb-dev libsnappy-dev libopencv-dev libhdf5-serial-dev protobuf-compiler
@@ -56,11 +57,11 @@ sudo apt-get install libatlas-base-dev
 sudo apt-get install python-dev
 sudo apt-get install awscli
 vi Makefile.config
-{% endhighlight %}
+```
 
 with the following Makefile
 
-{% highlight makefile %}
+```makefile
 USE_CUDNN := 1
 CUDA_DIR := /usr/local/cuda
 CUDA_ARCH := -gencode arch=compute_20,code=sm_20 \
@@ -81,11 +82,11 @@ BUILD_DIR := build
 DISTRIBUTE_DIR := distribute
 TEST_GPUID := 0
 Q ?= @
-{% endhighlight %}
+```
 
 Compile the code :
 
-{% highlight bash %}
+```bash
 make all -j8
 make test
 make runtest
@@ -93,11 +94,11 @@ sudo ln /dev/null /dev/raw1394
 echo "export LD_LIBRARY_PATH=/usr/local/cuda/lib64:$LD_LIBRARY_PATH" >> ~/.bashrc
 sudo apt-get install linux-image-extra-$(uname -r)
 sudo reboot
-{% endhighlight %}
+```
 
 # Install Digits with Digits'Caffe...
 
-{% highlight bash %}
+```bash
 wget https://s3-eu-west-1.amazonaws.com/christopherbourez/public/digits-2.0.0-preview.gz
 tar xvzf digits-2.0.0-preview.gz
 rm xvzf digits-2.0.0-preview.gz
@@ -115,13 +116,13 @@ apt-get install linux-image-extra-$(uname -r)
 echo '[DIGITS]' >> digits/digits.cfg
 echo 'caffe_root = /digits/digits-2.0/caffe' >> digits/digits.cfg
 LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/lib64 ./digits-server -D
-{% endhighlight %}
+```
 
 Open Port 8080 on the instance. The server will be running at [http://0.0.0.0:8080/](http://0.0.0.0:8080/)
 
 Note : the `Makefile`
 
-{% highlight makefile %}
+```makefile
 USE_CUDNN := 1
 CUDA_DIR := /usr/local/cuda
 CUDA_ARCH := -gencode arch=compute_20,code=sm_20 \
@@ -142,7 +143,7 @@ DISTRIBUTE_DIR := distribute
 TEST_GPUID := 0
 Q ?= @
 LIBRARY_NAME_SUFFIX := -nv
-{% endhighlight %}
+```
 
 # ... or simply launch an instance provisionned by Chef
 

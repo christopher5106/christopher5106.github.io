@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Google AppEngine, simply brillant. Tutorial"
+title:  "Google AppEngine, simply brillant. Here is my tutorial"
 date:   2016-05-11 19:00:51
 categories: continous deployment
 ---

@@ -45,7 +45,7 @@ The solution against technological dependency might be
 
 Old methods use **dedicated servers**
 
-- *Data privacy with on-promise servers*
+- *Data privacy with on-premise servers*
 
 - *Performance guarantees*
 
@@ -65,7 +65,7 @@ Docker and deployment platform technologies have enabled new deployment methods,
 
 - the slow process of launching a VM occurs only once, and deploying an app means in this case managing containers, which leads to better *agility*
 
-- containers can be deployed on different provider, or even on-promise instances, this is *portability*
+- containers can be deployed on different provider, or even on-premise instances, this is *portability*
 
 ![]({{ site.url }}/img/new_deployment_methods.png)
 

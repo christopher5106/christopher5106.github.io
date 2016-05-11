@@ -9,19 +9,19 @@ categories: continous deployment
 
 AppEngine has been for a while, but since june 2014 it supports Docker technology, the open container standard, under the name of ["the flexible environment"](https://cloud.google.com/appengine/docs/flexible/custom-runtimes/), which offers the ability to do almost anything...
 
-**... in a very "fully-managed" way.** Much further than the traditional meaning of fully-managed : once you've created your Docker, you do not have to think anymore about deployment :)
+**... in a very "fully-managed" way.** Much further than the traditional meaning of "fully-managed service" : once you've created your Docker, you do not have to think anymore about deployment :)
 
 AppEngine provides also the option to go for more customization : it is the purpose of **Google Container Engine**, which offers more functions.
 
 If Google Container Engine could be limitating in some ways, Google Container Engine is based
 
-- on an opensource technology (K8s or **Kubernetes**) that can be installed anywhere, in particular locally or on-promise.
+- on an opensource technology (K8s or **Kubernetes**) that can be installed anywhere, in particular on local or on-premise servers.
 
 - on **Google Compute Engine**, which provides even more flexibility.
 
 So with Google products, as your needs evolve, you can gain in flexibility, from full management to complete manual setup of public or private instances, each offer based on the more customizable previous one :
 
-  **AppEngine > Container Engine > Compute Engine or Kubernetes on-promise**
+  **AppEngine > Container Engine > Compute Engine or Kubernetes on-premise**
 
 Just in case you need more, not to be stuck by some technical limitations. Just in case you do not want to be dependant on Google, not to stick to AppEngine API only.
 

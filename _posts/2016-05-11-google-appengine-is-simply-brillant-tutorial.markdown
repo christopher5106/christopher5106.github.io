@@ -7,9 +7,7 @@ categories: continous deployment
 
 **AppEngine** is simply tremendous and extraordinary. Its web interface is simply beautifully designed, fluid and effective.
 
-AppEngine has been existing for a while, but since june 2014 it supports Docker technology, the open container standard, under the name of ["custom runtimes in the flexible environment"](https://cloud.google.com/appengine/docs/flexible/custom-runtimes/), which offers the ability to do almost anything...
-
-**... in a very "fully-managed" way.** Much further than the traditional meaning of "fully-managed service" : once you've created your Docker, you do not have to think anymore about deployment :)
+AppEngine has been existing for a while, but since june 2014 it supports Docker technology, the open container standard, under the name of ["custom runtimes in the flexible environment"](https://cloud.google.com/appengine/docs/flexible/custom-runtimes/), which offers the ability to do almost anything **... in a very "fully-managed" way.** Much further than the traditional meaning of "fully-managed service" : once you've created your Docker, you do not have to think anymore about deployment :)
 
 AppEngine is today still in *beta*, but it reminds me of Gmail which has been in *beta* for a long while also, and AppEngine might convert everybody switch to it in the near future as did Gmail with mailboxes. While still in *beta*, AppEngine operates on the VM in the US regions, which will soon change.
 

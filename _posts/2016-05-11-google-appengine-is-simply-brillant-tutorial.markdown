@@ -13,13 +13,13 @@ AppEngine has been for a while, but since june 2014 it supports Docker technolog
 
 AppEngine is today still in *beta*, but it reminds me of Gmail which has been in *beta* for a long while also, and AppEngine might convert everybody switch to it in the near future as did Gmail with mailboxes. While still in *beta*, AppEngine operates on the VM in the US regions, which will soon change.
 
-AppEngine provides also the option to go for more customization : it is the purpose of **Google Container Engine**, which offers more functions.
+Google Cloud provides also the option to go for more customization : it is the purpose of **Google Container Engine**, which extends AppEngine with more functions, less management, more customization of the containers, services, instances, ...
 
 If Google Container Engine could be limitating in some ways, Google Container Engine is based
 
-- on an opensource technology (K8s or **Kubernetes**) that can be installed anywhere, in particular on local or on-premise servers.
+- on an opensource technology (K8s or **Kubernetes**) that can be installed anywhere, in particular on local or on-premise servers that can become the providers of the same interface as Google Container Engine.
 
-- on **Google Compute Engine**, which provides even more flexibility.
+- on **Google Compute Engine**, the naked VM, that can be useful in a big project for the use of very specific technologies.
 
 So with Google Cloud, as your needs evolve, you can gain in flexibility, from full management to complete manual setup of public or private instances, each offer based on the more customizable one :
 

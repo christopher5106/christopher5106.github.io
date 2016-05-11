@@ -19,7 +19,7 @@ If Google Container Engine could be limitating in some ways, Google Container En
 
 - on **Google Compute Engine**, which provides even more flexibility.
 
-So with Google products, as your needs evolve, you can gain in flexibility, from full management to complete manual setup of public or private instances, each offer based on the more customizable previous one :
+So with Google Cloud, as your needs evolve, you can gain in flexibility, from full management to complete manual setup of public or private instances, each offer based on the more customizable one :
 
   **AppEngine > Container Engine > Compute Engine or Kubernetes on-premise**
 

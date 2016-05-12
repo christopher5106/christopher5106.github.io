@@ -19,6 +19,8 @@ If Google Container Engine could be limitating in some ways also, keep in mind t
 
 - on **Google Compute Engine**, the naked VM, that can be useful in a big project where the install of very specific technologies can be common.
 
+For the same reasons, as an important notice, I would not advise to deploy your code for AppEngine as it is possible for NodeJS, Java, Python, Go or Ruby, because it creates too much adherence to AppEngine specification. **I would advise to always run your app code packaged in Docker containers ("custom runtimes") on AppEngine, because Docker is an open standard, that enable your app to be run anywhere else.**.
+
 So with Google Cloud, as your needs evolve, you can gain in flexibility, from full management to complete manual setup of public or private instances for the deployment of your Docker containers, each offer based on the more customizable one in the following order :
 
   **AppEngine > Container Engine > Compute Engine (naked VM) + Kubernetes (interface to containers)**

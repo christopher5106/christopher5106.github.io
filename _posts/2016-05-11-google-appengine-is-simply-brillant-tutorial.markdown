@@ -90,7 +90,7 @@ Select the versions and how much traffic to deliver in percentage on each versio
 
 ![]({{ site.url }}/img/appengine_split_traffic.png)
 
-You can divide the traffic between more than 2 different versions.
+You can divide the traffic between more than 2 different versions : A/B/C/D... testing.
 
 # Deploy multiple services
 
@@ -102,11 +102,11 @@ Another architectural pattern is the organization into **microservices** so that
 
 Simply create a microservice in a separate directory, with a Dockerfile and a **app.yaml** file. Provide the name of the service in the **app.yaml** file with the attribute `service: XXX`. Publish the service with the same publishing command than the default one. The service will be give the DNS `https://XXX-dot-PROJECT_ID.appspot.com`.  
 
-As an example, the publication of a second service under the name "test"
+As an example, the publication of a second service with the name "test" will be listed under the *Versions section* :
 
 ![]({{ site.url }}/img/appengine_service.png)
 
-In the same way, you can decide on each service on which version to serve requests :
+In the same way, you can decide on each service with which version to serve requests :
 
 ![]({{ site.url }}/img/appengine_service_version.png)
 

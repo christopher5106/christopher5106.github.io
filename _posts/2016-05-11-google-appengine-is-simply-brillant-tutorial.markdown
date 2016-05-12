@@ -115,9 +115,9 @@ In the same way, you can decide on each service with which version to serve requ
 
 AppEngine comes with queues :
 
-- pull queues, from which your code needs to dequeue tasks, by leasing them then deleting them, thanks to a [Task Queue API](https://cloud.google.com/appengine/docs/python/taskqueue/rest/). If the lease expires, the task returns back into the queue.
+- pull queues, from which your code can dequeue tasks, by leasing them then deleting them, via the [Task Queue API](https://cloud.google.com/appengine/docs/python/taskqueue/rest/). If the lease expires, the task returns back into the queue.
 
-- push queues, to execute tasks (registered as "URL" on services) at a specified rate. The queue is "pushing" the tasks to the services. You'll define a strategy to deal with failure (retry, ...).
+- push queues, to execute tasks (registered as "URL" on services) at a specified rate. The queue is "pushing" the tasks to the services. You'll define a strategy to deal with failure.
 
 - cron, to execute tasks at specified times with a certain recurrence
 

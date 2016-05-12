@@ -1,4 +1,4 @@
----
+  ---
 layout: post
 title:  "Google AppEngine, simply brilliant. Here is my tutorial"
 date:   2016-05-11 19:00:51
@@ -94,9 +94,13 @@ You can divide the traffic between more than 2 different versions.
 
 # Deploy multiple services
 
-Another architectural pattern is the organization into **microservices**.
+Another architectural pattern is the organization into **microservices** so that each service will scale independently, with different loadbalancers.
 
-Simply put each microservice into a separate directory, with a Dockerfile and a **app.yaml** file. Provide the name of the service in each **app.yaml** file with the attribute `service: XXX`. Publish each service with the same publishing command. The service will be give the DNS `https://XXX-dot-PROJECT_ID.appspot.com`.  
+![]({{ site.url }}/img/appengine_microservices.png)
+
+[https://cloud.google.com/appengine/docs/java/an-overview-of-app-engine](https://cloud.google.com/appengine/docs/java/an-overview-of-app-engine)
+
+Simply create a microservice in a separate directory, with a Dockerfile and a **app.yaml** file. Provide the name of the service in the **app.yaml** file with the attribute `service: XXX`. Publish the service with the same publishing command than the default one. The service will be give the DNS `https://XXX-dot-PROJECT_ID.appspot.com`.  
 
 As an example, the publication of a second service under the name "test"
 
@@ -117,7 +121,7 @@ AppEngine comes with queues :
 
 - cron, to execute tasks at specified times with a certain recurrence
 
-# Other possible actions
+# Other features
 
 Define port forwarding other than default (Port 8080), tags, network to be attached, CPU, disk & memory capacity, scaling, health checks, multi threading, environment variables... by configuring correctly the **app.yaml**.
 

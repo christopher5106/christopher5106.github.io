@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Google AppEngine, simply brilliant. Here is my tutorial"
+title:  "Google AppEngine, simply brilliant. Here is an overview"
 date:   2016-05-11 19:00:51
 categories: continous deployment
 ---
@@ -65,7 +65,7 @@ In my case, I submitted 5 times. Under the *Versions section*, I get the list of
 
 ![AppEngine versions]({{site.url}}/img/appengine_versions2.png)
 
-A specified version will also be available under the `https://VERSION_ID-dot-PROJECT_ID.appspot.com` URL.
+Each version will be available under an URL in the format `https://VERSION_ID-dot-PROJECT_ID.appspot.com`.
 
 The first two parameters of the previous **app.yaml** file are necessary to be in the "custom runtime + flexible environment" case.
 
@@ -82,7 +82,7 @@ It might be that you uploaded an unstable version of the Docker image, in this c
 
 # A/B testing in just one clic
 
-You would have never imagine how easy this could have been. Under the *Versions section*, click on the "Split Traffic" button to set up an A/B testing between two uploaded docker versions :
+You would have never imagined how easy this could have been. Under the *Versions section*, click on the "Split Traffic" button to set up an A/B testing between two uploaded docker versions :
 
 ![]({{ site.url }}/img/appengine_abtesting.png)
 
@@ -119,7 +119,7 @@ AppEngine comes with queues :
 
 - push queues, to execute tasks (registered as "URL" on services) at a specified rate. The queue is "pushing" the tasks to the services. You'll define a strategy to deal with failure.
 
-- cron, to execute tasks at specified times with a certain recurrence
+- cron, to execute tasks at specified times with a certain recurrence.
 
 # Other features
 

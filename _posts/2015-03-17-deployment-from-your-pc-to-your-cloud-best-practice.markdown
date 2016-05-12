@@ -7,6 +7,8 @@ categories: continous deployment
 
 Keywords : continous deployment, AWS, Virtual machines, GIT, IaaC (Infrastructure as a Code), DevOps
 
+*NB: this article is a bit outdated. Have a look at [my new one](http://christopher5106.github.io/continous/deployment/2016/05/02/deploy-instantly-from-your-host-to-AWS-EC2-and-Google-Cloud-with-kubernetes.html).*
+
 You'd like to automatize your build, on any machine (your PC, your cloud servers or any server), with a very simple and clean way to do it ?
 
 Here are my best practices I developed using deployment technologies.

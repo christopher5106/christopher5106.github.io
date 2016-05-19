@@ -65,6 +65,8 @@ cd data/negatives
 ls -l1 *.jpg > negatives.txt
 {% endhighlight %}
 
+**be careful:** in some cases, OpenCV requires an absolute path for images in the *negatives.txt* (otherwise you could get an error `Train dataset for temp stage can not be filled. Branch training terminated.`)
+
 The CSV input file to the program is a list of input images with the class and coordinates of the rectangles where objects are located in the image,
 
     /Users/christopherbourez/data/img.png,0,10,30,210,65

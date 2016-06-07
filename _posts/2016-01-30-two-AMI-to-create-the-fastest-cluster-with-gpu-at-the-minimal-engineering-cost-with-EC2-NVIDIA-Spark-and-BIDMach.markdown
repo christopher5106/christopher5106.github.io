@@ -10,7 +10,7 @@ In this tutorial, I will create four AMI for AWS G2 instances (GPU-enabled), the
 - **ami-0ef6407d** : NVIDIA driver + Cuda 7.5
 This first AMI is *Spark-ec2 compatible*, it can be launched with *spark-ec2* command.
 
-- **ami-9af54ce9** : NVIDIA driver + Cuda 7.5 + CUDNN + Caffe
+- **ami-e5c84c96** : NVIDIA driver + Cuda 7.5 + CUDNN + Caffe
 This second AMI is *Spark-ec2 compatible*, it can be launched with *spark-ec2* command.
 
 - **ami-18f5466b** (or **ami-e2f74491** for a memory efficient AMI - some unnecessary files removed): NVIDIA driver + Cuda 7.5 + BIDMach

@@ -16,7 +16,7 @@ gcloud config set project PROJECT_ID
 gcloud preview app deploy app.yaml
 ```
 
-It is a very good first step in any project. Now we'll see why AppEngine is the first step of a bigger concept that generalizes to deployment of all your apps, anywhere.
+It is a very good first step for any project. In this post, we'll see why AppEngine is the first step of a bigger concept that generalizes to deployment of all your apps, anywhere. For an overview of AppEngine have a look at [this post](http://christopher5106.github.io/continous/deployment/2016/05/11/google-appengine-is-simply-brillant-tutorial.html).
 
 
 # The needs for deployment

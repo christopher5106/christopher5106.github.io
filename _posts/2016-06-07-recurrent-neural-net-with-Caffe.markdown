@@ -26,7 +26,7 @@ caffe.set_mode_cpu()
 
 Let's create a *lstm.prototxt* defining **a LSTM layer with 15 cells**, the number of cells defining the memory capacity of the net, and an InnerProduct Layer to output a prediction :
 
-```
+```protobuf
 name: "LSTM"
 input: "data"
 input_shape { dim: 320 dim: 1 }
@@ -88,7 +88,7 @@ layer {
 
 and its solver :
 
-```
+```protobuf
 net: "lstm.prototxt"
 test_iter: 1
 test_interval: 2000000
@@ -99,8 +99,7 @@ display: 200
 max_iter: 100000
 solver_mode: CPU
 average_loss: 200
-debug_info: true
-
+#debug_info: true
 ```
 
 

@@ -90,6 +90,8 @@ and its solver :
 
 ```
 net: "lstm.prototxt"
+test_iter: 1
+test_interval: 2000000
 base_lr: 0.0001
 momentum: 0.95
 lr_policy: "fixed"
@@ -158,3 +160,5 @@ plt.plot(np.arange(niter), train_loss)
 ```
 
 ![]({{ site.url }}/img/lstm_caffe_loss.png)
+
+Let's test the result :

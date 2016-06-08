@@ -415,6 +415,11 @@ print("Accuracy: {:.3f}".format(accuracy))
 [Parameter sharing between Siamese networks](http://caffe.berkeleyvision.org/gathered/examples/siamese.html)
 
 
+### Recurrent neural nets in Caffe
+
+Have a look at my [tutorial about recurrent neural nets in Caffe](http://christopher5106.github.io/deep/learning/2016/06/07/recurrent-neural-net-with-Caffe.html).
+
+
 ### Spatial transformer layers
 
 [![]({{ site.url }}/img/spatial_transformer_networks.png)]({{ site.url }}/big/data/2016/04/18/spatial-transformer-layers-caffe-tensorflow.html)

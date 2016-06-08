@@ -185,3 +185,5 @@ plt.show()
 ```
 
 ![]({{site.url}}/img/lstm_caffe_predictions.png)
+
+**Well done!**

@@ -106,11 +106,24 @@ debug_info: true
 
 LSTM params are three matrices defining for the 4 computations of input gate, forget gate, output gate and hidden state candidate :
 
-- coefficient for input : 4 x 15 x 1
+- U, the coefficients for input : 4 x 15 x 1
 
-- coefficient for previous state : 4 x 15 x 15
+- W, the coefficients for previous state : 4 x 15 x 15
 
-- bias : 4 x 15 x 1
+- b, the bias : 4 x 15 x 1
+
+
+$$ i = \sigma( x_t U^i + s_{t-1} W^i + b^i) $$
+
+$$ f = \sigma( x_t U^f + s_{t-1} W^f + b^f) $$
+
+$$ o = \sigma( x_t U^o + s_{t-1} W^o + b^o) $$
+
+$$ g = \tanh( x_t U^g + s_{t-1} W^g + b^g ) $$
+
+$$ c_t = c_{t-1} f + g i $$
+
+$$ s_t = tanh(c_t) o $$
 
 And load the net in Python :
 

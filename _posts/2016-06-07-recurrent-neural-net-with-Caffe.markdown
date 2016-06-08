@@ -136,7 +136,7 @@ As input, of the LSTM :
 
 - data, of dimension $$T \times  N \times I$$, where I is the dimensionality of the data (1 in our example) at each step in the sequence, $$ T \times N $$ the sequence length and N the batch size. The constraint is that the data size has to be a multiple of batch size N.
 
-- clip, of dimension $$T \times  N $$. If clip=0, hidden state and memory cell will be initialiazed to zero. If not, previous value will be used.
+- clip, of dimension $$T \times  N $$. If clip=0, hidden state and memory cell will be initialiazed to zero. If not, their previous value will be used.
 
 - label, the target to predict at each step.
 
@@ -214,5 +214,68 @@ plt.show()
 ![]({{site.url}}/img/lstm_caffe_predictions.png)
 
 We have to put more memory, and stack the LSTM, to get better results!
+
+
+# Repeat layer
+
+As in [Recurrent Spatial Transformer Networks](https://github.com/skaae/recurrent-spatial-transformer-code), it can be very usefull to have a Repeat Layer to repeat the value of an image vector into the different steps of the RNN. Let's see in practice how it works, and create a *repeat.prototxt*
+
+```protobuf
+name: "Repeat"
+input: "data"
+input_shape { dim: 10 dim: 1 }
+layer {
+  name: "loss_repeat"
+  type: "Repeat"
+  bottom: "data"
+  top: "repeated"
+  propagate_down: 1
+  repeat_param {
+    num_repeats: 32
+  }
+}
+```
+
+If we set for example for num_repeats=3,
+
+$$ W = \left[
+
+ \begin{array}{ccc} 1 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 1 \\ 1 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 1 \\ 1 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 1 \end{array}
+
+\right]
+
+$$
+
+then the forward pass is a simple matrix multiplication :
+
+$$ V_{n,j} = \Sigma_{i=0}^{num\_repeats * K} U_{n,i} w_{j,i} $$
+
+$$ V = U \times W^T
+
+The backward pass
+
+$$ \delta U_{n,i} =  \Sigma_{j=0}^K  \delta V_{n,j} w_{j,i}  $$
+
+$$ \delta U = \delta V \times W $$
+
+Let's test it :
+
+```python
+import sys
+sys.path.insert(0, 'python')
+import caffe
+caffe.set_mode_cpu()
+net = caffe.Net('repeat.prototxt',caffe.TEST)
+import numpy as np
+net.blobs['data'].data[...]=np.arange(0,10,1).reshape(10,1)
+print "input", net.blobs['data'].data[5]
+out = net.forward()["repeated"]
+print "output shape", out.shape
+print "output", out
+```
+
+
+
+
 
 **Well done!**

@@ -173,7 +173,6 @@ preds = np.zeros(len(d))
 for i in range(len(d)):
     solver.test_nets[0].blobs['clip'].data[0] = i > 0
     preds[i] =  solver.test_nets[0].forward()['ip1'][0][0]
-    print preds[i]
 ```
 
 and plot :

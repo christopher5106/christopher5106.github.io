@@ -250,7 +250,7 @@ then the forward pass is a simple matrix multiplication :
 
 $$ V_{n,j} = \Sigma_{i=0}^{num\_repeats * K} U_{n,i} w_{j,i} $$
 
-$$ V = U \times W^T
+$$ V = U \times W^T $$
 
 The backward pass
 

@@ -9,7 +9,7 @@ It is so easy to train a recurrent network with Caffe.
 
 # Install
 
-Let's compile [Caffe with LSTM layers](https://github.com/junhyukoh/caffe-lstm), which are a kind of recurrent neural nets, with good memory capacity.
+Let's compile [Caffe with LSTM layers](https://github.com/christopher5106/last_caffe_with_stn), which are a kind of recurrent neural nets, with good memory capacity.
 
 For compilation help, have a look at my tutorials on [Mac OS](http://christopher5106.github.io/big/data/2015/07/16/deep-learning-install-caffe-cudnn-cuda-for-digits-python-on-mac-osx.html) or [Linux Ubuntu](http://christopher5106.github.io/big/data/2015/07/16/deep-learning-install-caffe-cudnn-cuda-for-digits-python-on-ubuntu-14-04.html).
 

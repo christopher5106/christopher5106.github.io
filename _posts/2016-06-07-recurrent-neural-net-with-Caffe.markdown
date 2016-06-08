@@ -186,6 +186,6 @@ plt.show()
 
 ![]({{site.url}}/img/lstm_caffe_predictions.png)
 
-We have to put more memory to get better results!
+We have to put more memory, and stack the LSTM, to get better results!
 
 **Well done!**

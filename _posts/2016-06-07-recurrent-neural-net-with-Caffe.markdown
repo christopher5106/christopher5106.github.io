@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Recurrent neural net with Caffe"
+title:  "Recurrent neural nets with Caffe"
 date:   2016-06-07 19:00:51
 categories: deep learning
 ---
@@ -162,3 +162,26 @@ plt.plot(np.arange(niter), train_loss)
 ![]({{ site.url }}/img/lstm_caffe_loss.png)
 
 Let's test the result :
+
+
+```python
+solver.test_nets[0].blobs['data'].reshape(2,1)
+solver.test_nets[0].blobs['clip'].reshape(2,1)
+solver.test_nets[0].reshape()
+solver.test_nets[0].blobs['clip'].data[...] = 1
+preds = np.zeros(len(d))
+for i in range(len(d)):
+    solver.test_nets[0].blobs['clip'].data[0] = i > 0
+    preds[i] =  solver.test_nets[0].forward()['ip1'][0][0]
+    print preds[i]
+```
+
+and plot :
+
+```python
+plt.plot(np.arange(len(d)), preds)
+plt.plot(np.arange(len(d)), d)
+plt.show()
+```
+
+![]({{site.url}}/img/lstm_caffe_predictions.png)

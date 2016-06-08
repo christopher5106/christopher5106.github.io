@@ -105,9 +105,9 @@ average_loss: 200
 
 LSTM params are three matrices defining for the 4 computations of input gate, forget gate, output gate and hidden state candidate :
 
-- U, the coefficients for input : 4 x 15 x 1
+- U, the input-to-hidden weights : 4 x 15 x 1
 
-- W, the coefficients for previous state : 4 x 15 x 15
+- W, the hidden-to-hidden weights : 4 x 15 x 15
 
 - b, the bias : 4 x 15 x 1
 
@@ -123,6 +123,22 @@ $$ g = \tanh( x_t U^g + s_{t-1} W^g + b^g ) $$
 $$ c_t = c_{t-1} \circ f + g \circ i $$
 
 $$ s_t = \tanh(c_t) \circ o $$
+
+The LSTM layer contains blobs of data :
+
+- a memory cell of size H, previous c_0 and next c_T
+
+- hidden activation values of size H, previous h_0 and next h_T
+
+for each step ($$ T \times N $$).
+
+As input, of the LSTM :
+
+- data, of dimension $$T \times  N \times I$$, where I is the dimensionality of the data (1 in our example) at each step in the sequence, $$ T \times N $$ the sequence length and N the batch size. The constraint is that the data size has to be a multiple of batch size N.
+
+- clip, of dimension $$T \times  N $$. If clip=0, hidden state and memory cell will be initialiazed to zero. If not, previous value will be used.
+
+- label, the target to predict at each step.
 
 And load the net in Python :
 

@@ -121,9 +121,9 @@ $$ o = \sigma( x_t U^o + s_{t-1} W^o + b^o) $$
 
 $$ g = \tanh( x_t U^g + s_{t-1} W^g + b^g ) $$
 
-$$ c_t = c_{t-1} f + g i $$
+$$ c_t = c_{t-1} \circ f + g \circ i $$
 
-$$ s_t = tanh(c_t) o $$
+$$ s_t = \tanh(c_t) \circ o $$
 
 And load the net in Python :
 

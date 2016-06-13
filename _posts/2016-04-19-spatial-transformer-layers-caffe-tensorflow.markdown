@@ -263,4 +263,29 @@ The SPN repositions the document around the same place roughly :
 
 Have a look at [Tensorflow implementation](https://github.com/tensorflow/models/tree/master/transformer).
 
+
+<a id="rotation" />
+
+# Rotation-only spatial transformer networks
+
+Instead of learning the $$ \theta $$ parameter, which we cannot constrain to a rotation, it's possible to learn an $$ \beta = \alpha / 180 \in [-1,1] $$ parameter :
+
+$$
+
+\left( \begin{array}{c} x_{in} \\ y_{in} \end{array} \right) =
+
+\left[ \begin{array}{cc} cos \ 180 \beta & - sin \ 180 \beta  \\ sin \ 180  \beta & cos \ 180 \beta  \end{array} \right]
+
+\left( \begin{array}{c} x_{out} \\ y_{out}  \end{array} \right)
+
+$$
+
+and replacing with
+
+$$ \frac{\partial I_{out}}{\partial \beta }   =  \frac{\partial bilinear}{\partial X } \times  \frac{\partial \tau_{x}}{\partial \beta}  $$
+
+where
+
+$$ \frac{\partial \tau_{x}}{\partial \beta}  = \left[ \begin{array}{cc} - 180 \ sin \ 180 \beta & - 180 \ cos \ 180 \beta  \\ 180 \ cos \ 180 \beta & - 180 \ sin \ 180 \beta  \end{array} \right] $$
+
 **Well done!**

@@ -166,16 +166,16 @@ Let's train :
 
 ```python
 niter=5000
-train_loss = zeros(niter)
+train_loss = np.zeros(niter)
 solver.net.params['lstm1'][2].data[15:30]=5
 solver.net.blobs['clip'].data[...] = 1
-iter = 0;
+iter = 0
 while iter < niter :
     seq_idx = iter % (len(d) / 320)
     solver.net.blobs['clip'].data[0] = seq_idx > 0
     solver.net.blobs['label'].data[:,0] = d[ seq_idx * 320 : (seq_idx+1) * 320 ]
-    solver.step(1);
-    train_loss[it] = solver.net.blobs['loss'].data
+    solver.step(1)
+    train_loss[iter] = solver.net.blobs['loss'].data
     iter+=1
 ```
 
@@ -218,7 +218,11 @@ We have to put more memory, and stack the LSTM, to get better results!
 
 # Repeat layer
 
-As in [Recurrent Spatial Transformer Networks](https://github.com/skaae/recurrent-spatial-transformer-code), it can be very usefull to have a Repeat Layer to repeat the value of an image vector into the different steps of the RNN. Let's see in practice how it works, and create a *repeat.prototxt*
+As in [Recurrent Spatial Transformer Networks](https://github.com/skaae/recurrent-spatial-transformer-code), it can be very usefull to have a Repeat Layer to repeat the value of an image vector into the different steps of the RNN.
+
+This kind of layer can be useful to transfer less data to the GPU, and go faster since transfer time are the bottleneck.
+
+Let's see in practice how it works, and create a *repeat.prototxt*
 
 ```protobuf
 name: "Repeat"

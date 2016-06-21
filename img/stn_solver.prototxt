@@ -1,0 +1,13 @@
+net: "stn.prototxt"
+test_iter: 100
+test_interval: 1000
+base_lr: 0.01
+momentum: 0.9
+lr_policy: "step"
+gamma: 0.1
+stepsize: 50000
+display: 100
+max_iter: 150000
+snapshot: 10000
+snapshot_prefix: "stn"
+solver_mode: GPU

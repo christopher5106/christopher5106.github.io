@@ -590,7 +590,7 @@ Remove a named range :
 
 **get cell sheet**
 
-*cell.getCellAddress().Sheet**
+*cell.getCellAddress().Sheet*
 
 **get range column and rowstart/end start/end/count**
 
@@ -647,12 +647,13 @@ Get the charts
 
 Change dataseries order :
 
-*oXChartType = oCharts.getByIndex(0).getEmbeddedObject().getFirstDiagram().getCoordinateSystems()[0].getChartTypes()[0]
+```python
+oXChartType = oCharts.getByIndex(0).getEmbeddedObject().getFirstDiagram().getCoordinateSystems()[0].getChartTypes()[0]
 oSeries = oXChartType.getDataSeries()
 oNewSeries = ()
 oNewSeries = (oSeries[4], oSeries[3], oSeries[2], oSeries[1], oSeries[0] )
-oXChartType.setDataSeries(oNewSeries)*
-
+oXChartType.setDataSeries(oNewSeries)
+```
 
 Change color and transparency :
 
@@ -672,13 +673,14 @@ while RangesEnum.hasMoreElements():
 
 **Export as a CSV in UTF-8**
 
-
+```python
 struct3 = uno.createUnoStruct('com.sun.star.beans.PropertyValue')
 struct3.Name = "FilterName"
 struct3.Value = "Text - txt - csv (StarCalc)"
 struct4 = uno.createUnoStruct('com.sun.star.beans.PropertyValue')
 struct4.Name = "FilterOptions"
 struct4.Value = "59,34,76,1,,0,false,true,true,false"
+```
 
 **Current print area**
 

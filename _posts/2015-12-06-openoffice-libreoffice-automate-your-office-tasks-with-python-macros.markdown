@@ -59,7 +59,7 @@ Even though Python 2.7 still remains very used, and Python 3 introduced differen
 {% highlight bash %}
 /Applications/LibreOffice.app/Contents/MacOS/python --version
 #Python 3.3.5
-{% endhighlight %}
+```
 
 # First play with the Python shell to get familiar
 
@@ -70,7 +70,7 @@ First launch LibreOffice Calc (Calc for spreadsheet open documents) with an open
 {% highlight bash %}
 /Applications/LibreOffice.app/Contents/MacOS/soffice --calc \
 --accept="socket,host=localhost,port=2002;urp;StarOffice.ServiceManager"
-{% endhighlight %}
+```
 
 (for the Windows command : `"C:\\Program Files (x86)\LibreOffice 5\program\soffice.exe" --calc --accept="socket,host=localhost,port=2002;urp;"` but if any trouble, have a look the [proposed workarounds](http://www.openoffice.org/udk/python/python-bridge.html)).
 
@@ -78,7 +78,7 @@ and launch the Python shell
 
 {% highlight bash %}
 /Applications/LibreOffice.app/Contents/MacOS/python
-{% endhighlight %}
+```
 
 (for the Windows command : `"C:\\Program Files (x86)\LibreOffice 5\program\python.exe"`).
 
@@ -86,7 +86,7 @@ and launch the Python shell
 
 To initialize your context, type the following lines in your python shell :
 
-{% highlight python %}
+```python
 import socket  # only needed on win32-OOo3.0.0
 import uno
 
@@ -107,7 +107,7 @@ desktop = smgr.createInstanceWithContext( "com.sun.star.frame.Desktop",ctx)
 # access the current writer document
 model = desktop.getCurrentComponent()
 
-{% endhighlight %}
+```
 
 These lines are common for every documents (Text, Spreadsheet, Presentation, Drawing).
 
@@ -115,7 +115,7 @@ Now you can interact with the document.
 
 Since we launched LibreOffice with `--calc` option, let's try the spreadsheet interactions :
 
-{% highlight python %}
+```python
 # access the active sheet
 active_sheet = model.CurrentController.ActiveSheet
 
@@ -128,11 +128,11 @@ cell1.String = "Hello world"
 # other example with a value
 cell2 = active_sheet.getCellRangeByName("E6")
 cell2.Value = cell2.Value + 1
-{% endhighlight %}
+```
 
 If you open a text document and access it with a new document writer, you can try the following interactions :
 
-{% highlight python %}
+```python
 # access the document's text property
 text = model.Text
 
@@ -141,7 +141,7 @@ cursor = text.createTextCursor()
 
 # insert the text into the document
 text.insertString( cursor, "Hello World", 0 )
-{% endhighlight %}
+```
 
 Here is a schema for what we've just done : the shell communicates with the LibreOffice runtime to command actions inside the current document.
 
@@ -157,11 +157,11 @@ OpenOffice.org does not offer a way to edit Python scripts. You have to use your
 
 There are 3 places where you can put your code. The first way is to add it as a library for LibreOffice in one of the directories in the PYTHONPATH
 
-{% highlight python %}
+```python
 import sys
 for i in sys.path:
      print(i)
-{% endhighlight %}
+```
 
 which gives
 
@@ -204,7 +204,7 @@ download the [Java SE 6 version here](http://download.info.apple.com/Mac_OS_X/03
 
 Let's edit a first macro script file **myscript.py** that will print the Python version, creating a method *PythonVersion* :
 
-{% highlight python %}
+```python
 import sys
 def PythonVersion(*args):
     """Prints the Python version into the current document"""
@@ -222,7 +222,7 @@ def PythonVersion(*args):
 #and set the string
     tRange.String = "The Python version is %s.%s.%s" % sys.version_info[:3] + " and the executable path is " + sys.executable
     return None
-{% endhighlight %}
+```
 
 and copy it to the Macro directory for LibreOffice :
 
@@ -236,13 +236,13 @@ Open a new text document and run it from the menu :
 
 In case there are multiple methods, all of them will be exported, but we can also specify which one to export with the following statement at the end of the file :
 
-{% highlight python %}
+```python
 g_exportedScripts = PythonVersion,
-{% endhighlight %}
+```
 
 Its spreadsheet counterpart would be :
 
-{% highlight python %}
+```python
 import sys
 def PythonVersion(*args):
     """Prints the Python version into the current document"""
@@ -263,7 +263,7 @@ def PythonVersion(*args):
     tRange = sheet.getCellRangeByName("C5")
     tRange.String = sys.executable
     return None
-{% endhighlight %}
+```
 
 
 For distribution of code, [OXT format](http://wiki.openoffice.org/wiki/Documentation/DevGuide/Extensions/Extensions) acts as containers of code that will be installed by the Extension Manager or with the command line `/Applications/LibreOffice.app/Contents/MacOS/unopkg`.
@@ -311,7 +311,7 @@ You'll get the following list of files and subdirectories in your extracted file
 
 You can directly append your script to the file with the *zipfile library*. Let's create *include_macro.py* :
 
-{% highlight python %}
+```python
 import zipfile
 import shutil
 import os
@@ -337,7 +337,7 @@ for line in doc.open('META-INF/manifest.xml'):
 doc.writestr('META-INF/manifest.xml', ''.join(manifest))
 doc.close()
 print("File created: "+filename)
-{% endhighlight %}
+```
 
 such that to include your Python macro inside *document.ods*, just type command
 
@@ -367,7 +367,7 @@ You can download my example [here]({{ site.url }}/examples/test_compatibility.od
 
 You can also add the button programmatically :
 
-{% highlight python %}
+```python
 sheet = model.Sheets.getByIndex(0)
 
 LShape  = model.createInstance("com.sun.star.drawing.ControlShape")
@@ -389,11 +389,11 @@ LShape.setControl(oButtonModel)
 
 oDrawPage = sheet.DrawPage
 oDrawPage.add(LShape)
-{% endhighlight %}
+```
 
 and add a listener
 
-{% highlight python %}
+```python
 aEvent = uno.createUnoStruct("com.sun.star.script.ScriptEventDescriptor")
 aEvent.AddListenerParam = ""
 aEvent.EventMethod = "actionPerformed"
@@ -404,12 +404,12 @@ aEvent.ScriptType = "Script"
 oForm = oDrawPage.getForms().getByIndex(0)
 oForm.getCount()
 oForm.registerScriptEvent(0, aEvent)
-{% endhighlight %}
+```
 
 
 or
 
-{% highlight python %}
+```python
 import unohelper
 from com.sun.star.awt import XActionListener
 
@@ -422,7 +422,7 @@ class MyActionListener( unohelper.Base, XActionListener ):
 doc = model.getCurrentController()
 doc.getControl(oButtonModel)
 doc.getControl(oButtonModel).addActionListener(MyActionListener())
-{% endhighlight %}
+```
 
 <a name="onloaded" />
 
@@ -442,7 +442,7 @@ You have the choice to save the preference
 
 # Add a listener when the cell content changes
 
-{% highlight python %}
+```python
 import uno, unohelper
 from com.sun.star.util import XModifyListener
 
@@ -472,7 +472,7 @@ g_ImplementationHelper.addImplementation(
    'com.sun.star.util.XModifyListener',()
 )
 g_exportedScripts = AddMyListener,
-{% endhighlight %}
+```
 
 # Spreadsheet methods
 
@@ -543,6 +543,14 @@ You can also have a look at number formats, dates, ...
 
 *model.URL*
 
+```python
+import os
+if os.name == "nt":
+    directory = os.path.dirname(model.URL)[8:].replace("%20"," ")
+else:
+    directory = os.path.dirname(model.URL)[7:]
+```
+
 **Named Ranges**
 
 Named ranges are like "alias" or shortcuts defining ranges in the document :
@@ -551,10 +559,10 @@ Named ranges are like "alias" or shortcuts defining ranges in the document :
 
 Set a named range :
 
-{% highlight python %}
+```python
 oCellAddress = active_sheet.getCellRangeByName("C4").getCellAddress()
 model.NamedRanges.addNewByName("Test Name","C4",oCellAddress,0)
-{% endhighlight %}
+```
 
 Get named range :
 
@@ -631,18 +639,54 @@ Remove a named range :
 
 *sheet.DrawPage.getByIndex(17).Visible=False*
 
+**Charts**
+
+Get the charts
+
+*oCharts = sheet.getCharts()*
+
+Change dataseries order :
+
+*oXChartType = oCharts.getByIndex(0).getEmbeddedObject().getFirstDiagram().getCoordinateSystems()[0].getChartTypes()[0]
+oSeries = oXChartType.getDataSeries()
+oNewSeries = ()
+oNewSeries = (oSeries[4], oSeries[3], oSeries[2], oSeries[1], oSeries[0] )
+oXChartType.setDataSeries(oNewSeries)*
+
+
+Change color and transparency :
+
+*oCharts.getByIndex(pi).getEmbeddedObject().getFirstDiagram().getCoordinateSystems()[0].getChartTypes()[0].DataSeries[0].Color=int("7030A0",16)*
+
+*oCharts.getByIndex(pi).getEmbeddedObject().getFirstDiagram().getCoordinateSystems()[0].getChartTypes()[0].DataSeries[0].Transparency=50*
+
+
 
 **Deal with enumerations**
 
-{% highlight python %}
+```python
 RangesEnum = active_sheet.getCellRangeByName("C4").getCellFormatRanges().createEnumeration()
 while RangesEnum.hasMoreElements():
      oRange = RangesEnum.nextElement()
-{% endhighlight %}
+```
+
+**Export as a CSV in UTF-8**
+
+
+struct3 = uno.createUnoStruct('com.sun.star.beans.PropertyValue')
+struct3.Name = "FilterName"
+struct3.Value = "Text - txt - csv (StarCalc)"
+struct4 = uno.createUnoStruct('com.sun.star.beans.PropertyValue')
+struct4.Name = "FilterOptions"
+struct4.Value = "59,34,76,1,,0,false,true,true,false"
+
+**Current print area**
+
+*model.CurrentController.ActiveSheet.PrintAreas[0]*
 
 **Save as PDF**
 
-{% highlight python %}
+```python
 import uno
 from com.sun.star.beans import PropertyValue
 
@@ -655,12 +699,12 @@ model.storeToURL('file:///tmp/test.pdf',tuple(properties))
 
 #less verbose :
 model.storeToURL('file:///tmp/test2.pdf',tuple([PropertyValue('FilterName',0,'calc_pdf_Export',0)]))
-{% endhighlight %}
+```
 
 
 Add filter data options ([available options](https://wiki.openoffice.org/wiki/API/Tutorials/PDF_export)), such a page range :
 
-{% highlight python %}
+```python
 fdata = []
 fdata1 = PropertyValue()
 fdata1.Name = "PageRange"
@@ -678,11 +722,11 @@ args.append(arg1)
 args.append(arg2)
 
 model.storeToURL('file:///tmp/test.pdf',tuple(args))
-{% endhighlight %}
+```
 
 or a selection of cells "$A$1:$B$3"
 
-{% highlight python %}
+```python
 fdata = []
 fdata1 = PropertyValue()
 fdata1.Name = "Selection"
@@ -701,21 +745,21 @@ args.append(arg1)
 args.append(arg2)
 
 model.storeToURL('file:///tmp/test.pdf',tuple(args))
-{% endhighlight %}
+```
 
 
 **Determining the used area**
 
-{% highlight python %}
+```python
 cursor = sheet.createCursor()
 cursor.gotoStartOfUsedArea(False)
 cursor.gotoEndOfUsedArea(True)
 rangeaddress = cursor.getRangeAddress()
-{% endhighlight %}
+```
 
 **Create a message box**
 
-{% highlight python %}
+```python
 from com.sun.star.awt.MessageBoxType import MESSAGEBOX, INFOBOX, WARNINGBOX, ERRORBOX, QUERYBOX
 
 from com.sun.star.awt.MessageBoxButtons import BUTTONS_OK, BUTTONS_OK_CANCEL, BUTTONS_YES_NO, BUTTONS_YES_NO_CANCEL, BUTTONS_RETRY_CANCEL, BUTTONS_ABORT_IGNORE_RETRY
@@ -729,7 +773,7 @@ result = box.execute()
 if result == OK:
   print("OK")
 
-{% endhighlight %}
+```
 
 returns the value.
 
@@ -738,7 +782,7 @@ Have a look [here](https://wiki.openoffice.org/wiki/PythonDialogBox) also.
 
 **Work on selections using the dispatcher**
 
-{% highlight python %}
+```python
 # access the dispatcher
 dispatcher = smgr.createInstanceWithContext( "com.sun.star.frame.DispatchHelper", ctx)
 
@@ -810,7 +854,7 @@ struct.Name = 'URL'
 struct.Value = 'file:///Users/christopherbourez/Documents/test.ods'
 dispatcher.executeDispatch(doc, ".uno:Open", "", 0, tuple([struct]))
 
-{% endhighlight %}
+```
 
 You can have a look at other actions such as Protection, Cancel, TerminateInplaceActivation, InsertContents (with properties 'Flags','FormulaCommand','SkipEmptyCells','Transpose','AsLink','MoveMode' )
 
@@ -826,7 +870,7 @@ Let's create and open a dialog with a push button and a label such as :
 
 (example from [this thread](https://forum.openoffice.org/en/forum/viewtopic.php?f=5&t=64465))
 
-{% highlight python %}
+```python
 # create dialog
 dialogModel = smgr.createInstanceWithContext("com.sun.star.awt.UnoControlDialogModel", ctx)
 dialogModel.PositionX = 10
@@ -884,11 +928,11 @@ controlContainer.createPeer(toolkit, None)
 
 # execute it
 controlContainer.execute()
-{% endhighlight %}
+```
 
 but clicking does not execute anything. Let's close it, add listeners to increase the label counter when clicking the button, and re-open the dialog :
 
-{% highlight python %}
+```python
 import unohelper
 from com.sun.star.awt import XActionListener
 
@@ -908,14 +952,14 @@ oBox.addActionListener(MyActionListener( oLabel,labelModel.Label ))
 
 # execute again
 controlContainer.execute()
-{% endhighlight %}
+```
 
 And let's delete
 
-{% highlight python %}
+```python
 # dispose the dialog
 controlContainer.dispose()
-{% endhighlight %}
+```
 
 
 # Working with a form
@@ -929,7 +973,7 @@ and linked to data :
 ![libreoffice listbox data]({{ site.url}}/img/libreoffice_listbox_data.png)
 
 
-{% highlight python %}
+```python
 # get the sheet
 accueil_sheet = model.Sheets.getByName("Accueil")
 
@@ -950,15 +994,15 @@ ListBoxCtrl = model.getCurrentController().getControl(ListBox)
 
 # get the selected items:
 ListBoxCtrl.SelectedItems
-{% endhighlight %}
+```
 
 If the list box view is not in the current active sheet, you can access it with :
 
-{% highlight python %}
+```python
 for i in range(1, accueil_sheet.DrawPage.getCount()):
     if accueil_sheet.DrawPage.getByIndex(i).Control.Name == "ListBox":
         ListBoxCtrl = accueil_sheet.DrawPage.getByIndex(i).Control
-{% endhighlight %}
+```
 
 Please do not hesitate to do your contributions to my tutorial.
 

@@ -203,6 +203,23 @@ for i in range(9):
 
 ![play with theta on spatial transformer]({{ site.url }}/img/cat-spn-test.png)
 
+# Test on the MNIST cluttered database
+
+Let's create a folder of MNIST cluttered images :
+
+    git clone https://github.com/christopher5106/mnist-cluttered
+    cd mnist-cluttered
+    luajit download_mnist.lua
+    mkdir -p {0..9}
+    luajit save_to_file.lua
+    for i in {0..9}; do for p in /home/ubuntu/mnist-cluttered/$i/*; do echo $p $i >> mnist.txt; done ; done
+
+And train with a [stn protobuf file]({{ site.url }}/img/stn.prototxt), the [bias init]({{ site.url }}/img/bias_init.txt), and [solver file]({{ site.url }}/img/stn_solver.prototxt).
+
+    ./build/tools/caffe.bin train -solver=stn_solver.prototxt
+
+
+
 **OK, great, it works.**
 
 # Supervised learning of the affine transformation for document orientation / localization

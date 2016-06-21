@@ -166,7 +166,7 @@ Let's train :
 
 ```python
 niter=5000
-train_loss = zeros(niter)
+train_loss = np.zeros(niter)
 solver.net.params['lstm1'][2].data[15:30]=5
 solver.net.blobs['clip'].data[...] = 1
 iter = 0;
@@ -174,8 +174,8 @@ while iter < niter :
     seq_idx = iter % (len(d) / 320)
     solver.net.blobs['clip'].data[0] = seq_idx > 0
     solver.net.blobs['label'].data[:,0] = d[ seq_idx * 320 : (seq_idx+1) * 320 ]
-    solver.step(1);
-    train_loss[it] = solver.net.blobs['loss'].data
+    solver.step(1)
+    train_loss[iter] = solver.net.blobs['loss'].data
     iter+=1
 ```
 

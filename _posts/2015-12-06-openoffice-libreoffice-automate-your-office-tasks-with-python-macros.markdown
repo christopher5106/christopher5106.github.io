@@ -56,7 +56,7 @@ Python has also numerous available libraries for other purposes, due to its succ
 
 Even though Python 2.7 still remains very used, and Python 3 introduced differences, the latest version of LibreOffice comes with Python 3.3, so the use of Python 3.3 is advised for durability.
 
-{% highlight bash %}
+```bash
 /Applications/LibreOffice.app/Contents/MacOS/python --version
 #Python 3.3.5
 ```
@@ -67,7 +67,7 @@ Before creating your own macro, let's play with the Python shell and interact wi
 
 First launch LibreOffice Calc (Calc for spreadsheet open documents) with an open socket to communicate with from the shell on your Mac OS :
 
-{% highlight bash %}
+```bash
 /Applications/LibreOffice.app/Contents/MacOS/soffice --calc \
 --accept="socket,host=localhost,port=2002;urp;StarOffice.ServiceManager"
 ```
@@ -76,7 +76,7 @@ First launch LibreOffice Calc (Calc for spreadsheet open documents) with an open
 
 and launch the Python shell
 
-{% highlight bash %}
+```bash
 /Applications/LibreOffice.app/Contents/MacOS/python
 ```
 

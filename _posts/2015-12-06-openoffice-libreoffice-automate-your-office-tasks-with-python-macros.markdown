@@ -657,10 +657,11 @@ oXChartType.setDataSeries(oNewSeries)
 
 Change color and transparency :
 
-*oCharts.getByIndex(pi).getEmbeddedObject().getFirstDiagram().getCoordinateSystems()[0].getChartTypes()[0].DataSeries[0].Color=int("7030A0",16)*
+```python
+oCharts.getByIndex(pi).getEmbeddedObject().getFirstDiagram().getCoordinateSystems()[0].getChartTypes()[0].DataSeries[0].Color=int("7030A0",16)
 
-*oCharts.getByIndex(pi).getEmbeddedObject().getFirstDiagram().getCoordinateSystems()[0].getChartTypes()[0].DataSeries[0].Transparency=50*
-
+oCharts.getByIndex(pi).getEmbeddedObject().getFirstDiagram().getCoordinateSystems()[0].getChartTypes()[0].DataSeries[0].Transparency=50
+```
 
 
 **Deal with enumerations**

@@ -5,6 +5,8 @@ date:   2015-09-04 23:00:51
 categories: deep learning
 ---
 
+**UPDATE!** : my [Fast Image Annotation Tool for Caffe](https://github.com/christopher5106/FastAnnotationTool) has just been released ! Have a look !
+
 [Caffe](http://caffe.berkeleyvision.org/) is certainly one of the best frameworks for deep learning, if not the best.
 
 Let's try to put things into order, in order to get a good tutorial :).

@@ -5,6 +5,8 @@ date:   2015-12-26 08:00:51
 categories: computer vision
 ---
 
+**UPDATE!** : my [Fast Image Annotation Tool for Computer Vision](https://github.com/christopher5106/FastAnnotationTool) following these guidelines has just been released ! Have a look !
+
 # File Format
 
 This is a good question when you start a computer vision project. You are going to annotate your pictures in a format that will serve different computer vision tools for training.

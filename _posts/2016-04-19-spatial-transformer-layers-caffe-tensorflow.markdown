@@ -7,6 +7,9 @@ categories: big data
 
 ![]({{ site.url }}/img/mnist_distorted.png)
 
+**UPDATE!** : my [Fast Image Annotation Tool for Spatial Transformer supervised training](https://github.com/christopher5106/FastAnnotationTool) has just been released ! Have a look !
+
+
 # Spatial Transformer Networks
 
 Spatial Transformer Networks (SPN) is a network invented by [Max Jaderberg, Karen Simonyan, Andrew Zisserman, Koray Kavukcuoglu](http://arxiv.org/pdf/1506.02025v3.pdf) at Google DeepMind artificial intelligence lab in London.

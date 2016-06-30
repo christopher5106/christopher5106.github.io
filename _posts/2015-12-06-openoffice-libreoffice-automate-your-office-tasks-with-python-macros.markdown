@@ -546,7 +546,7 @@ You can also have a look at number formats, dates, ...
 ```python
 import os
 if os.name == "nt":
-    directory = os.path.dirname(model.URL)[8:].replace("%20"," ")
+    directory = os.path.dirname(unohelper.fileUrlToSystemPath(model.URL)) 
 else:
     directory = os.path.dirname(model.URL)[7:]
 ```

@@ -75,7 +75,7 @@ The `nn.Recurrent` takes 6 arguments :
 
 So far, we have built this part :
 
-![simple RNN]({{ site.url }}/img/rnn_idden.png)
+![simple RNN]({{ site.url }}/img/rnn_hidden.png)
 
 This module inherits from the **AbstractRecurrent** interface (abstract class).
 

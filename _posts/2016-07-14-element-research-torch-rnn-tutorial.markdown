@@ -5,7 +5,7 @@ date:   2016-07-14 17:00:51
 categories: deep learning
 ---
 
-It is quite hard to understand the `torch.rnn` package since it begins the description with abstract classes.
+It is not straightforward to understand the `torch.rnn` package since it begins the description with abstract classes.
 
 Let's begin with simple examples and put things back into order to simplify comprehension for beginners.
 

@@ -46,7 +46,7 @@ $$ h_t = \sigma(W_{hh} h_{t−1} + W_{xh} X_t) $$
 
 The $$ W_{xh} $$ is a kind of word embedding where the multiplication with the word index produces the vector representing the word in the embedding space (in this case it's a 7-dim space).
 
-This equation is implemened by the Reccurent layer :
+This equation is implemened by the `nn.Reccurent` layer :
 
 ```lua
 require 'rnn'
@@ -65,9 +65,9 @@ The `nn.Recurrent` takes 6 arguments :
 
 - 7, the size of the hidden state
 
-- `nn.LookupTable(10, 7)` giving the $ W_{xh} X_t $$
+- `nn.LookupTable(10, 7)` giving the $ W_{xh} X_t $
 
-- `nn.Linear(7, 7)` describing the $W_{hh} h_{t−1}$
+- `nn.Linear(7, 7)` describing the $ W_{hh} h_{t−1} $
 
 - `nn.Sigmoid()` if the activation function
 

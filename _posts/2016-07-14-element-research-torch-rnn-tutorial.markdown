@@ -40,7 +40,7 @@ Let's build a simple RNN like this one :
 
 with an hidden state of size 7 to predict the new word in a dictionary of 10 words.
 
-**Compute the hidden state at each time step**
+**1. Compute the hidden state at each time step**
 
 $$ h_t = \sigma(W_{hh} h_{t−1} + W_{xh} X_t) $$
 
@@ -65,15 +65,15 @@ The `nn.Recurrent` takes 6 arguments :
 
 - 7, the size of the hidden state
 
-- `nn.LookupTable(10, 7)` giving the $$ W_{xh} X_t $$
+- `nn.LookupTable(10, 7)` computing the impact of the input $$ W_{xh} X_t $$
 
-- `nn.Linear(7, 7)` describing the $$ W_{hh} h_{t−1} $$
+- `nn.Linear(7, 7)` describing the impact of the previous state $$ W_{hh} h_{t−1} $$
 
-- `nn.Sigmoid()` if the activation function
+- `nn.Sigmoid()` the non-linearity or activation function, also named *transfer function*
 
 - 8 (the `rho` parameter) is the maximum number of steps to backpropagate through time (BPPT). It can be initialiazed to 9999 or the size of the sequence.
 
-So far, we have built this part :
+So far, we have built this part of our target RNN :
 
 ![simple RNN]({{ site.url }}/img/rnn_hidden.png)
 
@@ -100,7 +100,7 @@ where
 - 1 is the input dimension
 
 
-**Compute the output at a time step**
+**2. Compute the output at a time step**
 
 Now, let's add the output to our previous net.
 
@@ -124,7 +124,7 @@ So far, we have built this part :
 
 This module does not inherit anymore from the **AbstractRecurrent** interface (abstract class).
 
-**Make it a recurrent module**
+**3. Make it a recurrent module**
 
 The previous module is not recurrent. It can still take one input at time, but without the convenient methods to train it throught time.
 
@@ -143,7 +143,7 @@ Now we have a net with the capacity to remember the last 8 steps for training :
 
 ![simple RNN]({{ site.url }}/img/rnn.png)
 
-**Apply the net to each element of a sequence step by step**
+**4. Apply the net to each element of a sequence step by step**
 
 Let's apply our recurring net to a sequence of 8 words given by an input `torch.LongTensor` and compute the error with the expected target `torch.LongTensor`.
 
@@ -156,7 +156,7 @@ for step=1,8 do
 end
 ```
 
-**Train the net step by step through the sequence**
+**5. Train the net step by step through the sequence**
 
 Let's retropropagate the error through time, going in the reverse order of the forwards:
 
@@ -173,7 +173,7 @@ and update the parameters
 rnn:updateParameters(0.1) -- learning rate
 ```
 
-**Reset the net**
+**6. Reset the net**
 
 To reset the hidden state once training or evaluation of a sequence is done :
 

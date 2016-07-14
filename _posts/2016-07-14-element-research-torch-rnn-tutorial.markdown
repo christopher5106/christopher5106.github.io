@@ -40,6 +40,8 @@ Let's build a simple RNN like this one :
 
 with an hidden state of size 7 to predict the new word in a dictionary of 10 words.
 
+THis RNN remembers the last 5 steps or words in our sequence.
+
 **1. Compute the hidden state at each time step**
 
 $$ h_t = \sigma(W_{hh} h_{t−1} + W_{xh} X_t) $$
@@ -56,7 +58,7 @@ r = nn.Recurrent(
     nn.LookupTable(10, 7),
     nn.Linear(7, 7),
     nn.Sigmoid(),
-    8
+    5
   )
 =r
 ```
@@ -71,7 +73,7 @@ The `nn.Recurrent` takes 6 arguments :
 
 - `nn.Sigmoid()` the non-linearity or activation function, also named *transfer function*
 
-- 8 (the `rho` parameter) is the maximum number of steps to backpropagate through time (BPPT). It can be initialiazed to 9999 or the size of the sequence.
+- 5 (the `rho` parameter) is the maximum number of steps to backpropagate through time (BPPT). It can be initialiazed to 9999 or the size of the sequence.
 
 So far, we have built this part of our target RNN :
 
@@ -118,7 +120,7 @@ rr = nn.Sequential()
 =rr
 ```
 
-So far, we have built this part :
+Now, we've built a complete step :
 
 ![simple RNN]({{ site.url }}/img/rnn_step.png)
 
@@ -133,24 +135,24 @@ The previous module is not recurrent. It can still take one input at time, but w
 Since we added non-recurrent modules, we have to transform the net back to a recurrent module, with the `Recursor` function :
 
 ```lua
-rnn = nn.Recursor(rr, 8)
+rnn = nn.Recursor(rr, 5)
 =rnn
 ```
 
 This will clone the non-recurrent submodules for the number of steps the net has to remember for retropropagation throught time (BPTT), each clone sharing the same parameters and gradients for the parameters.
 
-Now we have a net with the capacity to remember the last 8 steps for training :
+Now we have a net with the capacity to remember the last 5 steps for training :
 
 ![simple RNN]({{ site.url }}/img/rnn.png)
 
 **4. Apply the net to each element of a sequence step by step**
 
-Let's apply our recurring net to a sequence of 8 words given by an input `torch.LongTensor` and compute the error with the expected target `torch.LongTensor`.
+Let's apply our recurring net to a sequence of 5 words given by an input `torch.LongTensor` and compute the error with the expected target `torch.LongTensor`.
 
 ```lua
 outputs, err = {}, 0
 criterion = nn.ClassNLLCriterion()
-for step=1,8 do
+for step=1,5 do
    outputs[step] = rnn:forward(inputs[step])
    err = err + criterion:forward(outputs[step], targets[step])
 end
@@ -162,7 +164,7 @@ Let's retropropagate the error through time, going in the reverse order of the f
 
 ```lua
 gradOutputs, gradInputs = {}, {}
-for step=8,1,-1 do
+for step=5,1,-1 do
   gradOutputs[step] = criterion:backward(outputs[step], targets[step])
   gradInputs[step] = rnn:backward(inputs[step], gradOutputs[step])
 end

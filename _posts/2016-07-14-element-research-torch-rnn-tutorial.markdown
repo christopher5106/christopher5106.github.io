@@ -46,7 +46,7 @@ In this example, the RNN remembers the last 5 steps or words in our sequence. So
 
 $$ h_t = \sigma(W_{hh} h_{t−1} + W_{xh} X_t) $$
 
-The $$ W_{xh} $$ is a kind of word embedding where the multiplication with the word index produces the vector representing the word in the embedding space (in this case it's a 7-dim space).
+The $$ W_{xh} $$ is a kind of word embedding where the multiplication with the word one-hot encoding selects the vector representing the word in the embedding space (in this case it's a 7-dim space). Thanks to `nn.LookupTable`, you don't need to convert your words into one-hot encoding, you just provide the word index as input.
 
 This equation is implemened by the `nn.Reccurent` layer :
 

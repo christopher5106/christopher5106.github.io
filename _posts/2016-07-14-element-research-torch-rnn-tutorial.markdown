@@ -254,4 +254,6 @@ as well as sequencers :
 - `n.SequencerCriterion`
 - `nn.RepeaterCriterion`
 
+Full documentation is available [here](https://github.com/Element-Research/rnn#rnn.NormStabilizer).
+
 **Well done!**

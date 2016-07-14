@@ -216,12 +216,13 @@ rnn:zeroGradParameters()
 
 # Prebuilt RNN and Sequencers
 
-There exists a bunch of RNN :
+There exists a bunch of prebuilt RNN :
 
 - `nn.LSTM` and `nn.FastLSTM` (a faster version)
 - `nn.GRU`
 
 as well as sequencers :
+
 - `nn.seqLSTM` (a faster version than `nn.Sequencer(nn.FastLSTM(inputsize, outputsize))`)
 - `nn.seqGRU`
 - `nn.BiSequencer` to transform a RNN into a bidirectionnal RNN

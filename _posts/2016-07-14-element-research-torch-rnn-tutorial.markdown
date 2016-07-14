@@ -120,7 +120,7 @@ rr = nn.Sequential()
 =rr
 ```
 
-Now, we've built a complete step :
+Now, our module will look like this, a complete step :
 
 ![simple RNN]({{ site.url }}/img/rnn_step.png)
 

@@ -38,13 +38,13 @@ Let's build a simple RNN like this one :
 
 ![simple RNN]({{ site.url }}/img/rnn.png)
 
-### Compute the hidden state
+**Compute the hidden state**
 
 Let's build a simple recurrent network with an hidden state of size 7 to predict the new word in a dictionary of 10 words :
 
 $$ h_t = \sigma(W_{hh} h_{t−1} + W_{xh} X_t) $$
 
-The $$ W_{xh} $$ is a kind of word embedding where the multiplication with the word index produce the vector representing the word in the high dimensionnal space (in this case it's a 7-dim space).
+The $$ W_{xh} $$ is a kind of word embedding where the multiplication with the word index produces the vector representing the word in the embedding space (in this case it's a 7-dim space).
 
 This equation is implemened by the Reccurent layer :
 
@@ -100,7 +100,7 @@ where
 - 1 is the input dimension
 
 
-### Compute the output
+**Compute the output**
 
 Now, let's add the output to our previous net.
 
@@ -124,7 +124,7 @@ So far, we have built this part :
 
 This module does not inherit anymore from the **AbstractRecurrent** interface (abstract class).
 
-### Make it a recurrent module
+**Make it a recurrent module**
 
 The previous module is not recurrent. It is still taking one input at time.
 
@@ -143,7 +143,7 @@ Now we have
 
 ![simple RNN]({{ site.url }}/img/rnn.png)
 
-### Apply the net to each element of a sequence step by step
+**Apply the net to each element of a sequence step by step**
 
 Let's apply our recurring net to a sequence of 7 words given by an input `torch.LongTensor` and compute the error with the expected target `torch.LongTensor`.
 
@@ -183,7 +183,7 @@ To reset the accumulated gradients for the parameters :
 rnn:zeroGradParameters()
 ```
 
-# Apply a net to a sequence in one step
+# Apply a net to a sequence in one step thanks to sequencer module
 
 The `Sequencer` module enables to transform a net to apply it directly to the full sequence:
 
@@ -230,3 +230,5 @@ as well as sequencers :
 - `nn.SeqReverseSequence` to reverse a sequence order
 - `n.SequencerCriterion`
 - `nn.RepeaterCriterion`
+
+**Well done!**

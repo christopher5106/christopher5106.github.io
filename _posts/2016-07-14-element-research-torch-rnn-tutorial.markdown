@@ -223,7 +223,7 @@ There exists a bunch of prebuilt RNN :
 
 as well as sequencers :
 
-- `nn.seqLSTM` (a faster version than `nn.Sequencer(nn.FastLSTM(inputsize, outputsize))`)
+- `nn.seqLSTM` (a faster version than `nn.Sequencer(nn.FastLSTM)`)
 - `nn.seqGRU`
 - `nn.BiSequencer` to transform a RNN into a bidirectionnal RNN
 - `nn.SeqBRNN` a bidirectionnal LSTM

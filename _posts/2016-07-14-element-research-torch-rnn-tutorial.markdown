@@ -38,9 +38,9 @@ Let's build a simple RNN like this one :
 
 ![simple RNN]({{ site.url }}/img/rnn.png)
 
-**Compute the hidden state**
+with an hidden state of size 7 to predict the new word in a dictionary of 10 words.
 
-Let's build a simple recurrent network with an hidden state of size 7 to predict the new word in a dictionary of 10 words :
+**Compute the hidden state at each time step**
 
 $$ h_t = \sigma(W_{hh} h_{t−1} + W_{xh} X_t) $$
 
@@ -100,7 +100,7 @@ where
 - 1 is the input dimension
 
 
-**Compute the output**
+**Compute the output at a time step**
 
 Now, let's add the output to our previous net.
 
@@ -156,6 +156,8 @@ for step=1,7 do
 end
 ```
 
+**Train the net step by step through the sequence**
+
 Let's retropropagate the error through time, going in the reverse order of the forwards:
 
 ```lua
@@ -170,6 +172,8 @@ and update the parameters
 ```lua
 rnn:updateParameters(0.1) -- learning rate
 ```
+
+**Reset the net**
 
 To reset the hidden state after a forward call (training and evaluation) :
 

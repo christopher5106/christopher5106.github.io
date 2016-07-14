@@ -126,7 +126,7 @@ Now, our module will look like this, that is a complete step :
 
 This module does not inherit anymore from the **AbstractRecurrent** interface (abstract class).
 
-**3. Make it a recurrent module**
+**3. Make it a recurrent module / RNN**
 
 The previous module is not recurrent. It can still take one input at time, but without the convenient methods to train it through time.
 
@@ -145,7 +145,9 @@ Now we have a net with the capacity to remember the last 5 steps for training :
 
 ![simple RNN]({{ site.url }}/img/rnn.png)
 
-**4. Apply the net to each element of a sequence step by step**
+This module inherits from the **AbstractRecurrent** interface (abstract class).
+
+**4. Apply each element of a sequence to the RNN step by step**
 
 Let's apply our recurring net to a sequence of 5 words given by an input `torch.LongTensor` and compute the error with the expected target `torch.LongTensor`.
 
@@ -158,7 +160,7 @@ for step=1,5 do
 end
 ```
 
-**5. Train the net step by step through the sequence**
+**5. Train the RNN step by step through the sequence**
 
 Let's retropropagate the error through time, going in the reverse order of the forwards:
 
@@ -175,7 +177,7 @@ and update the parameters
 rnn:updateParameters(0.1) -- learning rate
 ```
 
-**6. Reset the net**
+**6. Reset the RNN**
 
 To reset the hidden state once training or evaluation of a sequence is done :
 
@@ -194,7 +196,7 @@ rnn:zeroGradParameters()
 for backpropagation through a new sequence.
 
 
-# Apply a net to a sequence in one step thanks to sequencer module
+# Apply RNN to a sequence in one step thanks to sequencer module
 
 The `Sequencer` module enables to transform a net to apply it directly to the full sequence:
 
@@ -221,7 +223,7 @@ Since the Sequencer takes care of calling the `forget` method, just reset the gr
 rnn:zeroGradParameters()
 ```
 
-# Regularizing RNN
+# Regularize RNN
 
 
 To regularize the hidden states of the RNN by adding a [norm-stabilization criterion](http://arxiv.org/pdf/1511.08400v7.pdf), add :

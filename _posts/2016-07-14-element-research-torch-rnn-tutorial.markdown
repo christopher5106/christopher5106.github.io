@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Element-Research' Torch RNN Tutorial"
-date:   2016-06-07 19:00:51
+date:   2016-07-14 19:00:51
 categories: deep learning
 ---
 

@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Element-Research' Torch RNN Tutorial"
+title:  "Element-Research Torch RNN Tutorial for recurrent neural nets"
 date:   2016-07-14 17:00:51
 categories: deep learning
 ---

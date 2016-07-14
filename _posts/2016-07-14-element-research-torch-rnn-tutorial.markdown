@@ -181,11 +181,16 @@ To reset the hidden state once training or evaluation of a sequence is done :
 rnn:forget()
 ```
 
+to forward a new sequence.
+
 To reset the accumulated gradients for the parameters once training of a sequence is done :
 
 ```lua
 rnn:zeroGradParameters()
 ```
+
+for backpropagation through a new sequence.
+
 
 # Apply a net to a sequence in one step thanks to sequencer module
 

@@ -5,12 +5,14 @@ date:   2016-07-14 19:00:51
 categories: deep learning
 ---
 
-Let's put things into order :)
+It is quite hard to understand the `torch.rnn` package since it begins the description with abstract classes.
+
+Let's begin with simple examples and put things back into order to simplify comprehension for beginners.
 
 
 # Install
 
-To use Torch with NVIDIA library CUDA, I would advise you to copy the CUDA files to a new directory `/usr/local/cuda-8-cudnn-5` in which you install the last CUDNN. Then you can follow the [install guide](http://torch.ch/docs/getting-started.html).
+To use Torch with NVIDIA library CUDA, I would advise to copy the CUDA files to a new directory `/usr/local/cuda-8-cudnn-5` in which you install the last CUDNN since Torch prefers a CUDNN version above 5. Then the [install guide](http://torch.ch/docs/getting-started.html) will step up Torch.
 
 Install the `rnn` package and the [dependencies](https://github.com/Element-Research/rnn)
 
@@ -27,11 +29,11 @@ Launch a Torch shell with `luajit` command.
 
 # Build a simple RNN
 
-So we want to build a simple RNN like this :
+Let's build a simple RNN like this one :
 
 ![simple RNN]({{ site.url }}/img/rnn.png)
 
-## Compute the hidden state
+### Compute the hidden state
 
 Let's build a simple recurrent network with an hidden state of size 7 to predict the new word in a dictionary of 10 words :
 
@@ -93,7 +95,7 @@ where
 - 1 is the input dimension
 
 
-## Compute the output
+### Compute the output
 
 Now, let's add the output to our previous net.
 
@@ -117,7 +119,7 @@ So far, we have built this part :
 
 This module does not inherit anymore from the **AbstractRecurrent** interface (abstract class).
 
-## Make it a recurrent module
+### Make it a recurrent module
 
 The previous module is not recurrent. It is still taking one input at time.
 
@@ -136,7 +138,7 @@ Now we have
 
 ![simple RNN]({{ site.url }}/img/rnn.png)
 
-## Apply the net to each element of a sequence step by step
+### Apply the net to each element of a sequence step by step
 
 Let's apply our recurring net to a sequence of 7 words given by an input `torch.LongTensor` and compute the error with the expected target `torch.LongTensor`.
 
@@ -176,7 +178,7 @@ To reset the accumulated gradients for the parameters :
 rnn:zeroGradParameters()
 ```
 
-## Apply the recurrent net to a sequence in one step
+# Apply a net to a sequence in one step
 
 The `Sequencer` module enables to transform a net to apply it directly to the full sequence:
 

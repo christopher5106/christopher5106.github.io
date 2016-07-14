@@ -175,13 +175,13 @@ rnn:updateParameters(0.1) -- learning rate
 
 **Reset the net**
 
-To reset the hidden state after a forward call (training and evaluation) :
+To reset the hidden state once training or evaluation of a sequence is done :
 
 ```lua
 rnn:forget()
 ```
 
-To reset the accumulated gradients for the parameters :
+To reset the accumulated gradients for the parameters once training of a sequence is done :
 
 ```lua
 rnn:zeroGradParameters()

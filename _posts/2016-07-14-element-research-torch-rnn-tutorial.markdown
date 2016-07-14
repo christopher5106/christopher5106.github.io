@@ -12,7 +12,12 @@ Let's begin with simple examples and put things back into order to simplify comp
 
 # Install
 
-To use Torch with NVIDIA library CUDA, I would advise to copy the CUDA files to a new directory `/usr/local/cuda-8-cudnn-5` in which you install the last CUDNN since Torch prefers a CUDNN version above 5. Then the [install guide](http://torch.ch/docs/getting-started.html) will step up Torch.
+To use Torch with NVIDIA library CUDA, I would advise to copy the CUDA files to a new directory `/usr/local/cuda-8-cudnn-5` in which you install the last CUDNN since Torch prefers a CUDNN version above 5. The [install guide](http://torch.ch/docs/getting-started.html) will step up Torch. In your `~/.bashrc` :
+
+```bash
+export LD_LIBRARY_PATH=/usr/local/cuda-8.0-cudnn-5/lib64:/usr/local/cuda-8.0-cudnn-4/lib64:/usr/local/lib/
+. /home/christopher/torch/install/bin/torch-activate
+```
 
 Install the `rnn` package and the [dependencies](https://github.com/Element-Research/rnn)
 

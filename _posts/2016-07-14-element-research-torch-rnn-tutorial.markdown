@@ -108,7 +108,7 @@ Output is computed thanks to
 
 $$ o_t = W_{ho} h_t $$
 
-and converted to a probability with the Softmax function.
+and converted to a probability with the log softmax function.
 
 ```lua
 rr = nn.Sequential()
@@ -126,9 +126,9 @@ This module does not inherit anymore from the **AbstractRecurrent** interface (a
 
 **Make it a recurrent module**
 
-The previous module is not recurrent. It is still taking one input at time.
+The previous module is not recurrent. It can still take one input at time, but without the convenient methods to train it throught time.
 
-`Recurrent`, `LSTM`, `GRU`, ... are recurrent modules. They can be applied to sequences.
+`Recurrent`, `LSTM`, `GRU`, ... are recurrent modules but `Linear` and `LogSoftMax` are not.
 
 Since we added non-recurrent modules, we have to transform the net back to a recurrent module, with the `Recursor` function :
 
@@ -137,20 +137,20 @@ rnn = nn.Recursor(rr, 8)
 =rnn
 ```
 
-This will clone the non-recurrent submodules, each clone sharing the same parameters and gradients for the parameters.
+This will clone the non-recurrent submodules for the number of steps the net has to remember for retropropagation throught time (BPTT), each clone sharing the same parameters and gradients for the parameters.
 
-Now we have
+Now we have a net with the capacity to remember the last 8 steps for training :
 
 ![simple RNN]({{ site.url }}/img/rnn.png)
 
 **Apply the net to each element of a sequence step by step**
 
-Let's apply our recurring net to a sequence of 7 words given by an input `torch.LongTensor` and compute the error with the expected target `torch.LongTensor`.
+Let's apply our recurring net to a sequence of 8 words given by an input `torch.LongTensor` and compute the error with the expected target `torch.LongTensor`.
 
 ```lua
 outputs, err = {}, 0
 criterion = nn.ClassNLLCriterion()
-for step=1,7 do
+for step=1,8 do
    outputs[step] = rnn:forward(inputs[step])
    err = err + criterion:forward(outputs[step], targets[step])
 end
@@ -162,7 +162,7 @@ Let's retropropagate the error through time, going in the reverse order of the f
 
 ```lua
 gradOutputs, gradInputs = {}, {}
-for step=7,1,-1 do
+for step=8,1,-1 do
   gradOutputs[step] = criterion:backward(outputs[step], targets[step])
   gradInputs[step] = rnn:backward(inputs[step], gradOutputs[step])
 end

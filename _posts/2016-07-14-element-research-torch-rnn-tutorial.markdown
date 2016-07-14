@@ -65,9 +65,9 @@ The `nn.Recurrent` takes 6 arguments :
 
 - 7, the size of the hidden state
 
-- `nn.LookupTable(10, 7)` giving the $ W_{xh} X_t $
+- `nn.LookupTable(10, 7)` giving the $$ W_{xh} X_t $$
 
-- `nn.Linear(7, 7)` describing the $ W_{hh} h_{t−1} $
+- `nn.Linear(7, 7)` describing the $$ W_{hh} h_{t−1} $$
 
 - `nn.Sigmoid()` if the activation function
 
@@ -79,7 +79,7 @@ So far, we have built this part :
 
 This module inherits from the **AbstractRecurrent** interface (abstract class).
 
-There is a new way to create the same net, thanks to the new and more general `Recurrence` module :
+There is an **alternative** way to create the same net, thanks to a more general module, `nn.Recurrence` :
 
 ```lua
 rm = nn.Sequential()
@@ -93,7 +93,7 @@ r = nn.Recurrence(rm, 7, 1)
 ```
 where
 
-- rm has to be a module that computes $h_t$ given an input table $ X_t, h_{t-1} $
+- rm has to be a module that computes $$ h_t $$ given an input table $$ X_t, h_{t-1} $$
 
 - 7 is the hidden state size
 

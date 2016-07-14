@@ -40,7 +40,7 @@ Let's build a simple RNN like this one :
 
 with an hidden state of size 7 to predict the new word in a dictionary of 10 words.
 
-THis RNN remembers the last 5 steps or words in our sequence.
+In this example, the RNN remembers the last 5 steps or words in our sequence. So, the backpropagation through time will be limited to the last 5 steps.
 
 **1. Compute the hidden state at each time step**
 
@@ -128,7 +128,7 @@ This module does not inherit anymore from the **AbstractRecurrent** interface (a
 
 **3. Make it a recurrent module**
 
-The previous module is not recurrent. It can still take one input at time, but without the convenient methods to train it throught time.
+The previous module is not recurrent. It can still take one input at time, but without the convenient methods to train it through time.
 
 `Recurrent`, `LSTM`, `GRU`, ... are recurrent modules but `Linear` and `LogSoftMax` are not.
 
@@ -139,7 +139,7 @@ rnn = nn.Recursor(rr, 5)
 =rnn
 ```
 
-This will clone the non-recurrent submodules for the number of steps the net has to remember for retropropagation throught time (BPTT), each clone sharing the same parameters and gradients for the parameters.
+This will clone the non-recurrent submodules for the number of steps the net has to remember for retropropagation through time (BPTT), each clone sharing the same parameters and gradients for the parameters.
 
 Now we have a net with the capacity to remember the last 5 steps for training :
 

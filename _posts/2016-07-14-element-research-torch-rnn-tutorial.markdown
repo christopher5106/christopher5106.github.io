@@ -221,6 +221,15 @@ Since the Sequencer takes care of calling the `forget` method, just reset the gr
 rnn:zeroGradParameters()
 ```
 
+# Regularizing RNN
+
+
+To regularize the hidden states of the RNN by adding a [norm-stabilization criterion](http://arxiv.org/pdf/1511.08400v7.pdf), add :
+
+```lua
+rr:add(nn.NormStabilizer())
+```
+
 # Prebuilt RNN and Sequencers
 
 There exists a bunch of prebuilt RNN :

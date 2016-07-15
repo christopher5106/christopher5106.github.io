@@ -55,4 +55,4 @@ Still sorry for the victims.
 
 All these technics rely in the computed predictability of our minds... and have no link with a real physical world.
 
-Then, you can put the blame on the guns, say the guns are the root of violence (which is false because murder rates are not proportional to the number of guns in the different countries and terrorists will use a truck to drive on the people). The root of the problem is still the same : bullshit. 
+Then, you can put the blame on the guns, say the guns are the root of violence (which is false because murder rates are not proportional to the number of guns in the different countries and terrorists will use a truck to drive on the people rather than a gun). The root of the problem is still the same : bullshit. 

@@ -45,7 +45,7 @@ Once the mecanism of reciprocity has begun (return of violence), then, the commo
 
 - leave your opponents the time of their reaction (lot's of casualties) and hide some details to leave your opponents more space for further steps in reaction (example of hidden details by the [French autorities](http://lesobservateurs.ch/2016/07/14/bataclan-testicules-coupees-mises-bouche-decapitations-proteger-musulmans-gouvernement-a-censure-tortures-infligees-aux-victimes/?utm_source=twitterfeed&utm_medium=twitter))
 
-- make ad hominem judgements about your opponents : **describe yourself as "positive thinker" and all other actions around you as negative**. It is not really being positive to decribe negative people, but in fact, when you are the leader, it is possible, because of the power : it keeps your opponents at a good distance in the morality.
+- make ad hominem judgements about your opponents : **describe yourself as "positive thinker" and all other actions around you as negative**. It is not really being positive to decribe negative people, but in fact, when you are the leader, it is possible, because of the power : it keeps your opponents at a good distance in the morality spectrum.
 
 At the end, the real questions, such as access to health services, access to education, freedom of speech, equal opportunity, reduction of poverty, freedom of entreprenorship, redistribution of wealth, ... all these which are certainly the aspiration of all the people on earth, are not answered.
 

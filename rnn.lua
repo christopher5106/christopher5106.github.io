@@ -16,11 +16,12 @@ if gpu>0 then
 end
 
 nIters = 2000
-batchSize = 800
+batchSize = 80
 rho = 10
 hiddenSize = 300
 nIndex = 1
 lr = 0.0001
+nPredict=200
 
 rnn = nn.Sequential()
    :add(nn.Linear(nIndex, hiddenSize))
@@ -49,7 +50,7 @@ end
 
 offsets = {}
 for i=1,batchSize do
-   table.insert(offsets, math.ceil(math.random()*sequence:size(1)))
+   table.insert(offsets, math.ceil(math.random()* (sequence:size(1)-rho) ))
 end
 offsets = torch.LongTensor(offsets)
 if gpu>0 then
@@ -88,32 +89,36 @@ while iteration < nIters do
    iteration = iteration + 1
 end
 
---rnn:evaluate()
-start = {}
-result = {}
+
+rnn:evaluate()
+predict=torch.FloatTensor(nPredict)
+if gpu>0 then
+  predict=predict:cuda()
+end
 for step=1,rho do
-  start[step] = sequence:index(1,torch.LongTensor({step})):view(1,1)
-  table.insert(result, #result+1, start[step])
+  predict[step]= sequence[step]
 end
 
+start = {}
 iteration=0
-while iteration <20 do
+while rho + iteration < nPredict do
+  for step=1,rho do
+    start[step] = predict:index(1,torch.LongTensor({step+iteration})):view(1,1)
+  end
+
   print("start")
   pt(start)
+
   output = rnn:forward(start)
+
   print("result")
-  res = (output[rho]:float())[1][1]
-  print(res)
-  table.insert(result, #result+1, output[rho])
-  table.remove(start, 1)
-  table.insert(start, #start+1, output[rho])
+  print((output[rho]:float())[1][1] )
+  predict[iteration+rho+1] = (output[rho]:float())[1][1]
+
   iteration = iteration + 1
 end
 
-pt(result)
-
 print("result")
-result = nn.JoinTable(1):forward(result):float()
-print(result)
+print(predict)
 
-gnuplot.plot({'f(x)',result,'+-'})
+gnuplot.plot({'f(x)',predict,'+-'})

@@ -84,6 +84,21 @@ TEST_GPUID := 0
 Q ?= @
 ```
 
+Note that in the last version of Caffe, you need
+
+```bash
+cd /usr/lib/x86_64-linux-gnu
+sudo ln -s libhdf5_serial.so.8.0.2 libhdf5.so
+sudo ln -s libhdf5_serial_hl.so.8.0.2 libhdf5_hl.so
+```
+
+and add in the Makefile.config
+
+```makefile
+INCLUDE_DIRS := $(PYTHON_INCLUDE) /usr/local/include /usr/include/hdf5/serial/ and
+LIBRARY_DIRS := $(PYTHON_LIB) /usr/local/lib /usr/lib /usr/lib/x86_64-linux-gnu/hdf5/serial/
+```
+
 Compile the code :
 
 ```bash

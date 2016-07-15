@@ -50,3 +50,5 @@ Once the mecanism of reciprocity has begun (return of violence), then, the commo
 At the end, the real questions, such as access to health services, access to education, freedom of speech, equal opportunity, reduction of poverty, freedom of entreprenorship, redistribution of wealth, ... all these which are certainly the aspiration of all the people on earth, are not answered.
 
 **Terrorism remains. And terrorism is great for our leaders, because no real action can be taken against terrorism, anybody can be a terrorist... and "no action" is also the objective of the managers of our countries and big corporations : doing nothing, and keeping the power... until we understand we have to get rid of them.**
+
+Still sorry for the victims.

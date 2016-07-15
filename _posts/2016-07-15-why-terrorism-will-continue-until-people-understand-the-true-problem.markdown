@@ -21,7 +21,7 @@ So, how come we arrived in such a situation ?
 
 The situation has been the result of heavy use of predicting capabilities. For example, it is not a surprise that the winner of the US presidential election, Obama, is the one who made a heavy use of data science to understand the reaction of people and cleverly counter their intent... in order to be elected.
 
-But in reality, that simply means that the president has not a real political program, and his success relies in its capacity to manipulate the people. So, in a certain sense, it is what we usually name as **bullshit**. Bullshit is the sense of their real program.
+But in reality, that simply means that the president has not a real political program, and his success relies in its capacity to manipulate the people. So, in a certain sense, it is what we usually name as **bullshit**. Bullshit is the sense of their real program. And bullshit means : **a loss of link with reality**.
 
 So, mediocrity has become the true skill of the managers of our countries and big corporations. No other skill. No skill in technical analysis (that would be difficult and not necessary, left to experts). But no skill in management, because I truly believe that management is still a positive skill, **management is how we help other people succeed**. No skill in communication. But skills in politics and pyschological manipulation.
 

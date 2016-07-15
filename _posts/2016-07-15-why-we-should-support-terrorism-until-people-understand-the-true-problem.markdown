@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Why the managers of our companies and countries are responsible for terrorism"
+title:  "Why the managers of our big corporations and countries are responsible for terrorism"
 date:   2016-07-15 00:00:51
 categories: management
 ---

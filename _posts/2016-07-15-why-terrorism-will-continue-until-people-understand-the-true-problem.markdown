@@ -7,7 +7,7 @@ categories: management
 
 It is my first article about management. I've been working for one year in a big corporation and I think it's now time to describe the tools that are being used by the managers of our big corporations and countries. I know some of you will say something about this opinion, but this still does not prevent me from writing it and giving it to my 130 000 monthly readers.
 
-Terrorism is becoming a very common thing. For people like me, my friends, we still see an opportunity.
+Terrorism is becoming a very common thing. For people like me, my friends, we still see an opportunity that people will discover the real reason behind this new phenomenon.
 
 The world has changed. Some people say it is sick. Some people say it has cancer. But it is not being ill when we know the reason and we just have to change : for example if you drink 1 liter of water per hour, and you know it's going to be too much, but you still continue to drink 1 liter of water per hour, then, even if water is good for your health, at that rate you will certainly create your sickness, but it is not a true disease, it is a disease you created.
 

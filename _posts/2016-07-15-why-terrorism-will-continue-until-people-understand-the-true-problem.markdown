@@ -52,3 +52,5 @@ The real questions, such as access to health services, access to education, free
 **Terrorism remains. And terrorism is great for our leaders, because no real action can be taken against terrorism, anybody can be a terrorist... and "no action" is also the objective of the managers of our countries and big corporations : doing nothing, and keeping the power... until we understand we have to get rid of them.**
 
 Still sorry for the victims.
+
+All these technics rely in the computed predictability of our minds... and have no link with a real physical world.

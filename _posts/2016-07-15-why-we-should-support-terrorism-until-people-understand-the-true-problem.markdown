@@ -5,7 +5,7 @@ date:   2016-07-15 00:00:51
 categories: management
 ---
 
-It is my first article about management. I've been working for one year in a big corporation and I think it's now time to describe the tools that are being used by the managers of our companies and countries. I know some of you will say it is not its opinion, but this still does not prevent me from writing this and give it to my 130 000 monthly readers.
+It is my first article about management. I've been working for one year in a big corporation and I think it's now time to describe the tools that are being used by the managers of our big corporations and countries. I know some of you will say it is not its opinion, but this still does not prevent me from writing this and give it to my 130 000 monthly readers.
 
 Terrorism is becoming a very common things. For people like me, my friends, we still see an opportunity.
 

@@ -31,11 +31,11 @@ Now, put you at the place of Obama, the current US president, or François Holla
 
 It is much easier than you think.
 
-Since we have a natural tendency to accept or reject things, in the natural process of our lives, then you just have to create the causes and observe the effects. A cause produces the effect. But the effect is what people see. Terrorism is one effect. And people will judge the effect, not the causes. So you're safe as a president. And the effect will put your people into a movement in favor of your power (untill the people realizes it is completely manipulated) : they will reject the terrorist, accept the power.
+Since we have a natural tendency to accept or reject things, in the natural process of our lives, then you just have to create the causes (of rejection) and observe the effects (the rejection, the conflict). A cause produces the effect. But the effect is what people see. Terrorism is one effect. And people will judge the effect, not the causes. So you're safe as a president. And the effect will put your people into a movement in your favor (untill the people realizes it is completely manipulated) : they will reject the terrorist, accept the power.
 
 So how do we build this fucking cause, if this is the root of all the story ?
 
-There is not much to do. The first reason is because everybody knows that you have absolutely no skill at all, which will make people a bit sick. This might be not sufficient. Yes, it is important to combine the no-skill-capability with
+There is not much to do. The first reason is because everybody knows that you have absolutely no skill at all, which will make most common people sick. This might be not sufficient to your point of view. Yes, you can go further and combine the no-skill-capability with much more violent technics
 
 - a total absence of work and progress, this means you never solve any real problem
 

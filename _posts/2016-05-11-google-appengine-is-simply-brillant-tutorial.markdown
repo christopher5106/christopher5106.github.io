@@ -112,9 +112,9 @@ In the same way, you can decide on each service with which version to serve requ
 
 ![]({{ site.url }}/img/appengine_service_version.png)
 
-# Stack driver monitoring
+# Stackdriver monitoring
 
-By default, AppEngine is compatible to send its metrics to [StackDriver](https://cloud.google.com/monitoring/alerts/uptime-checks) which is a great dashboard : 
+By default, AppEngine is directly integrated in [StackDriver monitoring](https://cloud.google.com/monitoring/alerts/uptime-checks) which is a great dashboard to follow your app status :
 
 ![monitoring]({{ site.url }}/img/appengine_stackdriver.png)
 

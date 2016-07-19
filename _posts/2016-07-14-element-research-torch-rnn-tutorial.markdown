@@ -45,11 +45,13 @@ In this example, the RNN remembers the last 5 steps or words in our sequence. So
 
 **1. Compute the hidden state at each time step**
 
+A recurrent net is a net that take its previous internal state and optionally an input to compute its new state :
+
 $$ h_t = \sigma(W_{hh} h_{t−1} + W_{xh} X_t) $$
 
 The $$ W_{xh} $$ is a kind of word embedding where the multiplication with the word one-hot encoding selects the vector representing the word in the embedding space (in this case it's a 7-dim space). Thanks to `nn.LookupTable`, you don't need to convert your words into one-hot encoding, you just provide the word index as input.
 
-This equation is implemened by the `nn.Reccurent` layer :
+In Torch RNN, this equation is implemened by the `nn.Reccurent` layer which output is the state :
 
 ```lua
 require 'rnn'
@@ -275,6 +277,7 @@ gnuplot.plot({'f(x)',ii,oo,'+-'})
 ![]({{ site.url }}/img/rnn_cos.png)
 
 
+In this case, I'm only interested in predicting the value at the last step, and do not need to use a sequencer for the criterion : 
 
 ```lua
 require 'rnn'

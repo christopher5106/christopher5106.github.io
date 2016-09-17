@@ -16,9 +16,9 @@ Let's remind a few concepts.
 
 # The likelihood and the log loss
 
-When we observe n features $$ x = (x_1, ... , x_n) $$ (outputs of a neural net) depending on an unknown parameter, the class or category y, the **likelihood** of the class y is a function in y
+When we observe a variable X depending on an unknown parameter, the class or category y, the **likelihood** of the class y is a function in y
 
-$$ f( y ) = P(X | y ) $$
+$$ f( y ) = P( X | y ) $$
 
 and the log-likelihood which is more convenient to work with is :
 

@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "About loss functions : multinomial logistic, cross entropy, square errors, euclidian loss, hinge loss, one versus all, squared hinge, absolute value, L1 / L2 / Frobenius norms"
+title:  "About loss functions : multinomial logistic, cross entropy, square errors, euclidian, hinge, Crammer and Singer, one versus all, squared hinge, absolute value, L1 / L2 / Frobenius norms"
 date:   2016-09-16 17:00:51
 categories: deep learning
 ---
@@ -66,7 +66,7 @@ It is a problem where we have *k* classes or categories, and only one valid for 
 
 The values are still binary but represented as a vector. If the example x is of class c, then
 
-$$ y_i = \left{   \begin{array}{c} 0 \if i \neq c \\ 1 \end{array}   $$
+$$ y_i = \left{   \begin{array}{c} 0 \ i \neq c \\ 1 \  i == c \end{array}   $$
 
 If $$ \{ p_i \} $$ is the probability of each class, then it is a multinomial distribution and
 
@@ -81,9 +81,9 @@ The error is also best described by cross-entropy :
 
 $$ - \sum_{i=0}^k y_i \ln p_i $$
 
-Cross-entropy is designed to deal with errors on probabilities. For example, ln(0.01) will be a lot stronger error signal than ln(0.1) and encourage to resolve errors. In some cases, the logarithm is bounded to avoid extreme punishments.
+Cross-entropy is designed to deal with errors on probabilities. For example, $$ \ln(0.01) $$ will be a lot stronger error signal than $$ \ln(0.1) $$ and encourage to resolve errors. In some cases, the logarithm is bounded to avoid extreme punishments.
 
-In information theory, optimizing the log loss means minimizing the description length of y. The information content of a random variable to be in the class being $$ - ln p_i $$.
+In information theory, optimizing the log loss means minimizing the description length of y. The information content of a random variable to be in the class being $$ - \ln p_i $$.
 
 Last, let's remind that the combined softmax and cross-entropy has a very simple and stable derivative.
 
@@ -125,6 +125,27 @@ The absolute value loss is the L1-norm of the error :
 $$ \sum_i |  ŷ_i - y_i | $$
 
 Minimizing the absolute value loss means predicting the (conditional) median of y. Variants can handle other quantiles. 0/1 loss for classification is a special case.
+
+
+# Hinge loss / Maximum margin
+
+Hinge loss is trying to separate the positive and negative examples $ (x,y) $, x being the input, y the target $$ \in {-1, 1} $$, the loss for a linear model is defined by
+
+$$ l = max_i (0, 1 - y w \dot x ) $$
+
+The minimization of the loss will only consider examples that infringe the margin, otherwise the gradient will be zero since the max saturates.
+
+In order to minimize the loss,
+
+- positive example will have to output a result superior to 1 :  $$ w \dot x > 1$$
+
+- negative example will have to output a result inferior to -1 : $$ w \dot x < - 1$$
+
+
+# Crammer and Singer loss
+
+
+
 
 
 # One versus All Hinge loss / Squared hinge loss

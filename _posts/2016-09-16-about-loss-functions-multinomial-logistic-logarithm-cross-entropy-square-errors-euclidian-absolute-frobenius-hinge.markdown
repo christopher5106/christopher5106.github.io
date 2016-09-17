@@ -16,7 +16,7 @@ Let's remind a few concepts.
 
 # The likelihood and the log loss
 
-When we see a variable X depending of another variable $$ \theta $$, the likelihood is the function in $$ \theta $$
+When we see a variable X depending of another variable $$ \theta $$, the **likelihood** is the function in $$ \theta $$
 
 $$ f( \theta ) = P(X | \theta ) $$
 
@@ -39,7 +39,7 @@ Binomial means 2 classes, which are usually 0 or 1.
 
 Each class has a probability $$ p $$ and $$ 1 - p $$ (sums to 1).
 
-When using a network, we try to get 0 and 1 as values, that's why we add a function that saturates as a last layer :
+When using a network, we try to get 0 and 1 as values, that's why we add a **sigmoid function or logistic function** that saturates as a last layer :
 
 ![]({{site.url}}/img/sigmoid.png)
 
@@ -50,7 +50,7 @@ Then, once the estimated probability to get 1 is $$ y_p $$, then it is easy to s
 
 $$ negloglike( y ) = - y \log y_p  - (1 - y) \log ( 1 - y_p ) $$
 
-which is also the cross-entropy
+which is also the **cross-entropy**
 
 $$ crossentropy (p , q ) = E_p [ -\log q ] = - \sum_x p(x ) \log q(x) $$
 
@@ -59,12 +59,12 @@ In information theory, if you try to identify all classes with a code of a lengt
 Last, let's remind that the combined sigmoid and cross-entropy has a very simple and stable derivative.
 
 
-# Multinomial probabilities / multi-class classification : Multinomial logistic loss / Cross Entropy loss / Logarithm loss
+# Multinomial probabilities / multi-class classification : multinomial logistic loss / cross entropy loss / log loss
 
 
 It is a problem where we have *k* classes or categories, and only one valid for each example.
 
-The values are still binary but represented as a vector. If the example x is of class c, then the target value is y with
+The target values are still binary but represented as a vector y that will be defined by the following if the example x is of class c :
 
 $$  y_i =   \begin{cases}
       0, & \text{if}\ i \neq c \\
@@ -83,7 +83,7 @@ $$ z \rightarrow \frac{\exp z_i }{ \sum_k \exp^{z_k} }  $$
 
 The error is also best described by cross-entropy :
 
-$$ - \sum_{i=0}^k y_i \ln p_i $$
+$$ l(y) = - \sum_{i=0}^k y_i \ln p_i $$
 
 Cross-entropy is designed to deal with errors on probabilities. For example, $$ \ln(0.01) $$ will be a lot stronger error signal than $$ \ln(0.1) $$ and encourage to resolve errors. In some cases, the logarithm is bounded to avoid extreme punishments.
 
@@ -104,16 +104,16 @@ $$ \frac{1}{1+\exp^{-t}} $$
 
 The cross-entropy will look like :
 
-$$ - \sum_{i=0}^k y_i \ln p_i + (1 - y_i) \ln ( 1 - p_i ) $$
+$$ l(y) = - \sum_{i=0}^k y_i \ln p_i + (1 - y_i) \ln ( 1 - p_i ) $$
 
 
 
 # Square error / Sum of squares / Euclidian loss
 
 
-This time, contrary to previous estimations that were probabilities, when predictions are scalars or metrics, we usually use the squared error which is the L2-norm of the error :
+This time, contrary to previous estimations that were probabilities, when predictions are scalars or metrics, we usually use the **square error or euclidian loss** which is the L2-norm of the error :
 
-$$ \sum_i ( ŷ_i - y_i )^2 $$
+$$ l(y) = \sum_i ( ŷ_i - y_i )^2 $$
 
 Minimising the squared error is equivalent to predicting the (conditional) mean of y.
 
@@ -126,16 +126,16 @@ A squared error is often used with a rectified linear unit.
 
 The absolute value loss is the L1-norm of the error :
 
-$$ \sum_i |  ŷ_i - y_i | $$
+$$ l(y) = \sum_i |  ŷ_i - y_i | $$
 
 Minimizing the absolute value loss means predicting the (conditional) median of y. Variants can handle other quantiles. 0/1 loss for classification is a special case.
 
 
 # Hinge loss / Maximum margin
 
-Hinge loss is trying to separate the positive and negative examples $$ (x,y) $$, x being the input, y the target $$ \in {-1, 1} $$, the loss for a linear model is defined by
+Hinge loss is trying to separate the positive and negative examples $$ (x,y) $$, x being the input, y the target $$ \in \{-1, 1 \} $$, the loss for a linear model is defined by
 
-$$ l = \max (0, 1 - y w \cdot x ) $$
+$$ l(y) = \max (0, 1 - y w \cdot x ) $$
 
 The minimization of the loss will only consider examples that infringe the margin, otherwise the gradient will be zero since the max saturates.
 
@@ -146,12 +146,12 @@ In order to minimize the loss,
 - negative example will have to output a result inferior to -1 : $$ w \cdot x < - 1$$
 
 
-# Crammer and Singer loss
+# Crammer and Singer loss / One-versus-All Hinge loss
 
 
 Crammer and Singer defined a multi-class version of the hinge loss :
 
-$$ l = \max (0, 1 + \max_{ c \neq y }  w_c \cdot x - w_y \cdot x ) $$
+$$ l(y) = \max (0, 1 + \max_{ c \neq y }  w_c \cdot x - w_y \cdot x ) $$
 
 so that minimizing the loss means to do both :
 
@@ -162,8 +162,11 @@ so that minimizing the loss means to do both :
 until for all these other classes, their predicted values $$ w_c \cdot x $$ are all below $$ w_y \cdot x -1 $$, the value for the correct class with a margin of 1.
 
 
-# One versus All Hinge loss / Squared hinge loss
+#  Squared hinge loss
 
+It is simply the square of the hinge loss :
+
+$$ l(y) = \max (0, 1 - y w \cdot x )^2 $$
 
 
 # Infogain loss

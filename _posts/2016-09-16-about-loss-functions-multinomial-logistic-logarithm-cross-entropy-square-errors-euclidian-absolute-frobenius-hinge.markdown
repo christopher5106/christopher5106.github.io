@@ -159,7 +159,29 @@ In order to minimize the loss,
 - negative example will have to output a result inferior to -1 : $$ w \cdot x < - 1$$
 
 
-# Crammer and Singer loss / One-versus-All Hinge loss
+#  Squared hinge loss
+
+It is simply the square of the hinge loss :
+
+$$ l(y) = \max (0, 1 - y w \cdot x )^2 $$
+
+
+# One-versus-All Hinge loss
+
+The multi-class version of the hinge loss
+
+$$ l(y) = \sum_c \max (0, 1 -  \mathbb{1}_{y,c} w \cdot x ) $$
+
+where
+
+$$   \mathbb{1}_{y,c} =   \begin{cases}
+      -1, & \text{if}\ y \neq c \\
+      1, & \text{otherwise}
+    \end{cases}
+$$
+
+
+# Crammer and Singer loss
 
 
 Crammer and Singer defined a multi-class version of the hinge loss :
@@ -174,12 +196,15 @@ so that minimizing the loss means to do both :
 
 until for all these other classes, their predicted values $$ w_c \cdot x $$ are all below $$ w_y \cdot x -1 $$, the value for the correct class with a margin of 1.
 
+Note that is possible to replace the 1 with a smooth $$ \Delta ( y, c) $$ value that measure the similarity :
 
-#  Squared hinge loss
+$$ l(y) = \max (0, \max_{ c \neq y } \Delta ( y, c) + w_c \cdot x - w_y \cdot x ) $$
 
-It is simply the square of the hinge loss :
 
-$$ l(y) = \max (0, 1 - y w \cdot x )^2 $$
+
+
+
+
 
 
 # L1 / L2, Frobenius / L2,1 norms

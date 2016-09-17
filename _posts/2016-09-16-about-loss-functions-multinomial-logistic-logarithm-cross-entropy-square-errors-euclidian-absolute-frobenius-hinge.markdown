@@ -18,11 +18,11 @@ Let's remind a few concepts.
 
 When we see a variable X depending of another variable $$ \theta $$, the likelihood is the function in $$ \theta $$
 
-$$ f( \theta ) = P(X \| \theta ) $$
+$$ f( \theta ) = P(X | \theta ) $$
 
 and the log-likelihood which is more convenient to work with is :
 
-$$ loglike( \theta ) = ln P(X \| \theta ) $$
+$$ loglike( \theta ) = \ln P(X | \theta ) $$
 
 The log-likelihood of statistically independant observation will simply be the sum of the log-likelihood of each observation.
 
@@ -30,7 +30,7 @@ We usually want to estimate the parameter $$ \theta $$ and that's why we try to 
 
 Last, as an *objective function or a loss*, we usually prefer to say that we "minimize" it, that's why the **negative log likelihood** is used :
 
-$$ negloglike( \theta ) = - ln P(X \| \theta ) $$
+$$ negloglike( \theta ) = - \ln P(X \| \theta ) $$
 
 
 # Binomial probabilities - log loss / logistic loss / cross-entropy loss
@@ -52,7 +52,7 @@ $$ negloglike( y ) = - y \log y_p  - (1 - y) \log ( 1 - y_p ) $$
 
 which is also the cross-entropy
 
-$$ crossentropy (p , q ) = E_p (-log q) = - \sum_x p(x ) \log q(x) $$
+$$ crossentropy (p , q ) = E_p \[ -\log q \] = - \sum_x p(x ) \log q(x) $$
 
 In information theory, if you try to identify all classes with a code of a length depending of his probability, that is $$ \log q $$, where q is your estimated probability, then the expected length in reality is given by the cross-entropy.
 
@@ -66,13 +66,11 @@ It is a problem where we have *k* classes or categories, and only one valid for 
 
 The values are still binary but represented as a vector. If the example x is of class c, then
 
-$$ y_i = 0 for i \neq c $$
-
-$$ y_c = 1 $$
+$$ y_i = \{   \begin{array}{c} 0 \for i \neq c \\ 1 \end{array}   $$
 
 If $$ \{ p_i \} $$ is the probability of each class, then it is a multinomial distribution and
 
-$$ \sum p_i = 1 $$
+$$ \sum_i p_i = 1 $$
 
 The equivalent to the sigmoid function in multi-dimensional space is the **softmax function or logistic function or normalized exponential function** to produce such a distribution from any input :
 

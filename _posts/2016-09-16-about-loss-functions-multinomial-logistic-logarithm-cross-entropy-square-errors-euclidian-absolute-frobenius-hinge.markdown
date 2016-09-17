@@ -66,13 +66,11 @@ It is a problem where we have *k* classes or categories, and only one valid for 
 
 The values are still binary but represented as a vector. If the example x is of class c, then
 
-$$     \begin{cases}
-      0, & \text{if}\ a=1 \\
-      1, & \text{otherwise}
+$$  y_i =   \begin{cases}
+      0, & \text{if}\ i \neq c \\
+      1, & \text{i == c}
     \end{cases}
 $$
-
-$$ y_i = \left{   \begin{array}{c} 0 \ i \neq c \\ 1 \  i == c \end{array}   $$
 
 If $$ \{ p_i \} $$ is the probability of each class, then it is a multinomial distribution and
 

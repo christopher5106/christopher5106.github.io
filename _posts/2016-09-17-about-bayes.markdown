@@ -47,7 +47,7 @@ $$ P(x | y ) = \prod_i p(x_i|y) $$
 
 then
 
-$$ f(y) ~ p(y)  \prod_i p(x_i | y) $$
+$$ f(y) \propto p(y)  \prod_i p(x_i | y) $$
 
 because $$ p(x) $$ is a constant if features are known.
 

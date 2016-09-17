@@ -60,3 +60,5 @@ The class prior might be easy to estimate from the training set :
 $$ p(y_c) = \frac{ \text{number of examples of the class c} }{ \text{size of the set} } $$
 
 To estimate the distribution of features for each class, assumptions are made with models.
+
+**That's it!**

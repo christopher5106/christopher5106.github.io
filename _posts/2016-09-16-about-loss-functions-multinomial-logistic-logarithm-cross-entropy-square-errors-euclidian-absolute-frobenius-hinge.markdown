@@ -64,11 +64,11 @@ Last, let's remind that the combined sigmoid and cross-entropy has a very simple
 
 It is a problem where we have *k* classes or categories, and only one valid for each example.
 
-The values are still binary but represented as a vector. If the example x is of class c, then
+The values are still binary but represented as a vector. If the example x is of class c, then the target value is y with
 
 $$  y_i =   \begin{cases}
       0, & \text{if}\ i \neq c \\
-      1, & \text{i == c}
+      1, & \text{otherwise}
     \end{cases}
 $$
 
@@ -133,17 +133,17 @@ Minimizing the absolute value loss means predicting the (conditional) median of 
 
 # Hinge loss / Maximum margin
 
-Hinge loss is trying to separate the positive and negative examples $ (x,y) $, x being the input, y the target $$ \in {-1, 1} $$, the loss for a linear model is defined by
+Hinge loss is trying to separate the positive and negative examples $$ (x,y) $$, x being the input, y the target $$ \in {-1, 1} $$, the loss for a linear model is defined by
 
-$$ l = \max (0, 1 - y w \dot x ) $$
+$$ l = \max (0, 1 - y w \cdot x ) $$
 
 The minimization of the loss will only consider examples that infringe the margin, otherwise the gradient will be zero since the max saturates.
 
 In order to minimize the loss,
 
-- positive example will have to output a result superior to 1 :  $$ w \dot x > 1$$
+- positive example will have to output a result superior to 1 :  $$ w \cdot x > 1$$
 
-- negative example will have to output a result inferior to -1 : $$ w \dot x < - 1$$
+- negative example will have to output a result inferior to -1 : $$ w \cdot x < - 1$$
 
 
 # Crammer and Singer loss
@@ -151,15 +151,15 @@ In order to minimize the loss,
 
 Crammer and Singer defined a multi-class version of the hinge loss :
 
-$$ l = \max (0, 1 + \max_{ c \neq y }  w_c \dot x - w_y \dot x ) $$
+$$ l = \max (0, 1 + \max_{ c \neq y }  w_c \cdot x - w_y \cdot x ) $$
 
-so that minimizing the loss is equivalent to
+so that minimizing the loss means to do both :
 
-- maximize the prediction $$ w_y \dot x $$ of the correct class
+- maximize the prediction $$ w_y \cdot x $$ of the correct class
 
-- minimize the predicted value $$ w_c \dot x $$ for all other classes c that have the maximal value
+- minimize the predicted value $$ w_c \cdot x $$ for all other classes c that have the maximal value
 
-- until for all these other classes, their predicted values $$ w_c \dot x $$ are all below the value for the correct class with a margin of 1 ($$ w_y \dot x -1 $$).
+until for all these other classes, their predicted values $$ w_c \cdot x $$ are all below $$ w_y \cdot x -1 $$, the value for the correct class with a margin of 1.
 
 
 # One versus All Hinge loss / Squared hinge loss

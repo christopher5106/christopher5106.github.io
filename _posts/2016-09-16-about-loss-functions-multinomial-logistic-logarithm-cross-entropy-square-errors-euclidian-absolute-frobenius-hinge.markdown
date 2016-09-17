@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "About loss functions : multinomial logistic, cross entropy, square errors, euclidian loss, hinge loss, "
+title:  "About loss functions : multinomial logistic, cross entropy, square errors, euclidian loss, hinge loss, one versus all, squared hinge, absolute value, L1 / L2 / Frobenius norms"
 date:   2016-09-16 17:00:51
 categories: deep learning
 ---
@@ -108,25 +108,32 @@ $$ - \sum_{i=0}^k y_i \ln p_i + (1 - y_i) \ln ( 1 - p_i ) $$
 
 # Square error / Sum of squares / Euclidian loss
 
-outputs and sum-squared error are for scalar values.
+
+This time, contrary to previous estimations that were probabilities, when predictions are scalars or metrics, we usually use the squared error which is the L2-norm of the error :
+
+$$ \sum_i ( ŷ_i - y_i )^2 $$
+
+Minimising the squared error is equivalent to predicting the (conditional) mean of y.
+
+Due to the gradient being flat at the extremes for a sigmoid function, we do not use a sigmoid activation with a squared error loss because convergence will be slow if some neurons saturate on the wrong side.
+
+A squared error is often used with a rectified linear unit.
 
 
-predicting the (conditional) mean of y.
+# Absolute value loss
 
+The absolute value loss is the L1-norm of the error :
 
+$$ \sum_i \|  ŷ_i - y_i \| $$
 
+Minimizing the absolute value loss means predicting the (conditional) median of y. Variants can handle other quantiles. 0/1 loss for classification is a special case.
 
-RLEU with squared error
-
-You can also use a squared error with a sigmoid unit but the convergence will be slow in case any of the neurons reach a saturation in the wrong side (due to the gradient being flat at the extremes for a sigmoid function). So, a squared error is often used with a rectified linear unit RLEU.
-
-# absolute value loss
-
- lav(y,y’)=|y-y’| means predicting the (conditional) median of y. Variants can handle other quantiles. 0/1 loss for classification is a special case.
 
 # One versus All Hinge loss / Squared hinge loss
 
-norm L1, L2
 
 
 # Infogain loss
+
+
+# L1 / L2 / Frobenius norms

@@ -39,9 +39,7 @@ Bayes theorem tells us that once we made the observation x, the probability of t
 
 # Naive bayes classifier
 
-To build a classifier out of the probability, we suppose the x is represented by n independant feature conditionaly to the class:
-
-$$ x = (x_1, ... , x_n) $$
+To build a classifier out of the probability, we suppose the x is represented by n features $$ x = (x_1, ... , x_n) $$, independant conditionaly to the class:
 
 $$ P(x | y ) = \prod_i p(x_i|y) $$
 

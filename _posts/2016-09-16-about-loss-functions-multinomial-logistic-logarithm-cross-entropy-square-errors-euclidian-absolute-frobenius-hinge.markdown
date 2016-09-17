@@ -66,7 +66,7 @@ It is a problem where we have *k* classes or categories, and only one valid for 
 
 The values are still binary but represented as a vector. If the example x is of class c, then
 
-$$ y_i = \left{   \begin{array}{c} 0 \text{for} i \neq c \\ 1 \end{array}   $$
+$$ y_i = \left{   \begin{array}{c} 0 \if i \neq c \\ 1 \end{array}   $$
 
 If $$ \{ p_i \} $$ is the probability of each class, then it is a multinomial distribution and
 

@@ -46,7 +46,7 @@ When using a network, we try to get 0 and 1 as values, that's why we add a **sig
 
 ![]({{site.url}}/img/sigmoid.png)
 
-$$ f:  x \rightarrow \frac{1}{ 1 + \exp^{-x}} $$
+$$ f:  x \rightarrow \frac{1}{ 1 + e^{-x}} $$
 
 
 Then, once the estimated probability to get 1 is $$ ŷ $$, then it is easy to see that the negative log likelihood can be written

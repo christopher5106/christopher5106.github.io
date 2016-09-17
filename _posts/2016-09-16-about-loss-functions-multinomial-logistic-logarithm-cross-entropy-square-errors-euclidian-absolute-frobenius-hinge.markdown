@@ -54,9 +54,11 @@ which is also the **cross-entropy**
 
 $$ crossentropy (p , q ) = E_p [ -\log q ] = - \sum_x p(x ) \log q(x) $$
 
-In information theory, if you try to identify all classes with a code of a length depending of his probability, that is $$ \log q $$, where q is your estimated probability, then the expected length in reality is given by the cross-entropy.
+In information theory, if you try to identify all classes with a code of a length depending of his probability, that is $$ \log q $$, where q is your estimated probability, then the expected length in reality (p being the real probability) is given by the cross-entropy.
 
-Last, let's remind that the combined sigmoid and cross-entropy has a very simple and stable derivative.
+Last, let's remind that the combined sigmoid and cross-entropy has a very simple and stable derivative
+
+$$ ŷ - y $$
 
 
 # Multinomial probabilities / multi-class classification : multinomial logistic loss / cross entropy loss / log loss
@@ -158,6 +160,7 @@ In order to minimize the loss,
 
 - negative example will have to output a result inferior to -1 : $$ w \cdot x < - 1$$
 
+The hinge loss is a convex function, easy to minimize. Although it is not differentiable, it's easy to compute its gradient localy. There exists also [a smooth version of the gradient](https://en.wikipedia.org/wiki/Hinge_loss).
 
 #  Squared hinge loss
 
@@ -216,3 +219,5 @@ $$ \| w \|_2 = \sqrt{ \sum_{i,j} w_{i,j}^2 } $$
 The L2,1 norm is used for [discriminative feature selection](https://www.aaai.org/ocs/index.php/IJCAI/IJCAI11/paper/viewFile/3136/3481)
 
 $$ \| w \|_{2,1} = \sum_i \sqrt{ \sum_j w_{i,j}^2 } $$
+
+**You're all set for choosing the right loss functions.**

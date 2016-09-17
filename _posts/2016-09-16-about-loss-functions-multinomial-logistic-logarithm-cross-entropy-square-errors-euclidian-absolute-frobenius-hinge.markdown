@@ -26,11 +26,11 @@ $$ loglike( y ) = \ln P( X | y ) $$
 
 The log-likelihood of statistically independant observation will simply be the sum of the log-likelihood of each observation.
 
-[Under the assuption of a uniform prior $$ g(y) $$, maximising the a posteriori probability is equivalent to maximising the likelihood](http://christopher5106.github.io/machine/learning/2016/09/17/about-bayes.html#under-a-uniform-prior), or to **minimizing the negative log-likelihood** :
+[Under the assuption of a uniform prior $$ g(y) $$, maximising the a posteriori probability is equivalent to maximising the likelihood](http://christopher5106.github.io/machine/learning/2016/09/17/about-bayes.html#under-a-uniform-prior). That means that the target class maximizes of the log-likelihood.
+
+As an *objective function or a loss*, we usually prefer to "minimize", so the target class will **minimize the negative log-likelihood** :
 
 $$ negloglike( y ) = - \ln P(X | y ) $$
-
-As an *objective function or a loss*, we usually prefer to "minimize" it.
 
 In the case of independant observations, it is equivalent to minimizing the negative-log-likelihood of each observation.
 

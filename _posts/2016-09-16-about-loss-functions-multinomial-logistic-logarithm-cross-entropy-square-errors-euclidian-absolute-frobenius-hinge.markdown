@@ -131,7 +131,7 @@ Minimizing the absolute value loss means predicting the (conditional) median of 
 
 Hinge loss is trying to separate the positive and negative examples $ (x,y) $, x being the input, y the target $$ \in {-1, 1} $$, the loss for a linear model is defined by
 
-$$ l = max_i (0, 1 - y w \dot x ) $$
+$$ l = max (0, 1 - y w \dot x ) $$
 
 The minimization of the loss will only consider examples that infringe the margin, otherwise the gradient will be zero since the max saturates.
 
@@ -145,7 +145,17 @@ In order to minimize the loss,
 # Crammer and Singer loss
 
 
+Crammer and Singer defined a multi-class version of the hinge loss :
 
+$$ l = max (0, 1 + max_{ c \neq y }  w_c \dot x - w_y \dot x ) $$
+
+so that minimizing the loss is equivalent to
+
+- maximize the prediction $$ w_y \dot x $$ of the correct class
+
+- minimize the predicted value $$ w_c \dot x $$ for all other classes c that have the maximal value
+
+- until for all these other classes, their predicted values $$ w_c \dot x $$ are all below the value for the correct class with a margin of 1 ($$ w_y \dot x -1 $$).
 
 
 # One versus All Hinge loss / Squared hinge loss

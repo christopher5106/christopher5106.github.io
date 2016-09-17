@@ -51,12 +51,21 @@ because $$ p(x) $$ is a constant if features are known.
 
 The naïve Bayes classifier consists in using the maximum a posteriory rule :
 
-$$ ŷ = \text{argmax}_c p(y_c)  \prod_i p(x_i | y_c) $$
+$$ ŷ = \text{argmax}_y p(y)  \prod_i p(x_i | y) $$
 
 The class prior might be easy to estimate from the training set :
 
 $$ p(y_c) = \frac{ \text{number of examples of the class c} }{ \text{size of the set} } $$
 
 To estimate the distribution of features for each class, assumptions are made with models.
+
+
+# Under a uniform prior
+
+Also, we see that under a uniform prior,
+
+$$ f(y) \propto \prod_i p(x_i | y) $$
+
+and maximising the posterior is equivalent to maximising the likelihood.
 
 **That's it!**

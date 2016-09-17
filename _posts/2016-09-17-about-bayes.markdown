@@ -24,13 +24,13 @@ Let's see what it means in practice.
 
 # Bayes updating and inference
 
-Suppose we want to predict the class y of an observation x.
+Let's say y is the class we want to know the distribution, and we make an observation x. Then :
 
-$$ f(y) = p(y | x ) = \frac{ P( x | y  ) P( y )  }{ P( x )} $$
+$$ f(y) = p( y | x ) = \frac{ P( x | y  ) P( y )  }{ P( x )} $$
 
 which is rewritten :
 
-$$ \txt{posterior} = \frac{ \txt{likelihood} \times \txt{prior}  }{ \txt{evidence }} $$
+$$ \text{posterior} = \frac{ \text{likelihood} \times \text{prior}  }{ \text{evidence }} $$
 
 The prior is the probability of the class when we do not observe x. It is the distribution of classes.
 
@@ -39,7 +39,7 @@ Bayes theorem tells us that once we made the observation x, the probability of t
 
 # Naive bayes classifier
 
-Suppose the x is represented by n independant feature conditionaly to the class:
+To build a classifier out of the probability, we suppose the x is represented by n independant feature conditionaly to the class:
 
 $$ x = (x_1, ... , x_n) $$
 
@@ -53,10 +53,10 @@ because $$ p(x) $$ is a constant if features are known.
 
 The naïve Bayes classifier consists in using the maximum a posteriory rule :
 
-$$ ŷ = \argmax_c p(y_c)  \prod_i p(x_i | y_c) $$
+$$ ŷ = \text{argmax}_c p(y_c)  \prod_i p(x_i | y_c) $$
 
 The class prior might be easy to estimate from the training set :
 
-$$ p(y_c) = \frac{ \txt{number of examples of the class c} }{ \txt{size of the set} } $$
+$$ p(y_c) = \frac{ \text{number of examples of the class c} }{ \text{size of the set} } $$
 
 To estimate the distribution of features for each class, assumptions are made with models.

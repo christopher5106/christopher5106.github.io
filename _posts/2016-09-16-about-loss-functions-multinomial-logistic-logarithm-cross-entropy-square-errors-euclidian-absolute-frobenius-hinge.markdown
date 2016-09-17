@@ -30,7 +30,7 @@ We usually want to estimate the parameter $$ \theta $$ and that's why we try to 
 
 Last, as an *objective function or a loss*, we usually prefer to say that we "minimize" it, that's why the **negative log likelihood** is used :
 
-$$ negloglike( \theta ) = - \ln P(X \| \theta ) $$
+$$ negloglike( \theta ) = - \ln P(X | \theta ) $$
 
 
 # Binomial probabilities - log loss / logistic loss / cross-entropy loss
@@ -52,7 +52,7 @@ $$ negloglike( y ) = - y \log y_p  - (1 - y) \log ( 1 - y_p ) $$
 
 which is also the cross-entropy
 
-$$ crossentropy (p , q ) = E_p \[ -\log q \] = - \sum_x p(x ) \log q(x) $$
+$$ crossentropy (p , q ) = E_p [ -\log q ] = - \sum_x p(x ) \log q(x) $$
 
 In information theory, if you try to identify all classes with a code of a length depending of his probability, that is $$ \log q $$, where q is your estimated probability, then the expected length in reality is given by the cross-entropy.
 
@@ -66,7 +66,7 @@ It is a problem where we have *k* classes or categories, and only one valid for 
 
 The values are still binary but represented as a vector. If the example x is of class c, then
 
-$$ y_i = \{   \begin{array}{c} 0 \for i \neq c \\ 1 \end{array}   $$
+$$ y_i = \left{   \begin{array}{c} 0 \text{for} i \neq c \\ 1 \end{array}   $$
 
 If $$ \{ p_i \} $$ is the probability of each class, then it is a multinomial distribution and
 
@@ -122,7 +122,7 @@ A squared error is often used with a rectified linear unit.
 
 The absolute value loss is the L1-norm of the error :
 
-$$ \sum_i \|  ŷ_i - y_i \| $$
+$$ \sum_i |  ŷ_i - y_i | $$
 
 Minimizing the absolute value loss means predicting the (conditional) median of y. Variants can handle other quantiles. 0/1 loss for classification is a special case.
 

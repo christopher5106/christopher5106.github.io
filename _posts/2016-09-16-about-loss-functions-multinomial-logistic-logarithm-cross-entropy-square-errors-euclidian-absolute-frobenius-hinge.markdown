@@ -34,7 +34,7 @@ As an *objective function or a loss*, we usually prefer to "minimize", so the ta
 
 $$ negloglike( y ) = - \ln P( X | y ) $$
 
-In case of independant observations, it is equivalent to minimizing the negative-log-likelihood of each observation.
+In case of independant observations, it is equivalent to minimize the sum of the negative-log-likelihood of each observation.
 
 # Binomial probabilities - log loss / logistic loss / cross-entropy loss
 

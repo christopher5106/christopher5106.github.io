@@ -113,7 +113,7 @@ Many synonym exists : Kullback–Leibler divergence, discrimination information,
 
 It measures the difference between two probabilities.
 
-$$ KL(p,q) = H(p,q) - H(p) = - \sum p(x) \log q(x) + \sum p(x) \log p(x) = \sum p(x ) \frac{ p(x)}{q(x)} $$
+$$ KL(p,q) = H(p,q) - H(p) = - \sum p(x) \log q(x) + \sum p(x) \log p(x) = \sum p(x ) \ln \frac{ p(x)}{q(x)} $$
 
 hence in our nomenclature :
 
@@ -199,11 +199,6 @@ until for all these other classes, their predicted values $$ w_c \cdot x $$ are 
 Note that is possible to replace the 1 with a smooth $$ \Delta ( y, c) $$ value that measure the dissimilarity :
 
 $$ l(y) = \max (0, \max_{ c \neq y } \Delta ( y, c) + w_c \cdot x - w_y \cdot x ) $$
-
-
-
-
-
 
 
 

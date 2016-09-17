@@ -9,13 +9,13 @@ Let's speak about Bayes : its theorem, Bayes classifiers and Bayes inference.
 
 # Bayes theorem
 
-The conditional probabilities $$ P( B | A  ) $$ and $$ P( A | B  ) $$ verify :
+The conditional probabilities P( B | A  ) and P( A | B  ) verify :
 
 $$ P( A \cap B ) = P( A | B ) P(B) =  P( B | A ) P(A) $$
 
 meaning that the probability to see A and B, is the probability to see B, and then the probability to A given we have already seen B. Or inversely, seeing A, then B given A.
 
-This leads to the Bayes theorem that gives the relation between $$ P( B | A  ) $$ and $$ P( A | B  ) $$ :
+This leads to the Bayes theorem that gives the relation between P( B | A  ) and P( A | B  ) :
 
 $$ P( A | B ) = \frac{ P( B | A  ) P( A )  }{ P( B )} $$
 

@@ -117,7 +117,7 @@ $$ KL(p,q) = H(p,q) - H(p) = - \sum p(x) \log q(x) + \sum p(x) \log p(x) = \sum 
 
 hence in our nomenclature :
 
-$$ l(y) = \sum_i y_i \frac{ y_i }{ ŷ_i } $$
+$$ l(y) = \sum_i y_i \ln \frac{ y_i }{ ŷ_i } $$
 
 The infogain is the difference between the entropy before and the entropy after.
 

@@ -16,22 +16,23 @@ Let's remind a few concepts.
 
 # The likelihood and the log loss
 
-When we see a variable X depending of another variable $$ \theta $$, the **likelihood** is the function in $$ \theta $$
+When we observe n features $$ x = (x_1, ... , x_n) $$ (outputs of a neural net) depending on an unknown parameter, the class or category y, the **likelihood** of the class y is a function in y
 
-$$ f( \theta ) = P(X | \theta ) $$
+$$ f( y ) = P(X | y ) $$
 
 and the log-likelihood which is more convenient to work with is :
 
-$$ loglike( \theta ) = \ln P(X | \theta ) $$
+$$ loglike( y ) = \ln P( X | y ) $$
 
 The log-likelihood of statistically independant observation will simply be the sum of the log-likelihood of each observation.
 
-We usually want to estimate the parameter $$ \theta $$ and that's why we try to maximise the log-likelihood (which is equivalent to maximising the likelihood itself). In the case of independant observations, it is equivalent to maximising the log-likelihood of each observation.
+[Under the assuption of a uniform prior $$ g(y) $$, maximising the a posteriori probability is equivalent to maximising the likelihood](http://christopher5106.github.io/machine/learning/2016/09/17/about-bayes.html#under-a-uniform-prior), or to **minimizing the negative log-likelihood** :
 
-Last, as an *objective function or a loss*, we usually prefer to say that we "minimize" it, that's why the **negative log likelihood** is used :
+$$ negloglike( y ) = - \ln P(X | y ) $$
 
-$$ negloglike( \theta ) = - \ln P(X | \theta ) $$
+As an *objective function or a loss*, we usually prefer to "minimize" it.
 
+In the case of independant observations, it is equivalent to minimizing the negative-log-likelihood of each observation.
 
 # Binomial probabilities - log loss / logistic loss / cross-entropy loss
 
@@ -78,7 +79,7 @@ If $$ \{ p_i \} $$ is the probability of each class, then it is a multinomial di
 
 $$ \sum_i p_i = 1 $$
 
-The equivalent to the sigmoid function in multi-dimensional space is the **softmax function or logistic function or normalized exponential function** to produce such a distribution from any input :
+The equivalent to the sigmoid function in multi-dimensional space is the **softmax function or logistic function or normalized exponential function** to produce such a distribution from any input vector z :
 
 $$ z \rightarrow \frac{\exp z_i }{ \sum_k \exp^{z_k} }  $$
 
@@ -102,7 +103,7 @@ For example, "car", "automotible", "motor vehicule" are three labels that can be
 
 In this case, the softmax function will not apply, we usually add a sigmoïd layer before the cross-entropy layer to ensure stable gradient estimation :
 
-$$ \frac{1}{1+\exp^{-t}} $$
+$$ \frac{1}{1+e^{-t}} $$
 
 The cross-entropy will look like :
 

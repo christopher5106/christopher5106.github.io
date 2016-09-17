@@ -57,6 +57,6 @@ $$ ŷ = \text{argmax}_c p(y_c)  \prod_i p(x_i | y_c) $$
 
 The class prior might be easy to estimate from the training set :
 
-$$ p(y_c) = \frac{ \text{number-of-examples-of-the-class-c} }{ \text{size-of-the-set} } $$
+$$ p(y_c) = \frac{ \text{number of examples of the class c} }{ \text{size of the set} } $$
 
 To estimate the distribution of features for each class, assumptions are made with models.

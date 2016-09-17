@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "About loss functions : multinomial logistic, cross entropy, square errors, euclidian, hinge, Crammer and Singer, one versus all, squared hinge, absolute value, L1 / L2 / Frobenius norms"
+title:  "About loss functions : multinomial logistic, cross entropy, square errors, euclidian, hinge, Crammer and Singer, one versus all, squared hinge, absolute value, infogain, L1 / L2 / Frobenius norms"
 date:   2016-09-16 17:00:51
 categories: deep learning
 ---
@@ -46,9 +46,9 @@ When using a network, we try to get 0 and 1 as values, that's why we add a **sig
 $$ f:  x \rightarrow \frac{1}{ 1 + \exp^{-x}} $$
 
 
-Then, once the estimated probability to get 1 is $$ y_p $$, then it is easy to see that the negative log likelihood can be written
+Then, once the estimated probability to get 1 is $$ ŷ $$, then it is easy to see that the negative log likelihood can be written
 
-$$ negloglike( y ) = - y \log y_p  - (1 - y) \log ( 1 - y_p ) $$
+$$ negloglike( y ) = - y \log ŷ  - (1 - y) \log ( 1 - ŷ ) $$
 
 which is also the **cross-entropy**
 
@@ -83,7 +83,7 @@ $$ z \rightarrow \frac{\exp z_i }{ \sum_k \exp^{z_k} }  $$
 
 The error is also best described by cross-entropy :
 
-$$ l(y) = - \sum_{i=0}^k y_i \ln p_i $$
+$$ l(y) = - \sum_{i=0}^k y_i \ln ŷ_i $$
 
 Cross-entropy is designed to deal with errors on probabilities. For example, $$ \ln(0.01) $$ will be a lot stronger error signal than $$ \ln(0.1) $$ and encourage to resolve errors. In some cases, the logarithm is bounded to avoid extreme punishments.
 
@@ -104,9 +104,22 @@ $$ \frac{1}{1+\exp^{-t}} $$
 
 The cross-entropy will look like :
 
-$$ l(y) = - \sum_{i=0}^k y_i \ln p_i + (1 - y_i) \ln ( 1 - p_i ) $$
+$$ l(y) = - \sum_{i=0}^k y_i \ln ŷ_i + (1 - y_i) \ln ( 1 - ŷ_i ) $$
 
 
+# Infogain loss / relative entropy
+
+Many synonym exists : Kullback–Leibler divergence, discrimination information, information divergence, information gain, relative entropy, KLIC, KL divergence.
+
+It measures the difference between two probabilities.
+
+$$ KL(p,q) = H(p,q) - H(p) = - \sum p(x) \log q(x) + \sum p(x) \log p(x) = \sum p(x ) \frac{ p(x)}{q(x)} $$
+
+hence in our nomenclature :
+
+$$ l(y) = \sum_i y_i \frac{ y_i }{ ŷ_i } $$
+
+The infogain is the difference between the entropy before and the entropy after.
 
 # Square error / Sum of squares / Euclidian loss
 
@@ -169,7 +182,17 @@ It is simply the square of the hinge loss :
 $$ l(y) = \max (0, 1 - y w \cdot x )^2 $$
 
 
-# Infogain loss
+# L1 / L2, Frobenius / L2,1 norms
+
+It is frequent to add some regularizations to the cost function such as the L1-norm
 
 
-# L1 / L2 / Frobenius norms
+$$ \| w \|_1 = \sum_{i,j} | w_{i,j} | $$
+
+the L2-norm or Frobenius norm
+
+$$ \| w \|_2 = \sqrt{ \sum_{i,j} w_{i,j}^2 } $$
+
+The L2,1 norm is used for [discriminative feature selection](https://www.aaai.org/ocs/index.php/IJCAI/IJCAI11/paper/viewFile/3136/3481)
+
+$$ \| w \|_{2,1} = \sum_i \sqrt{ \sum_j w_{i,j}^2 } $$

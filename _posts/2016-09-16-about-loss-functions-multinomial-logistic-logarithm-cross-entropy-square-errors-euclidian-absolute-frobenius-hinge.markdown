@@ -54,7 +54,7 @@ which is also the **cross-entropy**
 
 $$ crossentropy (p , q ) = E_p [ -\log q ] = - \sum_x p(x ) \log q(x) $$
 
-In information theory, if you try to identify all classes with a code of a length depending of his probability, that is $$ \log q $$, where q is your estimated probability, then the expected length in reality (p being the real probability) is given by the cross-entropy.
+In information theory, if you try to identify all classes with a code of a length depending of his probability, that is $$ - \log q $$, where q is your estimated probability, then the expected length in reality (p being the real probability) is given by the cross-entropy.
 
 Last, let's remind that the combined sigmoid and cross-entropy has a very simple and stable derivative
 

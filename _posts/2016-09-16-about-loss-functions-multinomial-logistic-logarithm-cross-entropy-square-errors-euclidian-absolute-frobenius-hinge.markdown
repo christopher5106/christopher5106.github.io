@@ -131,7 +131,7 @@ The infogain is the difference between the entropy before and the entropy after.
 
 This time, contrary to previous estimations that were probabilities, when predictions are scalars or metrics, we usually use the **square error or euclidian loss** which is the L2-norm of the error :
 
-$$ l(y) = \sum_i ( ŷ_i - y_i )^2 $$
+$$ l(y) = \sum_i ( ŷ_i - y_i )^2 = \| ŷ - y \|_2^2 $$
 
 Minimising the squared error is equivalent to predicting the (conditional) mean of y.
 
@@ -139,14 +139,29 @@ Due to the gradient being flat at the extremes for a sigmoid function, we do not
 
 A squared error is often used with a rectified linear unit.
 
+The L2 norm penalizes large errors more strongly and therefore is very sensitive to outliers. To avoid this, we usually use the squared root version :
 
-# Absolute value loss
+$$ l(y) = \| ŷ - y \|_2 $$
+
+
+
+# Absolute value loss / L1 loss
 
 The absolute value loss is the L1-norm of the error :
 
-$$ l(y) = \sum_i |  ŷ_i - y_i | $$
+$$ l(y) = \sum_i |  ŷ_i - y_i | = \| ŷ - y \|_1 $$
 
 Minimizing the absolute value loss means predicting the (conditional) median of y. Variants can handle other quantiles. 0/1 loss for classification is a special case.
+
+Note that the L1 norm is not differentiable in 0, and it is possible to use a smooth L1 :
+
+$$ | w |_{\text{smooth}} = =   \begin{cases}
+      0.5 w **2, & \text{if}\ | w  | \leq 1 \\
+      | w | - 0.5, & \text{otherwise}
+    \end{cases}
+    $$
+
+Although the L2 norm is more precise and better in minizing prediction errors, the L1 norm produces sparser solutions, ignore more easily fine details and is less sensitive to outliers. Sparser solutions are good for feature selection in high dimensional spaces, as well for prediction speed.
 
 
 # Hinge loss / Maximum margin
@@ -210,16 +225,21 @@ $$ l(y) = \max (0, \max_{ c \neq y } \Delta ( y, c) + w_c \cdot x - w_y \cdot x 
 
 # L1 / L2, Frobenius / L2,1 norms
 
-It is frequent to add some regularizations to the cost function such as the L1-norm
+It is frequent to add some regularization terms to the cost function
 
+$$ min_w l(y,w) + \gamma R(w) $$
 
-$$ \| w \|_1 = \sum_{i,j} | w_{i,j} | $$
+such as
 
-the L2-norm or Frobenius norm
+- the L1-norm, for the LASSO regularization
 
-$$ \| w \|_2 = \sqrt{ \sum_{i,j} w_{i,j}^2 } $$
+$$ \| w \|_1 = \sum_{i,j} | w_{i,j} | = \sum_i \| w_i \|_1 $$
 
-The L2,1 norm is used for [discriminative feature selection](https://www.aaai.org/ocs/index.php/IJCAI/IJCAI11/paper/viewFile/3136/3481)
+- the L2-norm or Frobenius norm, for the ridge regularization
+
+$$ \| w \|_2 = \sqrt{ \sum_{i,j} w_{i,j}^2 } = \sqrt{ \sum_i  \| w_i \|_2^2 } $$
+
+- the L2,1 norm, used for [discriminative feature selection](https://www.aaai.org/ocs/index.php/IJCAI/IJCAI11/paper/viewFile/3136/3481)
 
 $$ \| w \|_{2,1} = \sum_i \sqrt{ \sum_j w_{i,j}^2 } $$
 

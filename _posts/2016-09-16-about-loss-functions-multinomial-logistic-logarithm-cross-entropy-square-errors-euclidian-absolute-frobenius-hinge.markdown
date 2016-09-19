@@ -84,7 +84,7 @@ $$ \sum_i p_i = 1 $$
 
 The equivalent to the sigmoid function in multi-dimensional space is the **softmax function or logistic function or normalized exponential function** to produce such a distribution from any input vector z :
 
-$$ z \rightarrow \left{ \frac{\exp z_i }{ \sum_k \exp^{z_k} } \right}_i  $$
+$$ z \rightarrow \left\{ \frac{\exp z_i }{ \sum_k \exp^{z_k} } \right\}_i  $$
 
 
 The error is also best described by cross-entropy :

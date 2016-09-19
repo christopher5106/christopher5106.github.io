@@ -169,7 +169,7 @@ Although the L2 norm is more precise and better in minizing prediction errors, t
 
 Hinge loss is trying to separate the positive and negative examples $$ (x,y) $$, x being the input, y the target $$ \in \{-1, 1 \} $$, the loss for a linear model is defined by
 
-$$ \mathscr{L} = \max (0, 1 - y w \cdot x ) $$
+$$ \mathscr{L}(w) = \max (0, 1 - y w \cdot x ) $$
 
 The minimization of the loss will only consider examples that infringe the margin, otherwise the gradient will be zero since the max saturates.
 
@@ -185,14 +185,14 @@ The hinge loss is a convex function, easy to minimize. Although it is not differ
 
 It is simply the square of the hinge loss :
 
-$$ \mathscr{L} = \max (0, 1 - y w \cdot x )^2 $$
+$$ \mathscr{L}(w) = \max (0, 1 - y w \cdot x )^2 $$
 
 
 # One-versus-All Hinge loss
 
 The multi-class version of the hinge loss
 
-$$ \mathscr{L} = \sum_c \max (0, 1 -  \mathbb{I}_{y,c} w \cdot x ) $$
+$$ \mathscr{L}(w) = \sum_c \max (0, 1 -  \mathbb{I}_{y,c} w \cdot x ) $$
 
 where
 
@@ -208,7 +208,7 @@ $$
 
 Crammer and Singer defined a multi-class version of the hinge loss :
 
-$$ \mathscr{L} = \max (0, 1 + \max_{ c \neq y }  w_c \cdot x - w_y \cdot x ) $$
+$$ \mathscr{L}(w) = \max (0, 1 + \max_{ c \neq y }  w_c \cdot x - w_y \cdot x ) $$
 
 so that minimizing the loss means to do both :
 
@@ -220,7 +220,7 @@ until for all these other classes, their predicted values $$ w_c \cdot x $$ are 
 
 Note that is possible to replace the 1 with a smooth $$ \Delta ( y, c) $$ value that measure the dissimilarity :
 
-$$ \mathscr{L} = \max (0, \max_{ c \neq y } \Delta ( y, c) + w_c \cdot x - w_y \cdot x ) $$
+$$ \mathscr{L}(w) = \max (0, \max_{ c \neq y } \Delta ( y, c) + w_c \cdot x - w_y \cdot x ) $$
 
 
 

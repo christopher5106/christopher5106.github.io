@@ -24,11 +24,11 @@ $$ f_\theta : x \rightarrow y $$
 
 The process of defining the optimal parameters $$ \theta $$ given past observations X and their known labels Y is named **training**. The objective of the training is obviously to maximise the **likelihood**
 
-$$ \text{likelihood}( \theta ) = P( X, y | \theta ) $$
+$$ \text{likelihood}( \theta ) = P_\theta( y | x ) $$
 
 Since the logarithm is monotonous, it is equivalent to **minimize the negative log-likelihood** :
 
-$$ \mathscr{L}( \theta ) = - \ln P( X, y | \theta ) $$
+$$ \mathscr{L}( \theta ) = - \ln P_\theta( y | x ) $$
 
 The reason for taking the negative of the logarithm of the likelihood are
 

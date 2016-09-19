@@ -192,11 +192,11 @@ $$ \mathscr{L}(w) = \max (0, 1 - y w \cdot x )^2 $$
 
 The multi-class version of the hinge loss
 
-$$ \mathscr{L}(w) = \sum_c \max (0, 1 -  \mathbb{I}_{y,c} w \cdot x ) $$
+$$ \mathscr{L}(w) = \sum_c \max (0, 1 -  \mathbb{1}_{y,c} w \cdot x ) $$
 
 where
 
-$$   \mathbb{I}_{y,c} =   \begin{cases}
+$$   \mathbb{1}_{y,c} =   \begin{cases}
       -1, & \text{if}\ y \neq c \\
       1, & \text{otherwise}
     \end{cases}

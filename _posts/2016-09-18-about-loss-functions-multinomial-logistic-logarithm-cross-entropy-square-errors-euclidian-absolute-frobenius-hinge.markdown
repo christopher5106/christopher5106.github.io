@@ -1,7 +1,7 @@
 ---
 layout: post
-title:  "About loss functions, regularization and joint losses : multinomial logistic, cross entropy, square errors, euclidian, hinge, Crammer and Singer, one versus all, squared hinge, absolute value, infogain, L1 / L2 - Frobenius / L2,1 norms"
-date:   2016-09-16 17:00:51
+title:  "About loss functions"
+date:   2016-09-18 17:00:51
 categories: deep learning
 ---
 

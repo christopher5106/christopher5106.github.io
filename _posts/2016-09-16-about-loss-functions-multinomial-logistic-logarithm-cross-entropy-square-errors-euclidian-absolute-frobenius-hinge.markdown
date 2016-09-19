@@ -262,7 +262,7 @@ $$ s_{\theta_3} : E_1, E_2 \rightarrow E_1^T \theta_3 E_2 $$
 
 In these examples of zero-shot learning where a simple classical multi-class hinge loss was able to train classifiers [using precomputed output embedding for each class](https://arxiv.org/pdf/1409.8403.pdf), a [joint embedding loss](http://www.cv-foundation.org/openaccess/content_cvpr_2016/papers/Reed_Learning_Deep_Representations_CVPR_2016_paper.pdf) can train the two embeddings simultanously.
 
-The problem can also be seen as maximizing the log-likelihood for a binomial problem where the output is the degree of similarity $$ s_{1,2} = [ y_1 == y_2 ] $$  and the input $$ X = (X1,X2) $$ the combined modes :
+The joint embedding optimization can also be seen as **maximizing the log-likelihood for a binomial problem** where the output variable is the degree of similarity $$ s_{1,2} = [ y_1 == y_2 ] $$  and the input variable $$ X = (x_1,x_2) $$ the combined modalities :
 
 $$ \log p_{\theta_1,\theta_2,\theta_3}( s_{1,2} | x_1, x_2 ) $$
 
@@ -275,6 +275,6 @@ Hence, maximizing
 
 $$ \mathscr{L}(\theta) = \max_{z_1,z_2} \log p_{\theta_1}(z_1|x_1) + \log p_{\theta_2}(z_2|x_2) + \log p_{\theta_3}( s_{1,2} | z_1, z_2 ) $$
 
-In [Zero shot learning via joint latent similarity Embedding](https://arxiv.org/pdf/1511.04512v3.pdf), they propose an algorithm that iteratively assigns to each example in the dataset a $$ (z_1, z_2) $$ value that maximizes the objective function over all data, then optimizes $$ \theta = ( \theta_1,\theta_2,\theta_3 ) $$ for this assignment at a very good computational cost.
+In [Zero shot learning via joint latent similarity Embedding](https://arxiv.org/pdf/1511.04512v3.pdf), Zhang *et al.* propose an algorithm that iteratively assigns to each example in the dataset a $$ (z_1, z_2) $$ value that maximizes the objective function over all data, then optimizes $$ \theta = ( \theta_1,\theta_2,\theta_3 ) $$ for this assignment at a very good computational cost.
 
 **You're all set for choosing the right loss functions.**

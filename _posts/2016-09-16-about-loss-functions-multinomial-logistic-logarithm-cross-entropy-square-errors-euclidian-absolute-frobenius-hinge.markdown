@@ -268,7 +268,7 @@ $$ \log p_{\theta_1,\theta_2,\theta_3}( s_{1,2} | x_1, x_2 ) $$
 
 where
 
-$$ p( s_{1,2} | x_1, x_2 ) = \int p( z_1 | x_1) p( z_2 | x_2) p( s_{1,2} | z_1, z2) dz_1 dz_2\\
+$$ p( s_{1,2} | x_1, x_2 ) = \int p( z_1 | x_1) p( z_2 | x_2) p( s_{1,2} | z_1, z_2) dz_1 dz_2\\
 \geq \max_{z_1,z_2} p(z_1|x_1) p(z_2|x_2) p(s_{1,2} | z_1, z_2 )  $$
 
 Hence, maximizing

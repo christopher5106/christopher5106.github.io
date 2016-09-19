@@ -51,7 +51,7 @@ Old methods use **dedicated servers**
 
 Current methods use **virtual servers** : the build occurs during deployment, with deployment scripts, and update scripts, inside the virtual machine, and for all applications at the same time. These methods, brought by technologies such as Chef, Puppet or Ansible, have the benefits of *scalability* and *reproducibility*.
 
-![](/img/current_deployment_methods.png)
+![]({{ site.url }}/img/current_deployment_methods.png)
 
 Docker and deployment platform technologies have enabled new deployment methods, that add new benefits to the previous ones :
 

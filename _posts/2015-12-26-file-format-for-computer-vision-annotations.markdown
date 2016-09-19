@@ -23,7 +23,7 @@ The first solution is to create CSV files, one annotation per line, in the OpenC
 
     path,class,x,y,w,h
 
-![rectangle annotation format](/img/rectangle_format.png)
+![rectangle annotation format]({{ site.url }}/img/rectangle_format.png)
 
 To my point of view, the best format is not the Rect format, but the **RotatedRect format** with the center point coordinates and orientation of the annotation rectangle :
 
@@ -31,7 +31,7 @@ To my point of view, the best format is not the Rect format, but the **RotatedRe
 
 because it will be a more general case, while orientations are very common, and will enable you to use the same tools to work on your data, extract rectangles, etc in the case of orientation. In this format, it will be also quite easy to work without the orientation by ignoring the last column, if wanted.
 
-![rotatedrect annotation format](/img/rotatedrectangle_format.png)
+![rotatedrect annotation format]({{ site.url }}/img/rotatedrectangle_format.png)
 
 It is also possible to go further by adding perspective information and rotation on other axis, and in any case, center position is better than top left corner position for such description.
 

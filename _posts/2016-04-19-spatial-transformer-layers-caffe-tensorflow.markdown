@@ -217,7 +217,7 @@ Let's create a folder of MNIST cluttered images :
     luajit save_to_file.lua
     for i in {0..9}; do for p in /home/ubuntu/mnist-cluttered/$i/*; do echo $p $i >> mnist.txt; done ; done
 
-And train with a [stn protobuf file](/img/stn.prototxt), the [bias init](/img/bias_init.txt), and [solver file](/img/stn_solver.prototxt).
+And train with a [stn protobuf file]({{ site.url }}/img/stn.prototxt), the [bias init]({{site.url}}/img/bias_init.txt), and [solver file]({{ site.url }}/img/stn_solver.prototxt).
 
     ./build/tools/caffe.bin train -solver=stn_solver.prototxt
 

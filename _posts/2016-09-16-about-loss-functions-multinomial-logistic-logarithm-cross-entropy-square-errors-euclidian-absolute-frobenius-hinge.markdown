@@ -45,7 +45,7 @@ Each class has a probability $$ p $$ and $$ 1 - p $$ (sums to 1).
 
 When using a network, we try to get 0 and 1 as values, that's why we add a **sigmoid function or logistic function** that saturates as a last layer :
 
-![](/img/sigmoid.png)
+![]({{ site.url }}/img/sigmoid.png)
 
 $$ f:  x \rightarrow \frac{1}{ 1 + e^{-x}} $$
 

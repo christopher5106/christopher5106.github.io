@@ -276,6 +276,7 @@ Hence, maximizing
 
 $$ \log p_{\theta_1}(z_1|x_1) + \log p_{\theta_2}(z_2|x_2) + \log p_{\theta_3}( y_1 == y_2 | z_1, z2 ) $$
 
-In [Zero shot learning via joint latent similarity Embedding](https://arxiv.org/pdf/1511.04512v3.pdf), they propose an algorithm that iteratively assign for each example in the dataset a $$ (z_1, z2) $$ value that maximizes the objective function, then optimizing $$ \theta = ( ) $$ for this assignment at a very good computational cost.
+In [Zero shot learning via joint latent similarity Embedding](https://arxiv.org/pdf/1511.04512v3.pdf), they propose an algorithm that iteratively assign for each example in the dataset a $$ (z_1, z2) $$ value that maximizes the objective function, then optimizing $$ \theta = ( \theta_1,\theta_2,\theta_3 ) $$ for this assignment at a very good computational cost.
+
 
 **You're all set for choosing the right loss functions.**

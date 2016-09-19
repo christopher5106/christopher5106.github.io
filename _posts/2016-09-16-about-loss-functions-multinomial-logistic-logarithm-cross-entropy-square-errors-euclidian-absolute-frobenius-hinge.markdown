@@ -218,7 +218,7 @@ so that minimizing the loss means to do both :
 
 until for all these other classes, their predicted values $$ w_c \cdot x $$ are all below $$ w_y \cdot x -1 $$, the value for the correct class with a margin of 1.
 
-Note that is possible to replace the 1 with a smooth $$ \Delta ( y, c) $$ value that measure the dissimilarity :
+Note that is possible to replace the 1 with a smooth $$ \Delta ( y, c) $$ value that measures the dissimilarity :
 
 $$ \mathscr{L}(w) = \max (0, \max_{ c \neq y } \Delta ( y, c) + w_c \cdot x - w_y \cdot x ) $$
 

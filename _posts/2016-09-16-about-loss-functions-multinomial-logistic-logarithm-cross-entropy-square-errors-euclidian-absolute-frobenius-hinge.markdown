@@ -252,13 +252,13 @@ $$ \text{min}_{w_1,w_2} \mathscr{L}_1(w_1) + \mathscr{L}_2(w_2) $$
 
 and in the case of multi-modal classification, where data is composed of multiple parts, such as for example images (x1) and texts (x2), we usually use the joint loss with multiple **embeddings**, which are high dimensional feature spaces :
 
-$$ f_{w_1} : x_1 \rightarrow E_1 $$
+$$ f_{w_1} : x_1 \rightarrow z_1 $$
 
-$$ g_{w_2} : x_2 \rightarrow E_2 $$
+$$ g_{w_2} : x_2 \rightarrow z_2 $$
 
 and a similarity function, such as for example,
 
-$$ s_{w_3} : E_1, E_2 \rightarrow E_1^T w_3 E_2 $$
+$$ s_{w_3} : z_1, z_2 \rightarrow z_1^T w_3 z_2 $$
 
 In these examples of zero-shot learning where a simple classical multi-class hinge loss was able to train classifiers [using precomputed output embedding for each class](https://arxiv.org/pdf/1409.8403.pdf), a [joint embedding loss](http://www.cv-foundation.org/openaccess/content_cvpr_2016/papers/Reed_Learning_Deep_Representations_CVPR_2016_paper.pdf) can train the two embeddings simultanously.
 

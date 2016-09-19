@@ -106,17 +106,17 @@ Simply create a microservice in a separate directory, with a Dockerfile and a **
 
 As an example, the publication of a second service with the name "test" will be listed under the *Versions section* :
 
-![]({{ site.url }}/img/appengine_service.png)
+![](/img/appengine_service.png)
 
 In the same way, you can decide on each service with which version to serve requests :
 
-![]({{ site.url }}/img/appengine_service_version.png)
+![](/img/appengine_service_version.png)
 
 # Stackdriver monitoring
 
-By default, AppEngine is directly integrated in [StackDriver monitoring](https://cloud.google.com/monitoring/alerts/uptime-checks) which is a great dashboard to follow your app status :
+By default, AppEngine is directly integrated in [StackDriver monitoring](https://cloud.google.com/monitoring/alerts/uptime-checks) which is a great dashboard to follow your ap :
 
-![monitoring]({{ site.url }}/img/appengine_stackdriver.png)
+![monitoring](/img/appengine_stackdriver.png)
 
 
 

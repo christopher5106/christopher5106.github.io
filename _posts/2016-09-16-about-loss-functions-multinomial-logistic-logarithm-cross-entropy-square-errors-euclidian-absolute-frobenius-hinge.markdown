@@ -20,15 +20,15 @@ $$ x \rightarrow y $$
 
 Such a function is named a **classifier**. To create such classifier, we usually create models with parameters to define :
 
-$$ f_\theta : x \rightarrow y $$
+$$ f_w : x \rightarrow y $$
 
-The process of defining the optimal parameters $$ \theta $$ given past observations X and their known labels Y is named **training**. The objective of the training is obviously to maximise the **likelihood**
+The process of defining the optimal parameters w given past observations X and their known labels Y is named **training**. The objective of the training is obviously to maximise the **likelihood**
 
-$$ \text{likelihood}( \theta ) = P_\theta( y | x ) $$
+$$ \text{likelihood}( w ) = P_w( y | x ) $$
 
 Since the logarithm is monotonous, it is equivalent to **minimize the negative log-likelihood** :
 
-$$ \mathscr{L}( \theta ) = - \ln P_\theta( y | x ) $$
+$$ \mathscr{L}( w ) = - \ln P_w( y | x ) $$
 
 The reason for taking the negative of the logarithm of the likelihood are
 
@@ -156,9 +156,9 @@ Minimizing the absolute value loss means predicting the (conditional) median of 
 
 Note that the L1 norm is not differentiable in 0, and it is possible to use a smooth L1 :
 
-$$ | w |_{\text{smooth}} = =   \begin{cases}
-      0.5 w^2, & \text{if}\ | w  | \leq 1 \\
-      | w | - 0.5, & \text{otherwise}
+$$ | d |_{\text{smooth}} = =   \begin{cases}
+      0.5 d^2, & \text{if}\ | d  | \leq 1 \\
+      | d | - 0.5, & \text{otherwise}
     \end{cases}
     $$
 
@@ -228,43 +228,43 @@ $$ \mathscr{L}(w) = \max (0, \max_{ c \neq y } \Delta ( y, c) + w_c \cdot x - w_
 
 It is frequent to add some regularization terms to the cost function
 
-$$ \text{min}_\theta \mathscr{L}(\theta) + \gamma R(\theta) $$
+$$ \text{min}_w \mathscr{L}(w) + \gamma R(w) $$
 
 such as
 
 - the L1-norm, for the LASSO regularization
 
-$$ \| \theta \|_1 = \sum_{i,j} | \theta_{i,j} | = \sum_i \| \theta_i \|_1 $$
+$$ \| w \|_1 = \sum_{i,j} | w_{i,j} | = \sum_i \| w_i \|_1 $$
 
 - the L2-norm or Frobenius norm, for the ridge regularization
 
-$$ \| \theta \|_2 = \sqrt{ \sum_{i,j} \theta_{i,j}^2 } = \sqrt{ \sum_i  \| \theta_i \|_2^2 } $$
+$$ \| w \|_2 = \sqrt{ \sum_{i,j} w_{i,j}^2 } = \sqrt{ \sum_i  \| w_i \|_2^2 } $$
 
 - the L2,1 norm, used for [discriminative feature selection](https://www.aaai.org/ocs/index.php/IJCAI/IJCAI11/paper/viewFile/3136/3481)
 
-$$ \| \theta \|_{2,1} = \sum_i \sqrt{ \sum_j \theta_{i,j}^2 } $$
+$$ \| w \|_{2,1} = \sum_i \sqrt{ \sum_j w_{i,j}^2 } $$
 
 # Joint embedding
 
 A **joint loss** is a sum of two losses :
 
-$$ \text{min}_{\theta_1,\theta_2} \mathscr{L}_1(\theta_1) + \mathscr{L}_2(\theta_2) $$
+$$ \text{min}_{w_1,w_2} \mathscr{L}_1(w_1) + \mathscr{L}_2(w_2) $$
 
 and in the case of multi-modal classification, where data is composed of multiple parts, such as for example images (x1) and texts (x2), we usually use the joint loss with multiple **embeddings**, which are high dimensional feature spaces :
 
-$$ f_{\theta_1} : x_1 \rightarrow E_1 $$
+$$ f_{w_1} : x_1 \rightarrow E_1 $$
 
-$$ g_{\theta_2} : x_2 \rightarrow E_2 $$
+$$ g_{w_2} : x_2 \rightarrow E_2 $$
 
 and a similarity function, such as for example,
 
-$$ s_{\theta_3} : E_1, E_2 \rightarrow E_1^T \theta_3 E_2 $$
+$$ s_{w_3} : E_1, E_2 \rightarrow E_1^T w_3 E_2 $$
 
 In these examples of zero-shot learning where a simple classical multi-class hinge loss was able to train classifiers [using precomputed output embedding for each class](https://arxiv.org/pdf/1409.8403.pdf), a [joint embedding loss](http://www.cv-foundation.org/openaccess/content_cvpr_2016/papers/Reed_Learning_Deep_Representations_CVPR_2016_paper.pdf) can train the two embeddings simultanously.
 
 The joint embedding optimization can also be seen as **maximizing the log-likelihood for a binomial problem** where the output variable is the degree of similarity $$ s_{1,2} = [ y_1 == y_2 ] $$  and the input variable $$ X = (x_1,x_2) $$ the combined modalities :
 
-$$ \log p_{\theta_1,\theta_2,\theta_3}( s_{1,2} | x_1, x_2 ) $$
+$$ \log p_{w_1,w_2,w_3}( s_{1,2} | x_1, x_2 ) $$
 
 where
 
@@ -273,8 +273,8 @@ $$ p( s_{1,2} | x_1, x_2 ) = \int p( z_1 | x_1) p( z_2 | x_2) p( s_{1,2} | z_1, 
 
 Hence, maximizing
 
-$$ \mathscr{L}(\theta) = \max_{z_1,z_2} \log p_{\theta_1}(z_1|x_1) + \log p_{\theta_2}(z_2|x_2) + \log p_{\theta_3}( s_{1,2} | z_1, z_2 ) $$
+$$ \mathscr{L}(w) = \max_{z_1,z_2} \log p_{w_1}(z_1|x_1) + \log p_{w_2}(z_2|x_2) + \log p_{w_3}( s_{1,2} | z_1, z_2 ) $$
 
-In [Zero shot learning via joint latent similarity Embedding](https://arxiv.org/pdf/1511.04512v3.pdf), Zhang *et al.* propose an algorithm that iteratively assigns to each example in the dataset an embedding value $$ (z_1, z_2) $$ that maximizes the objective function over all data, then optimizes $$ \theta = ( \theta_1,\theta_2,\theta_3 ) $$ for this assignment at a very good computational cost.
+In [Zero shot learning via joint latent similarity Embedding](https://arxiv.org/pdf/1511.04512v3.pdf), Zhang *et al.* propose an algorithm that iteratively assigns to each example in the dataset an embedding value $$ (z_1, z_2) $$ that maximizes the objective function over all data, then optimizes $$ w = ( w_1,w_2,w_3 ) $$ for this assignment at a very good computational cost.
 
 **You're all set for choosing the right loss functions.**

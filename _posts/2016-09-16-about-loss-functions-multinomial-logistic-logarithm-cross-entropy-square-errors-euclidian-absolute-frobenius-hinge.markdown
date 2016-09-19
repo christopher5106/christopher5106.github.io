@@ -275,6 +275,6 @@ Hence, maximizing
 
 $$ \mathscr{L}(\theta) = \max_{z_1,z_2} \log p_{\theta_1}(z_1|x_1) + \log p_{\theta_2}(z_2|x_2) + \log p_{\theta_3}( s_{1,2} | z_1, z_2 ) $$
 
-In [Zero shot learning via joint latent similarity Embedding](https://arxiv.org/pdf/1511.04512v3.pdf), Zhang *et al.* propose an algorithm that iteratively assigns to each example in the dataset a $$ (z_1, z_2) $$ value that maximizes the objective function over all data, then optimizes $$ \theta = ( \theta_1,\theta_2,\theta_3 ) $$ for this assignment at a very good computational cost.
+In [Zero shot learning via joint latent similarity Embedding](https://arxiv.org/pdf/1511.04512v3.pdf), Zhang *et al.* propose an algorithm that iteratively assigns to each example in the dataset an embedding value $$ (z_1, z_2) $$ that maximizes the objective function over all data, then optimizes $$ \theta = ( \theta_1,\theta_2,\theta_3 ) $$ for this assignment at a very good computational cost.
 
 **You're all set for choosing the right loss functions.**

@@ -16,25 +16,28 @@ Let's remind a few concepts.
 
 # The likelihood and the log loss
 
-When we observe a variable X depending on an unknown parameter, the class or category y, the **likelihood** of the class y is a function in y
+Classifying means assigning a label to an observation :
 
-$$ f( y ) = P( X | y ) $$
+$$ x \rightarrow y $$
 
-and the log-likelihood which is more convenient to work with is :
+Such a function is named a **classifier**. To create such classifier, we usually create models with parameters to define :
 
-$$ loglike( y ) = \ln P( X | y ) $$
+$$ f_\theta : x \rightarrow y $$
 
-The log-likelihood of statistically independant observation will simply be the sum of the log-likelihood of each observation.
+The process of defining the parameters $$ \theta $$ given past observations X and their known labels Y is named **training**. The objective of the training is obviously to maximise the **likelihood**
 
-[Under the assumption of a uniform prior $$ g(y) $$, maximising the a posteriori probability is equivalent to maximising the likelihood](http://christopher5106.github.io/machine/learning/2016/09/17/about-bayes.html#under-a-uniform-prior).
+$$ \text{likelihood}( \theta ) = P( X, y | \theta ) $$
 
-That means that it is equivalent to say that the target class (to predict) is the class that maximizes the posterior or the log-likelihood.
+Since the logarithm is monotonous, it is equivalent to minimize the **negative log-likelihood** :
 
-As an *objective function or a loss*, we usually prefer to "minimize", so the target class will **minimize the negative log-likelihood** :
+$$ \text{negative log likelihood}( \theta ) = - \ln P( X, y | \theta ) $$
 
-$$ negloglike( y ) = - \ln P( X | y ) $$
+The reason for using the negative log-likelihood are
 
-In case of independant observations, it is equivalent to minimize the sum of the negative-log-likelihood of each observation.
+- it is more convenient to work with the log, because the log-likelihood of statistically independant observation will simply be the sum of the log-likelihood of each observation.
+
+- we usually prefer to write the **objective function** as a **cost function** to minimize.
+
 
 # Binomial probabilities - log loss / logistic loss / cross-entropy loss
 

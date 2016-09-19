@@ -91,7 +91,7 @@ $$ z \rightarrow \frac{\exp z_i }{ \sum_k \exp^{z_k} }  $$
 
 The error is also best described by cross-entropy :
 
-$$ l = - \sum_{i=0}^k y_i \ln ŷ_i $$
+$$ \mathscr{L} = - \sum_{i=0}^k y_i \ln ŷ_i $$
 
 Cross-entropy is designed to deal with errors on probabilities. For example, $$ \ln(0.01) $$ will be a lot stronger error signal than $$ \ln(0.1) $$ and encourage to resolve errors. In some cases, the logarithm is bounded to avoid extreme punishments.
 
@@ -112,7 +112,7 @@ $$ \frac{1}{1+e^{-t}} $$
 
 The cross-entropy will look like :
 
-$$ l = - \sum_{i=0}^k y_i \ln ŷ_i + (1 - y_i) \ln ( 1 - ŷ_i ) $$
+$$ \mathscr{L} = - \sum_{i=0}^k y_i \ln ŷ_i + (1 - y_i) \ln ( 1 - ŷ_i ) $$
 
 
 # Infogain loss / relative entropy
@@ -125,7 +125,7 @@ $$ KL(p,q) = H(p,q) - H(p) = - \sum p(x) \log q(x) + \sum p(x) \log p(x) = \sum 
 
 hence in our nomenclature :
 
-$$ l = \sum_i y_i \ln \frac{ y_i }{ ŷ_i } $$
+$$ \mathscr{L} = \sum_i y_i \ln \frac{ y_i }{ ŷ_i } $$
 
 The infogain is the difference between the entropy before and the entropy after.
 
@@ -134,7 +134,7 @@ The infogain is the difference between the entropy before and the entropy after.
 
 This time, contrary to previous estimations that were probabilities, when predictions are scalars or metrics, we usually use the **square error or euclidian loss** which is the L2-norm of the error :
 
-$$ l = \sum_i ( ŷ_i - y_i )^2 = \| ŷ - y \|_2^2 $$
+$$ \mathscr{L} = \sum_i ( ŷ_i - y_i )^2 = \| ŷ - y \|_2^2 $$
 
 Minimising the squared error is equivalent to predicting the (conditional) mean of y.
 
@@ -144,7 +144,7 @@ A squared error is often used with a rectified linear unit.
 
 The L2 norm penalizes large errors more strongly and therefore is very sensitive to outliers. To avoid this, we usually use the squared root version :
 
-$$ l = \| ŷ - y \|_2 $$
+$$ \mathscr{L} = \| ŷ - y \|_2 $$
 
 
 
@@ -152,7 +152,7 @@ $$ l = \| ŷ - y \|_2 $$
 
 The absolute value loss is the L1-norm of the error :
 
-$$ l = \sum_i |  ŷ_i - y_i | = \| ŷ - y \|_1 $$
+$$ \mathscr{L} = \sum_i |  ŷ_i - y_i | = \| ŷ - y \|_1 $$
 
 Minimizing the absolute value loss means predicting the (conditional) median of y. Variants can handle other quantiles. 0/1 loss for classification is a special case.
 
@@ -171,7 +171,7 @@ Although the L2 norm is more precise and better in minizing prediction errors, t
 
 Hinge loss is trying to separate the positive and negative examples $$ (x,y) $$, x being the input, y the target $$ \in \{-1, 1 \} $$, the loss for a linear model is defined by
 
-$$ l = \max (0, 1 - y w \cdot x ) $$
+$$ \mathscr{L} = \max (0, 1 - y w \cdot x ) $$
 
 The minimization of the loss will only consider examples that infringe the margin, otherwise the gradient will be zero since the max saturates.
 
@@ -187,14 +187,14 @@ The hinge loss is a convex function, easy to minimize. Although it is not differ
 
 It is simply the square of the hinge loss :
 
-$$ l = \max (0, 1 - y w \cdot x )^2 $$
+$$ \mathscr{L} = \max (0, 1 - y w \cdot x )^2 $$
 
 
 # One-versus-All Hinge loss
 
 The multi-class version of the hinge loss
 
-$$ l = \sum_c \max (0, 1 -  \mathbb{1}_{y,c} w \cdot x ) $$
+$$ \mathscr{L} = \sum_c \max (0, 1 -  \mathbb{1}_{y,c} w \cdot x ) $$
 
 where
 
@@ -210,7 +210,7 @@ $$
 
 Crammer and Singer defined a multi-class version of the hinge loss :
 
-$$ l = \max (0, 1 + \max_{ c \neq y }  w_c \cdot x - w_y \cdot x ) $$
+$$ \mathscr{L} = \max (0, 1 + \max_{ c \neq y }  w_c \cdot x - w_y \cdot x ) $$
 
 so that minimizing the loss means to do both :
 
@@ -222,7 +222,7 @@ until for all these other classes, their predicted values $$ w_c \cdot x $$ are 
 
 Note that is possible to replace the 1 with a smooth $$ \Delta ( y, c) $$ value that measure the dissimilarity :
 
-$$ l = \max (0, \max_{ c \neq y } \Delta ( y, c) + w_c \cdot x - w_y \cdot x ) $$
+$$ \mathscr{L} = \max (0, \max_{ c \neq y } \Delta ( y, c) + w_c \cdot x - w_y \cdot x ) $$
 
 
 

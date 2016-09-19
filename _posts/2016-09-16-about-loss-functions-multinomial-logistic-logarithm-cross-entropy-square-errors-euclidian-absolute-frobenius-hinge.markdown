@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "About loss functions : multinomial logistic, cross entropy, square errors, euclidian, hinge, Crammer and Singer, one versus all, squared hinge, absolute value, infogain, L1 / L2 - Frobenius / L2,1 norms"
+title:  "About loss functions, regularizations and joint embeddings : multinomial logistic, cross entropy, square errors, euclidian, hinge, Crammer and Singer, one versus all, squared hinge, absolute value, infogain, L1 / L2 - Frobenius / L2,1 norms"
 date:   2016-09-16 17:00:51
 categories: deep learning
 ---
@@ -243,5 +243,39 @@ $$ \| \theta \|_2 = \sqrt{ \sum_{i,j} \theta_{i,j}^2 } = \sqrt{ \sum_i  \| \thet
 - the L2,1 norm, used for [discriminative feature selection](https://www.aaai.org/ocs/index.php/IJCAI/IJCAI11/paper/viewFile/3136/3481)
 
 $$ \| \theta \|_{2,1} = \sum_i \sqrt{ \sum_j \theta_{i,j}^2 } $$
+
+
+# Joint embedding
+
+A **joint loss** is a sum of two losses :
+
+$$ \text{min}_{\theta_1,\theta_2} \mathscr{L}_1(\theta_1) + \mathscr{L}_2(\theta_2) $$
+
+and in the case of multi-modal classification, where data is composed of multiple parts, such as for example images (x1) and texts (x2), we usually use it with multiple **embeddings**, which are high dimensional feature spaces :
+
+$$ f_{\theta_1} : x_1 \rightarrow E_1 $$
+
+$$ g_{\theta_2} : x_2 \rightarrow E_2 $$
+
+and a similarity function, such as for example,
+
+$$ s_{\theta_3} : E_1, E2 \rightarrow E_1^T W E_2 $$
+
+For example [using precomputed output embedding for each class](https://arxiv.org/pdf/1409.8403.pdf), a simple classical multi-class hinge loss will enable to train classifiers. Using a [joint loss](http://www.cv-foundation.org/openaccess/content_cvpr_2016/papers/Reed_Learning_Deep_Representations_CVPR_2016_paper.pdf) will enable to train the two embeddings simultanously.
+
+But it can also be seen as maximizing the log-likelihood for a binomial problem (the degree of similarity $$ y_1 == y_2 $$ ) on $$ X = (X1,X2) $$
+
+$$ \log p_{\theta_1,\theta_2,\theta_3}( y_1 == y_2 | x_1, x_2 ) $$
+
+where
+
+$$ p( y_1 == y_2 | x_1, x_2 ) = \int p( z_1 | x_1) p( z_2 | x_2) p( y_1 == y_2 | z_1, z2) \\
+\geq max_{z1,z2} p(z_1|x_1) p(z_2|x_2) p( y_1 == y_2 | z_1, z2 )  $$
+
+Hence, maximizing
+
+$$ \log p_{\theta_1}(z_1|x_1) + \log p_{\theta_2}(z_2|x_2) + \log p_{\theta_3}( y_1 == y_2 | z_1, z2 ) $$
+
+In [Zero shot learning via joint latent similarity Embedding](https://arxiv.org/pdf/1511.04512v3.pdf), they propose an algorithm that iteratively assign for each example in the dataset a $$ (z_1, z2) $$ value that maximizes the objective function, then optimizing $$ \theta = ( ) $$ for this assignment at a very good computational cost.
 
 **You're all set for choosing the right loss functions.**

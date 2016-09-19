@@ -179,7 +179,7 @@ In order to minimize the loss,
 
 - negative example will have to output a result inferior to -1 : $$ w \cdot x < - 1$$
 
-The hinge loss is a convex function, easy to minimize. Although it is not differentiable, it's easy to compute its gradient localy. There exists also [a smooth version of the gradient](https://en.wikipedia.org/wiki/Hinge_loss).
+The hinge loss is a convex function, easy to minimize. Although it is not differentiable, it's easy to compute its gradient locally. There exists also [a smooth version of the gradient](https://en.wikipedia.org/wiki/Hinge_loss).
 
 #  Squared hinge loss
 

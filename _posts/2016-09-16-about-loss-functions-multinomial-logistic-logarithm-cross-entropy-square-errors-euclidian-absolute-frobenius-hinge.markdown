@@ -84,7 +84,7 @@ $$ \sum_i p_i = 1 $$
 
 The equivalent to the sigmoid function in multi-dimensional space is the **softmax function or logistic function or normalized exponential function** to produce such a distribution from any input vector z :
 
-$$ z \rightarrow \frac{\exp z_i }{ \sum_k \exp^{z_k} }  $$
+$$ z \rightarrow \left{ \frac{\exp z_i }{ \sum_k \exp^{z_k} } \right}_i  $$
 
 
 The error is also best described by cross-entropy :
@@ -106,7 +106,7 @@ For example, "car", "automotible", "motor vehicule" are three labels that can be
 
 In this case, the softmax function will not apply, we usually add a sigmoïd layer before the cross-entropy layer to ensure stable gradient estimation :
 
-$$ \frac{1}{1+e^{-t}} $$
+$$ t \rightarrow \frac{1}{1+e^{-t}} $$
 
 The cross-entropy will look like :
 
@@ -157,7 +157,7 @@ Minimizing the absolute value loss means predicting the (conditional) median of 
 Note that the L1 norm is not differentiable in 0, and it is possible to use a smooth L1 :
 
 $$ | w |_{\text{smooth}} = =   \begin{cases}
-      0.5 w **2, & \text{if}\ | w  | \leq 1 \\
+      0.5 w^2, & \text{if}\ | w  | \leq 1 \\
       | w | - 0.5, & \text{otherwise}
     \end{cases}
     $$
@@ -192,11 +192,11 @@ $$ \mathscr{L} = \max (0, 1 - y w \cdot x )^2 $$
 
 The multi-class version of the hinge loss
 
-$$ \mathscr{L} = \sum_c \max (0, 1 -  \mathbb{1}_{y,c} w \cdot x ) $$
+$$ \mathscr{L} = \sum_c \max (0, 1 -  \mathbb{I}_{y,c} w \cdot x ) $$
 
 where
 
-$$   \mathbb{1}_{y,c} =   \begin{cases}
+$$   \mathbb{I}_{y,c} =   \begin{cases}
       -1, & \text{if}\ y \neq c \\
       1, & \text{otherwise}
     \end{cases}

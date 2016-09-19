@@ -244,7 +244,7 @@ $$ \| \theta \|_2 = \sqrt{ \sum_{i,j} \theta_{i,j}^2 } = \sqrt{ \sum_i  \| \thet
 
 $$ \| \theta \|_{2,1} = \sum_i \sqrt{ \sum_j \theta_{i,j}^2 } $$
 
-
+xxx
 
 
 

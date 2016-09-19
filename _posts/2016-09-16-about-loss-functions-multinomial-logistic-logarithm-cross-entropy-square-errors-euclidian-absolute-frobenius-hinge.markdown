@@ -54,7 +54,7 @@ $$ f:  x \rightarrow \frac{1}{ 1 + e^{-x}} $$
 
 Then, once the estimated probability to get 1 is $$ ŷ $$, then it is easy to see that the negative log likelihood can be written
 
-$$ \text{negative-log-likelihood} = - y \log ŷ  - (1 - y) \log ( 1 - ŷ ) $$
+$$ \mathscr{L} = - y \log ŷ  - (1 - y) \log ( 1 - ŷ ) $$
 
 which is also the **cross-entropy**
 
@@ -230,20 +230,20 @@ $$ \mathscr{L} = \max (0, \max_{ c \neq y } \Delta ( y, c) + w_c \cdot x - w_y \
 
 It is frequent to add some regularization terms to the cost function
 
-$$ min_w l(y,w) + \gamma R(w) $$
+$$ \text{min}_\theta \mathscr{L}(\theta) + \gamma R(\theta) $$
 
 such as
 
 - the L1-norm, for the LASSO regularization
 
-$$ \| w \|_1 = \sum_{i,j} | w_{i,j} | = \sum_i \| w_i \|_1 $$
+$$ \| \theta \|_1 = \sum_{i,j} | \theta_{i,j} | = \sum_i \| \theta_i \|_1 $$
 
 - the L2-norm or Frobenius norm, for the ridge regularization
 
-$$ \| w \|_2 = \sqrt{ \sum_{i,j} w_{i,j}^2 } = \sqrt{ \sum_i  \| w_i \|_2^2 } $$
+$$ \| \theta \|_2 = \sqrt{ \sum_{i,j} \theta_{i,j}^2 } = \sqrt{ \sum_i  \| \theta_i \|_2^2 } $$
 
 - the L2,1 norm, used for [discriminative feature selection](https://www.aaai.org/ocs/index.php/IJCAI/IJCAI11/paper/viewFile/3136/3481)
 
-$$ \| w \|_{2,1} = \sum_i \sqrt{ \sum_j w_{i,j}^2 } $$
+$$ \| \theta \|_{2,1} = \sum_i \sqrt{ \sum_j \theta_{i,j}^2 } $$
 
 **You're all set for choosing the right loss functions.**

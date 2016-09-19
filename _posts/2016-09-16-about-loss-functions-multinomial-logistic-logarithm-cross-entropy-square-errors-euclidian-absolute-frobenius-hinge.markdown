@@ -261,7 +261,7 @@ and a similarity function, such as for example,
 
 $$ s_{\theta_3} : E_1, E2 \rightarrow E_1^T W E_2 $$
 
-For example [using precomputed output embedding for each class](https://arxiv.org/pdf/1409.8403.pdf), a simple classical multi-class hinge loss will enable to train classifiers. Using a [joint loss](http://www.cv-foundation.org/openaccess/content_cvpr_2016/papers/Reed_Learning_Deep_Representations_CVPR_2016_paper.pdf) will enable to train the two embeddings simultanously.
+In these examples of zero-shot learning where a simple classical multi-class hinge loss was able to train classifiers [using precomputed output embedding for each class](https://arxiv.org/pdf/1409.8403.pdf), a [joint loss](http://www.cv-foundation.org/openaccess/content_cvpr_2016/papers/Reed_Learning_Deep_Representations_CVPR_2016_paper.pdf) can train the two embeddings simultanously.
 
 But it can also be seen as maximizing the log-likelihood for a binomial problem (the degree of similarity $$ y_1 == y_2 $$ ) on $$ X = (X1,X2) $$
 

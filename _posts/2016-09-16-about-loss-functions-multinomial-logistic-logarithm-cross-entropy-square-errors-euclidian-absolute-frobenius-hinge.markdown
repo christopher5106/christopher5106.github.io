@@ -60,9 +60,11 @@ $$ \text{crossentropy} (p , q ) = E_p [ -\log q ] = - \sum_x p(x ) \log q(x) = -
 
 In information theory, if you try to identify all classes with a code of a length depending of his probability, that is $$ - \log q $$, where q is your estimated probability, then the expected length in reality (p being the real probability) is given by the cross-entropy.
 
-In natural language processing, we may also speek of **perplexity** defined by
+Note that in natural language processing, we may also speek of **perplexity** defined by
 
 $$ 2^{ \text{crossentropy}(p,q)} = 2^{ - \frac{1}{N} \sum_{n=1}^N \log_2 q(x_n) } $$
+
+seen as an indicator of the number of possibilities for the variable to predict, since the perplexity of a uniform k-class random variable would be k.
 
 Last, let's remind that the combined sigmoid and cross-entropy has a very simple and stable derivative
 

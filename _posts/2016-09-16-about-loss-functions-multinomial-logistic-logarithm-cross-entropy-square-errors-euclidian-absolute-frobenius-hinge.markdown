@@ -56,9 +56,13 @@ $$ \mathscr{L} = - y \log ŷ  - (1 - y) \log ( 1 - ŷ ) $$
 
 which is also the **cross-entropy**
 
-$$ \text{crossentropy} (p , q ) = E_p [ -\log q ] = - \sum_x p(x ) \log q(x) $$
+$$ \text{crossentropy} (p , q ) = E_p [ -\log q ] = - \sum_x p(x ) \log q(x) = - \frac{1}{N} \sum_{n=1}^N log q(x_n) $$
 
 In information theory, if you try to identify all classes with a code of a length depending of his probability, that is $$ - \log q $$, where q is your estimated probability, then the expected length in reality (p being the real probability) is given by the cross-entropy.
+
+In natural language processing, we may also speek of **perplexity** defined by
+
+$$ 2^{ \text{crossentropy}(p,q)} = 2^{ - \frac{1}{N} \sum_{n=1}^N log_2 q(x_n) } $$
 
 Last, let's remind that the combined sigmoid and cross-entropy has a very simple and stable derivative
 

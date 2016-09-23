@@ -594,13 +594,13 @@ A few notes :
 
 - be careful not to predict the next value given correct previous values. Instead use previous predicted values. Otherwise, you will think you will get a good curve but even a very bad algorithm will not make a bad curve this way. You can for example think of an algorithm that would take the last value of the input sequence and this will give you a very good looking curve, with just a small delay. That is not a prediction at all. Plenty of repositories do this though.
 
-- It is also possible to predict a value at each step and back propagate for all outputs. Except for the value 1 and -1, the network will never be able to predict correctly without history.
+- It is also possible to predict a value at each step and back propagate for all outputs. Except for the value 1 and -1, the network will never be able to predict correctly without history and reduce its error during the first steps.
 
 - It is absolutely not an optimal network for the problem. Just an example. Hyperparameter tuning will help find the correct coefficients.
 
 - We can see that even with errors in the past predictions, the network does not take any delay for the future.
 
-- It is always good to know where to put the gradients manually, but you can simply the code by selecting only the last output with `nn.SelectTable` :
+- It is always good to know where to put the gradients manually, but you can simplify the code by selecting only the last output with `nn.SelectTable` :
 
 ```lua
 rnn = nn.FastLSTM(nIndex, hiddenSize)

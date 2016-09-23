@@ -277,7 +277,7 @@ gnuplot.plot({'f(x)',ii,oo,'+-'})
 ![]({{ site.url }}/img/rnn_cos.png)
 
 
-In this case, I'm only interested in predicting the value at the last step, and do not need to use a sequencer for the criterion : 
+In this case, I'm only interested in predicting the value at the last step, and do not need to use a sequencer for the criterion :
 
 ```lua
 require 'rnn'
@@ -586,5 +586,45 @@ compared with a CPU descent on a MacBook Pro or iMac:
 
 **GPU makes the difference !**
 
+Here is the result :
+
+![]({{ site.url }}/img/torch-rnn-sin.png)
+
+A few notes :
+
+- be careful not to predict the next value given correct previous values. Instead use previous predicted values. Otherwise, you will think you will get a good curve but even a very bad algorithm will not make a bad curve this way. You can for example think of an algorithm that would take the last value of the input sequence and this will give you a very good looking curve, with just a small delay. That is not a prediction at all. Plenty of repositories do this though.
+
+- It is also possible to predict a value at each step and back propagate for all outputs. Except for the value 1 and -1, the network will never be able to predict correctly without history.
+
+- It is absolutely not an optimal network for the problem. Just an example. Hyperparameter tuning will help find the correct coefficients.
+
+- We can see that even with errors in the past predictions, the network does not take any delay for the future.
+
+- It is always good to know where to put the gradients manually, but you can simply the code by selecting only the last output with `nn.SelectTable` :
+
+```lua
+rnn = nn.FastLSTM(nIndex, hiddenSize)
+
+rnn = nn.Sequential()
+    :add(nn.SplitTable(0,2))
+    :add(nn.Sequencer(rnn))
+    :add(nn.SelectTable(-1))
+    :add(nn.Linear(hiddenSize, hiddenSize))
+    :add(nn.ReLU())
+    :add(nn.Linear(hiddenSize, nIndex))
+    :add(nn.Tanh())
+```
+
+Note also the use of `nn.SplitTable` to use a Tensor as input instead of a table.
+
+Full code is available [here](https://github.com/christopher5106/rnn-sin). Second version is under *rrn_train_with_select.lua*.
+
+It is funny to play with the different parameters to see how it goes :
+
+![]({{ site.url }}/img/torch-rnn-sin-without-relu.png)
+
+![]({{ site.url }}/img/torch-rnn-sin-1.png)
+
+![]({{ site.url }}/img/torch-rnn-sin-3.png)
 
 **Well done!**

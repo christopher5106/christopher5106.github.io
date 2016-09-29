@@ -586,13 +586,24 @@ compared with a CPU descent on a MacBook Pro or iMac:
 
 **GPU makes the difference !**
 
-Here is the result :
+
+# Eval one step
+
+If you eval one step, then you get an impressive match, as many repositories do :
+
+![]({{ site.url }}/img/torch-sin-eval-one-step.png)
+
+In this case, prediction is given based on a set of perfectly correct previous values.
+
+Note that you can think of an algorithm that simply takes the last value of the input sequence as the prediction : this will produce a very good looking curve, with just a small delay. This means that predicting only one step is an easy task, and we won't be able to judge the capacity of the network.
+
+# Eval multiple step ahead
+
+I'd like to see how the prediction behaves when using the previous predicted values, and how error will be cumulated :
 
 ![]({{ site.url }}/img/torch-rnn-sin.png)
 
 A few notes :
-
-- be careful not to predict the next value given correct previous values. Instead use previous predicted values. Otherwise, you will think you will get a good curve but even a very bad algorithm will not make a bad curve this way. You can for example think of an algorithm that would take the last value of the input sequence and this will give you a very good looking curve, with just a small delay. That is not a prediction at all. Plenty of repositories do this though. You can simulate this with option `-eval_one_step true`.
 
 - It is also possible to predict a value at each step and back propagate for all outputs. Except for the value 1 and -1, the network will never be able to predict correctly without history and reduce its error during the first steps.
 
@@ -600,7 +611,7 @@ A few notes :
 
 - We can see that even with errors in the past predictions, the network does not take any delay for the future.
 
-- It is always good to know where to put the gradients manually, but you can simplify the code by selecting only the last output with `nn.SelectTable` :
+- It is always good to know where to put the gradients manually, but you can simplify the code by selecting only the last output with the `nn.SelectTable` module :
 
 ```lua
 rnn = nn.FastLSTM(nIndex, hiddenSize)
@@ -617,7 +628,11 @@ rnn = nn.Sequential()
 
 Note also the use of `nn.SplitTable` to use a Tensor as input instead of a table.
 
-Full code is available [here](https://github.com/christopher5106/rnn-sin). The option `-select false` is to desactivate the use of `nn.SelectTable` in the model (does not change the computations).
+Full code is available [here](https://github.com/christopher5106/rnn-sin).
+
+- option `-select false` to desactivate the use of `nn.SelectTable` in the model (does not change the computations).
+
+- option `-eval_one_step true` to evaluate only one step.
 
 It is funny to play with the different parameters to see how it goes :
 

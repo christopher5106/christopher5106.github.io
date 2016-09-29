@@ -603,6 +603,8 @@ I'd like to see how the prediction behaves when using the previous predicted val
 
 ![]({{ site.url }}/img/torch-rnn-sin.png)
 
+There is one limitation : training has not been done to consider this case of multiple step ahead previous predictions, even if dropout could help correct errors a bit. This gives a good reason to consider **re-inforcement learning** instead.
+
 A few notes :
 
 - It is also possible to predict a value at each step and back propagate for all outputs. Except for the value 1 and -1, the network will never be able to predict correctly without history and reduce its error during the first steps.

@@ -592,7 +592,7 @@ Here is the result :
 
 A few notes :
 
-- be careful not to predict the next value given correct previous values. Instead use previous predicted values. Otherwise, you will think you will get a good curve but even a very bad algorithm will not make a bad curve this way. You can for example think of an algorithm that would take the last value of the input sequence and this will give you a very good looking curve, with just a small delay. That is not a prediction at all. Plenty of repositories do this though.
+- be careful not to predict the next value given correct previous values. Instead use previous predicted values. Otherwise, you will think you will get a good curve but even a very bad algorithm will not make a bad curve this way. You can for example think of an algorithm that would take the last value of the input sequence and this will give you a very good looking curve, with just a small delay. That is not a prediction at all. Plenty of repositories do this though. You can simulate this with option `-eval_one_step true`.
 
 - It is also possible to predict a value at each step and back propagate for all outputs. Except for the value 1 and -1, the network will never be able to predict correctly without history and reduce its error during the first steps.
 
@@ -617,7 +617,7 @@ rnn = nn.Sequential()
 
 Note also the use of `nn.SplitTable` to use a Tensor as input instead of a table.
 
-Full code is available [here](https://github.com/christopher5106/rnn-sin). Second version is under *rrn_train_with_select.lua*.
+Full code is available [here](https://github.com/christopher5106/rnn-sin). The option `-select false` is to desactivate the use of `nn.SelectTable` in the model (does not change the computations).
 
 It is funny to play with the different parameters to see how it goes :
 

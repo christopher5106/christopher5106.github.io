@@ -1,0 +1,41 @@
+---
+layout: post
+title:  "1D grid LSTM and the XOR problem"
+date:   2016-10-21 17:00:51
+categories: deep learning
+---
+
+A short post about a very nice classifier, the 1D-Grid-LSTM, and its application on the XOR problem, as proposed in []().
+
+The XOR problem consists in predicting the parity of a string of bits, 0 and 1. If the sum of the bits is odd, the target is the 0. If the sum of the bits is even, the target is 1.
+
+The problem is pathological in the sense a simple bit in the input sequence can change the target to its contrary.
+
+Although it is simple to build a network manually, or to build a recurrent network on the input sequence, it is a much more complicated problem to use the complete sequence as input of a feed forward network and train it with the traditional gradient descent.
+
+The 1D Grid LSTM solves this problem very nicely, demonstrating the power of the grid.
+
+# The story
+
+Grid LSTM have been invented in continuity of stacked LSTM and multi-dimensional LSTM. They present a more general concept, much precise than stacked LSTM and more stable than multi-dimensional LSTM.
+
+Consider a 2D-Grid-LSTM (2 dimensions) as a virtual cell running on a 2D grid  instead of a sequence.
+
+![](img/grid-2d.png)
+
+For each cell in the grid, there can be an input and/or an output, as well as no input and/or no output. In the case of 1D sequences (times series, textes, ...) for which GRID LSTM perform better, input can be given for the bottom row only as shown with the input sentence "I love deep learning". In case of text classification for example, output will be given for the last cell top right (as shown with "Good" output label).
+
+The first dimension is usually the *time*, the second dimension the *depth*.
+
+The equation is given by :
+
+$$ h_2', m_2' = \text{LSTM} (h_1, h_2', m_2, W_2) $$
+
+$$ h_1', m_1' = \text{LSTM} (h_1, h_2, m_1, W_1) $$
+
+
+In this example, the depth dimension is prioritary on the time dimension : we first compute the depth dimension, then the time dimension second, since the LSTM of the time dimension will rely on the output value of the depth dimension. Parallelisation of the computations cannot be performed randomly and require to follow this order.
+
+![](img/grid-2d-lstm.png)
+
+We usually feed the input into the hidden state of the first row, with a linear state.

@@ -1,11 +1,11 @@
 ---
 layout: post
-title:  "1D grid LSTM and the XOR problem"
+title:  "1-grid LSTM and the XOR problem"
 date:   2016-10-21 17:00:51
 categories: deep learning
 ---
 
-A short post about a very nice classifier, the 1D-Grid-LSTM, and its application on the XOR problem, as proposed in []().
+A short post about a very nice classifier, the 1-Grid-LSTM, and its application on the XOR problem, as proposed in [Nal Kalchbrenner, Ivo Danihelka, Alex Graves paper](https://arxiv.org/abs/1507.01526).
 
 The XOR problem consists in predicting the parity of a string of bits, 0 and 1. If the sum of the bits is odd, the target is the 0. If the sum of the bits is even, the target is 1.
 
@@ -13,15 +13,15 @@ The problem is pathological in the sense a simple bit in the input sequence can 
 
 Although it is simple to build a network manually, or to build a recurrent network on the input sequence, it is a much more complicated problem to use the complete sequence as input of a feed forward network and train it with the traditional gradient descent.
 
-The 1D Grid LSTM solves this problem very nicely, demonstrating the power of the grid.
+The 1-Grid LSTM solves this problem very nicely, demonstrating the power of the grid.
 
 # The story
 
 Grid LSTM have been invented in continuity of stacked LSTM and multi-dimensional LSTM. They present a more general concept, much precise than stacked LSTM and more stable than multi-dimensional LSTM.
 
-Consider a 2D-Grid-LSTM (2 dimensions) as a virtual cell running on a 2D grid  instead of a sequence.
+Consider a 2-Grid-LSTM (2 dimensions) as a virtual cell running on a 2D grid  instead of a sequence.
 
-![](img/grid-2d.png)
+![The run of a 2-GRID LSTM](img/grid-2d.png)
 
 For each cell in the grid, there can be an input and/or an output, as well as no input and/or no output. In the case of 1D sequences (times series, textes, ...) for which GRID LSTM perform better, input can be given for the bottom row only as shown with the input sentence "I love deep learning". In case of text classification for example, output will be given for the last cell top right (as shown with "Good" output label).
 
@@ -40,9 +40,9 @@ In this example, the depth dimension is prioritary on the time dimension : we fi
 
 We usually feed the input into the hidden state of the first row, with a linear state. Let's see with 1D Grid LSTM.
 
-# 1D Grid LSTM
+# 1-Grid LSTM
 
-The 1D Grid LSTM looks as follow :
+The 1-Grid LSTM looks as follow :
 
 ![](img/grid-1d.png)
 
@@ -54,13 +54,13 @@ It looks very closely to a LSTM, but with the following differences :
 
 The XOR problem shows the power of such network as classifiers. Here are two implementations :
 
-- [Theano 1D Grid LSTM]()
+- [Theano 1-Grid LSTM](https://github.com/christopher5106/grid-1D-LSTM-theano)
 
-- [Torch 1D Grid LSTM]()
+- [Torch 1-Grid LSTM](https://github.com/christopher5106/grid-1D-LSTM-torch)
 
 # Generalization
 
-The ND-Grid LSTM is a improvement of the multi-dimensional LSTM.
+The N-Grid LSTM is a improvement of the multi-dimensional LSTM.
 
 The option to untie the weigths in the depth direction is considered also during evaluation of models.
 

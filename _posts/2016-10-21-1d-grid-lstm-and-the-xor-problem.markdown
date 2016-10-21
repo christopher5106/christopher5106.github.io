@@ -38,4 +38,30 @@ In this example, the depth dimension is prioritary on the time dimension : we fi
 
 ![](img/grid-2d-lstm.png)
 
-We usually feed the input into the hidden state of the first row, with a linear state.
+We usually feed the input into the hidden state of the first row, with a linear state. Let's see with 1D Grid LSTM.
+
+# 1D Grid LSTM
+
+The 1D Grid LSTM looks as follow :
+
+![](img/grid-1d.png)
+
+It looks very closely to a LSTM, but with the following differences :
+
+- there is no input at each step in the recurrence of the LSTM
+
+- the input is fed into the hidden state and cell state thanks to a linear projection
+
+The XOR problem shows the power of such network as classifiers. Here are two implementations :
+
+- [Theano 1D Grid LSTM]()
+
+- [Torch 1D Grid LSTM]()
+
+# Generalization
+
+The ND-Grid LSTM is a improvement of the multi-dimensional LSTM.
+
+The option to untie the weigths in the depth direction is considered also during evaluation of models.
+
+In this case, if you also remove the cell in the depth LSTM and replace the LSTM by a non-linearity, you come back to the stacked LSTM.

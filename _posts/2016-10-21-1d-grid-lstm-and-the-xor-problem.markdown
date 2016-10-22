@@ -31,7 +31,7 @@ To get a good idea of what it means, you can consider a 2-Grid-LSTM as a virtual
 
 ![The run of a 2-GRID LSTM]({{ site.url }}/img/grid-2d.png)
 
-LSTM 1 uses the hidden state value of the LSTM 2, in this case $$ h_2^{x,y} $$, instead of its previous values. This helps the network learn faster correlation between the two LSTM. There is always a notion of **priority** and **order** in the computation of the LSTM. Parallelisation of the computations require to take into consideration this order.
+LSTM 1 uses the hidden state value of the LSTM 2, in this case $$ h_2^{x,y} $$, instead of its previous value. This helps the network learn faster correlation between the two LSTM. There is always a notion of **priority** and **order** in the computation of the LSTM. Parallelisation of the computations require to take into consideration this order.
 
 For each cell in the grid, there can be an input and/or an output, as well as no input and/or no output.
 
@@ -41,7 +41,7 @@ In case of text classification, output will be given for the last cell top right
 
 The first dimension is usually the *time* (x), the second dimension the *depth* (y).
 
-Here is the mecanism and the connections inside the cell : 
+Here is the mecanism and the connections inside the cell :
 
 ![]({{ site.url }}/img/grid-2d-lstm.png)
 

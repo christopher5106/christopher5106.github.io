@@ -41,6 +41,8 @@ In case of text classification, output will be given for the last cell top right
 
 The first dimension is usually the *time* (x), the second dimension the *depth* (y).
 
+Here is the mecanism and the connections inside the cell : 
+
 ![]({{ site.url }}/img/grid-2d-lstm.png)
 
 
@@ -75,4 +77,6 @@ Two options are possible :
 
 - the LSTM 2 can be transformed into a feedforward model, where weights are not shared between the different level y
 
-In this last case, if you also remove the cell in the depth LSTM and replace the LSTM by a non-linearity, you come back to the stacked LSTM.
+In this last case, if you also remove the cell in the LSTM 2 and replace the LSTM mecanism by a non-linearity, you come back to the stacked LSTM.
+
+**Nice!**

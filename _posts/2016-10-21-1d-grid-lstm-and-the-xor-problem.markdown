@@ -19,36 +19,40 @@ It is a much more complicated problem to train a feed forward network with the t
 
 Grid LSTM have been invented in continuity of stacked LSTM and multi-dimensional LSTM. They present a more general concept, much precise than stacked LSTM and more stable than multi-dimensional LSTM.
 
-Consider a 2-Grid-LSTM (2 dimensions) as a virtual cell running on a 2D grid  instead of a sequence.
+Since it is complicated to visualize a N-Grid LSTM let's consider the 2-Grid-LSTM.
+
+The 2-Grid-LSTM is composed of 2 LSTM running on 2 different dimensions (x,y), given by the following equation :
+
+$$ h_2^{x,y}, m_2^{x,y} = \text{LSTM}^2 (h_1^{x,y-1}, h_2^{x,y-1}, m_2^{x,y-1}) $$
+
+$$ h_1^{x,y}, m_1^{x,y} = \text{LSTM}^1 (h_1^{x-1,y}, h_2^{x,y}, m_1^{x-1,y}) $$
+
+To get a good idea of what it means, you can consider a 2-Grid-LSTM as a virtual cell traveling on a 2 dimensional grid :
 
 ![The run of a 2-GRID LSTM]({{ site.url }}/img/grid-2d.png)
 
-For each cell in the grid, there can be an input and/or an output, as well as no input and/or no output. In the case of 1D sequences (times series, textes, ...) for which GRID LSTM perform better, input can be given for the bottom row only as shown with the input sentence "I love deep learning". In case of text classification for example, output will be given for the last cell top right (as shown with "Good" output label).
+LSTM 1 uses the hidden state value of the LSTM 2, in this case $$ h_2^{x,y} $$, instead of its previous values. This helps the network learn faster correlation between the two LSTM. There is always a notion of **priority** and **order** in the computation of the LSTM. Parallelisation of the computations require to take into consideration this order.
 
-The first dimension is usually the *time*, the second dimension the *depth*.
+For each cell in the grid, there can be an input and/or an output, as well as no input and/or no output.
 
-The equation is given by :
+In the case of 1D sequences (times series, textes, ...) for which 2-GRID LSTM perform better than stacked LSTM, input is given for the bottom row, as shown with the input sentence "I love deep learning" in the above figure.
 
-$$ h_2', m_2' = \text{LSTM} (h_1, h_2', m_2, W_2) $$
+In case of text classification, output will be given for the last cell top right (as shown with "Good" output label in the above figure).
 
-$$ h_1', m_1' = \text{LSTM} (h_1, h_2, m_1, W_1) $$
-
-
-In this example, the depth dimension is prioritary on the time dimension : we first compute the depth dimension, then the time dimension second, since the LSTM of the time dimension will rely on the output value of the depth dimension. Parallelisation of the computations cannot be performed randomly and require to follow this order.
+The first dimension is usually the *time* (x), the second dimension the *depth* (y).
 
 ![]({{ site.url }}/img/grid-2d-lstm.png)
 
-We usually feed the input into the hidden state of the first row, with a linear state. Let's see with 1D Grid LSTM.
 
-# 1-Grid LSTM
+# 1-Grid LSTM, a special case
 
-The 1-Grid LSTM looks as follow :
+The 1-Grid LSTM is a special case since the LSTM is used along the depth dimension to create a feedforward classifier instead of a recurrent network. It looks as follow :
 
 ![]({{ site.url }}/img/grid-1d.png)
 
 It looks very closely to a LSTM, but with the following differences :
 
-- there is no input at each step in the recurrence of the LSTM
+- there is no input at each step in the recurrence of the LSTM, and the recurrence is used along the depth dimension as a gated mecanism (such as in a Highway networks)
 
 - the input is fed into the hidden state and cell state thanks to a linear projection
 
@@ -58,10 +62,17 @@ The XOR problem shows the power of such network as classifiers. Here are two imp
 
 - [Torch 1-Grid LSTM](https://github.com/christopher5106/grid-1D-LSTM-torch)
 
+
 # Generalization
 
 The N-Grid LSTM is a improvement of the multi-dimensional LSTM.
 
 The option to untie the weigths in the depth direction is considered also during evaluation of models.
 
-In this case, if you also remove the cell in the depth LSTM and replace the LSTM by a non-linearity, you come back to the stacked LSTM.
+Two options are possible :
+
+- the LSTM 1 at different level y can have different weigths
+
+- the LSTM 2 can be transformed into a feedforward model, where weights are not shared between the different level y
+
+In this last case, if you also remove the cell in the depth LSTM and replace the LSTM by a non-linearity, you come back to the stacked LSTM.

@@ -21,7 +21,7 @@ Grid LSTM have been invented in continuity of stacked LSTM and multi-dimensional
 
 Consider a 2-Grid-LSTM (2 dimensions) as a virtual cell running on a 2D grid  instead of a sequence.
 
-![The run of a 2-GRID LSTM](img/grid-2d.png)
+![The run of a 2-GRID LSTM]({{ site.url }}/img/grid-2d.png)
 
 For each cell in the grid, there can be an input and/or an output, as well as no input and/or no output. In the case of 1D sequences (times series, textes, ...) for which GRID LSTM perform better, input can be given for the bottom row only as shown with the input sentence "I love deep learning". In case of text classification for example, output will be given for the last cell top right (as shown with "Good" output label).
 
@@ -36,7 +36,7 @@ $$ h_1', m_1' = \text{LSTM} (h_1, h_2, m_1, W_1) $$
 
 In this example, the depth dimension is prioritary on the time dimension : we first compute the depth dimension, then the time dimension second, since the LSTM of the time dimension will rely on the output value of the depth dimension. Parallelisation of the computations cannot be performed randomly and require to follow this order.
 
-![](img/grid-2d-lstm.png)
+![]({{ site.url }}/img/grid-2d-lstm.png)
 
 We usually feed the input into the hidden state of the first row, with a linear state. Let's see with 1D Grid LSTM.
 
@@ -44,7 +44,7 @@ We usually feed the input into the hidden state of the first row, with a linear 
 
 The 1-Grid LSTM looks as follow :
 
-![](img/grid-1d.png)
+![]({{ site.url }}/img/grid-1d.png)
 
 It looks very closely to a LSTM, but with the following differences :
 

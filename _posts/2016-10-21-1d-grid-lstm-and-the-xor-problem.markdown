@@ -73,10 +73,12 @@ The option to untie the weigths in the depth direction is considered also during
 
 Two options are possible :
 
-- the LSTM 1 at different level y can have different weigths
+- the LSTM 1 at different level y can have different weigths. It is usually the case in many implementations.
 
-- the LSTM 2 can be transformed into a feedforward model, where weights are not shared between the different level y
+- the LSTM 2 can be transformed into a feedforward model, where weights are not shared between the different level y.
 
-In this last case, if you also remove the cell in the LSTM 2 and replace the LSTM mecanism by a non-linearity, it comes back to the stacked LSTM.
+Last, it is also possible to remove the cell in the LSTM 2 and replace the LSTM mecanism by a non-linearity, to come back to the stacked LSTM architecture.
+
+In this sense, N-Grid-LSTM with the option of **untying the weights** and modifying the mecanism is a generalization of stacked LSTM. 
 
 **Nice!**

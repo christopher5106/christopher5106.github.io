@@ -5,15 +5,15 @@ date:   2016-10-21 17:00:51
 categories: deep learning
 ---
 
-A short post about a very nice classifier, the 1-Grid-LSTM, and its application on the XOR problem, as proposed in [Nal Kalchbrenner, Ivo Danihelka, Alex Graves paper](https://arxiv.org/abs/1507.01526).
+A short post about a very nice classifier, the 1-Grid-LSTM, and its application to the XOR problem, as proposed by [Nal Kalchbrenner, Ivo Danihelka, Alex Graves in their paper](https://arxiv.org/abs/1507.01526).
 
 The XOR problem consists in predicting the parity of a string of bits, 0 and 1. If the sum of the bits is odd, the target is the 0. If the sum of the bits is even, the target is 1.
 
-The problem is pathological in the sense a simple bit in the input sequence can change the target to its contrary.
+The problem is pathological in the sense a simple bit in the input sequence can change the target to its contrary. During training, accuracy is not better than random for a while, although a kind of engagement can be seen in a wavy increase to 100%.
 
-Although it is simple to build a network manually, or to build a recurrent network on the input sequence, it is a much more complicated problem to use the complete sequence as input of a feed forward network and train it with the traditional gradient descent.
+Building a network manually, or building a recurrent network with the bits as input sequence to the RNN, are easy.
 
-The 1-Grid LSTM solves this problem very nicely, demonstrating the power of the grid.
+It is a much more complicated problem to train a feed forward network with the traditional gradient descent on the full bit string as input. The 1-Grid LSTM solves this problem very nicely, demonstrating the power of the grid.
 
 # The story
 

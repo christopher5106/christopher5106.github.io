@@ -13,7 +13,7 @@ The problem is pathological in the sense a simple bit in the input sequence can 
 
 Building a network manually, or building a recurrent network with the bits as input sequence to the RNN, are easy.
 
-It is a much more complicated problem to train a feed forward network with the traditional gradient descent on the full bit string as input. The 1-Grid LSTM solves this problem very nicely, demonstrating the power of the grid.
+It is a much more complicated problem to train a feed forward network with the traditional gradient descent on the full bit string as input. The 1-Grid LSTM is a feed forward network that solves this problem very nicely, demonstrating the power of the grid.
 
 # The story
 

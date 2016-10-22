@@ -77,6 +77,6 @@ Two options are possible :
 
 - the LSTM 2 can be transformed into a feedforward model, where weights are not shared between the different level y
 
-In this last case, if you also remove the cell in the LSTM 2 and replace the LSTM mecanism by a non-linearity, you come back to the stacked LSTM.
+In this last case, if you also remove the cell in the LSTM 2 and replace the LSTM mecanism by a non-linearity, it comes back to the stacked LSTM.
 
 **Nice!**

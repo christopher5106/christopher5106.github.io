@@ -65,6 +65,12 @@ The XOR problem shows the power of such network as classifiers. Here are two imp
 - [Torch 1-Grid LSTM](https://github.com/christopher5106/grid-1D-LSTM-torch)
 
 
+1-Grid-LSTM is very close to [memory networks](https://arxiv.org/abs/1503.08895), networks that are also recurrent along the depth dimension, but whose weights can vary depending on a *memory* that is being feed with *statements* or *facts*.
+
+Recurrency along the depth sounds to me very close to natural **reasoning**, for which I have the feeling our brain is spinning for a certain amount of time, until it founds the solution. But that is not very scientific...
+
+[Recurrent Highway Networks](https://arxiv.org/abs/1607.03474) also use this kind of recurrency.
+
 # Generalization
 
 The N-Grid LSTM is a improvement of the multi-dimensional LSTM.

@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "About loss functions, regularization and joint losses : multinomial logistic, cross entropy, square errors, euclidian, hinge, Crammer and Singer, one versus all, squared hinge, absolute value, infogain, L1 / L2 - Frobenius / L2,1 norms"
+title:  "About loss functions, regularization and joint losses : multinomial logistic, cross entropy, square errors, euclidian, hinge, Crammer and Singer, one versus all, squared hinge, absolute value, infogain, L1 / L2 - Frobenius / L2,1 norms, connectionist temporal classification loss"
 date:   2016-09-16 17:00:51
 categories: deep learning
 ---
@@ -282,5 +282,29 @@ Hence, maximizing
 $$ \mathscr{L}(w) = \max_{z_1,z_2} \log p_{w_1}(z_1|x_1) + \log p_{w_2}(z_2|x_2) + \log p_{w_3}( s_{1,2} | z_1, z_2 ) $$
 
 In [Zero shot learning via joint latent similarity Embedding](https://arxiv.org/pdf/1511.04512v3.pdf), Zhang *et al.* propose an algorithm that iteratively assigns to each example in the dataset an embedding value $$ (z_1, z_2) $$ that maximizes the objective function over all data, then optimizes $$ w = ( w_1,w_2,w_3 ) $$ for this assignment at a very good computational cost.
+
+# Connectionist temporal classification loss
+
+This loss function is designed for temporal classification, to have the underlying network concentrate its discriminative capacity and sharpen its classification around **spikes**.
+
+This loss has been used in [audio classification](ftp://ftp.idsia.ch/pub/juergen/icml2006.pdf).
+
+We consider sequences **x** of length T, depending of the sampling interval. The idea is to design a network that is able to predict the correct class as well as *blanks* during no class is predicted. The underlying network output is enhanced with a *blank* class, and the output dictionary becomes $$ L \cup \{ blank \} $$. At each time step or *audio frame*, the network will predict the class probability $$ y_k^t $$ and the probability of a *path* is given by
+
+$$ p(\pi | x ) = \prod_{t=1}^T  y_k^t $$
+
+Nevertheless not every path can be a label : in audio classification, if successive frames are too close, they will correspond to the same phoneme, that's why the first rule is to reduce successive identical predictions into 1 phoneme if there is no blank between them. Also blanks can be removed.
+
+$$ \mathcal{B}(a--ab-) = \mathcal{B}(-aa-abb) = aab $$
+
+and the probability of a label in the CTC loss is defined as the sum of the probabilities of all paths reducing to it :
+
+$$ p(l | x ) = \sum_{\pi \in \mathcal{B}^{-1}(l)}  p(\pi | x ) $$
+
+The CTC loss is simply the negative log likelihood of this probability for correct classification
+
+$$ - \sum_{(x,l)\in \mathcal{S}} \ln p(l | x) $$
+
+[The original paper](ftp://ftp.idsia.ch/pub/juergen/icml2006.pdf) gives the formulation to compute the derivative of the CTC loss.
 
 **You're all set for choosing the right loss functions.**

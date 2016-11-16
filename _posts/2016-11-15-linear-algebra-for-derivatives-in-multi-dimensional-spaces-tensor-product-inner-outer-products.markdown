@@ -116,6 +116,9 @@ $$ \frac{ \partial \mathcal{C} }{ \partial w_i \partial w_j } =  \sum_k \sum_l \
 
 $$ h_{\mathcal{C}} = J_{\mathcal{N}}^T \times h_{\mathcal{L}} \times J_{\mathcal{N}} + \sum_k (J_{\mathcal{L}})_k \times h_{\mathcal{N}_k} $$
 
+The first part $$ J_{\mathcal{N}}^T \times h_{\mathcal{L}} \times J_{\mathcal{N}} $$ is the **Gauss-Newton matrix**, modeling the interactions of second order originated from the top part $$ \mathcal{L} $$. It is positive semi definite and is used as an approximation in some second order optimization algorithms. 
+
+
 # Matching loss function
 
 Let's consider the case where $$ \mathcal{N} $$ is the output non-linearity module, such as softmax.

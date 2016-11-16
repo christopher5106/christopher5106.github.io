@@ -23,7 +23,7 @@ $$ \mathcal{L} : \mathbb{R}^o \rightarrow \mathbb{R} $$
 
 # Linear algebra
 
-A matrix multiplication gives a new matrix :
+A matrix multiplication (or tensor product in higher dimensions) gives a new matrix :
 
 $$ A \times B = [ \sum_k a_{i,k} b_{k,j} ]_{i,j} $$
 
@@ -35,7 +35,7 @@ The same for matrices, the matrix dot product or Frobenius inner product, output
 
 $$ A \odot B = \sum_{i,j} a_{i,j} b_{i,j} $$
 
-The outer product of 2 vectors produces a matrix : 
+The outer product of 2 vectors produces a matrix :
 
 $$ u \otimes v = u \times v^T = [ u_i v_j ]_{i,j}  $$
 

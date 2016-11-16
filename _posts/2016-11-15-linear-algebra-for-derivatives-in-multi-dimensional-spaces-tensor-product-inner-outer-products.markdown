@@ -25,7 +25,7 @@ $$ \mathcal{L} : \mathbb{R}^o \rightarrow \mathbb{R} $$
 
 A matrix multiplication (or tensor product in higher dimensions) gives a new matrix :
 
-$$ A \times B = [ \sum_k a_{i,k} b_{k,j} ]_{i,j} $$
+$$ A B = A \times B = A \cdot B = [ \sum_k a_{i,k} b_{k,j} ]_{i,j} $$
 
 The inner product or scalar product or of 2 vectors outputs a scalar :
 
@@ -116,7 +116,7 @@ $$ \frac{ \partial \mathcal{C} }{ \partial w_i \partial w_j } =  \sum_k \sum_l \
 
 $$ h_{\mathcal{C}} = J_{\mathcal{N}}^T \times h_{\mathcal{L}} \times J_{\mathcal{N}} + \sum_k (J_{\mathcal{L}})_k \times h_{\mathcal{N}_k} $$
 
-The first part $$ J_{\mathcal{N}}^T \times h_{\mathcal{L}} \times J_{\mathcal{N}} $$ is the **Gauss-Newton matrix**, modeling the interactions of second order originated from the top part $$ \mathcal{L} $$. It is positive semi definite and is used as an approximation in some second order optimization algorithms. 
+The first part $$ G = J_{\mathcal{N}}^T \times h_{\mathcal{L}} \times J_{\mathcal{N}} $$ is the **Gauss-Newton matrix**, modeling the interactions of second order originated from the top part $$ \mathcal{L} $$. It is positive semi definite and is used as an approximation in some second order optimization algorithms.
 
 
 # Matching loss function

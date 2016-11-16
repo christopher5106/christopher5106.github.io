@@ -21,6 +21,25 @@ A loss function is a mapping to a 1-dimension space (scalar) :
 
 $$ \mathcal{L} : \mathbb{R}^o \rightarrow \mathbb{R} $$
 
+# Linear algebra
+
+A matrix multiplication gives a new matrix :
+
+$$ A \times B = [ \sum_k a_{i,k} b_{k,j} ]_{i,j} $$
+
+The inner product or scalar product or of 2 vectors outputs a scalar :
+
+$$ u \cdot v = \sum_i u_i v_i = u^T \times v $$
+
+The same for matrices, the matrix dot product or Frobenius inner product, outputs a scalar :
+
+$$ A \odot B = \sum_{i,j} a_{i,j} b_{i,j} $$
+
+The outer product of 2 vectors produces a matrix : 
+
+$$ u \otimes v = u \times v^T = [ u_i v_j ]_{i,j}  $$
+
+
 # Jacobian
 
 The Jacobian is the first order derivative of the function.

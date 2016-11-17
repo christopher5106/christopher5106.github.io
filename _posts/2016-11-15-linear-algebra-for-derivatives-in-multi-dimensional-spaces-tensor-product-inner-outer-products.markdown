@@ -68,11 +68,11 @@ where i is the indice of the output in the network output.
 
 For the example, the Jacobian of a linear layer :
 
-$$ \frac{\partial }{\partial h} A \cdot h = A $$
+$$ \frac{\partial }{\partial h} W \cdot h = W $$
 
-and with an activation function f : 
+and with an activation function f :
 
-$$ \frac{\partial }{\partial h} f(A \cdot h) = diag( f'(A \cdot h) ) A $$
+$$ \frac{\partial }{\partial h} f(W \cdot h) = diag( f'(W \cdot h) ) A $$
 
 
 # Hessian

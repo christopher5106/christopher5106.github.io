@@ -66,6 +66,15 @@ $$ J = \frac{ \partial \mathcal{L} }{ \partial \vec{u}^T } $$
 
 where i is the indice of the output in the network output.
 
+For the example, the Jacobian of a linear layer :
+
+$$ \frac{\partial }{\partial h} A \cdot h = A $$
+
+and with an activation function f : 
+
+$$ \frac{\partial }{\partial h} f(A \cdot h) = diag( f'(A \cdot h) ) A $$
+
+
 # Hessian
 
 The hessian is the second order derivative, following the same definition as for Jacobian :
@@ -94,7 +103,7 @@ In the general case when $$ \mathcal{L} $$ has a multi-dimensional output
 
 $$ \frac{ \partial \mathcal{C}_i }{ \partial w_j } = \sum_k \frac{ \partial \mathcal{L}_i }{ \partial u_k } \times \frac{ \partial \mathcal{N}_k }{ \partial w_j } $$
 
-which is a simple matrix multiplication
+which is a simple matrix multiplication named the **chain rule** :
 
 $$ J_{\mathcal{C}} =  J_{\mathcal{L}} \times  J_{\mathcal{N}} $$
 

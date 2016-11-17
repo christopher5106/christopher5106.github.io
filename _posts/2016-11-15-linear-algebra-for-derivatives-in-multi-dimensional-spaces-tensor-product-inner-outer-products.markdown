@@ -72,7 +72,7 @@ $$ \frac{\partial }{\partial \vec{h}^T } W \cdot \vec{h} = W $$
 
 and with an activation function f :
 
-$$ \frac{\partial }{\partial \vec{h}^T} f(W \cdot \vec{h}) = diag( f'(W \cdot \vec{h}) ) A $$
+$$ \frac{\partial }{\partial \vec{h}^T} f(W \cdot \vec{h}) = diag( f'(W \cdot \vec{h}) ) \cdot A $$
 
 
 # Hessian

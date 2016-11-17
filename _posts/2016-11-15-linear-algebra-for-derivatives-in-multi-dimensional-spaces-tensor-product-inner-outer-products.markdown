@@ -72,8 +72,9 @@ $$ \frac{\partial }{\partial \vec{h}^T } \left[ W \cdot \vec{h} \right] = W $$
 
 and with an activation function f :
 
-$$ \frac{\partial }{\partial \vec{h}^T} \left[ f(W \cdot \vec{h}) \right] = diag( j_f (W \cdot \vec{h}) ) \cdot W $$
+$$ \frac{\partial }{\partial \vec{h}^T} \left[ f(W \cdot \vec{h}) \right] = diag( f' (W \cdot \vec{h}) ) \cdot W $$
 
+The non-linearity is multiplying each row
 
 # Hessian
 

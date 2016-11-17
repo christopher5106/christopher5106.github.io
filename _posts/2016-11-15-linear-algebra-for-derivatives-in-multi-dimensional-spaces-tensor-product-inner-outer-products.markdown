@@ -74,7 +74,7 @@ and with an activation function f :
 
 $$ \frac{\partial }{\partial \vec{h}^T} \left[ f(W \cdot \vec{h}) \right] = diag( f' (W \cdot \vec{h}) ) \cdot W $$
 
-The non-linearity is multiplying each row
+The introduction of a non-linearity modifies the Jacobian so that each row (corresponding to the Jacobian of one neuron / output) is multiplied by the non-linearity derivative value at this neuron output.
 
 # Hessian
 

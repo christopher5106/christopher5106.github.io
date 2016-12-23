@@ -244,7 +244,7 @@ for i in {0..10}; do
   echo $COMMAND
   $COMMAND
 
-  # wait update
+  # wait the retrained timestamp has been updated
   while [ "$RETRAINED" == "$TIMESTAMP" ]
   do
     RETRAINED=`curl -s -X GET "https://gateway-a.watsonplatform.net/visual-recognition/api/v3/classifiers/$CLASSIFIER?api_key=$API_KEY&version=2016-05-20" | python -c "import json,sys;obj=json.load(sys.stdin);print obj['retrained'];"`

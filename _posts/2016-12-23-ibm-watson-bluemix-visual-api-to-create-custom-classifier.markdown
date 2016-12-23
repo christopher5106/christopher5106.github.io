@@ -225,7 +225,16 @@ curl -X GET "https://gateway-a.watsonplatform.net/visual-recognition/api/v3/clas
 
 # Update the created classifier with more classes
 
-Let's upload the remaining 91 classes. The service accepts a maximum of 256 MB per training call so we can only upload up to 9 classes per update. Also, if you submit an update command without waiting the **ready** state, the previous update command will be erased/canceled, which is not an intented behavior. After the first update, a retrained timestamp appears in the classifier JSON. After each retraining, the retrained timestamp will be updated with the last retraining update :
+Let's upload the remaining 91 classes. The service accepts a maximum of 256 MB per training call so we can only upload up to 9 classes per update. Also, if you submit an update command without waiting the **ready** state, or without waiting that the retrained timestamp has not been updated, the previous update command will be erased/canceled, which is not an intented behavior. After the first update, a retrained timestamp appears in the classifier JSON. After each retraining, the retrained timestamp will be updated with the last retraining update. Last, the update command returns a **413 Request Entity Too Large** which is not an error and has to ignored :
+
+    <html>
+    <head><title>413 Request Entity Too Large</title></head>
+    <body bgcolor="white">
+    <center><h1>413 Request Entity Too Large</h1></center>
+    <hr><center>nginx</center>
+    </body>
+    </html>
+
 
 ```bash
 # Wait that classifier is in ready state
@@ -244,8 +253,8 @@ for i in {0..10}; do
   echo $COMMAND
   $COMMAND
 
-  # wait the retrained timestamp has been updated
-  while [ "$RETRAINED" == "$TIMESTAMP" ]
+  # wait the retrained timestamp is not void or has been updated
+  while [ "$RETRAINED" == "" ] || [ "$RETRAINED" == "$TIMESTAMP" ]
   do
     RETRAINED=`curl -s -X GET "https://gateway-a.watsonplatform.net/visual-recognition/api/v3/classifiers/$CLASSIFIER?api_key=$API_KEY&version=2016-05-20" | python -c "import json,sys;obj=json.load(sys.stdin);print obj['retrained'];"`
     echo "Waiting update. Waiting 10s."

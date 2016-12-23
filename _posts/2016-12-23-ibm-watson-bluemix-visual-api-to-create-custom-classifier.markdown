@@ -68,7 +68,7 @@ The standard classifier comes with a huge dictionary of labels, for which models
     curl -X POST -F "images_file=@test/apple_pie/1011328.jpg" "https://gateway-a.watsonplatform.net/visual-recognition/api/v3/classify?api_key=$API_KEY&version=2016-05-20"
 
 
-![](img/apple_pie.jpg)
+![]({{ site.url }}/img/apple_pie.jpg)
 
 The classes retrieved for our apple pie are : sea hare, "shellfish, invertebrate, animal, giant conch...
 

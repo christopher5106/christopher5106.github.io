@@ -42,12 +42,12 @@ do
   while read -r line
   do
       name="$line"
-      DIRNAME="train/"`dirname $name`
+      DIRNAME="$SPLIT/"`dirname $name`
       if [ ! -d "$DIRNAME" ]; then
         echo "mkdir $DIRNAME"
         mkdir $DIRNAME
       fi
-      cp "food-101/images/$line.jpg" "$PLIT/$line.jpg"
+      cp "food-101/images/$line.jpg" "$SPLIT/$line.jpg"
       echo "Name read from file - $name"
   done < food-101/meta/$SPLIT.txt
 done

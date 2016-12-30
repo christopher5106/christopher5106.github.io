@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Commands for NVIDIA install on Ubuntu 16.04"
-date:   2016-12-20 11:00:51
+date:   2016-12-30 00:00:51
 categories: nvidia
 ---
 

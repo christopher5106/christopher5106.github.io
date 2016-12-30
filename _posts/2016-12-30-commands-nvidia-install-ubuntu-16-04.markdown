@@ -7,10 +7,6 @@ categories: nvidia
 
 # Remove the kernel you don't need
 
-Update :
-
-    sudo apt-get update && sudo apt-get -y upgrade
-
 Check your boot partition :
 
     df -h
@@ -30,6 +26,11 @@ List installed kernels :
 Remove some of them :
 
     sudo apt-get remove  linux-image-4.4.0-21-generic linux-image-4.4.0-45-generic linux-image-4.4.0-47-generic linux-image-4.4.0-51-generic
+
+NB : if your partition /boot is full and your install broken, it might ask you to run `apt-get install -f` which might not work as well, due to space constraints. You can erase manually the kernels you do not need :
+
+    rm /boot/vmlinuz-4.4.0-42-generic
+
 
 Remove also your NVIDIA drivers :
 
@@ -55,6 +56,11 @@ Check your boot partition :
 
     df -h
     /dev/sda1       236M   97M  127M  44% /boot
+
+
+Update :
+
+    sudo apt-get update && sudo apt-get -y upgrade
 
 
 Install kernel extras if not already installed :

@@ -1,11 +1,11 @@
 ---
 layout: post
-title:  "IBM Watson Bluemix Visual API : tutorial to create a custom classifier"
+title:  "IBM Watson Bluemix Visual API : tutorial and visual accuracy of a custom classifier"
 date:   2016-12-23 17:00:51
 categories: computer vision
 ---
 
-In this tutorial, I'll see how to use the standard visual classifier using IBM labels, then create our new custom classifier with Watson Visual API.
+In this tutorial, I'll see how to use the standard visual classifier using IBM labels, then create our new custom classifier with Watson Visual API, last, see how it performs and compute its accuracy.
 
 
 # Configure your Watson service
@@ -36,6 +36,7 @@ done
 - Second, create train and test directories :
 
 ```bash
+cd food-101
 mkdir train test
 for SPLIT in train test ;
 do
@@ -47,13 +48,13 @@ do
         echo "mkdir $DIRNAME"
         mkdir $DIRNAME
       fi
-      cp "food-101/images/$line.jpg" "$SPLIT/$line.jpg"
+      cp "images/$line.jpg" "$SPLIT/$line.jpg"
       echo "Name read from file - $name"
-  done < food-101/meta/$SPLIT.txt
+  done < meta/$SPLIT.txt
 done
 ```
 
-- Third, keep the first 100 images per class :
+- Third, for Watson API, keep the first 100 images per class :
 
 ```bash
 for folder in train/*;
@@ -306,4 +307,89 @@ Delete classifier :
 curl -X DELETE "https://gateway-a.watsonplatform.net/visual-recognition/api/v3/classifiers/$CLASSIFIER?api_key=$API_KEY&version=2016-05-20"
 ```
 
-**Well done!**
+# Compute accuracy of Watson Visual API
+
+First let us create a python script *test_watson.py* to compute Watson top-1 and top-5 accuracy :
+
+```python
+
+import glob
+import json,sys
+import os
+import pathlib
+import os
+from os.path import join, dirname
+
+import collections
+from watson_developer_cloud import VisualRecognitionV3
+
+visual_recognition = VisualRecognitionV3('2016-05-20', api_key=os.environ.get('API_KEY'))
+
+top_1_accuracy = 0
+top_5_accuracy = 0
+likelyhood = 0
+nb_test_images=100
+image_count=1
+path  = "test/"
+nb_samples = 0
+
+for root, dirs, files in os.walk(path):
+    for dir in dirs :
+        dirpath = path+dir
+        true_class = dir
+        for file_name in glob.glob(dirpath+'/*'):
+            print(file_name)
+
+            with open(join(dirname(__file__), str(file_name)), 'rb') as image_file:
+                input_data=json.dumps(visual_recognition.classify(images_file=image_file, threshold=0.1,
+                                                             classifier_ids=[os.environ.get('CLASSIFIER')]), indent=2)
+                obj1=json.loads(input_data)
+                print(input_data)
+                for doc in obj1["images"]:
+                    nb_samples = nb_samples + 1
+                    sorted_json = sorted(doc["classifiers"][0]["classes"], key=lambda k: (float(k["score"])),reverse=True)
+                    if sorted_json[0]["class"] == true_class:
+                        top_1_accuracy+=1
+                        likelyhood+= sorted_json[0]["score"]
+                    for count in range(5):
+                        if sorted_json[count]["class"] == true_class:
+                            top_5_accuracy += 1
+                            print("True Class in top 5, position: ", count, ", class : ",sorted_json[count]["class"], "Score :  ",sorted_json[count]["score"])
+                print("########    Results of the class : ", true_class ," sample ", nb_samples, "     ########")
+                print("------------------------------------------------------------------")
+                print("Top 1 Accuracy : ",top_1_accuracy * 1.0 / nb_samples ,"  Top 5 Accuracy : ",top_5_accuracy * 1.0 / nb_samples,"  Likely Hood :  " ,likelyhood)
+                print("------------------------------------------------------------------")
+```
+
+and test it :
+
+```bash
+export API_KEY
+export CLASSIFIER
+python test_watson.py
+```
+
+We get a **top-1 accuracy : 12% and a top-5 accuracy of 23%**.
+
+Let's compare accuracy we can get with ResNet 101. Let's take the full dataset (750 training images per class) and 7% of these traning images for validation :
+
+```bash
+mkdir val
+for folder in train/*;
+do
+  mkdir val/${folder:6}
+  ls $folder |sort -R |tail -50 |while read file; do
+    mv $folder/$file val/${folder:6}/$file
+    done
+done
+```
+
+Training :
+
+```bash
+th main.lua -dataset imagenet -data /sharedfiles/food-101 -nClasses 101 -depth 101 -retrain resnet-101.t7 -resetClassifier true -batchSize 128 -LR 0.01 -momentum 0.96 -weightDecay 0.0001  -resume /sharedfiles/ -eGPU 2 -nThreads 8 -shareGradInput true  2>&1 | tee log-resnet-101-food-101-classes.txt
+```
+
+After a few hours, I get a **top-1 accuracy of 82% and a top-5 accuracy of 96% with our own model**. See transcript [here]({{ site.url }}/img/log-resnet-101-food-101-classes.txt).
+
+**In conclusion, Watson Visual API is very far from what you can get very easily with your own models.**

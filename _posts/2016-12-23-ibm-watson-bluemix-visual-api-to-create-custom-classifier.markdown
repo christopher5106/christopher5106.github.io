@@ -78,6 +78,8 @@ After many exchanges, the IBM Bluemix support tells to limit to 100 images per c
 
 *I would suggest at this point that you reduce the number of examples in your classes to more like 100 - 200 for the sake of your proof of concept until engineering has addressed the training bug in an update.*
 
+Also, at 0.10 USD per image, indexing 101 classes with 750 images would cost $7575 per month, so it is better to limit the number of images to index.
+
 
 - Last, zip train images to prepare upload to Watson :
 

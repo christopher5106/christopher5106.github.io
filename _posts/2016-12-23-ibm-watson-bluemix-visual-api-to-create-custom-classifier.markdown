@@ -53,11 +53,35 @@ do
 done
 ```
 
+- Third, keep the first 100 images per class :
+
+```bash
+for folder in train/*;
+do
+  count=0
+  for file in $folder/*;
+  do
+    count=$((count+1))
+    if [ $count -gt 100 ]
+      then
+        rm $file
+    fi
+done done
+```
+
+After many exchanges, the IBM Bluemix support tells to limit to 100 images per class, here is their answer trying to index the 1000 images per class :
+
+*I have been working this issue with the engineers and it's looking more and more like we are hitting a performance wall due to the large number of images in each of your class datasets. It seems there is about a 1 second processing time per image when the service is under a typical user load (potentially longer under heavy user load). Given that each of your zip files contain roughly 1000 images each and the script is supplying 10 new files each time retraining is invoked, you can see that the training/retraining time can go pretty high very fast. Also to note... That when retraining occurs (using your script) we are adding another 10 new class files, to the first 10 classes that we've already trained on. So during the retraining process, we recall the first 10,000 image files from object storage and again process those, then we process the additional 10,000 images for a total of 20,000 images, and so on, and so on.
+This is why it seems that the classifier is never done retraining and at some point we have seen the classifier get stuck in this retraining mode where it never comes out of retraining and there is a bug that has been opened for this issue with engineering.
+
+I would suggest at this point that you reduce the number of examples in your classes to more like 100 - 200 for the sake of your proof of concept until engineering has addressed the training bug in an update.*
+
+
 - Last, zip train images to prepare upload to Watson :
 
 ```bash
 for file in train/*; do
-  echo "zipping $file" ; zip -r "$file.zip" "$file";
+  echo "zipping $file" ; zip -r "$file.zip" "$file"; rm -r $file;
 done
 ```
 

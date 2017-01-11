@@ -394,4 +394,4 @@ th main.lua -dataset imagenet -data /sharedfiles/food-101 -nClasses 101 -depth 1
 
 After a few hours of training, we get a **top-1 accuracy of 82% and a top-5 accuracy of 96% with our own model**. See transcript [here]({{ site.url }}/img/log-resnet-101-food-101-classes.txt).
 
-**In conclusion, Watson Visual API is very far from what you can get very easily with your own models.** 
+**In conclusion, a general API as Watson Visual API is very far from the results you can achieve with an expert in computer vision.** 

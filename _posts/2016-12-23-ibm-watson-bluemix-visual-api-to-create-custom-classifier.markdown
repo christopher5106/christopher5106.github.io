@@ -399,4 +399,4 @@ After a few hours of training, I get a **top-1 accuracy of 87% and a top-5 accur
 
 **In conclusion, a general API as Watson Visual API is very far from the results you can achieve with an expert in computer vision.**
 
-By the way, these results are far above what Stanford researchers got in their publication  [Deep Learning Based Food Recognition](http://cs229.stanford.edu/proj2016/report/YuMaoWang-Deep%20Learning%20Based%20Food%20Recognition-report.pdf) : top-1 72% and top-5 91%.
+By the way, these results are far above what Stanford researchers got in their publication  [Deep Learning Based Food Recognition](http://cs229.stanford.edu/proj2016/report/YuMaoWang-Deep%20Learning%20Based%20Food%20Recognition-report.pdf) : top-1 72% and top-5 91%. In the previous world with [Random Forests](https://github.com/palexang/food-101), they got 40% top-1 accuracy.

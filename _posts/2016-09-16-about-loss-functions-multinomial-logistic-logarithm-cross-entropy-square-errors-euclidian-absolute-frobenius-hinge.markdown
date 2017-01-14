@@ -50,9 +50,9 @@ When using a network, we try to get 0 and 1 as values, that's why we add a **sig
 $$ f:  x \rightarrow \frac{1}{ 1 + e^{-x}} $$
 
 
-Then, once the estimated probability to get 1 is $$ ŷ $$, then it is easy to see that the negative log likelihood can be written
+Then, once the estimated probability to get 1 is $$ \hat{p}  $$ (sometimes written $$ ŷ $$ also), then it is easy to see that the negative log likelihood can be written
 
-$$ \mathscr{L} = - y \log ŷ  - (1 - y) \log ( 1 - ŷ ) $$
+$$ \mathscr{L} = - y \log \hat{p}  - (1 - y) \log ( 1 - \hat{p} ) $$
 
 which is also the **cross-entropy**
 
@@ -68,8 +68,12 @@ seen as an indicator of the number of possibilities for the variable to predict,
 
 Last, let's remind that the combined sigmoid and cross-entropy has a very simple and stable derivative
 
-$$ ŷ - y $$
+$$ \hat{p} - y $$
 
+
+NB: if you choose that your labels $$ y \in \{1,-1} $$, you can write the binary logistic loss
+
+$$ \mathscr{L} = \log(1 + \e^{-y \cdot \hat{p} }) $$
 
 # Multinomial probabilities / multi-class classification : multinomial logistic loss / cross entropy loss / log loss
 
@@ -95,7 +99,7 @@ $$ z \rightarrow \left\{ \frac{\exp z_i }{ \sum_k \exp^{z_k} } \right\}_i  $$
 
 The error is also best described by cross-entropy :
 
-$$ \mathscr{L} = - \sum_{i=0}^k y_i \ln ŷ_i $$
+$$ \mathscr{L} = - \sum_{i=0}^k y_i \ln \hat{p}_i $$
 
 Cross-entropy is designed to deal with errors on probabilities. For example, $$ \ln(0.01) $$ will be a lot stronger error signal than $$ \ln(0.1) $$ and encourage to resolve errors. In some cases, the logarithm is bounded to avoid extreme punishments.
 
@@ -116,7 +120,7 @@ $$ t \rightarrow \frac{1}{1+e^{-t}} $$
 
 The cross-entropy will look like :
 
-$$ \mathscr{L} = - \sum_{i=0}^k y_i \ln ŷ_i + (1 - y_i) \ln ( 1 - ŷ_i ) $$
+$$ \mathscr{L} = - \sum_{i=0}^k y_i \ln \hat{p}_i + (1 - y_i) \ln ( 1 - \hat{p}_i ) $$
 
 
 # Infogain loss / relative entropy
@@ -129,7 +133,7 @@ $$ KL(p,q) = H(p,q) - H(p) = - \sum p(x) \log q(x) + \sum p(x) \log p(x) = \sum 
 
 hence in our nomenclature :
 
-$$ \mathscr{L} = \sum_i y_i \ln \frac{ y_i }{ ŷ_i } $$
+$$ \mathscr{L} = \sum_i y_i \ln \frac{ y_i }{ \hat{p}_i } $$
 
 The infogain is the difference between the entropy before and the entropy after.
 

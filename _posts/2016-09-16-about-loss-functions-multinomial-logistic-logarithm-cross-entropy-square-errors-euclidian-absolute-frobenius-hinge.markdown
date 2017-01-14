@@ -71,7 +71,7 @@ Last, let's remind that the combined sigmoid and cross-entropy has a very simple
 $$ \hat{p} - y $$
 
 
-NB: if you choose that your labels $$ y \in \left{ \pm 1 \right} $$, you can write the binary logistic loss
+NB: if you choose that your labels $$ y \in \{ \pm 1 \} $$, you can write the binary logistic loss
 
 $$ \mathscr{L} = \log \left(1 + e^{-y \cdot \hat{p} } \right) $$
 

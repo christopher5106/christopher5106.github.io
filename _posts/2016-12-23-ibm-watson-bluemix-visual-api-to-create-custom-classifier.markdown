@@ -395,7 +395,7 @@ Training :
 th main.lua -dataset imagenet -data /sharedfiles/food-101 -nClasses 101 -depth 101 -retrain resnet-101.t7 -resetClassifier true -batchSize 128 -LR 0.01 -momentum 0.96 -weightDecay 0.0001  -resume /sharedfiles/ -eGPU 2 -nThreads 8 -shareGradInput true  2>&1 | tee log-resnet-101-food-101-classes.txt
 ```
 
-After a few hours of training, I get a **top-1 accuracy of 87% and a top-5 accuracy of 97.6% with our own model**. See transcript [here]({{ site.url }}/img/log-resnet-101-food-101-classes.txt).
+After a few hours of training, I get a **top-1 accuracy of 88% and a top-5 accuracy of 97.5% with our own model**. See transcript [here]({{ site.url }}/img/log-resnet-101-food-101-classes.txt).
 
 **In conclusion, a general API as Watson Visual API is very far from the results you can achieve with an expert in computer vision.**
 

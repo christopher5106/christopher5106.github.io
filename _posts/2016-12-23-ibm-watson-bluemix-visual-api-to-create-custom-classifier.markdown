@@ -371,9 +371,12 @@ export CLASSIFIER
 python test_watson.py
 ```
 
-We get a **top-1 accuracy : 12% and a top-5 accuracy of 23%**.
+I get a **top-1 accuracy : 12% and a top-5 accuracy of 23%**.
 
-Let's compare accuracy we can get with ResNet 101. Let's take the full dataset (750 training images per class) and 7% of these traning images for validation :
+
+### Compare accuracy with state of the art
+
+Let me compare accuracy we can get with Torch ResNet 101. Let's take the full dataset (750 training images per class) and 7% of these training images for validation :
 
 ```bash
 mkdir val
@@ -392,6 +395,8 @@ Training :
 th main.lua -dataset imagenet -data /sharedfiles/food-101 -nClasses 101 -depth 101 -retrain resnet-101.t7 -resetClassifier true -batchSize 128 -LR 0.01 -momentum 0.96 -weightDecay 0.0001  -resume /sharedfiles/ -eGPU 2 -nThreads 8 -shareGradInput true  2>&1 | tee log-resnet-101-food-101-classes.txt
 ```
 
-After a few hours of training, we get a **top-1 accuracy of 82% and a top-5 accuracy of 96% with our own model**. See transcript [here]({{ site.url }}/img/log-resnet-101-food-101-classes.txt).
+After a few hours of training, I get a **top-1 accuracy of 87% and a top-5 accuracy of 97.6% with our own model**. See transcript [here]({{ site.url }}/img/log-resnet-101-food-101-classes.txt).
 
-**In conclusion, a general API as Watson Visual API is very far from the results you can achieve with an expert in computer vision.** 
+**In conclusion, a general API as Watson Visual API is very far from the results you can achieve with an expert in computer vision.**
+
+By the way, these results are far above what Stanford researchers got in their publication  [Deep Learning Based Food Recognition](http://cs229.stanford.edu/proj2016/report/YuMaoWang-Deep%20Learning%20Based%20Food%20Recognition-report.pdf) : top-1 72% and top-5 91%. In the previous world with [Random Forests](https://github.com/palexang/food-101), they got 40% top-1 accuracy.

@@ -73,7 +73,7 @@ $$ \hat{p} - y $$
 
 NB: if you choose that your labels $$ y \in { \pm 1 } $$, you can write the binary logistic loss
 
-$$ \mathscr{L} = \log(1 + \e^{-y \cdot \hat{p} }) $$
+$$ \mathscr{L} = \log \left(1 + e^{-y \cdot \hat{p} } \right) $$
 
 # Multinomial probabilities / multi-class classification : multinomial logistic loss / cross entropy loss / log loss
 

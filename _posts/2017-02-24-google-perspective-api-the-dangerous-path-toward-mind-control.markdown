@@ -75,7 +75,7 @@ But **Hitler** was toxic.
 
 ![]({{ site.url }}/img/jigsaw/hitler.png)
 
-I can understand. Hitler caused even more death than any other things, no ?
+I can understand. Hitler caused lot's of deaths.
 
 A **terrorist attack** is toxic :
 

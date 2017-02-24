@@ -173,4 +173,4 @@ Moreover, silence is, in psychology, considered as as violent and destroying as 
 
 Today's managers have fully forgotten the importance of speech in our brain development, and APIs such as Perspective API, can create as much disorder as the problem they try to solve. They build a verbal jail, or virtual jail, leading to even more madness.
 
-There are good questions to ask yourself.
+There are good questions when speaking about *data*, *big data*, *machine learning*. Does that really improve our world ? Does it help us evolve towards a better world ?

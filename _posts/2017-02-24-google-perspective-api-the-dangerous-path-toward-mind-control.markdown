@@ -182,4 +182,4 @@ Today's managers have fully forgotten the importance of speech in our brain deve
 
 There are good questions when speaking about *data*, *big data*, *machine learning*. Does that really improve our world ? Does it help us evolve towards a better world ?
 
-**Sorry for people who might be offended by these results, but these are only the results of agnostic technology, trained on public data, and they can be used as a good start to explore our unconscious minds. Perspective API encourage us to live in a closed loop**.
+**Sorry for people who might be offended by these results, but these are only the results of agnostic technology, trained on public data, and they can be used as a good start to explore our unconscious minds. Perspective API encourages us to live in a closed loop. But that is what some politicians, and perhaps some big companies, might want for us**.

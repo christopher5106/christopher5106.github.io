@@ -5,9 +5,15 @@ date:   2016-12-30 00:00:51
 categories: artificial intelligence
 ---
 
-Google just released [Perspective API](http://www.perspectiveapi.com/) to evaluate the degree of "toxicity" in online comments.
+Google just released [Perspective API](http://www.perspectiveapi.com/) to evaluate the degree of "toxicity" in online comments. An API you can try yourself.
 
-Such a word "toxic" triggers lot's of warnings in my mind. The first question I have in mind is what "toxicity" does really mean. In the dictionary, "toxic" means "poisonous", and "poisonous" means "causing or capable of causing death or illness if taken into the body". *Is it possible a word or a sentence can cause death or illness ?*. Like the words I'm writing now ? WAOU.
+Such a word "toxic" triggers lot's of warnings in my mind.
+
+The first question I have in mind is what "toxicity" does really mean.
+
+In the dictionary, "toxic" means "poisonous", and "poisonous" means "causing or capable of causing death or illness if taken into the body".
+
+*Is it possible a word or a sentence can cause death or illness ?*. Like the words I'm writing now ? WAOU.
 
 ### The business of toxicity
 

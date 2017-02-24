@@ -161,7 +161,7 @@ An **arabic** guy is more toxic than a **french** guy.
 ![]({{ site.url }}/img/jigsaw/french.png)
 
 
-### The world we live
+### The world we live in
 
 Perspective API is typically the kind of initiative that does an "average", and averages are absolutely not good. It is exactly as our brain does, creating prejudices. Shall we use articifial intelligence in order to become even more silly ? Or smarter.
 
@@ -174,3 +174,5 @@ Moreover, silence is, in psychology, considered as as violent and destroying as 
 Today's managers have fully forgotten the importance of speech in our brain development, and APIs such as Perspective API, can create as much disorder as the problem they try to solve. They build a verbal jail, or virtual jail, leading to even more madness.
 
 There are good questions when speaking about *data*, *big data*, *machine learning*. Does that really improve our world ? Does it help us evolve towards a better world ?
+
+**Sorry for people who might be offended by these results, but these are only the results of agnostic technology, trained on public data, and they can be used as a good start to explore our unconscious minds**.

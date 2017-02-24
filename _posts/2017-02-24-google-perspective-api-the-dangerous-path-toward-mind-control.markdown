@@ -170,7 +170,7 @@ An **arabic** guy is more toxic than a **french** guy.
 
 ### The world we live in
 
-Perspective API is typically the kind of initiative that does an "average", and averages are absolutely not good and have never been a solution to any issue. It is exactly as our brain does, creating prejudices. Shall we use articifial intelligence in order to become even more silly ? Or smarter.
+Perspective API is typically the kind of initiative that does an "average", and averages are absolutely not good and have never been a solution to any issue, but are heavily used in politics. It is exactly as our brain does, creating prejudices. Shall we use articifial intelligence in order to become even sillier ?
 
 This is the kind of initiative that goes against itself, is counterproductive, and leads to even more problems, a kind of manipulation, trying to keep our kids away from the real face of the world, and let them live in a dream world.
 

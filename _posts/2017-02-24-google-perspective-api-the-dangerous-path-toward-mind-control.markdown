@@ -146,7 +146,7 @@ Surprisingly, **Sergey Brin** is more toxic than **Larry Page**.
 
 ![]({{ site.url }}/img/jigsaw/larry_page.png)
 
-**Palestine** is more toxic than **Israel** or **France**.
+**Palestine** is a bit more toxic than **Israel**, but far more than **France**.
 
 ![]({{ site.url }}/img/jigsaw/palestine.png)
 

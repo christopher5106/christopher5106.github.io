@@ -178,8 +178,8 @@ I truly believe the world we live in today is one of the saddest, due to the **p
 
 Moreover, silence can be considered, in psychology, as more violent and destroying than "words", even "toxic words". Speech is the courageous step to go forward, in the outside world, leaving the mother's womb. Violence takes its roots when speech has become muffled : so many violent people have a dictionary of not more than 500 words, and preventing them from expressing these words will directly lead to physical violence.
 
-Today's managers have fully forgotten the importance of speech in our brain development, and APIs such as Perspective API, can create as much disorder as the problem they try to solve. They build a verbal jail, or virtual jail, leading to even more madness.
+Today's managers have fully forgotten the importance of speech in our brain's development, and APIs such as Perspective API, can create as much disorder as the problem they try to solve. They build a verbal jail, or virtual jail, leading to even more madness.
 
 There are good questions when speaking about *data*, *big data*, *machine learning*. Does that really improve our world ? Does it help us evolve towards a better world ?
 
-**Sorry for people who might be offended by these results: these are only the results of agnostic technology, trained on public data. They can be used as a good starting point to explore our unconscious minds and our relationship with artificial intelligence. Perspective API sounds like encouraging us to live in a closed loop, when the opportunity to heal people has never been so close. But living in a closed world, might be what some politicians want for us**.
+**Sorry for people who might be offended by these results: these are only the results of agnostic technology, trained on public data. They can be used as a good starting point to explore our unconscious minds and our relationship with artificial intelligence. Perspective API sounds like encouraging us to live in a closed loop, when the opportunity to heal people has never been so great. But living in a closed world, might be what some politicians want for us**.

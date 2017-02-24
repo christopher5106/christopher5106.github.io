@@ -174,12 +174,12 @@ Perspective API is typically the kind of initiative that does an "average", and 
 
 This is the kind of initiative that goes against itself, is counterproductive, and leads to even more problems, a kind of manipulation, trying to keep our kids away from the real face of the world, and let them live in a dream world.
 
-I truly believe the world we live in today is one of the saddest, due to the **positivness** of our "toxicity hunters", and their lack of understanding in the field of psychology. Positivness, when not linked to openmindness to what we believe negative or toxic, and toxicity, are the two sides of the same coin.
+I truly believe the world we live in today is one of the saddest, due to the **positivness** of our "toxicity hunters", and their lack of understanding in the field of psychology. Positivness, when not linked to openmindness to what we believe negative or toxic, and toxicity, are the two sides of the same coin. It is the path to "judgements".
 
-Moreover, silence is, in psychology, considered as as violent and destroying as "words" and in particular "toxic words". Speech is the courageous step to go forward, in the outside world, leaving the mother's womb. Violence takes its roots when speech has become muffled : so many violent people have a dictionary of not more than 500 words, and preventing them from expressing these words will directly lead to physical violence.
+Moreover, silence can be considered, in psychology, as more violent and destroying than "words", even "toxic words". Speech is the courageous step to go forward, in the outside world, leaving the mother's womb. Violence takes its roots when speech has become muffled : so many violent people have a dictionary of not more than 500 words, and preventing them from expressing these words will directly lead to physical violence.
 
 Today's managers have fully forgotten the importance of speech in our brain development, and APIs such as Perspective API, can create as much disorder as the problem they try to solve. They build a verbal jail, or virtual jail, leading to even more madness.
 
 There are good questions when speaking about *data*, *big data*, *machine learning*. Does that really improve our world ? Does it help us evolve towards a better world ?
 
-**Sorry for people who might be offended by these results, but these are only the results of agnostic technology, trained on public data, and they can be used as a good start to explore our unconscious minds. Perspective API encourages us to live in a closed loop. But that is what some politicians, and perhaps some big companies, might want for us**.
+**Sorry for people who might be offended by these results: these are only the results of agnostic technology, trained on public data. They can be used as a good starting point to explore our unconscious minds and our relationship with artificial intelligence. Perspective API sounds like encouraging us to live in a closed loop, when the opportunity to heal people has never been so close. But living in a closed world, might be what some politicians want for us**.

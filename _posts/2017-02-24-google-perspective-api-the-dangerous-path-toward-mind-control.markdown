@@ -19,7 +19,7 @@ In the dictionary, "toxic" means "poisonous", and "poisonous" means "causing or 
 
 I have met so many managers in my life, that were behaving as **"toxic people" hunters**, such as [Manuel Diaz, CEO of Emakina](https://www.youtube.com/watch?v=zQDaOecdlhM) who openly speaks in his video about toxic people in a team.
 
-After a while, I have also discovered lots of negativity and a lack of openness in these people who speak every day about how others are toxic to them. The paradox of their positivness.
+After a while, I have also discovered lots of negativity and a lack of openmindness in these people who speak every day about how others are toxic to them: the paradox of their positivness.
 
 *Toxic* is a word symptomatic of today's world. Let's see a bit more what is toxic or not toxic for Perspective API.
 
@@ -81,7 +81,7 @@ A **terrorist attack** is toxic :
 
 ![]({{ site.url }}/img/jigsaw/terrorist_attack.png)
 
-How much **mushrooms** are toxic ??
+How much toxic are **mushrooms** ??
 
 ![]({{ site.url }}/img/jigsaw/mushrooms.png)
 
@@ -124,7 +124,7 @@ And let's go further.
 
 ![]({{ site.url }}/img/jigsaw/white_man.png)
 
-**A homosexual** is more toxic than **a heterosexual**.
+**An homosexual** is more toxic than **an heterosexual**.
 
 ![]({{ site.url }}/img/jigsaw/homosexual.png)
 
@@ -133,11 +133,12 @@ And let's go further.
 
 **Donald Trump** is more toxic than **Barack Obama** or **Hillary Clinton**.
 
+![]({{ site.url }}/img/jigsaw/donald_trump.png)
+
 ![]({{ site.url }}/img/jigsaw/barack_obama.png)
 
 ![]({{ site.url }}/img/jigsaw/hillary_clinton.png)
 
-![]({{ site.url }}/img/jigsaw/donald_trump.png)
 
 Both last French presidents have the same degree of toxicity for the french people :
 
@@ -152,7 +153,7 @@ Surprisingly, **Sergey Brin** is more toxic than **Larry Page**.
 
 ![]({{ site.url }}/img/jigsaw/larry_page.png)
 
-**Palestine** is a bit more toxic than **Israel**, but far more than **France**.
+**Palestine** is a bit more toxic than **Israel**, but both are far more than **France**.
 
 ![]({{ site.url }}/img/jigsaw/palestine.png)
 
@@ -169,7 +170,7 @@ An **arabic** guy is more toxic than a **french** guy.
 
 ### The world we live in
 
-Perspective API is typically the kind of initiative that does an "average", and averages are absolutely not good. It is exactly as our brain does, creating prejudices. Shall we use articifial intelligence in order to become even more silly ? Or smarter.
+Perspective API is typically the kind of initiative that does an "average", and averages are absolutely not good and have never been a solution to any issue. It is exactly as our brain does, creating prejudices. Shall we use articifial intelligence in order to become even more silly ? Or smarter.
 
 This is the kind of initiative that goes against itself, is counterproductive, and leads to even more problems, a kind of manipulation, trying to keep our kids away from the real face of the world, and let them live in a dream world.
 
@@ -181,4 +182,4 @@ Today's managers have fully forgotten the importance of speech in our brain deve
 
 There are good questions when speaking about *data*, *big data*, *machine learning*. Does that really improve our world ? Does it help us evolve towards a better world ?
 
-**Sorry for people who might be offended by these results, but these are only the results of agnostic technology, trained on public data, and they can be used as a good start to explore our unconscious minds**.
+**Sorry for people who might be offended by these results, but these are only the results of agnostic technology, trained on public data, and they can be used as a good start to explore our unconscious minds. Perspective API encourage us to live in a closed loop**.

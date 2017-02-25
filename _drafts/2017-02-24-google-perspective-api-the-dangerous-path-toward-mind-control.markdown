@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Google Perspective API: the dangerous path towards mind control"
+title:  "Google Perspective API: the wrong path towards mind control"
 date:   2016-12-30 00:00:51
 categories: artificial intelligence
 ---
@@ -192,10 +192,10 @@ The art of psychanalysis is to let the patient speak and realize by herself if s
 
 Today's managers have fully forgotten the importance of speech in our brain's development, and APIs such as Perspective API, can create as much disorder as the problem they try to solve. They build a verbal jail, or virtual jail, leading to even more madness.
 
-**Perspective API sounds like encouraging us to live in a closed loop, when the opportunity to heal people has never been so great. But living in a closed world, might be what some want for us**.
+**Perspective API sounds like encouraging us to live in a closed loop, when the opportunity to heal people has never been so great. Living in a closed world, is what some want for us ?**.
 
 As you begin to see companies like Google engage themselves into political strikes, toxicity hunting is, to my point of view, the beginning of a new era, the era of **mind control** by big corporations... but in the wrong way this time.
 
-Last but not least, if comments are violent, is the news written by media completely wise and peaceful ? Does it give us a full and wise analysis of the political issue so that it encourages people to react wisely and peacefully ? Do they always make the choice to prefer 	abstemiousness to avoid to create buzz, traffic and advertising sales ? If comments are violent, it would be good to check the contents of the posts **because I've never found any toxic comment on my blog, for example**. The same question is also true for our "toxicity hunter" managers... do they have the right attitude ?
+Last but not least, if comments are violent, is the news written by media completely wise and peaceful ? Does it give us a full and wise analysis of the political issue so that it encourages people to react wisely and peacefully ? Do they always make the safe choice to prefer 	abstemiousness to avoid to create buzz, traffic and advertising sales ? If comments are violent, it would be good to check the contents of the posts **because I've never found any toxic comment on my blog, for example, for 21 000 readers per month**. The same question is also true for our "toxicity hunter" managers... do they have the right attitude ?
 
-There are good questions when speaking about *data*, *big data*, *machine learning*. Are we solving the right problem ? Does that really improve us ? Does it help us evolve towards a better world ?
+There are good questions before speaking about *data*, *big data*, *machine learning*. Are we solving the right problem ? Will machine learning really improve us ? Will it help us evolve towards a better world ?

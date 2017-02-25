@@ -21,6 +21,8 @@ I have met so many managers in my life, that were behaving as **"toxic people" h
 
 After a while, I have also discovered lots of negativity and a lack of openmindness in these people who speak every day about how others are toxic to them: the paradox of their positivness.
 
+Selecting people on the personality traits is an indirect way to impose **mind control** in work environments.
+
 *Toxic* is a word symptomatic of today's world. Let's see a bit more what is toxic or not toxic for Perspective API.
 
 
@@ -85,7 +87,7 @@ How much toxic are **mushrooms** ??
 
 ![]({{ site.url }}/img/jigsaw/mushrooms.png)
 
-Not so much. Ok, let's eat it :
+Not so much. Ok, let's eat it :)
 
 ![]({{ site.url }}/img/jigsaw/amanitamuscaria1.jpg)
 
@@ -170,16 +172,30 @@ An **arabic** guy is more toxic than a **french** guy.
 
 ### The world we live in
 
-Perspective API is typically the kind of initiative that does an "average", and averages are absolutely not good and have never been a solution to any issue, but are heavily used in politics. It is exactly as our brain does, creating prejudices. Shall we use articifial intelligence in order to become even sillier ?
+Sorry for people who might be offended by these results: these are only the results of agnostic technology, trained on public data. It is a good starting point to explore our unconscious minds and our wrong usage of artificial intelligence and big data analytics.
 
-This is the kind of initiative that goes against itself, is counterproductive, and leads to even more problems, a kind of manipulation, trying to keep our kids away from the real face of the world, and let them live in a dream world.
+No really pattern or model has been understood from the data, and **Perspective API in this case just leads us to suffer even more from the misunderstood patterns, to be even more slaves of these misconceptions**.
 
-I truly believe the world we live in today is one of the saddest, due to the **positivness** of our "toxicity hunters", and their lack of understanding in the field of psychology. Positivness, when not linked to openmindness to what we believe negative or toxic, and toxicity, are the two sides of the same coin. It is the path to "judgements".
+Perspective API is typically the kind of initiative that does an "average", exactly as our brain does, creating prejudices.
 
-Moreover, silence can be considered, in psychology, as more violent and destroying than "words", even "toxic words". Speech is the courageous step to go forward, in the outside world, leaving the mother's womb. Violence takes its roots when speech has become muffled : so many violent people have a dictionary of not more than 500 words, and preventing them from expressing these words will directly lead to physical violence.
+Averages are absolutely not good, have never lead to any great innovation, and have never been a solution to any issue. They are usually much more direct manipulation, trying to enforce a solution through brute force deviation, and are heavily used in politics. They do not bring any clear-sightedness to the problem.
+
+The initiative sounds counterproductive, and leads to even more problems, to an even closer world, trying to keep our people away from the real face of the world, and let them live in a safe world, **safe for the mind**.
+
+I truly believe the world we live in today is one of the saddest, due to the **positivness** of our "toxicity hunters", and their lack of understanding in the field of psychology. Positivness, when not linked to openmindness to what we believe negative or toxic, and toxicity, are the two sides of the same coin. It is the path to the "judgements".
+
+Our judgements are true until we realize they are wrong. As usual. But sometimes it takes a longer time. And even longer when technology creates a barrier to their contradictions.
+
+Moreover, silence can be considered, in psychology, as more violent and destroying than "words", even "toxic words". Speech is the courageous step to go forward, in the outside world, leaving the mother's womb. Violence takes its roots when speech has become muffled : so many violent people have a dictionary of not more than 500 words, and preventing them from expressing these words directly leads to physical violence.
+
+The art of psychanalysis is to let the patient speak and realize by herself if she was wrong. A "delete" button or an "edit" button below the comments would have certainly a better impact on people's mind than censorship.
 
 Today's managers have fully forgotten the importance of speech in our brain's development, and APIs such as Perspective API, can create as much disorder as the problem they try to solve. They build a verbal jail, or virtual jail, leading to even more madness.
 
-There are good questions when speaking about *data*, *big data*, *machine learning*. Does that really improve our world ? Does it help us evolve towards a better world ?
+**Perspective API sounds like encouraging us to live in a closed loop, when the opportunity to heal people has never been so great. But living in a closed world, might be what some want for us**.
 
-**Sorry for people who might be offended by these results: these are only the results of agnostic technology, trained on public data. They can be used as a good starting point to explore our unconscious minds and our relationship with artificial intelligence. Perspective API sounds like encouraging us to live in a closed loop, when the opportunity to heal people has never been so great. But living in a closed world, might be what some politicians want for us**.
+As you begin to see companies like Google engage themselves into political strikes, toxicity hunting is, to my point of view, the beginning of a new era, the era of **mind control** by big corporations... but in the wrong way this time.
+
+Last but not least, if comments are violent, is the news written by media completely wise and peaceful ? Does it give us a full and wise analysis of the political issue so that it encourages people to react wisely and peacefully ? Do they always make the choice to prefer 	abstemiousness to avoid to create buzz, traffic and advertising sales ? If comments are violent, it would be good to check the contents of the posts **because I've never found any toxic comment on my blog, for example**. The same question is also true for our "toxicity hunter" managers... do they have the right attitude ?
+
+There are good questions when speaking about *data*, *big data*, *machine learning*. Are we solving the right problem ? Does that really improve us ? Does it help us evolve towards a better world ?

@@ -55,7 +55,7 @@ a and b are not classical programming variables, but **symbols** or **placeholde
 a = th.dscalar()
 ga = th.grad(a ** 2,a)
 f = theano.function([a], ga)
-ga(2)
+f(2)
 ```
 
 This is great since it does not require to know how to differentiate a function. As you can see, both in Theano and Tensorflow, the `z = a + b` is of type Tensor as `a` and `b`.

@@ -10,15 +10,17 @@ In this article, I re-explain the characteristics of the bounding box object det
 
 # Grid
 
-The convolutions enable to compute a detection score at different positions in an optimized way. This avoids using a *sliding window* to compute a score at every potential position.
+The convolutions enable to compute predictions at different positions in an image in an optimized way. This avoids using a *sliding window* to compute separately a prediction at every potential position.
 
-The network is composed of convolution layers of stride 1, and max-pooling layers of stride 2 and kernel size 2.
+The deep learning network for prediction is composed of convolution layers of stride 1, and max-pooling layers of stride 2 and kernel size 2.
 
-This way, it is easier to align the grid produced by the network with the image:
+To make it easier to align the grid of predictions produced by the network with the image:
 
-- each  max-pooling layer divide the image size by two and multiply the stride by two. The padding used is 'VALID', meaning it is the **floor division** in the image size division, the extra values left on the right and the bottom of the image will only be used in the network field but a smaller image without these pixels would lead to the same grid
+- each  max-pooling layer divides the image size by 2 and multiplies the network stride by 2. The padding mode used is 'VALID', meaning it is the **floor division** in the image size division, the extra values left on the right and the bottom of the image will only be used in the network field but a smaller image without these pixels would lead to the same grid;
 
-- the convolutions have the 'SAME' padding, meaning the output has the same size of the output, which is performed by adding some zeros (or other values) on each border of the image. If we use a 'VALID' padding for the convolutions, then the first position on the grid would be shifted by half the network reception field size, which can be huge (~ 200 pixels for a ~400 pixel large network). The problem requires us to predict objects close to the borders also, so to avoid that shift, borders are padded by half the reception field size, which is performed by the 'SAME' padding.
+- the padding mode 'SAME' used in the convolutions means the output has the same size as the input. This is performed by padding with some zeros (or other new values) each border of the image. If we'd used a 'VALID' padding for the convolutions, then the first position on the grid would be shifted by half the network reception field size, which can be huge (~ 200 pixels for a ~400 pixel large network). The problem requires us to predict objects close to the borders, so, to avoid a shift and start predicting values at the image border, borders are padded by half the reception field size, an operation performed by the 'SAME' padding mode.
+
+The following figure presents a summary of the use of the paddings. Final stride is $$ 2^{nb max-pooling layers} $$
 
 ![]({{ site.url }}/img/yolo-padding.png)
 

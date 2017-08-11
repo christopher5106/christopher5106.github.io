@@ -8,7 +8,7 @@ categories: object detectors
 In this article, I re-explain the characteristics of the bounding box object detector Yolo since everything might not be so easy to catch. Its [first version](https://pjreddie.com/media/files/papers/yolo.pdf) has been improved in a [version 2](https://arxiv.org/pdf/1612.08242.pdf).
 
 
-# Grid
+# The network outputs' grid
 
 The convolutions enable to compute predictions at different positions in an image in an optimized way. This avoids using a *sliding window* to compute separately a prediction at every potential position.
 
@@ -25,16 +25,17 @@ The following figure displays the impact of the padding modes and the network ou
 ![]({{ site.url }}/img/yolo-padding.png)
 
 
-# Positives and negatives
+# Positives and negatives, and the cells
 
 A position on the grid, that is the closest position to the center of one of the ground truth bounding boxes, is **positive**. Other positions are negative. The cell in the figure below gathers all possible position for the center of a ground truth box to activate the network output as positive:
 
 ![]({{ site.url }}/img/yolo-positives.png)
 
-So, let us keep these circles as a representation of the net outputs, and for the grid, rather than displaying a grid of the outputs, let us use this grid to separate the zones for which any ground truth box center  will make these positions as positive. For that purpose, I just shift the grid back by half a stride:
+So, let us keep these circles as a representation of the net outputs, and for the grid, rather than displaying a grid of the outputs, let us use this grid to separate the zones for which any ground truth box center  will make these positions as positive. For that purpose, I can simply shift the grid back by half a stride:
 
 ![]({{ site.url }}/img/yolo-grid.png)
 
+Note that in a more general case, a position could be considered as positive for bigger or smaller cells than the network stride, and in such a case, it would not be possible to see the separations between the region of attraction of each position in a grid.
 
 # A regressor rather than a classifier
 

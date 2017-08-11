@@ -20,7 +20,7 @@ To make it easier to align the grid of predictions produced by the network with 
 
 - the padding mode 'SAME' used in the convolutions means the output has the same size as the input. This is performed by padding with some zeros (or other new values) each border of the image. If we'd used a 'VALID' padding for the convolutions, then the first position on the grid would be shifted by half the network reception field size, which can be huge (~ 200 pixels for a ~400 pixel large network). The problem requires us to predict objects close to the borders, so, to avoid a shift and start predicting values at the image border, borders are padded by half the reception field size, an operation performed by the 'SAME' padding mode.
 
-The following figure presents a summary of the use of the paddings. Final stride is $$ 2^{nb max-pooling layers} $$
+The following figure presents a summary of the use of the paddings. Final stride is $$ 2^{\text{nb max-pooling layers}} $$
 
 ![]({{ site.url }}/img/yolo-padding.png)
 

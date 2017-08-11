@@ -40,9 +40,12 @@ In the second version of Yolo, the predictions are relative to the grid position
 
 $$ b_x = \sigma(t_x) + c_x $$
 
+
 $$ b_y = \sigma(t_y) + c_y $$
 
+
 $$ b_w = p_w \ e^{t_w} $$
+
 
 $$ b_h = p_h \ e^{t_h} $$
 

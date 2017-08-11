@@ -71,7 +71,7 @@ In the Yolo papers, confidence is trained jointly with the position/dimension re
 
 Yolo V1 and V2 predict regression for B bounding boxes. Only one of the B regressors is trained at each positive position, the one that predicts a box that is closest to the ground truth box, so that there is a reinforcement of this predictor, and a specialization of each regressor.
 
-In Yolo V2, this specialization is 'assisted' with predefined anchors as in Faster-RCNN. The predefined anchors are choosen as representative as possible of the ground truth boxes, with a K-means to compute them.
+In Yolo V2, this specialization is 'assisted' with predefined anchors as in Faster-RCNN. The predefined anchors are chosen as representative as possible of the ground truth boxes, with a K-means clustering to find them.
 
 # All together
 

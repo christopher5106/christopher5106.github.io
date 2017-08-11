@@ -84,7 +84,7 @@ For each specialization, in Yolo V2, the class probabilities of the object insid
 
 Putting it all together for an example of 98 anchors, 10 object classes, the output of the network at each position can be decomposed into 3 parts:
 
-![]({{ site.url }}/img/net_output.png)
+![]({{ site.url }}/img/yolo-output.png)
 
 For all outputs except the relative width and height, the outputs are followed by the logistic activation function or sigmoid, so that the final outputs fall between 0 and 1. For the relative width and height, the activation is the exponential function.
 

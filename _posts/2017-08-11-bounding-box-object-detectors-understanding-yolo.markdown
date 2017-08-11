@@ -49,15 +49,14 @@ $$ b_w = p_w \ e^{t_w} $$
 
 $$ b_h = p_h \ e^{t_h} $$
 
-where $$ (c_x, c_y) $$ is the grid cell coordinate and $$ (p_w, p_h) $$ the anchor dimension.
+where $$ (c_x, c_y) $$ are the grid cell coordinates and $$ (p_w, p_h) $$ the anchor dimensions.
 
 ![]({{ site.url }}/img/yolo-regression.png)
 
-Please note that the previous figure is exagerated to display better.
 
 # Confidence
 
-Once the bounding box regressor is trained, the model is trained to predict a confidence score on the predicted bounding box with above parameters.
+Once the bounding box regressor is trained, the model is trained to predict a confidence score on the final predicted bounding box with above regression.
 
 The natural confidence score value is:
 
@@ -70,7 +69,7 @@ In the Yolo papers, confidence is trained jointly with the position/dimension re
 
 # Anchors or prediction specialization
 
-Yolo V1 and V2 predicts regression for B bounding boxes. The regression is trained at each positive position only for the predicted boxes that is closest to the ground box, so that there is a reinforcement of the predictor.
+Yolo V1 and V2 predict regression for B bounding boxes. Only one of the B regressors is trained at each positive position, the one that predicts a box that is closest to the ground truth box, so that there is a reinforcement of this predictor, and a specialization of each regressor.
 
 In Yolo V2, this specialization is 'assisted' with predefined anchors as in Faster-RCNN. The predefined anchors are choosen as representative as possible of the ground truth boxes, with a K-means to compute them.
 
@@ -80,6 +79,6 @@ For each specialization, in Yolo V2, a class of the object in the box is predict
 
 Putting all together on for an example of 10 classes and 98 anchors, the prediction of the network at each position can be decomposed into 3 parts:
 
-![](img/net_output.png)
+![]({{ site.url }}/img/net_output.png)
 
 **Well done!**

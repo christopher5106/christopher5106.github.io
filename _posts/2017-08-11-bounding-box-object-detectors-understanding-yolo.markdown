@@ -85,6 +85,6 @@ Putting it all together for an example of 98 anchors, 10 object classes, the out
 
 ![]({{ site.url }}/img/net_output.png)
 
-For all outputs except the width and height scaling, the outputs are followed by the logistic activation function or sigmoid, so that the final outputs fall between 0 and 1. For the width and height scale variations, the activation is the exponential function. 
+For all outputs except the relative width and height, the outputs are followed by the logistic activation function or sigmoid, so that the final outputs fall between 0 and 1. For the relative width and height, the activation is the exponential function. 
 
 **Well done!**

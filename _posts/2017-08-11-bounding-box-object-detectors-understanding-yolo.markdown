@@ -27,11 +27,11 @@ The following figure displays the impact of the padding modes and the network ou
 
 # Positives and negatives
 
-A position on the grid, that is the closest position to the center of one of the ground truth bounding boxes, is **positive**. Other positions are negative.
+A position on the grid, that is the closest position to the center of one of the ground truth bounding boxes, is **positive**. Other positions are negative. The cell in the figure below gathers all possible position for the center of a ground truth box to activate the network output as positive:
 
 ![]({{ site.url }}/img/yolo-positives.png)
 
-So, let us keep these circles as a representation of the net outputs, and for the grid,  rather than displaying a grid of the outputs, let us use it to display the cells for which any ground truth box center  will make these positions as positive and shift it back by half a stride:
+So, let us keep these circles as a representation of the net outputs, and for the grid, rather than displaying a grid of the outputs, let us use this grid to separate the zones for which any ground truth box center  will make these positions as positive. For that purpose, I just shift the grid back by half a stride:
 
 ![]({{ site.url }}/img/yolo-grid.png)
 
@@ -40,7 +40,7 @@ So, let us keep these circles as a representation of the net outputs, and for th
 
 For every positive position, the network predicts a **regression** on the bounding box precise position and dimension.
 
-In the second version of Yolo, the predictions are relative to the grid position and anchor size (instead of the full image) as in the Faster-RCNN models for better performance:
+In the second version of Yolo, these predictions are relative to the grid position and anchor size (instead of the full image) as in the Faster-RCNN models for better performance:
 
 $$ b_x = \sigma(t_x) + c_x $$
 

@@ -64,9 +64,9 @@ Once the bounding box regressor is trained, the model is also trained to predict
 
 The natural confidence score value is:
 
-- for positive positions, the **intersection over union (IOU)** of the predicted box with the ground truth
+- for a positive position, the **intersection over union (IOU)** of the predicted box with the ground truth
 
-- for negative positions, zero.
+- for a negative position, zero.
 
 In the Yolo papers, confidence is trained jointly with the position/dimension regressor, which can cause model instability. To avoid this, they weighted the regressor loss 5 times the confidence regressor.
 

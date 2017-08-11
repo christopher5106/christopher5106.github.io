@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Bounding box object detectors: understanding YOLO"
-date:   2017-08-11 00:00:51
+date:   2017-08-10 00:00:51
 categories: object detectors
 ---
 

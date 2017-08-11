@@ -88,4 +88,32 @@ Putting it all together for an example of 98 anchors, 10 object classes, the out
 
 For all outputs except the relative width and height, the outputs are followed by the logistic activation function or sigmoid, so that the final outputs fall between 0 and 1. For the relative width and height, the activation is the exponential function.
 
+# Multi-scale training
+
+The multi-scale training consists in augmenting the dataset so that objects will be at multiple scales. Since **a neural network works with pixels**, resizing the images in the dataset at multiple sizes simply enable to simulate objects of multiple scales.
+
+![]({{ site.url }}/img/yolo-multi-scale-training.png)
+
+Note that some neural network implementations resize all images to a given size, let's say 500x500, as a kind of first layer in the neural network. First, this automatic resizing step cancels the multi-scale training in the dataset. Second, there is also a problem with ratio since the network in this case will deal with squares: either part of the input image is discarded (crop), or the ratio is not preserved, which is suboptimal in both cases.
+
+The best way to deal with images of multiple sizes is to let the convolutions do the job: convolutions will automatically add more cells along the width or the height to deal with images of different sizes and ratios. The only thing that you need to remind of is that **a neural network works in pixels, given an input in a fixed number of pixels, to predict a value that can only be expressed in pixels**. A convolution in a neural network does not use the image width or height to compute the values locally. The width and the height of the image will only impact the number of cells in the grid, vertically and horizontally.
+
+This leads to the following point: anchor sizes can only be expressed in a number of pixels. In Yolo implementations, these sizes are given with respect to the grid size, which is a fixed number of pixels as well (the network stride, ie 32 pixels):
+
+VOC dataset:
+0.86, 0.75
+2.29, 1.75
+4.48, 3.33
+7.77, 5.72
+9.96, 9.91
+
+COCO dataset:
+1.3221, 1.73145
+3.19275, 4.00944
+5.05587, 8.09892
+9.47112, 4.84053
+11.2364, 10.0071
+
+In order to allow multi-scale training, anchors sizes will never be expressed relatively to the input image width or height, since the objective of multi-scale training is to modify the ratio between the input dimensions and anchor sizes.
+
 **Well done!**

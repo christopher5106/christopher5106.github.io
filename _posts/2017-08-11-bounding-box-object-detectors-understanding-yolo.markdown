@@ -20,7 +20,7 @@ To make it easier to align the grid of predictions produced by the network with 
 
 - the padding mode 'SAME' used in the convolutions means the output has the same size as the input. This is performed by padding with some zeros (or other new values) each border of the image. If we'd used a 'VALID' padding for the convolutions, then the first position on the grid would be shifted by half the network reception field size, which can be huge (~ 200 pixels for a ~400 pixel large network). The problem requires us to predict objects close to the borders, so, to avoid a shift and start predicting values at the image border, borders are padded by half the reception field size, an operation performed by the 'SAME' padding mode.
 
-The following figure displays the impact of the padding modes. Final stride is $$ 2^{\text{nb max-pooling layers}} $$, and the left and top offsets are half that value, ie $$ 2^{\text{nb max-pooling layers - 1}} $$:
+The following figure displays the impact of the padding modes and the network outputs in a grid. Final stride is $$ 2^{\text{nb max-pooling layers}} $$, and the left and top offsets are half that value, ie $$ 2^{\text{nb max-pooling layers - 1}} $$:
 
 ![]({{ site.url }}/img/yolo-padding.png)
 
@@ -30,6 +30,10 @@ The following figure displays the impact of the padding modes. Final stride is $
 A position on the grid, that is the closest position to the center of one of the ground truth bounding boxes, is **positive**. Other positions are negative.
 
 ![]({{ site.url }}/img/yolo-positives.png)
+
+So, let us keep theses circles as a representation of the net outputs, and for the grid,  rather than displaying a grid of the outputs, let us use it to display the cells for which any ground truth box center  will make these positions as positive and shift it back by half a stride:
+
+![]({{ site.url }}/img/yolo-grid.png)
 
 
 # A regressor rather than a classifier

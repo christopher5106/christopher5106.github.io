@@ -82,7 +82,7 @@ In Yolo V2, this specialization is 'assisted' with predefined anchors as in Fast
 
 For each specialization, in Yolo V2, the class probabilities of the object inside the box is trained to be predicted, as the confidence score, but conditionally on positive positions.
 
-Putting it all together for an example of 98 anchors, 10 object classes, the output of the network at each position can be decomposed into 3 parts:
+Putting it all together for an example of 5 anchors, 20 object classes, the output of the network at each position can be decomposed into 3 parts:
 
 ![]({{ site.url }}/img/yolo-output.png)
 

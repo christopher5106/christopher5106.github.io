@@ -79,12 +79,12 @@ In Yolo V2, this specialization is 'assisted' with predefined anchors as in Fast
 
 # All together
 
-For each specialization, in Yolo V2, the class probabilities of the object inside the box is trained to be predicted, as the confidence score.
+For each specialization, in Yolo V2, the class probabilities of the object inside the box is trained to be predicted, as the confidence score, but conditionally on positive positions.
 
 Putting it all together for an example of 98 anchors, 10 object classes, the output of the network at each position can be decomposed into 3 parts:
 
 ![]({{ site.url }}/img/net_output.png)
 
-For all outputs except the width and height scaling, the outputs are followed by the logistic activation function or sigmoid, to fall between 0 and 1.
+For all outputs except the width and height scaling, the outputs are followed by the logistic activation function or sigmoid, so that the final outputs fall between 0 and 1. For the width and height scale variations, the activation is the exponential function. 
 
 **Well done!**

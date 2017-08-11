@@ -16,18 +16,18 @@ The deep learning network for prediction is composed of convolution layers of st
 
 To make it easier to align the grid of predictions produced by the network with the image:
 
-- each  max-pooling layer divides the image size by 2 and multiplies the network stride by 2. The padding mode used is 'VALID', meaning it is the **floor division** in the image size division, the extra values left on the right and the bottom of the image will only be used in the network field but a smaller image without these pixels would lead to the same grid;
+- each  max-pooling layer divides the output size by 2, multiplies the network stride by 2, and shifts the position in the image corresponding to the net receptive field center by 1 pixel. The padding mode used is 'VALID', meaning it is the **floor division** in the image size division, the extra values left on the right and the bottom of the image will only be used in the network field but a smaller image without these pixels would lead to the same grid;
 
 - the padding mode 'SAME' used in the convolutions means the output has the same size as the input. This is performed by padding with some zeros (or other new values) each border of the image. If we'd used a 'VALID' padding for the convolutions, then the first position on the grid would be shifted by half the network reception field size, which can be huge (~ 200 pixels for a ~400 pixel large network). The problem requires us to predict objects close to the borders, so, to avoid a shift and start predicting values at the image border, borders are padded by half the reception field size, an operation performed by the 'SAME' padding mode.
 
-The following figure presents a summary of the use of the paddings. Final stride is $$ 2^{\text{nb max-pooling layers}} $$
+The following figure displays the impact of the padding modes. Final stride is $$ 2^{\text{nb max-pooling layers}} $$, and the left and top offsets are half that value, ie $$ 2^{\text{nb max-pooling layers - 1}} $$:
 
 ![]({{ site.url }}/img/yolo-padding.png)
 
 
 # Positives and negatives
 
-Position on the grid belonging to the top-left corner of a cell in which one of ground truth bounding boxes has a center inside are **positive**. Other positions are negative.
+A position on the grid, that is the closest position to the center of one of the ground truth bounding boxes, is **positive**. Other positions are negative.
 
 ![]({{ site.url }}/img/yolo-positives.png)
 

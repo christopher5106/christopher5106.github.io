@@ -31,7 +31,7 @@ A position on the grid, that is the closest position to the center of one of the
 
 ![]({{ site.url }}/img/yolo-positives.png)
 
-So, let us keep theses circles as a representation of the net outputs, and for the grid,  rather than displaying a grid of the outputs, let us use it to display the cells for which any ground truth box center  will make these positions as positive and shift it back by half a stride:
+So, let us keep these circles as a representation of the net outputs, and for the grid,  rather than displaying a grid of the outputs, let us use it to display the cells for which any ground truth box center  will make these positions as positive and shift it back by half a stride:
 
 ![]({{ site.url }}/img/yolo-grid.png)
 
@@ -85,6 +85,6 @@ Putting it all together for an example of 98 anchors, 10 object classes, the out
 
 ![]({{ site.url }}/img/net_output.png)
 
-For all outputs except the width and height scaling, the outputs are (logistic activation function or sigmoid)
+For all outputs except the width and height scaling, the outputs are followed by the logistic activation function or sigmoid, to fall between 0 and 1.
 
 **Well done!**

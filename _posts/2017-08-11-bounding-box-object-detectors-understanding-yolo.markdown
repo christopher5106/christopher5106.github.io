@@ -60,7 +60,7 @@ where $$ (c_x, c_y) $$ are the grid cell coordinates and $$ (p_w, p_h) $$ the an
 
 # Confidence
 
-Once the bounding box regressor is trained, the model is also trained to predict a confidence score on the final predicted bounding box with above regression.
+Once the bounding box regressor is trained, the model is also trained to predict a confidence score on the final predicted bounding box with the above regressor.
 
 The natural confidence score value is:
 

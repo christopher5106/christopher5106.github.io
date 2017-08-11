@@ -68,7 +68,7 @@ The natural confidence score value is:
 
 - for a negative position, zero.
 
-In the Yolo papers, confidence is trained jointly with the position/dimension regressor, which can cause model instability. To avoid this, they weighted the regressor loss 5 times the confidence regressor.
+In the Yolo papers, confidence is trained jointly with the position/dimension regressor, which can cause model instability. To avoid this, they weighted the position/dimension regressor loss 5 times the confidence regressor.
 
 
 # Anchors or prediction specialization

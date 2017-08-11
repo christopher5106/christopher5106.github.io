@@ -27,7 +27,7 @@ The following figure presents a summary of the use of the paddings. Final stride
 
 # Positives and negatives
 
-Positions on the grid belong to a cell in which one of ground truth bounding boxes has a center inside are **positive**. Other positions are negative.
+Positions on the grid belonging to a cell in which one of ground truth bounding boxes has a center inside are **positive**. Other positions are negative.
 
 ![]({{ site.url }}/img/yolo-positives.png)
 
@@ -36,17 +36,21 @@ Positions on the grid belong to a cell in which one of ground truth bounding box
 
 For every positive position, the network predicts a **regression** on the bounding box precise position and dimension.
 
-In the second version of Yolo, the predictions are relative to the grid position and anchor size (instead of the full image) as in the Faster-RCNN models:
+In the second version of Yolo, the predictions are relative to the grid position and anchor size (instead of the full image) as in the Faster-RCNN models for better performance:
 
 $$ b_x = \sigma(t_x) + c_x $$
+
 $$ b_y = \sigma(t_y) + c_y $$
+
 $$ b_w = p_w \ e^{t_w} $$
+
 $$ b_h = p_h \ e^{t_h} $$
 
 where $$ (c_x, c_y) $$ is the grid cell coordinate and $$ (p_w, p_h) $$ the anchor dimension.
 
 ![]({{ site.url }}/img/yolo-regression.png)
 
+Please note that the previous figure is exagerated to display better.
 
 # Confidence
 

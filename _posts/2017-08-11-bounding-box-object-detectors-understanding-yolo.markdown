@@ -27,7 +27,7 @@ The following figure presents a summary of the use of the paddings. Final stride
 
 # Positives and negatives
 
-Positions on the grid belonging to a cell in which one of ground truth bounding boxes has a center inside are **positive**. Other positions are negative.
+Position on the grid belonging to the top-left corner of a cell in which one of ground truth bounding boxes has a center inside are **positive**. Other positions are negative.
 
 ![]({{ site.url }}/img/yolo-positives.png)
 
@@ -75,10 +75,12 @@ In Yolo V2, this specialization is 'assisted' with predefined anchors as in Fast
 
 # All together
 
-For each specialization, in Yolo V2, a class of the object in the box is predicted as well as the confidence.
+For each specialization, in Yolo V2, the class probabilities of the object inside the box is trained to be predicted, as the confidence score.
 
-Putting all together on for an example of 10 classes and 98 anchors, the prediction of the network at each position can be decomposed into 3 parts:
+Putting it all together for an example of 98 anchors, 10 object classes, the output of the network at each position can be decomposed into 3 parts:
 
 ![]({{ site.url }}/img/net_output.png)
+
+For all outputs except the width and height scaling, the outputs are (logistic activation function or sigmoid)
 
 **Well done!**

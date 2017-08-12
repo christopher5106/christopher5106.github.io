@@ -102,7 +102,9 @@ The best way to deal with images of multiple sizes is to let the convolutions do
 
 The global image width/height impacts the number of cells in the grid, vertically and horizontally. Locally, each stack of convolutions and max-pooling layers composing the net uses the pixel patch in the receptive field to compute the prediction and ignores the total number of cells and the global image width/height.
 
-This leads to the following point: anchor sizes can only be expressed in a number of pixels. In Yolo implementations, these sizes are given with respect to the grid size, which is a fixed number of pixels as well (the network stride, ie 32 pixels):
+This leads to the following point: anchor sizes can only be expressed in pixels as well. In order to allow multi-scale training, anchors sizes will never be relative to the input image width or height, since the objective of multi-scale training is to modify the ratio between the input dimensions and anchor sizes.
+
+In Yolo implementations, these sizes are given with respect to the grid size, which is a fixed number of pixels as well (the network stride, ie 32 pixels):
 
 VOC dataset:
 
@@ -119,7 +121,5 @@ COCO dataset:
     5.05587, 8.09892
     9.47112, 4.84053
     11.2364, 10.0071
-
-In order to allow multi-scale training, anchors sizes will never be expressed relatively to the input image width or height, since the objective of multi-scale training is to modify the ratio between the input dimensions and anchor sizes.
 
 **Well done!**

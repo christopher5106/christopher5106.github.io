@@ -78,16 +78,16 @@ Yolo V1 and V2 predict B regressions for B bounding boxes. Only one of the B reg
 
 In Yolo V2, this specialization is 'assisted' with predefined anchors as in Faster-RCNN. The predefined anchors are chosen to be as representative as possible of the ground truth boxes, with the following K-means clustering algorithm to define them:
 
-- all ground truth bounding boxes are centered on (0,0)
+- all ground-truth bounding boxes are centered on (0,0)
 
-- the algorithm initiates 5 centroïds by drawing randomly 5 of these ground truth bounding boxes
+- the algorithm initiates 5 centroïds by drawing randomly 5 of the ground-truth bounding boxes
 
 - then, the following two steps are alternated:
 
-  - each ground truth box is assigned to one of the centroïd, using as distance measure the IOU, in order to get 5 *clusters* of ground truth bouding boxes
+  - each ground truth box is assigned to one of the centroïd, using as distance measure the IOU, in order to get 5 *clusters* or groups of ground-truth bouding boxes
 
-  - new centroïds are computed by taking in each of the 5 clusters the ground truth bounding box that minimizes the mean IOU with all other boxes inside the cluster
-  
+  - new centroïds are computed by taking the box inside each cluster that minimizes the mean IOU with all other boxes inside the cluster
+
 
 # All together
 

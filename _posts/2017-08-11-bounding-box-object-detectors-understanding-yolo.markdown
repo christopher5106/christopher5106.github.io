@@ -117,7 +117,7 @@ This leads to the following point: anchor sizes can only be expressed in pixels 
 
 In Yolo implementations, these sizes are given with respect to the grid size, which is a fixed number of pixels as well (the network stride, ie 32 pixels):
 
-[VOC dataset](https://github.com/pjreddie/darknet/blob/master/cfg/yolo-voc.cfg#L242):
+[Yolo anchors for VOC dataset](https://github.com/pjreddie/darknet/blob/master/cfg/yolo-voc.cfg#L242):
 
     1.3221, 1.73145
     3.19275, 4.00944

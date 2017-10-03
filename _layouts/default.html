@@ -9,6 +9,56 @@
 
     {% include header.html %}
 
+
+    <style>
+    .modal {
+      padding: 14px;
+    }
+    .modal-dialog {
+      width: 100%;
+      height: 100%;
+      padding: 0;
+      margin: 0;
+    }
+
+    .modal-content {
+      height: 100%;
+      border-radius: 0;
+      font-size: 20px;
+    }
+    </style>
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-body">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title" id="myModalLabel">New book, same as blog</h4>          </div>
+            <div class="row">
+              <div class="col-sm-6">
+                <center><a href="https://www.amazon.com/Deep-Learning-Theano-Christopher-Bourez/dp/1786465825/">
+                  <img src="/img/deep-learning-with-theano.png" /></a>
+                </center>
+              </div>
+              <div class="hidden-xs col-sm-6" style="height:70px">
+              </div>
+              <div class="col-sm-6" style="padding:20px">
+                <b>Deep Learning with Theano</b> <br/><br/>
+                An overview of deep learning with code examples in Python: convolutional networks, recurrent networks, residual networks, memory networks,
+                generative adversarial networks, and RL networks.<br/><br/>
+                <a href="https://www.amazon.com/Deep-Learning-Theano-Christopher-Bourez/dp/1786465825/">Learn more ></a>
+              </div>
+            </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script>
+    $('#myModal').modal('show');
+    </script>
+
     <div class="page-content">
       <div class="wrapper">
         {{ content }}

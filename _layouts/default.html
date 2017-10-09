@@ -11,6 +11,8 @@
 
 
     <style>
+    body { margin:0 !important; }
+    
     .modal {
       padding: 14px;
     }
@@ -56,7 +58,11 @@
     </div>
 
     <script>
-    $('#myModal').modal('show');
+    setTimeout(function(){
+      $('#myModal').modal('show')
+    }, 2000);
+
+
     </script>
 
     <div class="page-content">

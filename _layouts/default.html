@@ -47,7 +47,7 @@
               </div>
               <div class="hidden-xs col-sm-6" style="height:70px">
               </div>
-              <div class="col-sm-6" style="padding:20px 20px 0px 20px">
+              <div class="col-sm-6" style="padding:20px 40px 0px 40px">
                 <b>Deep Learning with Theano</b> <br/><br/>
                 An overview of deep learning with code examples in Python: convolutional networks, recurrent networks, residual networks, memory networks,
                 generative adversarial networks, and RL networks.<br/><br/>
@@ -60,9 +60,33 @@
     </div>
 
     <script>
-    setTimeout(function(){
-      $('#myModal').modal('show')
-    }, 2000);
+    function getCookie(cname) {
+      var name = cname + "=";
+      var ca = document.cookie.split(';');
+      for(var i=0; i<ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0)==' ') c = c.substring(1);
+        if (c.indexOf(name) == 0) return c.substring(name.length,c.length);
+      }
+      return "";
+    }
+
+    function setCookie(cname, cvalue, exdays) {
+      var d = new Date();
+      d.setTime(d.getTime() + (exdays*24*60*60*1000));
+      var expires = "expires="+d.toUTCString();
+      document.cookie = cname + "=" + cvalue + "; " + expires;
+    }
+
+    if (getCookie("book") == "")  {
+      setTimeout(function(){
+        $('#myModal').modal('show')
+      }, 2000);
+    }
+
+    $('#myModal').on('hidden.bs.modal', function () {
+      setCookie("book",true,1000);
+    })
 
 
     </script>

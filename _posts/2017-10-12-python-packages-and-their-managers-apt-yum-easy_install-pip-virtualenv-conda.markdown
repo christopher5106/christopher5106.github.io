@@ -9,7 +9,7 @@ Many of us might be messed up with Python packages or modules.
 
 There are many ways to install Python and its modules or packages: system package manager, python package managers, ... These package managers install packages in different directories.
 
-Moreover, the virtual environment managers will demultiply the number of directories in which packages can be found...
+Moreover, the virtual environment managers, as well as the `sudo` command, will demultiply the number of directories in which packages can be found...
 
 After a while, your system might be completely inconsistent.
 
@@ -69,7 +69,7 @@ After a while, your system might be completely inconsistent.
   python3.5-minimal/xenial-security,now 3.5.2-2ubuntu0~16.04.1 amd64 [installed,upgradable to: 3.5.2-2ubuntu0~16.04.3]
   ```
 
-    Let's have a look at the system binaries:
+    Let's have a look at where the system binaries have been installed:
 
   ```bash
   ls -l /usr/bin/*python*
@@ -107,6 +107,24 @@ After a while, your system might be completely inconsistent.
 
      `python3-ply` is the Lex and Yacc implementation for Python3 and `dh_python3-ply` generates versioned dependencies on `python3-ply`
 
+     The system has installed Python packages in the global `dist-packages` directories and created symbolic links:
+
+    ```bash
+    /usr/lib/python2.7/dist-packages/numpy
+
+    /usr/lib/python3/dist-packages/numpy
+
+    ls -ls /usr/include/numpy
+    #-> ../lib/python2.7/dist-packages/numpy/core/include/numpy
+
+    ls -l /usr/include/python2.7/numpy
+    #->../../lib/python2.7/dist-packages/numpy/core/include/numpy
+
+    ls -l /usr/include/python3.5m/numpy
+    #-> ../../lib/python3/dist-packages/numpy/core/include/numpy
+    ```
+
+
 
 - `easy_install` in the setupstool package is a Python package manager
 
@@ -125,12 +143,21 @@ After a while, your system might be completely inconsistent.
 
         To install the Pandas package:
 
-          pip install Pandas
+          pip install numpy
+
+        The newly installed package can be found:
+
+          /usr/local/lib/python2.7/dist-packages/numpy
 
         To install it the package in the local user directory `~/.local/` :
 
-          pip install --user Pandas
+          pip install --user numpy
 
+        In this case, the package can be found
+
+          /home/christopher/.local/lib/python2.7/site-packages/numpy
+
+        Note the change from `dist-packages` to `site-packages` in local mode.
 
    - directly with Python with the script [get-pip.py](https://bootstrap.pypa.io/get-pip.py) to run
 
@@ -143,21 +170,24 @@ After a while, your system might be completely inconsistent.
           sudo apt-get install python-pip
           sudo apt-get install python3-pip
 
-        In recent Ubuntu versions, by default, `pip` installs the package locally.
+        In recent Ubuntu versions, by default, `pip` installs the package locally:
+
+          /home/christopher/.local/lib/python3.5/site-packages/numpy
+
 
     To check where your package has been installed:
 
   ```bash
-  pip show tensorflow
-  # Name: tensorflow
-  # Version: 1.3.0
-  # Summary: TensorFlow helps the tensors flow
-  # Home-page: http://tensorflow.org/
-  # Author: Google Inc.
-  # Author-email: opensource@google.com
-  # License: Apache 2.0
+  pip show numpy
+  # Name: numpy
+  # Version: 1.13.3
+  # Summary: NumPy: array processing for numbers, strings, records, and objects.
+  # Home-page: http://www.numpy.org
+  # Author: NumPy Developers
+  # Author-email: numpy-discussion@python.org
+  # License: BSD
   # Location: /home/christopher/miniconda2/lib/python2.7/site-packages
-  # Requires: backports.weakref, wheel, mock, tensorflow-tensorboard, numpy, protobuf, six
+  # Requires
   ```
 
     To upgrade `pip`:
@@ -168,9 +198,9 @@ After a while, your system might be completely inconsistent.
 
     Note it is possible to specify the version to install:
 
-      pip install SomePackage            # latest version
-      pip install SomePackage==1.0.4     # specific version
-      pip install 'SomePackage>=1.0.4'     # minimum version
+      pip install numpy            # latest version
+      pip install numpy==1.9.0     # specific version
+      pip install 'numpy>=1.9.0'     # minimum version
 
     Since Pip does not have a true depency resolution, you will need to define a requirement file to
     specify which package needs to be installed and install them:
@@ -184,6 +214,10 @@ After a while, your system might be completely inconsistent.
     To create a requirements file from your installed packages to reproduce your install:
 
       pip freeze > requirements.txt
+
+    To uninstall a package:
+
+      pip uninstall numpy
 
     Pip offers many other [options and configuration properties](https://pip.pypa.io/en/stable/user_guide).
 
@@ -229,14 +263,26 @@ After a while, your system might be completely inconsistent.
       - pip:
         - numpy
 
+    The most recent package 'numpy-1.13.3-py27' has been installed in `~/miniconda2/pkgs/`, although I had a less recent package 'numpy-1.12.1-py36_0' for another environment.
+
+    To remove a package from the current environment:
+
+      conda uninstall numpy
+
+    The package 'numpy-1.13.3-py27' still appears in your conda dir `~/miniconda2/pkgs/` but is not available. To clean unused packages:
+
+      conda clean --packages
+
+    'numpy-1.12.1-py36_0' package has not been removed because it is used by another environment.
+
     As we'll see in the last section, `conda` also offers a virtual environment manager.
 
 
 To conclude:
 
-- **I would recommand to never use `sudo` to run the Python package manager. Reserve `sudo` for the system packages.**
+- **I would recommand to never use `sudo` to run the  `pip` and `conda` Python package managers. Reserve `sudo` for the system packages `apt-get`.** Packages installed with `sudo` will not be removed by `pip uninstall` command.
 
-- From this point, you should begin to leave your system in an inconsistent state. Packages installed with system manager, or different managers begin to be messed up.
+- From this point, you should begin to leave your system in an inconsistent state. Packages installed with system manager, or different managers begin to be messed up: multiple versions of a same package can be fetched by the Python programs, and we do not know which one.
 
 
 ### Paths
@@ -266,7 +312,7 @@ In this case, they look consistent because I've installed iPython and Jupyter wi
 
     export PATH="/home/christopher/miniconda2/bin:$PATH"
 
-Note that Ananconda is using the system binary for Python command:
+Note that Ananconda is using the system binary for Python command as `pip` does:
 
 ```bash
 ls -l /home/christopher/miniconda2/bin/python
@@ -274,7 +320,7 @@ ls -l /home/christopher/miniconda2/bin/python
 ```
 
 
-To check where pip installs the user packages, run in a Python shell:
+To check where `pip` installs the user packages, run in a Python shell:
 
 ```python
 >>> import site
@@ -284,13 +330,15 @@ To check where pip installs the user packages, run in a Python shell:
 '/home/christopher/.local/lib/python2.7/site-packages'
 ```
 
-To check which directories (and their order of precedence) are used to load the packages / dependencies:
+To check which directories (and their order of precedence) are used to load the packages / dependencies during a Python run:
 
 ```python
 >>> import sys
 >>> sys.path
 ['', '/home/christopher/technologies/caffe/python', '/home/christopher/apps/christopher5106.github.io', '/home/christopher/miniconda2/lib/python27.zip', '/home/christopher/miniconda2/lib/python2.7', '/home/christopher/miniconda2/lib/python2.7/plat-linux2', '/home/christopher/miniconda2/lib/python2.7/lib-tk', '/home/christopher/miniconda2/lib/python2.7/lib-old', '/home/christopher/miniconda2/lib/python2.7/lib-dynload', '/home/christopher/.local/lib/python2.7/site-packages', '/home/christopher/miniconda2/lib/python2.7/site-packages']
 ```
+
+**These commands gives a good picture of what's happening when running a Python script, where packages are fetched from and this can be a first step in debugging, although it does not give us any clue on what package has been installed in each directory.**
 
 The presence of the first path in the list is due to the environment variable `PYTHONPATH` setup in my `~/.bashrc` file:
 

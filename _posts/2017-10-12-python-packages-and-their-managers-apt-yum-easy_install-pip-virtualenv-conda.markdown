@@ -15,7 +15,7 @@ There are many ways to install Python and its modules or packages:
 
 ### Package managers
 
-- the system package manager, such as Redhat's `yum` or Ubuntu's `apt-get` commands:
+- the system package manager, such as Redhat's `yum` or Ubuntu's `apt-get` commands to install Python packages:
 
   ```bash
   sudo apt-get install python python-dev python-all python-all-dev
@@ -23,7 +23,55 @@ There are many ways to install Python and its modules or packages:
   python-dateutil python-decorator python-joblib python-matplotlib-data
   python-tz
   python2.7 python2.7-dev python3 python3-dev python3-numpy python3.5
+  ```
 
+    To list the installed packages:
+
+  ```bash
+  apt list --installed | grep python
+
+  dh-python/xenial-updates,xenial-updates,now 2.20151103ubuntu1.1 all  [installé]
+  libboost-mpi-python-dev/xenial,now 1.58.0.1ubuntu1 amd64  [installé, automatique]
+  libboost-mpi-python1.58-dev/xenial-updates,now 1.58.0+dfsg-5ubuntu3.1 amd64  [installé, automatique]
+  libboost-mpi-python1.58.0/xenial-updates,now 1.58.0+dfsg-5ubuntu3.1 amd64  [installé, automatique]
+  libboost-python-dev/xenial,now 1.58.0.1ubuntu1 amd64  [installé]
+  libboost-python1.58-dev/xenial-updates,now 1.58.0+dfsg-5ubuntu3.1 amd64  [installé, automatique]
+  libboost-python1.58.0/xenial-updates,now 1.58.0+dfsg-5ubuntu3.1 amd64  [installé, automatique]
+  libpeas-1.0-0-python3loader/xenial,now 1.16.0-1ubuntu2 amd64  [installé, automatique]
+  libpython-all-dev/xenial,now 2.7.11-1 amd64  [installé, automatique]
+  libpython-dev/xenial,now 2.7.11-1 amd64  [installé, automatique]
+  libpython-stdlib/xenial,now 2.7.11-1 amd64  [installé, automatique]
+  libpython2.7/xenial-updates,xenial-security,now 2.7.12-1ubuntu0~16.04.1 amd64  [installé]
+  libpython2.7-dev/xenial-updates,xenial-security,now 2.7.12-1ubuntu0~16.04.1 amd64  [installé, automatique]
+  ...
+  python/xenial,now 2.7.11-1 amd64  [installé]
+  python-all/xenial,now 2.7.11-1 amd64  [installé, automatique]
+  python-all-dev/xenial,now 2.7.11-1 amd64  [installé]
+  python-apt/xenial,now 1.1.0~beta1build1 amd64  [installé, automatique]
+  python-apt-common/xenial,xenial,now 1.1.0~beta1build1 all  [installé, automatique]
+  python-bs4/xenial,xenial,now 4.4.1-1 all  [installé, automatique]
+  ...
+  python2.7/xenial-updates,xenial-security,now 2.7.12-1ubuntu0~16.04.1 amd64  [installé, automatique]
+  python2.7-dev/xenial-updates,xenial-security,now 2.7.12-1ubuntu0~16.04.1 amd64  [installé, automatique]
+  python2.7-minimal/xenial-updates,xenial-security,now 2.7.12-1ubuntu0~16.04.1 amd64  [installé, automatique]
+  python3/xenial,now 3.5.1-3 amd64  [installé]
+  python3-apport/xenial-updates,xenial-updates,xenial-security,xenial-security,now 2.20.1-0ubuntu2.10 all  [installé, automatique]
+  python3-apt/xenial,now 1.1.0~beta1build1 amd64  [installé, automatique]
+  python3-aptdaemon/xenial,xenial,now 1.1.1+bzr982-0ubuntu14 all  [installé, automatique]
+  python3-aptdaemon.gtk3widgets/xenial,xenial,now 1.1.1+bzr982-0ubuntu14 all  [installé, automatique]
+  python3-aptdaemon.pkcompat/xenial,xenial,now 1.1.1+bzr982-0ubuntu14 all  [installé, automatique]
+  python3-blinker/xenial,xenial,now 1.3.dfsg2-1build1 all  [installé, automatique]
+  python3-botocore/xenial-updates,xenial-updates,now 1.4.70-1~16.04.0 all  [installé, automatique]
+  python3-brlapi/xenial-updates,now 5.3.1-2ubuntu2.1 amd64  [installé, automatique]
+  ...
+  python3.5/xenial-security,now 3.5.2-2ubuntu0~16.04.1 amd64 [installed,upgradable to: 3.5.2-2ubuntu0~16.04.3]
+  python3.5-dev/xenial-security,now 3.5.2-2ubuntu0~16.04.1 amd64 [installed,upgradable to: 3.5.2-2ubuntu0~16.04.3]
+  python3.5-minimal/xenial-security,now 3.5.2-2ubuntu0~16.04.1 amd64 [installed,upgradable to: 3.5.2-2ubuntu0~16.04.3]
+  ```
+
+    Let's have a look at the system binaries:
+
+  ```bash
   ls -l /usr/bin/*python*
   # /usr/bin/dh_python2
   # /usr/bin/dh_python3 -> ../share/dh-python/dh_python3
@@ -162,7 +210,24 @@ There are many ways to install Python and its modules or packages:
   # numpy                     1.13.3                    <pip>
   ```
 
-    Here, numpy package has been installed at least twice. Once with `conda`, once with `pip`.
+    Here, numpy package has been installed at least twice. Once with `conda`, once with `pip`. Note:
+
+    - `pip` does not see the packages installed by the system as well as the packages installed via conda
+
+    - `conda` does not see the packages installed by the system
+
+    Note that since `conda` sees the `pip` packages, it is possible to specify the `pip` packages in the `conda`
+    listing the packages:
+
+      # environment.yml
+      name: my_app
+      dependencies:
+      - python>=3.5
+      - anaconda
+      - numpy
+      - pip
+      - pip:
+        - numpy
 
     As we'll see in the last section, `conda` also offers a virtual environment manager.
 
@@ -257,13 +322,113 @@ Last, when loading a package, you can check from which directory it has been loa
 
 ### Virtual environments
 
+Virtual environments enable packages to be installed locally to an application, and not globally. This enables to have specific version of a package for the application.
+
+`virtualenv` (for pip), `venv` (for pip3), or `conda` are virtual environment managers. I'll create 3 environments, named 'my_app', in each of them. Once the environment 'my_app' is activated, the bash shell will mention the current active environment "my_app" the following way:
+
+    (my_app) christopher@christopher-G751JY:~/apps$
+
+Let's see for each one:
+
 - `virtualenv`
 
-    sudo pip install --upgrade virtualenv
+    To install, either one of the following commands:
 
-    pip install virtualenv
-    virtualenv <DIR>
-    source <DIR>/bin/activate
+      sudo apt get python-virtualenv
+      pip install virtualenv
+      conda install virtualenv
 
+    Virtual environments are attached to a directory (directory of the application) where packages will be stored.
+
+    To create a virtual environment:
+
+      mkdir my_app
+      virtualenv my_app
+
+    To activate the environment:
+
+      source my_app/bin/activate
+
+    Let's now list the packages in this environment:
+
+  ```bash
+  pip list
+  pip (8.1.1)
+  pkg-resources (0.0.0)
+  setuptools (20.7.0)
+  ```
+    All other packages installed globally are not visible anymore.
+
+    Note that `pip3` and `conda` package managers will ignore the current virtualenv environment and install packages globally.
+
+    Let's now check the Python executable:
+  ```bash
+  which python
+  # /home/christopher/apps/my_app/bin/python
+  ls -l /home/christopher/apps/my_app/bin/python
+  #/home/christopher/apps/my_app/bin/python -> python3
+  ls -l /home/christopher/apps/my_app/bin/python3
+  # /home/christopher/apps/my_app/bin/python3 -> /usr/bin/python3
+  ```
+
+  `virtualenv` environment mechanism relies on Python executable ability to configure its environment from local files (if present) and load local packages.
+
+- `venv`
+
+    To install:
+
+      sudo apt-get install python3-venv
+
+    To create a virtual environment:
+
+      mkdir my_app
+      python3 -m venv my_app
+
+    To activate the environment:
+
+      source my_app/bin/activate
+
+    Note that `conda` package manager will ignore the current virtualenv environment and install packages globally, while `pip` will not.
+
+    Let's now check the Python executable:
+  ```bash
+  which python
+  # /home/christopher/apps/my_app/bin/python
+  ls -l /home/christopher/apps/my_app/bin/python
+  #/home/christopher/apps/my_app/bin/python -> python3
+  ls -l /home/christopher/apps/my_app/bin/python3
+  # /home/christopher/apps/my_app/bin/python3 -> /usr/bin/python3
+  ```
+
+    `venv` environment mechanism relies on Python executable ability to configure its environment from local files (if present) and load local packages.
 
 - `conda`
+
+    In conda, environments are not linked to a particular directory. They are stored directly in `~/miniconda2/envs/`.
+
+    To create an environment:
+
+      conda create --name my_app
+
+    Note that it is possible to specify the version of Python:
+
+      conda create --name my_app python=3.4
+
+    or to create an environment from a file:
+
+      conda env create --file environment.yml
+
+    To activate the environment:
+
+      source activate my_app
+
+    Let's now check the Python executable:
+
+  ```bash
+  which python
+  # /home/christopher/miniconda2/bin/python
+  ```
+
+    `conda` environment mechanism relies on configurations and libraries defined in the `conda` directory to load the packages relative to the environment.
+
+    Note that as surprising as it looks like, `conda list` does not see anymore the packages that have been installed with `pip` and `pip3` globally, while they are still active and appear with `pip list` (or `pip3 list`)

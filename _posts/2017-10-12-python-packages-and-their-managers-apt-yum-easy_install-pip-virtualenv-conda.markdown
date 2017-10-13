@@ -97,6 +97,20 @@ There are many ways to install Python and its modules or packages:
 
         In recent Ubuntu versions, by default, `pip` installs the package locally.
 
+    To check where your package has been installed:
+
+    ```bash
+    pip show tensorflow
+    Name: tensorflow
+    Version: 1.3.0
+    Summary: TensorFlow helps the tensors flow
+    Home-page: http://tensorflow.org/
+    Author: Google Inc.
+    Author-email: opensource@google.com
+    License: Apache 2.0
+    Location: /home/christopher/miniconda2/lib/python2.7/site-packages
+    Requires: backports.weakref, wheel, mock, tensorflow-tensorboard, numpy, protobuf, six
+    ```
 
     To upgrade `pip`:
 
@@ -113,15 +127,15 @@ There are many ways to install Python and its modules or packages:
     Since Pip does not have a true depency resolution, you will need to define a requirement file to
     specify which package needs to be installed and install them:
 
-        pip install -r requirements.txt
+      pip install -r requirements.txt
 
     To list installed packages:
 
-        pip list
+      pip list
 
     To create a requirements file from your installed packages to reproduce your install:
 
-        pip freeze > requirements.txt
+      pip freeze > requirements.txt
 
     Pip offers many other [options and configuration properties](https://pip.pypa.io/en/stable/user_guide).
 
@@ -179,4 +193,22 @@ To check where pip installs the user packages, run in a Python shell:
 '/home/christopher/.local'
 >>> site.USER_SITE
 '/home/christopher/.local/lib/python2.7/site-packages'
+```
+
+To check which directories (and their order of precedence) are used to load the packages / dependencies:
+
+```python
+>>> import sys
+>>> sys.path
+['', '/home/christopher/technologies/caffe/python', '/home/christopher/apps/christopher5106.github.io', '/home/christopher/miniconda2/lib/python27.zip', '/home/christopher/miniconda2/lib/python2.7', '/home/christopher/miniconda2/lib/python2.7/plat-linux2', '/home/christopher/miniconda2/lib/python2.7/lib-tk', '/home/christopher/miniconda2/lib/python2.7/lib-old', '/home/christopher/miniconda2/lib/python2.7/lib-dynload', '/home/christopher/.local/lib/python2.7/site-packages', '/home/christopher/miniconda2/lib/python2.7/site-packages']
+```
+
+You can add any new directory dynamically in the Python code with `sys.path.append("/home/my/path")` or to specify an order of precedence `sys.path.insert(0, "/home/my/path")`.
+
+Last, when loading a package, you can check from which directory it has been loaded from:
+
+```python
+>>> import numpy
+>>> numpy.__file__
+'/home/christopher/miniconda2/lib/python2.7/site-packages/numpy/__init__.pyc'
 ```

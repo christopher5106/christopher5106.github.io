@@ -150,15 +150,28 @@ There are many ways to install Python and its modules or packages:
 
       rm -rf ~/miniconda2
 
+    To install a package:
+
+      conda install numpy
+
+    To check installed packages:
+
+  ```bash
+  conda list numpy
+  # numpy                     1.13.3           py27hbcc08e0_0  
+  # numpy                     1.13.3                    <pip>
+  ```
+
+    Here, numpy package has been installed at least twice. Once with `conda`, once with `pip`.
+
     As we'll see in the last section, `conda` also offers a virtual environment manager.
 
 
+To conclude:
 
-**I would recommand to never use `sudo` to run the Python package manager. Reserve `sudo` for the system packages.**
+- **I would recommand to never use `sudo` to run the Python package manager. Reserve `sudo` for the system packages.**
 
-From this point, you should begin to leave your system in an inconsistent state.
-
-
+- From this point, you should begin to leave your system in an inconsistent state. Packages installed with system manager, or different managers begin to be messed up.
 
 
 ### Paths

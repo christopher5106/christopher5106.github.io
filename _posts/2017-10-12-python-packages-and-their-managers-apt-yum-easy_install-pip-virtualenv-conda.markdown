@@ -175,15 +175,31 @@ which python
 #/home/christopher/miniconda2/bin/python
 python --version
 #Python 2.7.14 :: Anaconda, Inc.
+which ipython
+#/home/christopher/miniconda2/bin/ipython
+which jupyter
+# /home/christopher/miniconda2/bin/jupyter
 ```
 
-or in a Python shell
+or in a Python/iPython/Jupyter shell
 
 ```python
 >>> import sys
 >>> sys.executable
 '/home/christopher/miniconda2/bin/python'
 ```
+
+In this case, they look consistent because I've installed iPython and Jupyter with Conda package manager. So, they will use the same packages, which will simplify my development and my install. Ananconda's `python`, `ipython` and `jupyter` binaries come first (before system binaries in /usr/bin) due to the PATH environment variable setup from the Anaconda install:
+
+    export PATH="/home/christopher/miniconda2/bin:$PATH"
+
+Note that Ananconda is using the system binary for Python command:
+
+```bash
+ls -l /home/christopher/miniconda2/bin/python
+# /home/christopher/miniconda2/bin/python -> python2.7
+```
+
 
 To check where pip installs the user packages, run in a Python shell:
 
@@ -202,6 +218,10 @@ To check which directories (and their order of precedence) are used to load the 
 >>> sys.path
 ['', '/home/christopher/technologies/caffe/python', '/home/christopher/apps/christopher5106.github.io', '/home/christopher/miniconda2/lib/python27.zip', '/home/christopher/miniconda2/lib/python2.7', '/home/christopher/miniconda2/lib/python2.7/plat-linux2', '/home/christopher/miniconda2/lib/python2.7/lib-tk', '/home/christopher/miniconda2/lib/python2.7/lib-old', '/home/christopher/miniconda2/lib/python2.7/lib-dynload', '/home/christopher/.local/lib/python2.7/site-packages', '/home/christopher/miniconda2/lib/python2.7/site-packages']
 ```
+
+The presence of the first path in the list is due to the environment variable `PYTHONPATH` setup in my `~/.bashrc` file:
+
+    export PYTHONPATH=~/technologies/caffe/python:$PYTHONPATH
 
 You can add any new directory dynamically in the Python code with `sys.path.append("/home/my/path")` or to specify an order of precedence `sys.path.insert(0, "/home/my/path")`.
 

@@ -110,6 +110,23 @@ There are many ways to install Python and its modules or packages:
         pip install SomePackage==1.0.4     # specific version
         pip install 'SomePackage>=1.0.4'     # minimum version
 
+    Since Pip does not have a true depency resolution, you will need to define a requirement file to
+    specify which package needs to be installed and install them:
+
+        pip install -r requirements.txt
+
+    To list installed packages:
+
+        pip list
+
+    To create a requirements file from your installed packages to reproduce your install:
+
+        pip freeze > requirements.txt
+
+    Pip offers many other [options and configuration properties](https://pip.pypa.io/en/stable/user_guide).
+
+
+
 
 **I would recommand to never use `sudo` to run the Python package manager. Reserve `sudo` for the system packages.**
 
@@ -142,7 +159,16 @@ which python
 #/home/christopher/miniconda2/bin/python
 ```
 
-To check where pip installs the packages, run in a Python shell:
+or in a Python shell
+
+```python
+>>> import sys
+>>> sys.executable
+'/home/christopher/miniconda2/bin/python'
+```
+
+To check where pip installs the user packages, run in a Python shell:
+
 ```python
 >>> import site
 >>> site.USER_BASE

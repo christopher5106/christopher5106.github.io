@@ -370,6 +370,7 @@ Last, when loading a package, you can check from which directory it has been loa
 '/home/christopher/miniconda2/lib/python2.7/site-packages/numpy/__init__.pyc'
 ```
 
+**This command gives a second clue on what package version has been used.**
 
 ### Virtual environments
 
@@ -491,3 +492,8 @@ Let's see for each one:
     To delete an environment:
 
       conda env remove -n my_app
+
+
+To get a view on all versions of a package installed in all virtual environments, user rights, and managers:
+
+    sudo find / -name "numpy" 2>/dev/null

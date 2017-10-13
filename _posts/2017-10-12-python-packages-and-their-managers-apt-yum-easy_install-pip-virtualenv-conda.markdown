@@ -99,18 +99,18 @@ There are many ways to install Python and its modules or packages:
 
     To check where your package has been installed:
 
-    ```bash
-    pip show tensorflow
-    Name: tensorflow
-    Version: 1.3.0
-    Summary: TensorFlow helps the tensors flow
-    Home-page: http://tensorflow.org/
-    Author: Google Inc.
-    Author-email: opensource@google.com
-    License: Apache 2.0
-    Location: /home/christopher/miniconda2/lib/python2.7/site-packages
-    Requires: backports.weakref, wheel, mock, tensorflow-tensorboard, numpy, protobuf, six
-    ```
+  ```bash
+  pip show tensorflow
+  # Name: tensorflow
+  # Version: 1.3.0
+  # Summary: TensorFlow helps the tensors flow
+  # Home-page: http://tensorflow.org/
+  # Author: Google Inc.
+  # Author-email: opensource@google.com
+  # License: Apache 2.0
+  # Location: /home/christopher/miniconda2/lib/python2.7/site-packages
+  # Requires: backports.weakref, wheel, mock, tensorflow-tensorboard, numpy, protobuf, six
+  ```
 
     To upgrade `pip`:
 

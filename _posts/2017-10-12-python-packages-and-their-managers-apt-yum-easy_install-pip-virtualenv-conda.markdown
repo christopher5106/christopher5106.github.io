@@ -497,3 +497,5 @@ Let's see for each one:
 To get a view on all versions of a package installed in all virtual environments, user rights, and managers:
 
     sudo find / -name "numpy" 2>/dev/null
+
+**This is our last clue command...**

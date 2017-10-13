@@ -324,7 +324,7 @@ Last, when loading a package, you can check from which directory it has been loa
 
 Virtual environments enable packages to be installed locally to an application, and not globally. This enables to have specific version of a package for the application.
 
-`virtualenv` (for pip), `venv` (for pip3), or `conda` are virtual environment managers. I'll create 3 environments, named 'my_app', in each of them. Once the environment 'my_app' is activated, the bash shell will mention the current active environment "my_app" the following way:
+`virtualenv` (for pip), `venv` (for pip3), or `conda` are virtual environment managers. I'll create 3 environments, named 'my_app', in each of them. Once the environment 'my_app' is activated, the system command in the bash shell will mention the current active environment "my_app" the following way:
 
     (my_app) christopher@christopher-G751JY:~/apps$
 
@@ -432,3 +432,11 @@ Let's see for each one:
     `conda` environment mechanism relies on configurations and libraries defined in the `conda` directory to load the packages relative to the environment.
 
     Note that as surprising as it looks like, `conda list` does not see anymore the packages that have been installed with `pip` and `pip3` globally, while they are still active and appear with `pip list` (or `pip3 list`)
+
+    To deactivate an environment:
+
+      source activate my_app
+
+    To delete an environment:
+
+      conda env remove -n my_app

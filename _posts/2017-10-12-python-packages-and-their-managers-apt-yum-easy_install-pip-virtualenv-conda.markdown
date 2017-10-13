@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Python packages and their managers: Ubuntu APT, easy_install, pip, virtualenv, conda"
+title:  "Python packages and their managers: Ubuntu APT, yum, easy_install, pip, virtualenv, conda"
 date:   2017-10-12 00:00:51
 categories: python
 ---
@@ -9,15 +9,15 @@ Many of us might be messed up with Python packages or modules.
 
 There are many ways to install Python and its modules or packages:
 
-- the system package manager, such as `apt-get` for Ubuntu
+- the system package manager, such as Redhat's `yum` or Ubuntu's `apt-get` commands:
 
-        sudo apt-get install python python-dev python-all python-all-dev
-        python-numpy python-scipy python-matplotlib python-cycler
-        python-dateutil python-decorator python-joblib python-matplotlib-data
-        python-tz
-        python2.7 python2.7-dev python3 python3-dev python3-numpy python3.5
+      sudo apt-get install python python-dev python-all python-all-dev
+      python-numpy python-scipy python-matplotlib python-cycler
+      python-dateutil python-decorator python-joblib python-matplotlib-data
+      python-tz
+      python2.7 python2.7-dev python3 python3-dev python3-numpy python3.5
 
-        ls -l /usr/bin/*python*
+      ls -l /usr/bin/*python*
 
     returns
 

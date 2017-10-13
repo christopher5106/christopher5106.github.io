@@ -333,6 +333,9 @@ To check where `pip` installs the user packages, run in a Python shell:
 To check which directories (and their order of precedence) are used to load the packages / dependencies during a Python run:
 
 ```python
+Python 2.7.14 |Anaconda, Inc.| (default, Oct  5 2017, 07:26:46)
+[GCC 7.2.0] on linux2
+Type "help", "copyright", "credits" or "license" for more information.
 >>> import sys
 >>> sys.path
 ['', '/home/christopher/technologies/caffe/python', '/home/christopher/apps/christopher5106.github.io', '/home/christopher/miniconda2/lib/python27.zip', '/home/christopher/miniconda2/lib/python2.7', '/home/christopher/miniconda2/lib/python2.7/plat-linux2', '/home/christopher/miniconda2/lib/python2.7/lib-tk', '/home/christopher/miniconda2/lib/python2.7/lib-old', '/home/christopher/miniconda2/lib/python2.7/lib-dynload', '/home/christopher/.local/lib/python2.7/site-packages', '/home/christopher/miniconda2/lib/python2.7/site-packages']

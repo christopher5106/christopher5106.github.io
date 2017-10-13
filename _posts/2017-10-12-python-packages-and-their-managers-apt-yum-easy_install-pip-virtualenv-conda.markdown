@@ -7,11 +7,11 @@ categories: python
 
 Many of us might be messed up with Python packages or modules.
 
-There are many ways to install Python and its modules or packages:
+There are many ways to install Python and its modules or packages: system package manager, python package managers, ... These package managers install packages in different directories.
 
-- with the package managers: system package manager, python package managers, ...
+Moreover, the virtual environment managers will demultiply the number of directories in which packages can be found...
 
-- with virtual environment managers
+After a while, your system might be completely inconsistent.
 
 ### Package managers
 

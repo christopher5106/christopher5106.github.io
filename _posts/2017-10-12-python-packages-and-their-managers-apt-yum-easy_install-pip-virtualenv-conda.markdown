@@ -140,29 +140,23 @@ There are many ways to install Python and its modules or packages:
     Pip offers many other [options and configuration properties](https://pip.pypa.io/en/stable/user_guide).
 
 
+- `conda` is a package and dependency manager for Python, R, Ruby, Lua, Scala, Java, JavaScript, C/ C++, FORTRAN. It performs a true dependency resolution.
+
+    I would recommand to install Miniconda, which installs `conda`, while Anaconda also installs a hundred packages such as numpy, scipy, ipython notebook, and so on. To install Anaconda from `conda`, simply `conda install anaconda`.
+
+    Its [install under Linux](https://conda.io/docs/user-guide/install/linux.html#install-linux-silent) is very easy and simply creates a `~/miniconda2/` directory and adds its binaries to the PATH environment variable by setting it in the `.bashrc` file.
+
+    Uninstalling conda simply consists in removing its directory :
+
+      rm -rf ~/miniconda2
+
+
 
 
 **I would recommand to never use `sudo` to run the Python package manager. Reserve `sudo` for the system packages.**
 
 From this point, you should begin to leave your system in an inconsistent state.
 
-
-
-
-
-
-### Virtual environments
-
-- `virtualenv`
-
-    sudo pip install --upgrade virtualenv
-
-    pip install virtualenv
-    virtualenv <DIR>
-    source <DIR>/bin/activate
-
-
-- `conda`
 
 
 
@@ -232,3 +226,17 @@ Last, when loading a package, you can check from which directory it has been loa
 >>> numpy.__file__
 '/home/christopher/miniconda2/lib/python2.7/site-packages/numpy/__init__.pyc'
 ```
+
+
+### Virtual environments
+
+- `virtualenv`
+
+    sudo pip install --upgrade virtualenv
+
+    pip install virtualenv
+    virtualenv <DIR>
+    source <DIR>/bin/activate
+
+
+- `conda`

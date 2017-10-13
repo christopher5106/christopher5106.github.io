@@ -150,6 +150,7 @@ There are many ways to install Python and its modules or packages:
 
       rm -rf ~/miniconda2
 
+    As we'll see in the last section, `conda` also offers a virtual environment manager.
 
 
 
@@ -217,7 +218,20 @@ The presence of the first path in the list is due to the environment variable `P
 
     export PYTHONPATH=~/technologies/caffe/python:$PYTHONPATH
 
-You can add any new directory dynamically in the Python code with `sys.path.append("/home/my/path")` or to specify an order of precedence `sys.path.insert(0, "/home/my/path")`.
+The second path correspond to the local directory in which I have run the `python` command: all local python files are included. These paths are setup at at Python launch, with the contents of any .pth file paths created, and the standard library directories.
+
+Running directly `/usr/bin/python2.7` will launch the default Python setup:
+
+```python
+Python 2.7.12 (default, Nov 19 2016, 06:48:10)
+[GCC 5.4.0 20160609] on linux2
+Type "help", "copyright", "credits" or "license" for more information.
+>>> import sys
+>>> sys.path
+['', '/usr/local/lib/python2.7/dist-packages/subprocess32-3.2.7-py2.7-linux-x86_64.egg', '/usr/local/lib/python2.7/dist-packages/functools32-3.2.3.post2-py2.7.egg', '/home/christopher/technologies/caffe/python', '/home/christopher/apps', '/usr/lib/python2.7', '/usr/lib/python2.7/plat-x86_64-linux-gnu', '/usr/lib/python2.7/lib-tk', '/usr/lib/python2.7/lib-old', '/usr/lib/python2.7/lib-dynload', '/home/christopher/.local/lib/python2.7/site-packages', '/usr/local/lib/python2.7/dist-packages', '/usr/lib/python2.7/dist-packages', '/usr/lib/python2.7/dist-packages/gtk-2.0']
+```
+
+It is possible to add any new directory dynamically in the Python code with `sys.path.append("/home/my/path")` or to specify an order of precedence `sys.path.insert(0, "/home/my/path")`.
 
 Last, when loading a package, you can check from which directory it has been loaded from:
 

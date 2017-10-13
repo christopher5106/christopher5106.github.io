@@ -9,6 +9,12 @@ Many of us might be messed up with Python packages or modules.
 
 There are many ways to install Python and its modules or packages:
 
+- with the package managers: system package manager, python package managers, ...
+
+- with virtual environment managers
+
+# Package managers
+
 - the system package manager, such as Redhat's `yum` or Ubuntu's `apt-get` commands:
 
   ```bash
@@ -67,29 +73,30 @@ There are many ways to install Python and its modules or packages:
 
     - with easy_install:
 
-       easy_install pip
+          easy_install pip
+
+        To install the Pandas package:
+
+          pip install Pandas
+
+        To install it the package in the local user directory `~/.local/` :
+
+          pip install --user Pandas
+
+
+   - directly with Python with the script [get-pip.py](https://bootstrap.pypa.io/get-pip.py) to run
+
+        python get-pip.py
+
+       In order to avoid to mess up with packages installed by the system, it is possible to specify to pip to install the packages in a local directory rather than globally, with  `--prefix=/usr/local/` option for example.
 
     - with your sytem package manager
 
-       sudo apt-get install python-pip
-       sudo apt-get install python3-pip
+         sudo apt-get install python-pip
+         sudo apt-get install python3-pip
 
-      In recent Ubuntu versions, by default, `pip` installs the package locally.
+        In recent Ubuntu versions, by default, `pip` installs the package locally.
 
-    - directly with Python with the script [get-pip.py](https://bootstrap.pypa.io/get-pip.py) to run
-
-       python get-pip.py
-
-      It is possible to specify to pip to install the packages in a local directory rather than globally, with  `--prefix=/usr/local/` option for example.
-
-    To check where pip installs the packages, run in a Python shell:
-    ```python
-    >>> import site
-    >>> site.USER_BASE
-    '/home/christopher/.local'
-    >>> site.USER_SITE
-    '/home/christopher/.local/lib/python2.7/site-packages'
-    ```
 
     To upgrade pip:
 
@@ -97,20 +104,23 @@ There are many ways to install Python and its modules or packages:
 
     `pip` has become a better alternative to `easy_install` for installing Python packages.
 
-    **I would recommand to never use `sudo` to run the Python package manager. Reserve `sudo` for the system packages.**
+    Note it is possible to specify the version to install:
 
-    To install the Pandas package:
-
-      pip install Pandas
-
-
-
-    From this point, you should begin to leave your system in an inconsistent state.
+        pip install SomePackage            # latest version
+        pip install SomePackage==1.0.4     # specific version
+        pip install 'SomePackage>=1.0.4'     # minimum version
 
 
+**I would recommand to never use `sudo` to run the Python package manager. Reserve `sudo` for the system packages.**
+
+From this point, you should begin to leave your system in an inconsistent state.
 
 
 
+
+
+
+# Virtual environments
 
 - `virtualenv`
 
@@ -130,4 +140,13 @@ There are many ways to install Python and its modules or packages:
 ```bash
 which python
 #/home/christopher/miniconda2/bin/python
+```
+
+To check where pip installs the packages, run in a Python shell:
+```python
+>>> import site
+>>> site.USER_BASE
+'/home/christopher/.local'
+>>> site.USER_SITE
+'/home/christopher/.local/lib/python2.7/site-packages'
 ```

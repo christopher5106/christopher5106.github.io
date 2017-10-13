@@ -13,7 +13,7 @@ There are many ways to install Python and its modules or packages:
 
 - with virtual environment managers
 
-# Package managers
+### Package managers
 
 - the system package manager, such as Redhat's `yum` or Ubuntu's `apt-get` commands:
 
@@ -137,7 +137,7 @@ From this point, you should begin to leave your system in an inconsistent state.
 
 
 
-# Virtual environments
+### Virtual environments
 
 - `virtualenv`
 

@@ -86,19 +86,19 @@ There are many ways to install Python and its modules or packages:
 
    - directly with Python with the script [get-pip.py](https://bootstrap.pypa.io/get-pip.py) to run
 
-        python get-pip.py
+          python get-pip.py
 
        In order to avoid to mess up with packages installed by the system, it is possible to specify to pip to install the packages in a local directory rather than globally, with  `--prefix=/usr/local/` option for example.
 
     - with your sytem package manager
 
-         sudo apt-get install python-pip
-         sudo apt-get install python3-pip
+          sudo apt-get install python-pip
+          sudo apt-get install python3-pip
 
         In recent Ubuntu versions, by default, `pip` installs the package locally.
 
 
-    To upgrade pip:
+    To upgrade `pip`:
 
       pip install -U pip setuptools
 
@@ -106,9 +106,9 @@ There are many ways to install Python and its modules or packages:
 
     Note it is possible to specify the version to install:
 
-        pip install SomePackage            # latest version
-        pip install SomePackage==1.0.4     # specific version
-        pip install 'SomePackage>=1.0.4'     # minimum version
+      pip install SomePackage            # latest version
+      pip install SomePackage==1.0.4     # specific version
+      pip install 'SomePackage>=1.0.4'     # minimum version
 
     Since Pip does not have a true depency resolution, you will need to define a requirement file to
     specify which package needs to be installed and install them:
@@ -154,9 +154,13 @@ From this point, you should begin to leave your system in an inconsistent state.
 
 ### Paths
 
+In the command shell, check which version of Python you're using:
+
 ```bash
 which python
 #/home/christopher/miniconda2/bin/python
+python --version
+#Python 2.7.14 :: Anaconda, Inc.
 ```
 
 or in a Python shell

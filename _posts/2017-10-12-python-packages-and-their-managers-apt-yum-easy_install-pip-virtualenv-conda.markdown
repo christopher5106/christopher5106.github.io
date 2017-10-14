@@ -364,12 +364,41 @@ To install a Python package, multiple tools are available:
 
     while `pip` does see the packages installed by `conda` but merges the references in one line:
 
-      ```bash
-      conda list numpy
-      # numpy                     1.13.3                    <pip>
-      ```
+  ```bash
+  pip show numpy
+  # Name: numpy
+  # Version: 1.13.3
+  # Summary: NumPy: array processing for numbers, strings, records, and objects.
+  # Home-page: http://www.numpy.org
+  # Author: NumPy Developers
+  # Author-email: numpy-discussion@python.org
+  # License: BSD
+  # Location: /home/christopher/miniconda2/lib/python2.7/site-packages
+  # Requires
+  ```
 
-    `pip uninstall` is able to uninstall any package it finds in the Python sys path, leaving the other package managers in an inconsistent state (`apt-get`, `conda`,...) while `conda` cannot manage anything else than its own packages.
+    `pip uninstall` is able to uninstall any package it finds in the Python sys path, leaving the other package managers in an inconsistent state (`apt-get`, `conda`,...) while `conda` cannot uninstall anything else than the packages it has installed, but if these installs have overriden other manager's install, it will also leave other package managers in an inconsistent state:
+
+  ```bash
+  conda uninstall numpy
+
+  python
+  >>> import numpy
+  # Traceback (most recent call last):
+  # File "<stdin>", line 1, in <module>
+  # ImportError: No module named numpy
+
+  pip show numpy
+  # Name: numpy
+  # Version: 1.13.3
+  # Summary: NumPy: array processing for numbers, strings, records, and objects.
+  # Home-page: http://www.numpy.org
+  # Author: NumPy Developers
+  # Author-email: numpy-discussion@python.org
+  # License: BSD
+  # Location: /home/christopher/miniconda2/lib/python2.7/site-packages
+  # Requires
+  ```    
 
     It is possible to specify the `pip` packages in the `conda` environment definition to install them as with a pip requirement files:
 

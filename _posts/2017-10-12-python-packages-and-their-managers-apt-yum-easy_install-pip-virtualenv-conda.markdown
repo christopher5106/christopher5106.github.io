@@ -704,6 +704,7 @@ means Numpy has been installed with `easy_install`
 means Numpy has been installed by either
 - `apt-get` system manager with packet `python-numpy`
 - `easy_install` or `pip` in `sudo` mode for a system default Python 2
+
 .
 
     /usr/lib/python3/dist-packages/numpy

@@ -685,13 +685,14 @@ Let's see for each one:
 
 ### Reverse the paths
 
-To get a view on all versions of a package installed in all virtual environments, user rights, and managers:
+To get a view on all versions of a package installed in all virtual environments, user rights, and package managers:
 
     sudo find / -name "numpy" 2>/dev/null
 
 **This is our last clue...**
 
 So, here is the reverse meaning of each path you might encounter:
+
 
     /usr/local/lib/python2.7/dist-packages/numpy
 
@@ -731,6 +732,8 @@ means Numpy has been installed with `pip3 install` with a Python 3 using user di
 means either:
 - a specific install path has been specified to a package manager
 - Numpy has been installed in a `virtualenv` environment
+
+
 
 
     /home/christopher/miniconda2/lib/python2.7/site-packages/numpy

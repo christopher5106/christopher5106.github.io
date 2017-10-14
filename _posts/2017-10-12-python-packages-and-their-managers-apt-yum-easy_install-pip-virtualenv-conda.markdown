@@ -5,17 +5,21 @@ date:   2017-10-12 00:00:51
 categories: python
 ---
 
-Many of us might be messed up with Python packages or modules.
+Many of us, computer engineers, might be messed up with Python packages or modules, installing and uninstalling packages with different tools and making it work by chance after many trials.
 
-There are many ways to install Python and its modules or packages: system package manager, python package managers, ... These package managers install packages in different directories.
+Indeed, there are many ways to install Python and its modules or packages: the system package manager, but also the multiple python package managers. All these package managers install packages in different directories.
 
 Moreover, the virtual environment managers, as well as the `sudo` command, will demultiply the number of directories in which packages can be found...
 
-After a while, your system might be completely inconsistent.
+After a while, your system might be completely inconsistent, with multiple versions of the same package in different directories, not knowing exactly which one will be used by our programs, and causing errors.
+
+To go directly to the conclusion of this journey, [click here to go to the *Reverse the paths* section](#reverse-the-paths).
 
 ### Package managers
 
-- the system package manager, such as Redhat's `yum` or Ubuntu's `apt-get` commands to install Python packages:
+To install a Python package, multiple tools are available:
+
+- the system package manager, such as Redhat's `yum` or Ubuntu's `apt-get` commands, can install Python packages:
 
   ```bash
   sudo apt-get install python python-dev python-all python-all-dev
@@ -29,44 +33,43 @@ After a while, your system might be completely inconsistent.
 
   ```bash
   apt list --installed | grep python
-
-  dh-python/xenial-updates,xenial-updates,now 2.20151103ubuntu1.1 all  [installé]
-  libboost-mpi-python-dev/xenial,now 1.58.0.1ubuntu1 amd64  [installé, automatique]
-  libboost-mpi-python1.58-dev/xenial-updates,now 1.58.0+dfsg-5ubuntu3.1 amd64  [installé, automatique]
-  libboost-mpi-python1.58.0/xenial-updates,now 1.58.0+dfsg-5ubuntu3.1 amd64  [installé, automatique]
-  libboost-python-dev/xenial,now 1.58.0.1ubuntu1 amd64  [installé]
-  libboost-python1.58-dev/xenial-updates,now 1.58.0+dfsg-5ubuntu3.1 amd64  [installé, automatique]
-  libboost-python1.58.0/xenial-updates,now 1.58.0+dfsg-5ubuntu3.1 amd64  [installé, automatique]
-  libpeas-1.0-0-python3loader/xenial,now 1.16.0-1ubuntu2 amd64  [installé, automatique]
-  libpython-all-dev/xenial,now 2.7.11-1 amd64  [installé, automatique]
-  libpython-dev/xenial,now 2.7.11-1 amd64  [installé, automatique]
-  libpython-stdlib/xenial,now 2.7.11-1 amd64  [installé, automatique]
-  libpython2.7/xenial-updates,xenial-security,now 2.7.12-1ubuntu0~16.04.1 amd64  [installé]
-  libpython2.7-dev/xenial-updates,xenial-security,now 2.7.12-1ubuntu0~16.04.1 amd64  [installé, automatique]
-  ...
-  python/xenial,now 2.7.11-1 amd64  [installé]
-  python-all/xenial,now 2.7.11-1 amd64  [installé, automatique]
-  python-all-dev/xenial,now 2.7.11-1 amd64  [installé]
-  python-apt/xenial,now 1.1.0~beta1build1 amd64  [installé, automatique]
-  python-apt-common/xenial,xenial,now 1.1.0~beta1build1 all  [installé, automatique]
-  python-bs4/xenial,xenial,now 4.4.1-1 all  [installé, automatique]
-  ...
-  python2.7/xenial-updates,xenial-security,now 2.7.12-1ubuntu0~16.04.1 amd64  [installé, automatique]
-  python2.7-dev/xenial-updates,xenial-security,now 2.7.12-1ubuntu0~16.04.1 amd64  [installé, automatique]
-  python2.7-minimal/xenial-updates,xenial-security,now 2.7.12-1ubuntu0~16.04.1 amd64  [installé, automatique]
-  python3/xenial,now 3.5.1-3 amd64  [installé]
-  python3-apport/xenial-updates,xenial-updates,xenial-security,xenial-security,now 2.20.1-0ubuntu2.10 all  [installé, automatique]
-  python3-apt/xenial,now 1.1.0~beta1build1 amd64  [installé, automatique]
-  python3-aptdaemon/xenial,xenial,now 1.1.1+bzr982-0ubuntu14 all  [installé, automatique]
-  python3-aptdaemon.gtk3widgets/xenial,xenial,now 1.1.1+bzr982-0ubuntu14 all  [installé, automatique]
-  python3-aptdaemon.pkcompat/xenial,xenial,now 1.1.1+bzr982-0ubuntu14 all  [installé, automatique]
-  python3-blinker/xenial,xenial,now 1.3.dfsg2-1build1 all  [installé, automatique]
-  python3-botocore/xenial-updates,xenial-updates,now 1.4.70-1~16.04.0 all  [installé, automatique]
-  python3-brlapi/xenial-updates,now 5.3.1-2ubuntu2.1 amd64  [installé, automatique]
-  ...
-  python3.5/xenial-security,now 3.5.2-2ubuntu0~16.04.1 amd64 [installed,upgradable to: 3.5.2-2ubuntu0~16.04.3]
-  python3.5-dev/xenial-security,now 3.5.2-2ubuntu0~16.04.1 amd64 [installed,upgradable to: 3.5.2-2ubuntu0~16.04.3]
-  python3.5-minimal/xenial-security,now 3.5.2-2ubuntu0~16.04.1 amd64 [installed,upgradable to: 3.5.2-2ubuntu0~16.04.3]
+  # dh-python
+  # libboost-mpi-python-dev
+  # libboost-mpi-python1.58-dev
+  # libboost-mpi-python1.58.0
+  # libboost-python-dev
+  # libboost-python1.58-dev
+  # libboost-python1.58.0
+  # libpeas-1.0-0-python3loader
+  # libpython-all-dev
+  # libpython-dev
+  # libpython-stdlib
+  # libpython2.7
+  # libpython2.7-dev
+  # ...
+  # python
+  # python-all
+  # python-all-dev
+  # python-apt
+  # python-apt-common
+  # python-bs4
+  # ...
+  # python2.7
+  # python2.7-dev
+  # python2.7-minimal
+  # python3
+  # python3-apport
+  # python3-apt
+  # python3-aptdaemon
+  # python3-aptdaemon.gtk3widgets
+  # python3-aptdaemon.pkcompat
+  # python3-blinker
+  # python3-botocore
+  # python3-brlapi
+  # ...
+  # python3.5
+  # python3.5-dev
+  # python3.5-minimal
   ```
 
     Let's have a look at where the system binaries have been installed:
@@ -109,20 +112,20 @@ After a while, your system might be completely inconsistent.
 
      The system has installed Python packages in the global `dist-packages` directories and created symbolic links:
 
-    ```bash
-    /usr/lib/python2.7/dist-packages/numpy
+  ```bash
+  /usr/lib/python2.7/dist-packages/numpy
 
-    /usr/lib/python3/dist-packages/numpy
+  /usr/lib/python3/dist-packages/numpy
 
-    ls -ls /usr/include/numpy
-    #-> ../lib/python2.7/dist-packages/numpy/core/include/numpy
+  ls -ls /usr/include/numpy
+  #-> ../lib/python2.7/dist-packages/numpy/core/include/numpy
 
-    ls -l /usr/include/python2.7/numpy
-    #->../../lib/python2.7/dist-packages/numpy/core/include/numpy
+  ls -l /usr/include/python2.7/numpy
+  #->../../lib/python2.7/dist-packages/numpy/core/include/numpy
 
-    ls -l /usr/include/python3.5m/numpy
-    #-> ../../lib/python3/dist-packages/numpy/core/include/numpy
-    ```
+  ls -l /usr/include/python3.5m/numpy
+  #-> ../../lib/python3/dist-packages/numpy/core/include/numpy
+  ```
 
 
 
@@ -226,7 +229,7 @@ After a while, your system might be completely inconsistent.
 
     I would recommand to install Miniconda, which installs `conda`, while Anaconda also installs a hundred packages such as numpy, scipy, ipython notebook, and so on. To install Anaconda from `conda`, simply `conda install anaconda`.
 
-    Its [install under Linux](https://conda.io/docs/user-guide/install/linux.html#install-linux-silent) is very easy and simply creates a `~/miniconda2/` directory and adds its binaries to the PATH environment variable by setting it in the `.bashrc` file.
+    Its [install under Linux](https://conda.io/docs/user-guide/install/linux.html#install-linux-silent) is very easy and simply creates a `~/miniconda2/` directory and adds its binaries to the PATH environment variable by setting it in the `.bashrc` file. Conda install contains `pip` and `pip3`.
 
     Uninstalling conda simply consists in removing its directory :
 
@@ -493,6 +496,8 @@ Let's see for each one:
 
       conda env remove -n my_app
 
+
+### Reverse the paths
 
 To get a view on all versions of a package installed in all virtual environments, user rights, and managers:
 

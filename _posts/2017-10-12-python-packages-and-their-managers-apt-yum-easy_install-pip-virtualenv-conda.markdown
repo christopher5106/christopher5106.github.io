@@ -152,19 +152,19 @@ To install a Python package, multiple tools are available:
     In this case, `easy_install` is using `/usr/lib/python2.7/dist-packages` to install the packages, where it has found previously installed Numpy with system `apt-get`. Note the requirement of `sudo` because `/usr/lib/python2.7/dist-packages` is system owned. Let's remove previously installed Numpy and re install it with `easy_install`:
 
   ```bash
-    sudo apt-get remove python-numpy
-    sudo easy_install numpy
+  sudo apt-get remove python-numpy
+  sudo easy_install numpy
 
-    ###### compilation of Numpy #######
+  ###### compilation of Numpy #######
 
-    # creating /usr/local/lib/python2.7/dist-packages/numpy-1.13.3-py2.7-linux-x86_64.egg
-    # Extracting numpy-1.13.3-py2.7-linux-x86_64.egg to /usr/local/lib/python2.7/dist-packages
-    # Adding numpy 1.13.3 to easy-install.pth file
-    # Installing f2py script to /usr/local/bin
-    #
-    # Installed /usr/local/lib/python2.7/dist-packages/numpy-1.13.3-py2.7-linux-x86_64.egg
-    # Processing dependencies for numpy
-    # Finished processing dependencies for numpy
+  # creating /usr/local/lib/python2.7/dist-packages/numpy-1.13.3-py2.7-linux-x86_64.egg
+  # Extracting numpy-1.13.3-py2.7-linux-x86_64.egg to /usr/local/lib/python2.7/dist-packages
+  # Adding numpy 1.13.3 to easy-install.pth file
+  # Installing f2py script to /usr/local/bin
+  #
+  # Installed /usr/local/lib/python2.7/dist-packages/numpy-1.13.3-py2.7-linux-x86_64.egg
+  # Processing dependencies for numpy
+  # Finished processing dependencies for numpy
   ```
 
     `easy_install` has now messed the system directories :).
@@ -286,27 +286,27 @@ To install a Python package, multiple tools are available:
 
     It simply creates a `~/miniconda2/` directory. Conda uses the virtual environment mechanism proposed by Python executable to modify its package install path, a mechanism that we'll see later. Uninstalling conda simply consists in removing its directory :
 
-          rm -rf ~/miniconda2
+      rm -rf ~/miniconda2
 
      It proposes to add its binaries to the PATH environment variable by setting it in the `.bashrc` file and here is what happen:
 
   ```bash
-    which python
-    # /home/christopher/miniconda2/bin/python
+  which python
+  # /home/christopher/miniconda2/bin/python
 
-    which pip
-    # /home/christopher/miniconda2/bin/pip
+  which pip
+  # /home/christopher/miniconda2/bin/pip
 
-    which pip3
-    # /usr/bin/pip3
+  which pip3
+  # /usr/bin/pip3
 
-    which easy_install
-    # /home/christopher/miniconda2/bin/easy_install
+  which easy_install
+  # /home/christopher/miniconda2/bin/easy_install
 
-    ls -l /home/christopher/miniconda2/bin/python ls -l /home/christopher/miniconda2/bin/pip /home/christopher/miniconda2/bin/easy_install
-    # /home/christopher/miniconda2/bin/easy_install
-    # /home/christopher/miniconda2/bin/pip
-    # /home/christopher/miniconda2/bin/python -> python2.7
+  ls -l /home/christopher/miniconda2/bin/python ls -l /home/christopher/miniconda2/bin/pip /home/christopher/miniconda2/bin/easy_install
+  # /home/christopher/miniconda2/bin/easy_install
+  # /home/christopher/miniconda2/bin/pip
+  # /home/christopher/miniconda2/bin/python -> python2.7
   ```
 
     Conda install contains `pip` and `easy_install` because some packages are not available under Conda and you'll still need `pip`, which will not simplify your life:

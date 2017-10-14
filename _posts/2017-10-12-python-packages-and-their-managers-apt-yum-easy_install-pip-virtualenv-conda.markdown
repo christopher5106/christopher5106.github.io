@@ -689,17 +689,17 @@ Let's see for each one:
 
     As we have already seen, a `conda` virtual environment does not contain global packages, or previous installed packages prior to `conda` install, except those installed with `pip install --user`, prior or after.
 
-    `pip` still installs Python packages in
+    `pip` now installs Python packages in
 
       ~/miniconda2/lib/python2.7/site-packages
 
     so, packages installed via `pip` are global to all `conda` environments. The same is true for packages installed via `conda` in the default/root environment.
 
-    Packages installed via `conda` in the local environment are found in:
+    Packages installed via `conda` in the virtual environment 'my_app' are found in:
 
       ~/miniconda2/envs/my_app/lib/python2.7/site-packages/
 
-    While globally installed `ipython` or `jupyter` executables will not use the local environment's packages, let's try to see what happens when running `conda install jupyter` in the environment:
+    While globally installed `ipython` or `jupyter` executables will not use the local environment's packages, let's try to see what happens when running `conda install jupyter` in the virtual environment:
 
   ```bash
   which ipython

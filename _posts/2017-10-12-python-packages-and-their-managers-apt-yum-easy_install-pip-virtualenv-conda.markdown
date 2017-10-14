@@ -417,13 +417,13 @@ To install a Python package, multiple tools are available:
 
       conda uninstall numpy
 
-    The package 'numpy-1.13.3-py27' still appears in your conda dir `~/miniconda2/pkgs/` but is not available. To clean unused packages:
+    The package 'numpy-1.13.3-py27' still appears in your conda dir `~/miniconda2/pkgs/` but is not present in any virtual environment `~/miniconda2/envs/` nor in root/default environment `~/miniconda2/lib/`. To clean unused packages:
 
       conda clean --packages
 
     'numpy-1.12.1-py36_0' package has not been removed because it is used by another environment.
 
-    As we'll see in the last section, `conda` install creates a clean root environment, using the mechanism of virtual environments. Even with a system in a inconsistent state, with packages installed via the system manager, or different managers and in multiple versions, only newly installed Python packages via `pip` or `conda`, residing in the `~/miniconda2` directory, will effectively be considered by Python programs.
+    As we'll see in the last section, `conda` install creates a clean root environment, using the mechanism of virtual environments. Even with a system in a inconsistent state, with packages installed via the system manager, or different managers and in multiple versions, only newly installed Python packages via `pip` or `conda`, residing in the `~/miniconda2` directoriy, or packages in USER site `~/.local`, will effectively be considered by Python programs under `conda` setup.
 
     Nevertheless, be careful: if, before installing `conda`, you had installed via `pip` packages such as Jupyter or iPython packages that setup an executable script (beginning with `#!/usr/bin/python`) in `/usr/local/bin/`, the executables will run under previous packages (before installing `conda`). To have them run the packages of the new root `conda` environment, override them with `conda install jupyter`.
 

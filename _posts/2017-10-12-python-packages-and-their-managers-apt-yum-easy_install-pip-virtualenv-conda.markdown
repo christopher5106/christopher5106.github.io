@@ -266,7 +266,7 @@ To install a Python package, multiple tools are available:
 
       pip freeze > requirements.txt
 
-    To uninstall a package:
+    The following command will uninstall the first Python package `pip` has found:
 
       pip uninstall numpy
 
@@ -336,7 +336,9 @@ To install a Python package, multiple tools are available:
 
       /home/christopher/miniconda2/lib/python2.7/site-packages
 
-    This `pip` still manages to see packages installed by system package manger XXXX and system `/usr/bin/pip` while `conda` will install a new version whatever packages are installed on the system:
+    This `pip` does not see anymore the packages installed by system package manger `apt-get` nor by system `/usr/bin/pip` but still sees previously installed package in local mode `/usr/bin/pip install --user` while `conda` don't see any of them. So **`conda` starts from a complete new environment**.
+
+    To install a package with `conda`:
 
       conda install numpy
 
@@ -350,7 +352,7 @@ To install a Python package, multiple tools are available:
 
     Here, Numpy Python package has been installed at least twice. Once with `conda`, once with `pip`. Note:
 
-    - `pip` does not see the packages installed by the system XXXXanymore as well as the packages installed via conda
+    - `pip` does not see the packages installed by `conda`
 
       ```bash
       pip uninstall numpy
@@ -362,11 +364,7 @@ To install a Python package, multiple tools are available:
       # (void)
       ```
 
-    - `conda` does not see the packages installed by the system
-
-    XXX check install package system
-
-    Note that since `conda` sees the `pip` packages, it is possible to specify the `pip` packages in the `conda`
+    - since `conda` sees the `pip` packages, it is possible to specify the `pip` packages in the `conda`
     listing the packages:
 
       # environment.yml
@@ -391,10 +389,14 @@ To install a Python package, multiple tools are available:
 
     'numpy-1.12.1-py36_0' package has not been removed because it is used by another environment.
 
-    As we'll see in the last section, `conda` also offers a virtual environment manager.
+    As we'll see in the last section, `conda` install creates a clean root environment, using the mechanism of virtual environments. Even with a system in a inconsistent state, with packages installed via the system manager, or different managers and in multiple versions, only newly installed Python packages via `pip` or `conda`, residing in the `~/miniconda2` directory, will effectively be considered by Python programs.
+
+    Nevertheless, be careful: if you had installed executables via `pip` before installing `conda`, such as Jupyter or iPython packages, they are still in `/usr/local/bin/` and they will run under previous configuration. To replace them, run `conda install jupyter`.
+
+    `conda` also offers the possibility to create new virtual environments.
 
 
-From this point, you should have begun to leave your system in an inconsistent state. Packages installed with system manager, or different managers begin to be messed up: multiple versions of a same package can be fetched by the Python programs, and we do not know which one.
+From this point, you might have a system in an inconsistent state,
 
 
 ### Paths
@@ -595,18 +597,18 @@ Let's see for each one:
 
     Inside the environment, paths are modified to:
 
-    ```python
-    Python 3.5.2 (default, Sep 14 2017, 22:51:06)
-    [GCC 5.4.0 20160609] on linux
-    Type "help", "copyright", "credits" or "license" for more information.
-    >>> import sys
-    >>> sys.path
-    ['', '/home/christopher/technologies/caffe/python', '/home/christopher/apps', '/usr/lib/python35.zip', '/usr/lib/python3.5', '/usr/lib/python3.5/plat-x86_64-linux-gnu', '/usr/lib/python3.5/lib-dynload', '/home/christopher/apps/my_app/lib/python3.5/site-packages']
-    >>> import numpy
-    Traceback (most recent call last):
-      File "<stdin>", line 1, in <module>
-    ImportError: No module named numpy
-    ```
+  ```python
+  Python 3.5.2 (default, Sep 14 2017, 22:51:06)
+  [GCC 5.4.0 20160609] on linux
+  Type "help", "copyright", "credits" or "license" for more information.
+  >>> import sys
+  >>> sys.path
+  ['', '/home/christopher/technologies/caffe/python', '/home/christopher/apps', '/usr/lib/python35.zip', '/usr/lib/python3.5', '/usr/lib/python3.5/plat-x86_64-linux-gnu', '/usr/lib/python3.5/lib-dynload', '/home/christopher/apps/my_app/lib/python3.5/site-packages']
+  >>> import numpy
+  Traceback (most recent call last):
+    File "<stdin>", line 1, in <module>
+  ImportError: No module named numpy
+  ```
 
     Behavior is the same as for `virtualenv`.
 
@@ -647,9 +649,34 @@ Let's see for each one:
 
     Inside the environment, paths are modified to:
 
-    XXXX
+  ```python
+  Python 2.7.13 |Anaconda, Inc.| (default, Sep 30 2017, 18:12:43)
+  [GCC 7.2.0] on linux2
+  Type "help", "copyright", "credits" or "license" for more information.
+  >>> import sys
+  >>> sys.path
+  ['', '/home/christopher/technologies/caffe/python', '/home/christopher/apps', '/home/christopher/miniconda2/lib/python27.zip', '/home/christopher/miniconda2/lib/python2.7', '/home/christopher/miniconda2/lib/python2.7/plat-linux2', '/home/christopher/miniconda2/lib/python2.7/lib-tk', '/home/christopher/miniconda2/lib/python2.7/lib-old', '/home/christopher/miniconda2/lib/python2.7/lib-dynload', '/home/christopher/.local/lib/python2.7/site-packages', '/home/christopher/miniconda2/lib/python2.7/site-packages']
+  >>> import numpy
+  Traceback (most recent call last):
+    File "<stdin>", line 1, in <module>
+  ImportError: No module named numpy
+  ```
 
-    XXXX does it see global packages ?
+    As we have already seen, a `conda` virtual environment does not see global packages, or previous installed packages prior to `conda` install, except those installed with `pip install --user`, prior or after.
+
+    `pip` still installs Python packages in
+
+      ~/miniconda2/lib/python2.7/site-packages
+
+    so, packages installed via `pip` are global to all `conda` environments.
+
+    Packages installed via `conda` in the environments are found in:
+
+      ~/miniconda2/envs/my_app/lib/python2.7/site-packages/
+
+    To deactivate an environment:
+
+      source deactivate my_app
 
     To delete an environment:
 
@@ -665,6 +692,11 @@ To get a view on all versions of a package installed in all virtual environments
 **This is our last clue...**
 
 So, here is the reverse meaning of each path you might encounter:
+
+    /usr/local/lib/python2.7/dist-packages/numpy
+
+means Numpy has been installed with `easy_install`
+
 
     /usr/lib/python2.7/dist-packages/numpy
 
@@ -686,7 +718,7 @@ means Numpy has been installed by `sudo pip3 install`
 
     /home/christopher/.local/lib/python2.7/site-packages/numpy
 
-means Numpy has been installed with `pip install --user`
+means Numpy has been installed with `pip install --user`, even in the case if `conda` is installed on the system
 
 
     /home/christopher/.local/lib/python3.5/site-packages/numpy
@@ -708,11 +740,6 @@ means
 - Numpy has been installed with `pip` from conda install
 
 
-    /home/christopher/miniconda2/lib/python2.7/site-packages/numpy-1.13.3-py2.7-linux-x86_64.egg/numpy XXXXroot env packages?
-
-?? XXXX
-
-
     /home/christopher/miniconda2/pkgs/numpy-1.13.3-py27hbcc08e0_0/lib/python2.7/site-packages/numpy
 
 means
@@ -722,8 +749,24 @@ means
 but does not mean that Numpy is being used in the current environment or any other environments
 
 
+    /home/christopher/miniconda2/envs/my_app/lib/python2.7/site-packages/numpy
     /home/christopher/miniconda2/envs/yad2k/lib/python3.6/site-packages/numpy
 
-??? XXXX
+means Numpy has been installed by `conda` package manager in two environments, 'my_app' and 'yad2k', each one using a different version of Python.
+
+
+### In conclusion
+
+`conda` looks like a far better tool to manage Python packages, but since `pip` is still required for some packages, it comes with several problems:
+
+- some packages are not see by `conda`, the ones installed previously via `pip install --user`. I would recommand to remove Python packages in your `~/.local` directory and to **never use `pip install --user`**
+
+- in the meantime, never ever use `sudo` to install any packet once `conda` has been installed on your system
+
+- packages installed via `pip` are global to all `conda` environments, so they do not benefit from `conda` separation of packages
+
+- some previously installed executable might use another environment, in particular the previous one.
+
+It is far from simple...
 
 **Well done!**

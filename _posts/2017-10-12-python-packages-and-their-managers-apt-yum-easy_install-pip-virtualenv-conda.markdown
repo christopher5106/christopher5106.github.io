@@ -22,14 +22,15 @@ To install a Python package, multiple tools are available:
 - the system package manager, such as Redhat's `yum` or Ubuntu's `apt-get` commands, can install Python packages:
 
   ```bash
-  sudo apt-get install python python-dev python-all python-all-dev
-  python-numpy python-scipy python-matplotlib python-cycler
-  python-dateutil python-decorator python-joblib python-matplotlib-data
-  python-tz
-  python2.7 python2.7-dev python3 python3-dev python3-numpy python3.5
+  sudo apt-get install python python-dev python-all python-all-dev \
+  python-numpy python-scipy python-matplotlib python-cycler \
+  python-dateutil python-decorator python-joblib python-matplotlib-data \
+  python-tz \
+  python2.7 python2.7-dev \
+  python3 python3-dev python3-numpy python3.5
   ```
 
-    To list the installed packages:
+    To list the installed packages related to Python:
 
   ```bash
   apt list --installed | grep python
@@ -110,7 +111,7 @@ To install a Python package, multiple tools are available:
 
      `python3-ply` is the Lex and Yacc implementation for Python3 and `dh_python3-ply` generates versioned dependencies on `python3-ply`
 
-     The system has installed Python packages in the global `dist-packages` directories and created symbolic links:
+     The system has installed Python packages in the global `dist-packages` directory of each Python version and created symbolic links:
 
   ```bash
   /usr/lib/python2.7/dist-packages/numpy
@@ -129,38 +130,22 @@ To install a Python package, multiple tools are available:
 
 
 
-- `easy_install` in the setupstool package is a Python package manager
+- `easy_install` in the setupstool package is a Python package manager.
+
+    To install `easy_install` manager on Ubuntu:
 
       sudo apt-get install python-setuptools python-dev build-essential
 
-    To install the Pandas package :
+    To install a Python package such as Numpy :
 
-      easy_install pandas
+      easy_install numpy
 
 
-- `pip` (and `pip3`) is more recent Python 2 (respectively Python3) package management system. It is included by default for Python 2 >=2.7.9 or Python 3 >=3.4 , otherwise requires to be installed:
+- `pip` (and `pip3`) is a more recent Python 2 (respectively Python3) package management system which has become a better alternative to `easy_install` for installing Python packages. It is included by default for Python 2 >=2.7.9 or Python 3 >=3.4 , otherwise requires to be installed:
 
-    - with easy_install:
+    - with `easy_install`:
 
           easy_install pip
-
-        To install the Pandas package:
-
-          pip install numpy
-
-        The newly installed package can be found:
-
-          /usr/local/lib/python2.7/dist-packages/numpy
-
-        To install it the package in the local user directory `~/.local/` :
-
-          pip install --user numpy
-
-        In this case, the package can be found
-
-          /home/christopher/.local/lib/python2.7/site-packages/numpy
-
-        Note the change from `dist-packages` to `site-packages` in local mode.
 
    - directly with Python with the script [get-pip.py](https://bootstrap.pypa.io/get-pip.py) to run
 
@@ -173,10 +158,26 @@ To install a Python package, multiple tools are available:
           sudo apt-get install python-pip
           sudo apt-get install python3-pip
 
-        In recent Ubuntu versions, by default, `pip` installs the package locally:
+    To install a Python package such as Numpy with `pip`:
 
-          /home/christopher/.local/lib/python3.5/site-packages/numpy
+      pip install numpy
 
+    The newly installed package can be found:
+
+      /usr/local/lib/python2.7/dist-packages/numpy
+      /home/christopher/.local/lib/python3.5/site-packages/numpy
+
+    To install the Python2 package in the local user directory `~/.local/` also:
+
+      pip install --user numpy
+
+    In this case, the package can be found
+
+      /home/christopher/.local/lib/python2.7/site-packages/numpy
+
+    Note the change from `dist-packages` to `site-packages` in local mode.
+
+    In recent Ubuntu versions, by default, `pip` installs the package locally.
 
     To check where your package has been installed:
 
@@ -197,16 +198,14 @@ To install a Python package, multiple tools are available:
 
       pip install -U pip setuptools
 
-    `pip` has become a better alternative to `easy_install` for installing Python packages.
-
     Note it is possible to specify the version to install:
 
       pip install numpy            # latest version
       pip install numpy==1.9.0     # specific version
       pip install 'numpy>=1.9.0'     # minimum version
 
-    Since Pip does not have a true depency resolution, you will need to define a requirement file to
-    specify which package needs to be installed and install them:
+    Since `pip` does not have a true depency resolution, you will need to define a requirement file to
+    specify which packages and versions needs to be installed and install them:
 
       pip install -r requirements.txt
 

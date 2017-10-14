@@ -761,7 +761,7 @@ means Numpy has been installed by `conda` package manager in two environments, '
 
 `conda` looks like a far better tool to manage Python packages, but since `pip` is still required for some packages, it comes with several problems:
 
-- some packages are not see by `conda`, the ones installed previously via `pip install --user`. I would recommand to remove Python packages in your `~/.local` directory and to **never use `pip install --user`**
+- some packages are not seen by `conda`, the ones installed previously via `pip install --user`. I would recommand to remove Python packages in your `~/.local` directory and to **never use `pip install --user`**
 
 - in the meantime, never ever use `sudo` to install any packet once `conda` has been installed on your system
 

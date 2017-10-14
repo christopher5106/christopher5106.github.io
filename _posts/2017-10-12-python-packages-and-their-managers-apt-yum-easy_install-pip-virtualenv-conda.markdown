@@ -731,6 +731,7 @@ means Numpy has been installed with `pip3 install` with a Python 3 using user di
 means either:
 - a specific install path has been specified to a package manager
 - Numpy has been installed in a `virtualenv` environment
+
 .
 
 
@@ -740,14 +741,15 @@ means either:
 means
 - `conda` has been installed on the system
 - Numpy has been installed with `pip` from conda install
-.
 
+.
 
     /home/christopher/miniconda2/pkgs/numpy-1.13.3-py27hbcc08e0_0/lib/python2.7/site-packages/numpy
 
 means
 - `conda` has been installed on the system
 - Numpy has been installed with `conda`
+
 but does not mean that Numpy is being used in the current environment or any other environments
 
 

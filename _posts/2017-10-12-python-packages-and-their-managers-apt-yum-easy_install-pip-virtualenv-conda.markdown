@@ -427,10 +427,7 @@ To install a Python package, multiple tools are available:
 
     Nevertheless, be careful: if, before installing `conda`, you had installed via `pip` packages such as Jupyter or iPython packages that setup an executable script (beginning with `#!/usr/bin/python`) in `/usr/local/bin/`, the executables will run under previous packages (before installing `conda`). To have them run the packages of the new root `conda` environment, override them with `conda install jupyter`.
 
-    `conda` also offers the possibility to create new virtual environments.
-
-
-From this point, you might have a system in an inconsistent state,
+    `conda` also offers the possibility to create new virtual environments as we'll see two sections later.
 
 
 ### Paths

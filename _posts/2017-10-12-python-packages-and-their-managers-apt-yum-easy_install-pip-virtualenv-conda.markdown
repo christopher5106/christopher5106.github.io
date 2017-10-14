@@ -765,7 +765,10 @@ means Numpy has been installed by `conda` package manager in two environments, '
 
 - packages installed via `pip` are global to all `conda` environments, so they do not benefit from `conda` separation of packages
 
-- some previously installed executable might use another environment, in particular the previous one.
+- some previously installed Python executables might use the previous Python environment, in particular the previous one.
+
+- last, environment variable PYTHONPATH is still active in `conda` environment. Cross directory references should be avoided when using  virtual environments because they are not consistent with the behavior of virtual environments.
+
 
 It is far from simple...
 

@@ -698,6 +698,7 @@ So, here is the reverse meaning of each path you might encounter:
 
 means Numpy has been installed with `easy_install`
 
+.
 
     /usr/lib/python2.7/dist-packages/numpy
 
@@ -711,21 +712,25 @@ means Numpy has been installed by either
 
 means Numpy has been installed by `apt-get` system manager with packet `python3-numpy`
 
+.
 
     /usr/local/lib/python3.5/dist-packages/numpy
 
 means Numpy has been installed by `sudo pip3 install`
 
+.
 
     /home/christopher/.local/lib/python2.7/site-packages/numpy
 
 means Numpy has been installed with `pip install --user`, even in the case if `conda` is installed on the system
 
+.
 
     /home/christopher/.local/lib/python3.5/site-packages/numpy
 
 means Numpy has been installed with `pip3 install` with a Python 3 using user directory by default
 
+.
 
     /home/christopher/apps/my_app/lib/python2.7/site-packages/numpy
 
@@ -753,6 +758,7 @@ means
 
 but does not mean that Numpy is being used in the current environment or any other environments
 
+.
 
     /home/christopher/miniconda2/envs/my_app/lib/python2.7/site-packages/numpy
     /home/christopher/miniconda2/envs/yad2k/lib/python3.6/site-packages/numpy

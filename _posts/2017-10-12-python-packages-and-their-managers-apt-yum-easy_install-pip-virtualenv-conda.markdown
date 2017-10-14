@@ -341,7 +341,7 @@ To install a Python package, multiple tools are available:
       /home/christopher/miniconda2/lib/python2.7/site-packages/numpy
       /home/christopher/miniconda2/lib/python2.7/site-packages/numpy-1.13.3.dist-info
 
-    This `pip` does not see anymore the packages installed by system package manger `apt-get` nor by system `/usr/bin/pip` but still sees previously installed package in local mode `/usr/bin/pip install --user` while `conda` don't see any of them, many due to a bug in `conda` (because `pip` is consistent with `python` executable).
+    This `pip` does not see anymore the packages installed by system package manger `apt-get` nor by system `/usr/bin/pip` but still sees previously installed package in local mode `/usr/bin/pip install --user` while `conda` don't see any of them, mainly due to a bug in `conda` (because `pip` is consistent with `python` executable).
 
     To install a package with `conda`:
 

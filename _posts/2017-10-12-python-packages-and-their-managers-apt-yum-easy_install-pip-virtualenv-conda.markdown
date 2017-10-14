@@ -128,6 +128,7 @@ To install a Python package, multiple tools are available:
   #-> ../../lib/python3/dist-packages/numpy/core/include/numpy
   ```
 
+    Note the good use of `dist-packages` instead of `site-packages` which should be reserved for the system Python.
 
 
 - `easy_install` in the setupstool package is a Python package manager.
@@ -138,22 +139,45 @@ To install a Python package, multiple tools are available:
 
     To install a Python package such as Numpy :
 
-      easy_install numpy
+  ```bash
+  sudo easy_install numpy
+  # Searching for numpy
+  # Best match: numpy 1.11.0
+  # Adding numpy 1.11.0 to easy-install.pth file
+  #
+  # Using /usr/lib/python2.7/dist-packages
+  # Processing dependencies for numpy
+  # Finished processing dependencies for numpy
+  ```
+    In this case, `easy_install` is using `/usr/lib/python2.7/dist-packages` to install the packages, where it has found previously installed Numpy with system `apt-get`. Note the requirement of `sudo` because `/usr/lib/python2.7/dist-packages` is system owned. Let's remove previously installed Numpy and re install it with `easy_install`:
 
-    `easy_install` will install the package in the `lib` directory corresponding to the Python executable. Since I'm using `/home/christopher/miniconda2/bin/python`, the package has been installed in
+  ```bash
+    sudo apt-get remove python-numpy
+    sudo easy_install numpy
 
-      /home/christopher/miniconda2/lib/python2.7/site-packages
+    ###### compilation of Numpy #######
 
+    # creating /usr/local/lib/python2.7/dist-packages/numpy-1.13.3-py2.7-linux-x86_64.egg
+    # Extracting numpy-1.13.3-py2.7-linux-x86_64.egg to /usr/local/lib/python2.7/dist-packages
+    # Adding numpy 1.13.3 to easy-install.pth file
+    # Installing f2py script to /usr/local/bin
+    #
+    # Installed /usr/local/lib/python2.7/dist-packages/numpy-1.13.3-py2.7-linux-x86_64.egg
+    # Processing dependencies for numpy
+    # Finished processing dependencies for numpy
+  ```
+
+    `easy_install` has now messed the system directories :).
 
 - `pip` (and `pip3`) is a more recent Python 2 (respectively Python3) package management system which has become a better alternative to `easy_install` for installing Python packages. It is included by default for Python 2 >=2.7.9 or Python 3 >=3.4 , otherwise requires to be installed:
 
     - with `easy_install`:
 
-          easy_install pip
+          sudo easy_install pip
 
    - directly with Python with the script [get-pip.py](https://bootstrap.pypa.io/get-pip.py) to run
 
-          python get-pip.py
+          sudo python get-pip.py
 
        In order to avoid to mess up with packages installed by the system, it is possible to specify to pip to install the packages in a local directory rather than globally, with  `--prefix=/usr/local/` option for example.
 
@@ -162,17 +186,29 @@ To install a Python package, multiple tools are available:
           sudo apt-get install python-pip
           sudo apt-get install python3-pip
 
-    To install a Python package such as Numpy with `pip`:
+    As `easy_install`, `pip` installs packages in `/usr/local/lib/python2.7/dist-packages/`, requiring `sudo`:
 
-      pip install numpy
+  ```bash
+  sudo pip install numpy
+  # Requirement already satisfied: numpy in /usr/local/lib/python2.7/dist-packages/numpy-1.13.3-py2.7-linux-x86_64.egg
 
-    The newly installed package by `pip` can be found:
+  sudo pip uninstall numpy
+  # Uninstalling numpy-1.13.3:
+  #   /usr/local/lib/python2.7/dist-packages/numpy-1.13.3-py2.7-linux-x86_64.egg
+  # Proceed (y/n)? y
+  #   Successfully uninstalled numpy-1.13.
 
-      /usr/local/lib/python2.7/dist-packages/numpy
+  sudo pip install numpy
+  # Collecting numpy
+  #   Downloading numpy-1.13.3-cp27-cp27mu-manylinux1_x86_64.whl (16.6MB)
+  #     100% |████████████████████████████████| 16.7MB 84kB/s
+  # Installing collected packages: numpy
+  # Successfully installed numpy-1.13.3
+  ```
 
-    Note the use of `dist-packages` instead of `site-packages` which should be reserved for sytem installs.
+    **It is not recommanded to use `sudo` for a Python package manager other than the system package manager `apt-get`, nor to mess up the system directories.**
 
-    To install the Python2 package in the local user directory `~/.local/` also:
+    For that purpose, it is recommanded to install the Python2 package in the local user directory `~/.local/` also:
 
       pip install --user numpy
 
@@ -237,13 +273,64 @@ To install a Python package, multiple tools are available:
 
     I would recommand to install Miniconda, which installs `conda`, while Anaconda also installs a hundred packages such as numpy, scipy, ipython notebook, and so on. To install Anaconda from `conda`, simply `conda install anaconda`.
 
-    Its [install under Linux](https://conda.io/docs/user-guide/install/linux.html#install-linux-silent) is very easy and simply creates a `~/miniconda2/` directory and adds its binaries to the PATH environment variable by setting it in the `.bashrc` file. Conda install contains `pip` and `pip3`.
+    Its [install under Linux](https://conda.io/docs/user-guide/install/linux.html#install-linux-silent) is very easy. For example:
 
-    Uninstalling conda simply consists in removing its directory :
+      wget https://repo.continuum.io/miniconda/Miniconda2-latest-Linux-x86_64.sh
+      bash Miniconda2-latest-Linux-x86_64.sh
 
-      rm -rf ~/miniconda2
+    It simply creates a `~/miniconda2/` directory. Uninstalling conda simply consists in removing its directory :
 
-    To install a package:
+          rm -rf ~/miniconda2
+
+     It proposes to add its binaries to the PATH environment variable by setting it in the `.bashrc` file and here is what happen:
+
+  ```bash
+    which python
+    # /home/christopher/miniconda2/bin/python
+
+    which pip
+    # /home/christopher/miniconda2/bin/pip
+
+    which pip3
+    # /usr/bin/pip3
+
+    which easy_install
+    # /home/christopher/miniconda2/bin/easy_install
+
+    ls -l /home/christopher/miniconda2/bin/python ls -l /home/christopher/miniconda2/bin/pip /home/christopher/miniconda2/bin/easy_install
+    # /home/christopher/miniconda2/bin/easy_install
+    # /home/christopher/miniconda2/bin/pip
+    # /home/christopher/miniconda2/bin/python -> python2.7
+  ```
+
+    Conda install contains `pip` and `easy_install`.
+
+  ```bash
+  sudo pip uninstall numpy
+
+  pip install numpy
+  #  Collecting numpy
+  #    Using cached numpy-1.13.3-cp27-cp27mu-manylinux1_x86_64.whl
+  #  Installing collected packages: numpy
+  #  Successfully installed numpy-1.13.3
+
+  pip show numpy
+  # Name: numpy
+  # Version: 1.13.3
+  # Summary: NumPy: array processing for numbers, strings, records, and objects.
+  # Home-page: http://www.numpy.org
+  # Author: NumPy Developers
+  # Author-email: numpy-discussion@python.org
+  # License: BSD
+  # Location: /home/christopher/miniconda2/lib/python2.7/site-packages
+  # Requires
+  ```
+
+    Default install location for `pip` and `easy_install` is now:
+
+      /home/christopher/miniconda2/lib/python2.7/site-packages
+
+    To install a package with `conda`:
 
       conda install numpy
 
@@ -255,9 +342,19 @@ To install a Python package, multiple tools are available:
   # numpy                     1.13.3                    <pip>
   ```
 
-    Here, numpy package has been installed at least twice. Once with `conda`, once with `pip`. Note:
+    Here, Numpy Python package has been installed at least twice. Once with `conda`, once with `pip`. Note:
 
     - `pip` does not see the packages installed by the system as well as the packages installed via conda
+
+      ```bash
+      pip uninstall numpy
+
+      conda list numpy
+      # numpy                     1.13.3                    <pip>
+
+      pip show numpy
+      # (void)
+      ```
 
     - `conda` does not see the packages installed by the system
 
@@ -289,11 +386,7 @@ To install a Python package, multiple tools are available:
     As we'll see in the last section, `conda` also offers a virtual environment manager.
 
 
-To conclude:
-
-- **I would recommand to never use `sudo` to run the  `pip` and `conda` Python package managers. Reserve `sudo` for the system packages `apt-get`.** Packages installed with `sudo` will not be removed by `pip uninstall` command.
-
-- From this point, you should begin to leave your system in an inconsistent state. Packages installed with system manager, or different managers begin to be messed up: multiple versions of a same package can be fetched by the Python programs, and we do not know which one.
+From this point, you should have begun to leave your system in an inconsistent state. Packages installed with system manager, or different managers begin to be messed up: multiple versions of a same package can be fetched by the Python programs, and we do not know which one.
 
 
 ### Paths
@@ -303,10 +396,13 @@ In the command shell, check which version of Python you're using:
 ```bash
 which python
 #/home/christopher/miniconda2/bin/python
+
 python --version
 #Python 2.7.14 :: Anaconda, Inc.
+
 which ipython
 #/home/christopher/miniconda2/bin/ipython
+
 which jupyter
 # /home/christopher/miniconda2/bin/jupyter
 ```
@@ -512,3 +608,19 @@ To get a view on all versions of a package installed in all virtual environments
     sudo find / -name "numpy" 2>/dev/null
 
 **This is our last clue command...**
+
+Here is the result of a particularly messed install:
+
+    /home/christopher/miniconda2/lib/python2.7/site-packages/numpy
+    /home/christopher/miniconda2/lib/python2.7/site-packages/numpy-1.13.3-py2.7-linux-x86_64.egg/numpy
+    /home/christopher/.local/lib/python3.5/site-packages/numpy
+    /home/christopher/miniconda2/pkgs/numpy-1.12.1-py36_0/lib/python3.6/site-packages/numpy
+    /home/christopher/miniconda2/pkgs/numpy-1.13.3-py27hbcc08e0_0/lib/python2.7/site-packages/numpy
+    /home/christopher/miniconda2/envs/yad2k/lib/python3.6/site-packages/numpy
+
+So, here is the reverse meaning of each paths:
+
+
+    /home/christopher/miniconda2/lib/python2.7/site-packages/numpy
+
+=> means Numpy has been installed by

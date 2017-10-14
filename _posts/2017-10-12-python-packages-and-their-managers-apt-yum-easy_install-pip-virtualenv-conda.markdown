@@ -332,9 +332,14 @@ To install a Python package, multiple tools are available:
   # Requires
   ```
 
-    Default install location for `pip` and `easy_install` is now:
+    Default install location for `conda`, `pip` and `easy_install` is now:
 
       /home/christopher/miniconda2/lib/python2.7/site-packages
+
+    `pip install` has created two subdirectories:
+
+      /home/christopher/miniconda2/lib/python2.7/site-packages/numpy
+      /home/christopher/miniconda2/lib/python2.7/site-packages/numpy-1.13.3.dist-info
 
     This `pip` does not see anymore the packages installed by system package manger `apt-get` nor by system `/usr/bin/pip` but still sees previously installed package in local mode `/usr/bin/pip install --user` while `conda` don't see any of them. So **`conda` starts from a complete new environment**.
 
@@ -342,7 +347,14 @@ To install a Python package, multiple tools are available:
 
       conda install numpy
 
-    To check installed packages:
+    which overwrite previously installed package by `pip`, and create a new subdirectory:
+
+      /home/christopher/miniconda2/lib/python2.7/site-packages/numpy
+      /home/christopher/miniconda2/lib/python2.7/site-packages/numpy-1.13.3-py2.7.egg-info
+
+    Note here the difference with `pip` that would not accept to install a package under the same path.
+
+    `conda list` displays both package references for `conda` and `pip`:
 
   ```bash
   conda list numpy
@@ -350,22 +362,16 @@ To install a Python package, multiple tools are available:
   # numpy                     1.13.3                    <pip>
   ```
 
-    Here, Numpy Python package has been installed at least twice. Once with `conda`, once with `pip`. Note:
-
-    - `pip` does not see the packages installed by `conda`
+    while `pip` does see the packages installed by `conda` but merges the references in one line:
 
       ```bash
-      pip uninstall numpy
-
       conda list numpy
       # numpy                     1.13.3                    <pip>
-
-      pip show numpy
-      # (void)
       ```
 
-    - since `conda` sees the `pip` packages, it is possible to specify the `pip` packages in the `conda`
-    listing the packages:
+    `pip uninstall` is able to uninstall any package it finds in the Python sys path, leaving the other package managers in an inconsistent state (`apt-get`, `conda`,...) while `conda` cannot manage anything else than its own packages.
+
+    It is possible to specify the `pip` packages in the `conda` environment definition to install them as with a pip requirement files:
 
       # environment.yml
       name: my_app
@@ -391,7 +397,7 @@ To install a Python package, multiple tools are available:
 
     As we'll see in the last section, `conda` install creates a clean root environment, using the mechanism of virtual environments. Even with a system in a inconsistent state, with packages installed via the system manager, or different managers and in multiple versions, only newly installed Python packages via `pip` or `conda`, residing in the `~/miniconda2` directory, will effectively be considered by Python programs.
 
-    Nevertheless, be careful: if you had installed executables via `pip` before installing `conda`, such as Jupyter or iPython packages, they are still in `/usr/local/bin/` and they will run under previous configuration. To replace them, run `conda install jupyter`.
+    Nevertheless, be careful: if, before installing `conda`, you had installed via `pip` packages such as Jupyter or iPython packages that setup an executable script (beginning with `#!/usr/bin/python`) in `/usr/local/bin/`, the executables will run under previous packages (before installing `conda`). To have them run the packages of the new root `conda` environment, override them with `conda install jupyter`.
 
     `conda` also offers the possibility to create new virtual environments.
 
@@ -614,7 +620,10 @@ Let's see for each one:
 
 - `conda`
 
-    Conda does not use Python executable ability to configure its environment from the local directory except for itself. In conda, packages and environments are stored directly in `~/miniconda2/`, in `~/miniconda2/pkgs/` and `~/miniconda2/envs/` respectively.
+    Conda uses Python executable ability to configure its environment from a local directory,
+
+
+     except for itself. In conda, packages and environments are stored directly in `~/miniconda2/`, in `~/miniconda2/pkgs/` and `~/miniconda2/envs/` respectively.
 
     To create an environment:
 
@@ -643,10 +652,6 @@ Let's see for each one:
 
     Note that as surprising as it looks like, `conda list` does not see anymore the packages that have been installed with `pip` and `pip3` globally, while they are still active and appear with `pip list` (or `pip3 list`)
 
-    To deactivate an environment:
-
-      source activate my_app
-
     Inside the environment, paths are modified to:
 
   ```python
@@ -674,6 +679,18 @@ Let's see for each one:
 
       ~/miniconda2/envs/my_app/lib/python2.7/site-packages/
 
+    While globally installed `ipython` or `jupyter` executables will not use the local environment's packages, let's try to see what happens when running `conda install jupyter` in the environment:
+
+    ```bash
+    which ipython
+    # /home/christopher/miniconda2/envs/my_app/bin/ipython
+
+    which jupyter
+    # /home/christopher/miniconda2/envs/my_app/bin/jupyter
+    ```
+
+    Each executable has been deployed in the local environment's bin folder, and begins with the local Python command `#!/home/christopher/miniconda2/envs/my_app/bin/python`. So, now you can run `ipython` or `jupyter` in your application, using the packages required by the application.
+
     To deactivate an environment:
 
       source deactivate my_app
@@ -687,7 +704,7 @@ Let's see for each one:
 
 To get a view on all versions of a package installed in all virtual environments, user rights, and package managers:
 
-    sudo find / -name "numpy" 2>/dev/null
+    sudo find / -name "numpy*" 2>/dev/null
 
 **This is our last clue...**
 
@@ -741,12 +758,22 @@ means either:
 .
 
 
-
     /home/christopher/miniconda2/lib/python2.7/site-packages/numpy
+    /home/christopher/miniconda2/lib/python2.7/site-packages/numpy-1.13.3-py2.7.egg-info
 
 means
 - `conda` has been installed on the system
-- Numpy has been installed with `pip` from conda install
+- Numpy has been installed in conda root/default environment with `conda`
+
+.
+
+
+    /home/christopher/miniconda2/lib/python2.7/site-packages/numpy
+    /home/christopher/miniconda2/lib/python2.7/site-packages/numpy-1.13.3.dist-info
+
+means
+- `conda` has been installed on the system
+- Numpy has been installed in conda root/default environment with `pip` from conda install
 
 .
 

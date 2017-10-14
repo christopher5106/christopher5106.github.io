@@ -741,6 +741,7 @@ means either:
 means
 - `conda` has been installed on the system
 - Numpy has been installed with `pip` from conda install
+ 
 
 
     /home/christopher/miniconda2/pkgs/numpy-1.13.3-py27hbcc08e0_0/lib/python2.7/site-packages/numpy

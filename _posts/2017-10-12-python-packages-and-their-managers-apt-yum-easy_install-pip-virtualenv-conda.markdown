@@ -140,6 +140,10 @@ To install a Python package, multiple tools are available:
 
       easy_install numpy
 
+    `easy_install` will install the package in the `lib` directory corresponding to the Python executable. Since I'm using `/home/christopher/miniconda2/bin/python`, the package has been installed in
+
+      /home/christopher/miniconda2/lib/python2.7/site-packages
+
 
 - `pip` (and `pip3`) is a more recent Python 2 (respectively Python3) package management system which has become a better alternative to `easy_install` for installing Python packages. It is included by default for Python 2 >=2.7.9 or Python 3 >=3.4 , otherwise requires to be installed:
 
@@ -162,10 +166,11 @@ To install a Python package, multiple tools are available:
 
       pip install numpy
 
-    The newly installed package can be found:
+    The newly installed package by `pip` can be found:
 
       /usr/local/lib/python2.7/dist-packages/numpy
-      /home/christopher/.local/lib/python3.5/site-packages/numpy
+
+    Note the use of `dist-packages` instead of `site-packages` which should be reserved for sytem installs.
 
     To install the Python2 package in the local user directory `~/.local/` also:
 
@@ -176,6 +181,10 @@ To install a Python package, multiple tools are available:
       /home/christopher/.local/lib/python2.7/site-packages/numpy
 
     Note the change from `dist-packages` to `site-packages` in local mode.
+
+    For `pip3`, the package is direcly installed locally:
+
+      /home/christopher/.local/lib/python3.5/site-packages/numpy
 
     In recent Ubuntu versions, by default, `pip` installs the package locally.
 
@@ -221,7 +230,7 @@ To install a Python package, multiple tools are available:
 
       pip uninstall numpy
 
-    Pip offers many other [options and configuration properties](https://pip.pypa.io/en/stable/user_guide).
+    `pip` offers many other [options and configuration properties](https://pip.pypa.io/en/stable/user_guide).
 
 
 - `conda` is a package and dependency manager for Python, R, Ruby, Lua, Scala, Java, JavaScript, C/ C++, FORTRAN. It performs a true dependency resolution.

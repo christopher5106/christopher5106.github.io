@@ -784,7 +784,7 @@ but does not mean that Numpy is being used in the current environment or any oth
     /home/christopher/miniconda2/envs/my_app/lib/python2.7/site-packages/numpy
     /home/christopher/miniconda2/envs/yad2k/lib/python3.6/site-packages/numpy
 
-means Numpy has been installed by `conda` package manager in two environments, 'my_app' and 'yad2k', each one using a different version of Python.
+means Numpy has been installed by `conda` package manager in two `conda` environments, 'my_app' and 'yad2k', each one using a different version of Python.
 
 
 ### In conclusion

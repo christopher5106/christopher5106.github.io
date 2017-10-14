@@ -222,6 +222,10 @@ To install a Python package, multiple tools are available:
 
       /home/christopher/.local/lib/python3.5/site-packages/numpy
 
+    while for `sudo pip3`, it is installed globally:
+
+      /usr/local/lib/python3.5/dist-packages/numpy
+
     In recent Ubuntu versions, by default, `pip` installs the package locally.
 
     To check where your package has been installed:
@@ -498,15 +502,19 @@ Let's see for each one:
     To install, either one of the following commands:
 
       sudo apt get python-virtualenv
-      pip install virtualenv
+      sudo pip install virtualenv
       conda install virtualenv
 
     Virtual environments are attached to a directory (directory of the application) where packages will be stored.
 
     To create a virtual environment:
 
-      mkdir my_app
-      virtualenv my_app
+  ```bash
+  mkdir my_app
+  virtualenv my_app
+  # New python executable in /home/christopher/apps/my_app/bin/python
+  # Installing setuptools, pip, wheel...done.
+  ```
 
     To activate the environment:
 
@@ -516,9 +524,9 @@ Let's see for each one:
 
   ```bash
   pip list
-  pip (8.1.1)
-  pkg-resources (0.0.0)
-  setuptools (20.7.0)
+  # pip (8.1.1)
+  # pkg-resources (0.0.0)
+  # setuptools (20.7.0)
   ```
     All other packages installed globally are not visible anymore.
 
@@ -534,13 +542,28 @@ Let's see for each one:
   # /home/christopher/apps/my_app/bin/python3 -> /usr/bin/python3
   ```
 
-  `virtualenv` environment mechanism relies on Python executable ability to configure its environment from local files (if present) and load local packages.
+    `virtualenv` environment mechanism relies on Python executable ability to configure its environment from local files (if present) and load local packages.
 
-  Inside the environment, paths are modified to:
+    Inside the environment, paths are modified to:
 
-  XXXX
+  ```python
+  Python 2.7.12 (default, Nov 19 2016, 06:48:10)
+  [GCC 5.4.0 20160609] on linux2
+  Type "help", "copyright", "credits" or "license" for more information.
+  >>> import sys
+  >>> sys.path
+  ['', '/home/christopher/technologies/caffe/python', '/home/christopher/apps', '/home/christopher/apps/my_app/lib/python2.7', '/home/christopher/apps/my_app/lib/python2.7/plat-x86_64-linux-gnu', '/home/christopher/apps/my_app/lib/python2.7/lib-tk', '/home/christopher/apps/my_app/lib/python2.7/lib-old', '/home/christopher/apps/my_app/lib/python2.7/lib-dynload', '/usr/lib/python2.7', '/usr/lib/python2.7/plat-x86_64-linux-gnu', '/usr/lib/python2.7/lib-tk', '/home/christopher/apps/my_app/local/lib/python2.7/site-packages', '/home/christopher/apps/my_app/lib/python2.7/site-packages']
+  >>> import numpy
+  Traceback (most recent call last):
+    File "<stdin>", line 1, in <module>
+  ImportError: No module named numpy
+  ```
 
-  XXXX does it see global packages ?
+    Packages installed globally by `apt-get` are not visible anymore. This is consistent with `pip` behavior inside the environment.
+
+    Install path for packages in this environment with `pip install` are now:
+
+      /home/christopher/apps/my_app/lib/python2.7/site-packages
 
 
 - `venv`
@@ -558,8 +581,6 @@ Let's see for each one:
 
       source my_app/bin/activate
 
-    Note that `conda` package manager will ignore the current virtualenv environment and install packages globally, while `pip` will not.
-
     Let's now check the Python executable:
   ```bash
   which python
@@ -574,9 +595,20 @@ Let's see for each one:
 
     Inside the environment, paths are modified to:
 
-    XXXX
+    ```python
+    Python 3.5.2 (default, Sep 14 2017, 22:51:06)
+    [GCC 5.4.0 20160609] on linux
+    Type "help", "copyright", "credits" or "license" for more information.
+    >>> import sys
+    >>> sys.path
+    ['', '/home/christopher/technologies/caffe/python', '/home/christopher/apps', '/usr/lib/python35.zip', '/usr/lib/python3.5', '/usr/lib/python3.5/plat-x86_64-linux-gnu', '/usr/lib/python3.5/lib-dynload', '/home/christopher/apps/my_app/lib/python3.5/site-packages']
+    >>> import numpy
+    Traceback (most recent call last):
+      File "<stdin>", line 1, in <module>
+    ImportError: No module named numpy
+    ```
 
-    XXXX does it see global packages ?
+    Behavior is the same as for `virtualenv`.
 
 - `conda`
 
@@ -644,10 +676,12 @@ means Numpy has been installed by either
 
     /usr/lib/python3/dist-packages/numpy
 
-means Numpy has been installed by either
+means Numpy has been installed by `apt-get` system manager with packet `python3-numpy`
 
-- `apt-get` system manager with packet `python3-numpy`
-- `easy_install` or `pip` in `sudo` mode for a system default Python 3  XXXXXuser default
+
+    /usr/local/lib/python3.5/dist-packages/numpy
+
+means Numpy has been installed by `sudo pip3 install`
 
 
     /home/christopher/.local/lib/python2.7/site-packages/numpy
@@ -660,9 +694,11 @@ means Numpy has been installed with `pip install --user`
 means Numpy has been installed with `pip3 install` with a Python 3 using user directory by default
 
 
-XXXX
+    /home/christopher/apps/my_app/lib/python2.7/site-packages/numpy
 
-virtualenv packages
+means either:
+- a specific install path has been specified to a package manager
+- Numpy has been installed in a `virtualenv` environment
 
 
     /home/christopher/miniconda2/lib/python2.7/site-packages/numpy

@@ -186,7 +186,7 @@ To install a Python package, multiple tools are available:
           sudo apt-get install python-pip
           sudo apt-get install python3-pip
 
-    As `easy_install`, `pip` installs packages in `/usr/local/lib/python2.7/dist-packages/`, requiring `sudo`:
+    As `easy_install`, `pip` installs packages in `/usr/local/lib/python2.7/dist-packages/`, finding previously installed packages with `apt-get` or `easy_install` and requiring `sudo`:
 
   ```bash
   sudo pip install numpy
@@ -265,6 +265,8 @@ To install a Python package, multiple tools are available:
     To uninstall a package:
 
       pip uninstall numpy
+
+    Note that uninstalling Numpy installed by `apt-get` with `pip uninstall` will leave the system in an inconsistent state, with `apt-get` thinking Numpy is in its latest version while it has been uninstalled.
 
     `pip` offers many other [options and configuration properties](https://pip.pypa.io/en/stable/user_guide).
 

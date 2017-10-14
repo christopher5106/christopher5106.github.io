@@ -347,7 +347,7 @@ To install a Python package, multiple tools are available:
 
       conda install numpy
 
-    which overwrite previously installed package by `pip`, and create a new subdirectory:
+    which overrides previously installed package by `pip`, and create a new subdirectory:
 
       /home/christopher/miniconda2/lib/python2.7/site-packages/numpy
       /home/christopher/miniconda2/lib/python2.7/site-packages/numpy-1.13.3-py2.7.egg-info

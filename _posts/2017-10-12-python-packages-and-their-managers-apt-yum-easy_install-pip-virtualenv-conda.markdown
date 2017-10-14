@@ -797,9 +797,9 @@ means Numpy has been installed by `conda` package manager in two `conda` environ
 
 - packages installed via `pip` are global to all `conda` environments, so they do not benefit from `conda` separation of packages
 
-- packages installed via `conda` in the default/root environment are also global to all `conda` environments, but `conda list` does not reference them
+- packages installed via `conda` in the default/root `conda` environment are also global to all `conda` environments, but `conda list` does not reference them
 
-- some Python executables installed prio to `conda` setup might use the previous Python environment, in particular the previous packages.
+- some Python executables installed prior to `conda` setup might use the previous Python environment, in particular the previous packages.
 
 - last, environment variable PYTHONPATH is still active in `conda` environment. Cross directory references should be avoided when using  virtual environments because they are not consistent with the behavior of virtual environments.
 

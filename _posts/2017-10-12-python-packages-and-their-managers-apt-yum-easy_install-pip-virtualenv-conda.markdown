@@ -495,7 +495,7 @@ The presence of the first path in the list is due to the environment variable `P
 
     export PYTHONPATH=~/technologies/caffe/python:$PYTHONPATH
 
-The second path correspond to the local directory in which I have run the `python` command: all local python files are included. These paths are setup at at Python launch, with the contents of any .pth file paths created, and the standard library directories.
+The second path corresponds to the local directory in which I have run the `python` command: all local python files are included. These paths are setup at Python launch, with the contents of any .pth file paths created, and the standard library directories.
 
 Running directly `/usr/bin/python2.7` will launch the default Python setup:
 
@@ -645,7 +645,7 @@ Let's see for each one:
 
 - `conda`
 
-    Conda uses Python executable ability to configure its environment from a local directory. In conda, packages and environments are stored directly in `~/miniconda2/`.
+    Conda uses Python executable ability to configure its environment from a local directory. In conda, packages and environments are stored directly in `~/miniconda2/` rather than an application directory.
 
     To create an environment:
 

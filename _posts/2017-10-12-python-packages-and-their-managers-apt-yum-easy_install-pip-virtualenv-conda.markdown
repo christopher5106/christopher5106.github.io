@@ -280,7 +280,7 @@ To install a Python package, multiple tools are available:
       wget https://repo.continuum.io/miniconda/Miniconda2-latest-Linux-x86_64.sh
       bash Miniconda2-latest-Linux-x86_64.sh
 
-    It simply creates a `~/miniconda2/` directory. Uninstalling conda simply consists in removing its directory :
+    It simply creates a `~/miniconda2/` directory. Conda uses the virtual environment mechanism proposed by Python executable to modify its package install path, a mechanism that we'll see later. Uninstalling conda simply consists in removing its directory :
 
           rm -rf ~/miniconda2
 
@@ -305,7 +305,7 @@ To install a Python package, multiple tools are available:
     # /home/christopher/miniconda2/bin/python -> python2.7
   ```
 
-    Conda install contains `pip` and `easy_install`.
+    Conda install contains `pip` and `easy_install` because some packages are not available under Conda and you'll still need `pip`, which will not simplify your life:
 
   ```bash
   sudo pip uninstall numpy
@@ -332,7 +332,7 @@ To install a Python package, multiple tools are available:
 
       /home/christopher/miniconda2/lib/python2.7/site-packages
 
-    To install a package with `conda`:
+    This `pip` still manages to see packages installed by system package manger XXXX and system `/usr/bin/pip` while `conda` will install a new version whatever packages are installed on the system:
 
       conda install numpy
 
@@ -346,7 +346,7 @@ To install a Python package, multiple tools are available:
 
     Here, Numpy Python package has been installed at least twice. Once with `conda`, once with `pip`. Note:
 
-    - `pip` does not see the packages installed by the system as well as the packages installed via conda
+    - `pip` does not see the packages installed by the system XXXXanymore as well as the packages installed via conda
 
       ```bash
       pip uninstall numpy
@@ -359,6 +359,8 @@ To install a Python package, multiple tools are available:
       ```
 
     - `conda` does not see the packages installed by the system
+
+    XXX check install package system
 
     Note that since `conda` sees the `pip` packages, it is possible to specify the `pip` packages in the `conda`
     listing the packages:
@@ -534,6 +536,13 @@ Let's see for each one:
 
   `virtualenv` environment mechanism relies on Python executable ability to configure its environment from local files (if present) and load local packages.
 
+  Inside the environment, paths are modified to:
+
+  XXXX
+
+  XXXX does it see global packages ?
+
+
 - `venv`
 
     To install:
@@ -563,9 +572,15 @@ Let's see for each one:
 
     `venv` environment mechanism relies on Python executable ability to configure its environment from local files (if present) and load local packages.
 
+    Inside the environment, paths are modified to:
+
+    XXXX
+
+    XXXX does it see global packages ?
+
 - `conda`
 
-    In conda, environments are not linked to a particular directory. They are stored directly in `~/miniconda2/envs/`.
+    Conda does not use Python executable ability to configure its environment from the local directory except for itself. In conda, packages and environments are stored directly in `~/miniconda2/`, in `~/miniconda2/pkgs/` and `~/miniconda2/envs/` respectively.
 
     To create an environment:
 
@@ -598,6 +613,12 @@ Let's see for each one:
 
       source activate my_app
 
+    Inside the environment, paths are modified to:
+
+    XXXX
+
+    XXXX does it see global packages ?
+
     To delete an environment:
 
       conda env remove -n my_app
@@ -609,20 +630,64 @@ To get a view on all versions of a package installed in all virtual environments
 
     sudo find / -name "numpy" 2>/dev/null
 
-**This is our last clue command...**
+**This is our last clue...**
 
-Here is the result of a particularly messed install:
+So, here is the reverse meaning of each path you might encounter:
+
+    /usr/lib/python2.7/dist-packages/numpy
+
+means Numpy has been installed by either
+
+- `apt-get` system manager with packet `python-numpy`
+- `easy_install` or `pip` in `sudo` mode for a system default Python 2
+
+
+    /usr/lib/python3/dist-packages/numpy
+
+means Numpy has been installed by either
+
+- `apt-get` system manager with packet `python3-numpy`
+- `easy_install` or `pip` in `sudo` mode for a system default Python 3  XXXXXuser default
+
+
+    /home/christopher/.local/lib/python2.7/site-packages/numpy
+
+means Numpy has been installed with `pip install --user`
+
+
+    /home/christopher/.local/lib/python3.5/site-packages/numpy
+
+means Numpy has been installed with `pip3 install` with a Python 3 using user directory by default
+
+
+XXXX
+
+virtualenv packages
+
 
     /home/christopher/miniconda2/lib/python2.7/site-packages/numpy
-    /home/christopher/miniconda2/lib/python2.7/site-packages/numpy-1.13.3-py2.7-linux-x86_64.egg/numpy
-    /home/christopher/.local/lib/python3.5/site-packages/numpy
-    /home/christopher/miniconda2/pkgs/numpy-1.12.1-py36_0/lib/python3.6/site-packages/numpy
+
+means
+- `conda` has been installed on the system
+- Numpy has been installed with `pip` from conda install
+
+
+    /home/christopher/miniconda2/lib/python2.7/site-packages/numpy-1.13.3-py2.7-linux-x86_64.egg/numpy XXXXroot env packages?
+
+?? XXXX
+
+
     /home/christopher/miniconda2/pkgs/numpy-1.13.3-py27hbcc08e0_0/lib/python2.7/site-packages/numpy
+
+means
+- `conda` has been installed on the system
+- Numpy has been installed with `conda`
+
+but does not mean that Numpy is being used in the current environment or any other environments
+
+
     /home/christopher/miniconda2/envs/yad2k/lib/python3.6/site-packages/numpy
 
-So, here is the reverse meaning of each paths:
+??? XXXX
 
-
-    /home/christopher/miniconda2/lib/python2.7/site-packages/numpy
-
-=> means Numpy has been installed by
+**Well done!**

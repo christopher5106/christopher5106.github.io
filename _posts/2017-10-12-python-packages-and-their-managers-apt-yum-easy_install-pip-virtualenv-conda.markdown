@@ -514,8 +514,9 @@ Last, when loading a package, you can check from which directory it has been loa
 
 ```python
 >>> import numpy
->>> numpy.__file__
-'/home/christopher/miniconda2/lib/python2.7/site-packages/numpy/__init__.pyc'
+>>> import imp
+>>> imp.find_module("numpy")
+(None, '/home/christopher/miniconda2/lib/python2.7/site-packages/numpy', ('', '', 5))
 ```
 
 **This command gives a second clue on what package version has been used.**

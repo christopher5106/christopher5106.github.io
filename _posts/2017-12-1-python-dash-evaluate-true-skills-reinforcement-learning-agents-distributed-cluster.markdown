@@ -75,20 +75,21 @@ The second option is to use `dask-ssh` that will do it for you, given the `ips.t
 dask-ssh --hostfile ips.txt
 ```
 
-Now, your Dask cluster is set.
+Now, our Dask cluster is set.
 
 
 ### Build a test game
 
 
-
-Last, the game was not implemented at all, not even a random simulation. My objective was to be able to test that the implementation was working correctly, ie :
+Let's build a test game, that will enable to verify that the implementation works without bugs, ie :
 
 1- be reliable to failures
 
-2- predict correct skills
+2- predict the correct skills
 
-For the first point, I affected a level to each created agent in the `game.py` file:
+
+
+In order to see if the implementation predicts the skills correctly, let's us define a game level to each created agent in a `game.py` file:
 
 ```python
 class Agent(object):
@@ -97,7 +98,7 @@ class Agent(object):
         self.r = random.randint(0, RATING_RANGE -1)
 ```
 
-and I implemented a simple game, where one could think logical that :
+and implement a simple game, in which one could think logical that :
 
 1- a better agent should win more often when playing with a lower agent
 
@@ -105,7 +106,7 @@ and I implemented a simple game, where one could think logical that :
 
 3- in the case the best agent does not win against the lower one, there might be some tie game / drawn games.
 
-So, here is my implementation, emulating also an unresponsive task with `sleep` method, random errors (exceptions or invalid results) on top of the stochastic strategy:
+Moreover, there might some unresponsive tasks in a real game evaluation, and we'll need to emulate such failures. Let's use the `sleep` method, random errors (exceptions or invalid results) on top of a stochastic strategy that will not always give the success to the best agent:
 
 ```python
 def play(self, agent0, agent1):
@@ -127,15 +128,25 @@ def play(self, agent0, agent1):
         return res
 ```
 
-Please note that the interface has not been modified.
+The implementation of our distributed framework should deliver a prediction of skill values of the agents, that should be more or less in the same order as the ground truth levels we choose behind the scene.
+
+Note that, once the test game has proved the implementation is correct, any game with the same interface can be used in place of this test game.
 
 
 ### Running the games
 
 
-From now on, everything happens in my implementation file `sketch.py`.
+To submit the games to play to the cluster, let's create a `sketch.py` in a Python 3 environment, using Dask API to connect to the cluster:
 
-To submit a task to the cluster, simply run `sketch.py` in a Python 3 environment:
+```python
+from dask.distributed import Client
+client = Client(scheduler_IP + ':8786')
+client.upload_file('game.py')
+for _ in range(num_plays):
+    jobs.append(client.submit(play, game, agents))
+```
+
+Let's run the games:
 
 ```bash
 >> python3 sketch.py
@@ -149,17 +160,17 @@ Skills computed in 4.81
 Accuracy of the ratings: 1.0
 ```
 
-The script does the following actions:
+More precisely, the final script `sketch.py` does the following actions:
 
-- read the hostname file `ips.txt` and consider the scheduler to be on the first instance in the list
+- it reads the hostname file `ips.txt` that acts as our configuration file. The scheduler is considered to be set on the first instance in the list.
 
-- print the cluster configuration, ie available workers, and the number of threads per workers. In the default settings, it is one thread per core, and a thread pool on each instance.
+- it prints the cluster configuration, ie available workers, number of threads per workers. In the default settings, one thread is used per core, and a thread pool on each instance.
 
-- run the game matches in a distributed way. Here is the elapsed time does not reflect a real game setting, and I had difficulty to emulate a heavy computation game with `sleep` method or other operations based on elapsed time since the proc scheduler as well as Dask will consider non responsive tasks and rotate them with other tasks (that's my current interpretation of the very sublinear growth of computation times). The message can be seen in the Dask logs : `distributed.core - WARNING - Event loop was unresponsive for 2.86s.`
+- it runs the games in a distributed way connecting to Dask. The elapsed time does not reflect a real game setting, and I had difficulty to emulate a heavy computation game with `sleep` method or operations based on elapsed time since the proc scheduler as well as Dask considers them as non responsive tasks and rotates them with other tasks (that's my current interpretation of the very sublinear growth of computation times). The message can be seen in the Dask logs : `distributed.core - WARNING - Event loop was unresponsive for 2.86s.`
 
-- compute the skills with the proposed TrueSkill library. I might be good to notice that the times to compute these skills is ok and will be very small compared to the times required for the game matches in a real setting, so it is not a priority to distribute theses computations. Also, distributing these computations would require to understand the TrueSkill implementation and check for data transfer it will imply in a distributed version.
+- it computes the skills with the TrueSkill library. We can notice the times to compute these skills confirms us it is not necessary to distribute this computation which will stay very small compared to the game times in a real world setting.
 
-- estimage the accuracy of the predicted skills. I used a very simple algorithm in which I pick all pairs of agents and I check if their skills are aligned with the level they were assigned. I do not know much about evaluation of *ratings* but I'm sure there is some scientific literature on this subject. I could not simply compare orders since a small error in ordering a pair of players could have an impact on the complete ordering.
+- it estimates the accuracy of the predicted skills. For this estimation, I'm using a very simple algorithm in which I pick all pairs of agents and I check if their skills are aligned with the level they were assigned. I could not simply compare orders since a small error in ordering a pair of players could have an impact on the complete ordering.
 
 To get more information about the parameters to run the code:
 
@@ -179,7 +190,7 @@ optional arguments:
 ```
 
 
-Let's check that if I use less matches, the accuracy will drop:
+Let's check that if I use less plays, the accuracy will drop:
 
 ```bash
 >>> python3 sketch.py --num-matches=10
@@ -209,26 +220,26 @@ Accuracy of the ratings: 0.91
 
 ### About my implementation
 
-The purpose is not necessary a specification at this time but more an exchange to check I understood correctly the problem.
-
 Please note the following points:
 
-- there might be some other cases to test for reliability, and this comes with experience. For example, a match that never finishes. It is possible in the `check_status()` method to exit after a timeout or when a certain percentage of the matches has finished.
+- there might be some other cases to test the distribution reliability, and this comes with experience. For example, a play that never finishes. It is possible in the `check_status()` method to exit after a timeout or when a certain percentage of the matches has finished.
 
-- reliability of the cluster is the job of `Dask` team
+- the reliability of the cluster is the job of `Dask` team
 
-- I do not re-submit matches for which there has been a failure. In this case, it does not disturb the final skill accuracy. But, in a real world setting, it is still important to check why they fail because there might hide some bigger problems having a huge impact on the final result.
+- here, I do not re-submit plays for which there has been a failure. In this case, such failures stay irrelevant, and do not disturb the final skill accuracy computation. But, in a real world setting, it is always important to understand all sources of failures because they might hide bigger problems with a huge impact on the final result.
 
-- if Trueskill were computation costly, or agents heavy to move from one machine to another one, we could have partition the game, as in a real world competition, with semi finals, finals, ... and shuffling the partitions after a few matches inside each partition.
+- if Trueskill were computation costly, or agents heavy to move from one machine to another one, we could have partitionned the game, as in a real world competition, with semi-finals, finals, ... and shuffling the partitions after a few matches inside each partition.
 
 - I'm not sure what it means to have an agent compete against himself, so I removed this case.
 
-- it was not so easy to test the correctness of the implementation in another way than by implementing a test game, in particular for the tie games. For example, after a tie game between an agent and himself, at the beginning, when its skill is 25.0, the Trueskill skill becomes 25.000000000000004 or 24.999999999999993.
+- it is not so easy to test the correctness of the implementation in another way than by implementing a test game, in particular for the tie games. For example, after a tie game between an agent and himself, at the beginning, when its skill is 25.0, the Trueskill skill becomes 25.000000000000004 or 24.999999999999993.
 
-### Questions
+For me, there are still some open questions:
 
-- I'm new with TrueSkill, and also not the expert about Bayes inferences. I do not understand what quality of a game means in their framework.
+- in TrueSkill, I left the understanding of the "quality" of a game in their framework.
 
 - I'm not sure how TrueSkill updates the skills in a tie game / drawn game between an agent and himself...
 
 - I'm not sure about the behavior of Dask default distributed scheduler and the Python interpretation in the case of unresponsive tasks (`sleep` method or time-based algorithm). It looks like the Python interpreter has optimized the sequence of instructions of the game, and the pool of threads takes into account such unresponsive tasks. I also tested the resource limitation, adding `resources={'GPU': 1}` to the job submition and simulating limited resource workers with `dask-worker 172.17.0.2:8786 --resources "GPU=8"` but still without success. So, the only way would be to use real costly operations to emulate a heavy games.
+
+**Well done!**

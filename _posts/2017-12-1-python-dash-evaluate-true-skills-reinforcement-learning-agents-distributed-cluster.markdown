@@ -242,4 +242,6 @@ For me, there are still some open questions:
 
 - I'm not sure about the behavior of Dask default distributed scheduler and the Python interpretation in the case of unresponsive tasks (`sleep` method or time-based algorithm). It looks like the Python interpreter has optimized the sequence of instructions of the game, and the pool of threads takes into account such unresponsive tasks. I also tested the resource limitation, adding `resources={'GPU': 1}` to the job submition and simulating limited resource workers with `dask-worker 172.17.0.2:8786 --resources "GPU=8"` but still without success. So, the only way would be to use real costly operations to emulate a heavy games.
 
+Hope this will help you.
+
 **Well done!**

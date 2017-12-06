@@ -11,6 +11,7 @@ Microsoft has released and patented a [Bayesian based library](https://www.micro
 
 When the number of agents is important, the number of plays becomes also important. Moreover, agents and games might require lot's of computations, in particular when they are based on deep learning neural networks. Let's see in practice an implementation to distribute the plays of the agents to evaluate their true skills.
 
+To follow this article, the full code can be cloned from [here](https://github.com/christopher5106/distributed-trueskill-eval-of-agents).
 
 ### Python package manager
 

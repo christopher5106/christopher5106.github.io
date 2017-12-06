@@ -1,13 +1,13 @@
 ---
 layout: post
-title:  "Python Dash: evaluate true skill of reinforcement learning agents with distributed cluster"
+title:  "Python Dask: evaluate true skill of reinforcement learning agents with a distributed cluster of instances"
 date:   2017-12-01 00:00:51
 categories: reinforcement learning
 ---
 
-Reinforcement learning requires a high number of plays for an agent to learn from a game. Once multiple agents have been trained, evaluating the quality of the agents requires to let them play multiple times as well.
+Reinforcement learning requires a high number of matches for an agent to learn from a game. Once multiple agents have been trained, evaluating the quality of the agents requires to let them play multiple times against each others.
 
-Microsoft has released a Bayesian based library to help us compute the true skill of agents given the scores they achieved against each other. The Bayesian theory gives a framework to update the skill value distribution of an agent each time the agent is implied in a game for which a result of the game has been known. Under gaussian assumptions, each update will modify the mean skill value and sharpen the distribution, which means reducing the uncertainty of the new (or a posteriori) skill value.
+Microsoft has released and patented a [Bayesian based library](https://www.microsoft.com/en-us/research/project/trueskill-ranking-system/) named [TrueSkill](http://trueskill.org/) to help us compute the skill of agents given the scores they achieved in multi-player matches. The Bayesian theory gives a framework to update the skill value distribution of an agent each time the agent is implied in a game for which a result of the game has been known. Under gaussian assumptions, each update will modify the mean skill value and sharpen the distribution, which means reducing the uncertainty of the new (or a posteriori) skill value. The library is available as a [Python package](http://trueskill.org/).
 
 When the number of agents is important, the number of plays becomes also important. Moreover, agents and games might require lot's of computations, in particular when they are based on deep learning neural networks. Let's see in practice an implementation to distribute the plays of the agents to evaluate their true skills.
 
@@ -104,7 +104,7 @@ and implement a simple game, in which one could think logical that :
 
 2- a better agent should have harder times winning when it was close in level to the lower agent
 
-3- in the case the best agent does not win against the lower one, there might be some tie game / drawn games.
+3- in the case the best agent does not win against the lower one, there might be some tie / drawn matches.
 
 Moreover, there might some unresponsive tasks in a real game evaluation, and we'll need to emulate such failures. Let's use the `sleep` method, random errors (exceptions or invalid results) on top of a stochastic strategy that will not always give the success to the best agent:
 
@@ -133,10 +133,10 @@ The implementation of our distributed framework should deliver a prediction of s
 Note that, once the test game has proved the implementation is correct, any game with the same interface can be used in place of this test game.
 
 
-### Running the games
+### Running the game matches
 
 
-To submit the games to play to the cluster, let's create a `sketch.py` in a Python 3 environment, using Dask API to connect to the cluster:
+To submit the game matches to play to the cluster, let's create a `sketch.py` in a Python 3 environment, using Dask API to connect to the cluster:
 
 ```python
 from dask.distributed import Client
@@ -146,7 +146,7 @@ for _ in range(num_plays):
     jobs.append(client.submit(play, game, agents))
 ```
 
-Let's run the games:
+Let's run the matches:
 
 ```bash
 >> python3 sketch.py
@@ -166,7 +166,7 @@ More precisely, the final script `sketch.py` does the following actions:
 
 - it prints the cluster configuration, ie available workers, number of threads per workers. In the default settings, one thread is used per core, and a thread pool on each instance.
 
-- it runs the games in a distributed way connecting to Dask. The elapsed time does not reflect a real game setting, and I had difficulty to emulate a heavy computation game with `sleep` method or operations based on elapsed time since the proc scheduler as well as Dask considers them as non responsive tasks and rotates them with other tasks (that's my current interpretation of the very sublinear growth of computation times). The message can be seen in the Dask logs : `distributed.core - WARNING - Event loop was unresponsive for 2.86s.`
+- it runs the matches in a distributed way connecting to Dask. The elapsed time does not reflect a real game setting, and I had difficulty to emulate a heavy computation game with `sleep` method or operations based on elapsed time since the proc scheduler as well as Dask considers them as non responsive tasks and rotates them with other tasks (that's my current interpretation of the very sublinear growth of computation times). The message can be seen in the Dask logs : `distributed.core - WARNING - Event loop was unresponsive for 2.86s.`
 
 - it computes the skills with the TrueSkill library. We can notice the times to compute these skills confirms us it is not necessary to distribute this computation which will stay very small compared to the game times in a real world setting.
 
@@ -177,7 +177,7 @@ To get more information about the parameters to run the code:
 ```bash
 >>> python3 sketch.py --help
 
-usage: sketch.py [-h] [--num-agents NUM_AGENTS] [--num-matches NUM_GAMES]
+usage: sketch.py [-h] [--num-agents NUM_AGENTS] [--num-matches NUM_MATCHES]
                  [--ip-file IP_FILE]
 
 optional arguments:
@@ -185,7 +185,7 @@ optional arguments:
   --num-agents NUM_AGENTS
                         number of players
   --num-matches NUM_MATCHES
-                        number of games to play
+                        number of matches to play
   --ip-file IP_FILE     location of the nodes
 ```
 
@@ -230,17 +230,15 @@ Please note the following points:
 
 - if Trueskill were computation costly, or agents heavy to move from one machine to another one, we could have partitionned the game, as in a real world competition, with semi-finals, finals, ... and shuffling the partitions after a few matches inside each partition.
 
-- I'm not sure what it means to have an agent compete against himself, so I removed this case.
+- it is not so easy to test the correctness of the implementation in another way than by implementing a test game, in particular for the tie matches. For example, after a tie game between an agent and himself, at the beginning, when its skill is 25.0, the Trueskill skill becomes 25.000000000000004 or 24.999999999999993.
 
-- it is not so easy to test the correctness of the implementation in another way than by implementing a test game, in particular for the tie games. For example, after a tie game between an agent and himself, at the beginning, when its skill is 25.0, the Trueskill skill becomes 25.000000000000004 or 24.999999999999993.
+For me, there are still some open questions, I'm not sure :
 
-For me, there are still some open questions:
+- how TrueSkill updates the skills in a tie game / drawn game between an agent and himself, so so I removed this case in my implementation, and
 
-- in TrueSkill, I left the understanding of the "quality" of a game in their framework.
+- about the behavior of Dask default distributed scheduler and the Python interpretation in the case of unresponsive tasks (`sleep` method or time-based algorithm). It looks like the Python interpreter has optimized the sequence of instructions of the game, and the pool of threads takes into account such unresponsive tasks. I also tested the resource limitation feature implemented in Dask, by simulating limited resource workers with `dask-worker 172.17.0.2:8786 --resources "GPU=8"` command line, and adding `resources={'GPU': 1}` to the job submission, but this did not help block and wait the scheduler. So, the only way would be to use real costly operations to emulate a heavy game.
 
-- I'm not sure how TrueSkill updates the skills in a tie game / drawn game between an agent and himself...
-
-- I'm not sure about the behavior of Dask default distributed scheduler and the Python interpretation in the case of unresponsive tasks (`sleep` method or time-based algorithm). It looks like the Python interpreter has optimized the sequence of instructions of the game, and the pool of threads takes into account such unresponsive tasks. I also tested the resource limitation, adding `resources={'GPU': 1}` to the job submition and simulating limited resource workers with `dask-worker 172.17.0.2:8786 --resources "GPU=8"` but still without success. So, the only way would be to use real costly operations to emulate a heavy games.
+Last but not least, it would be interesting to use the quality estimation of a game given by TrueSkill to reduce the number of matches required to estimate the skills. The more likely a match to be drawn one, then this is a good match.
 
 Hope this will help you.
 

@@ -238,8 +238,6 @@ For me, there are still some open questions, I'm not sure :
 
 - about the behavior of Dask default distributed scheduler and the Python interpretation in the case of unresponsive tasks (`sleep` method or time-based algorithm). It looks like the Python interpreter has optimized the sequence of instructions of the game, and the pool of threads takes into account such unresponsive tasks. I also tested the resource limitation feature implemented in Dask, by simulating limited resource workers with `dask-worker 172.17.0.2:8786 --resources "GPU=8"` command line, and adding `resources={'GPU': 1}` to the job submission, but this did not help block and wait the scheduler. So, the only way would be to use real costly operations to emulate a heavy game.
 
-Last but not least, it would be interesting to use the quality estimation of a game given by TrueSkill to reduce the number of matches required to estimate the skills. The more likely a match to be drawn one, then this is a good match.
-
-Hope this will help you.
+Last but not least, it would be interesting to use the quality estimation of a game given by TrueSkill to reduce the number of matches required to estimate the skills. The more likely a match to be a drawn one, the better the match will be to update the skills.
 
 **Well done!**

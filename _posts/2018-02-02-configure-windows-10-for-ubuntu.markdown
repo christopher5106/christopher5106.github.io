@@ -13,15 +13,15 @@ In this tutorial, I'll give you the command to install and use Ubuntu shell on a
 
 First, in **Settings > Update and security > For developers**, activate **Developer mode**:
 
-![](({{ site.url }}/img/windows_developer_mode.PNG)
+![]({{ site.url }}/img/windows_developer_mode.PNG)
 
 Second, in **Settings > Applications > Applications and features**, click on **Programs and features**,
 
-![](({{ site.url }}/img/windows_programs_and_features.PNG)
+![]({{ site.url }}/img/windows_programs_and_features.PNG)
 
 open **activate or desactivate Windows features** panel:
 
-![](({{ site.url }}/img/windows_features_activation.PNG)
+![]({{ site.url }}/img/windows_features_activation.PNG)
 
 enable the "Windows Subsystem for Linux" optional feature (you can also enable the feature with `Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux` in PowerShell as administrator).
 
@@ -31,7 +31,7 @@ Last, run `lsxrun /install` in the Windows Command Prompt to install Ubuntu Bash
 
 You'll find the Ubuntu bash under **Bash** in the Windows Command prompt:
 
-![](({{ site.url }}/img/windows_bash.PNG)
+![]({{ site.url }}/img/windows_bash.PNG)
 
 # Install a server X
 

@@ -60,4 +60,16 @@ Now, setting the display, you can access your Ubuntu remote server through the U
     ssh -X ...
 
 
+### Line endings
+
+You will probably find your files created with Atom editor with strange line endings under your Linux servers:
+
+![]({{ site.url }}/img/windows_line_endings.PNG)
+
+To avoid that, you can install [Windows Carriage Return Removers](https://atom.io/packages/windows-carriage-return-remover) to remove Windows line endings.
+
+You will also install the [Line Ending Selector Package](https://atom.io/packages/line-ending-selector) to write new files with Linux the new line.
+
+![]({{ site.url }}/img/linux_line_endings.PNG)
+
 **Well done!**

@@ -36,9 +36,13 @@ You'll find the Ubuntu bash under **Bash** in the Windows Command prompt:
 # Install a server X
 
 
-It is possible to run graphical applications from Ubuntu, for that purpose you need to install [Xming X Server for Windows](https://sourceforge.net/projects/xming/). Now you can run `firefox` in your Ubuntu Bash terminal.
+It is possible to run graphical applications from Ubuntu, for that purpose you need to install [Xming X Server for Windows](https://sourceforge.net/projects/xming/). Then, run Xming server and set the `DISPLAY` environment variable in the Ubuntu Bash Shell:
 
-To let Ubuntu bash on Windows 10 run `ssh -X` to get a GUI environment on a remote server, run in a Ubuntu Bash terminal,
+    export DISPLAY=localhost:0.0
+
+Now you can run `firefox` in your Ubuntu Bash terminal.
+
+In the Ubuntu Bash terminal under Windows, it is also possible to get the GUI environment from a remote server as under Linux, with command `ssh -X`. To enable this, install
 
     sudo apt install ssh xauth xorg
     sudo vi /etc/ssh/ssh_config
@@ -56,7 +60,6 @@ and edit the **ssh_config** file, uncommenting or adding the following lines:
 
 Now, setting the display, you can access your Ubuntu remote server through the Ubuntu server X on your Windows Ubuntu computer:
 
-    export DISPLAY=localhost:0
     ssh -X ...
 
 

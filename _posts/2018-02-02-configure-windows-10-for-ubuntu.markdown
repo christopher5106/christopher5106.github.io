@@ -42,7 +42,7 @@ It is possible to run graphical applications from Ubuntu, for that purpose you n
 
 Now you can run `firefox` in your Ubuntu Bash terminal.
 
-In the Ubuntu Bash terminal under Windows, it is also possible to get the GUI environment from a remote server as under Linux, with command `ssh -X`. To enable this, install
+In the Ubuntu Bash terminal under Windows, it is also possible to get the GUI environment from a remote server as under Linux, with command `ssh -X`. To enable this, install SSH, XAUTH and XORG:
 
     sudo apt install ssh xauth xorg
     sudo vi /etc/ssh/ssh_config

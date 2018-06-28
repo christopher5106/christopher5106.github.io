@@ -7,7 +7,7 @@ categories: deep learning
 
 Working as AI architect at Ivalua company, I'm happy to announce the release in the open source of my code for optical character recognition using Object Detection deep learning techniques.
 
-The main purpose of this work was to compute pretrained features that could serve as early layers in more complex deep learning nets for document analysis, segmentation, classification or reading.
+The main purpose of this work is to compute pretrained features that could serve as early layers in more complex deep learning nets for document analysis, segmentation, classification or reading.
 
 Object detection task has been improving a lot with the arise of new deep learning models such as R-CNN, Fast-RCNN, Faster-RCNN, Mask-RCNN, Yolo, SSD, ... These models have been developped on the case of natural images, on datasets such as COCO, Pascal VOC, ... They have been applied to the task of digit recognition in natural images, such as the Street View House Numbers (SVHN) Dataset.
 
@@ -19,17 +19,17 @@ Fitting the full document image is quite challenging, since characters could be 
 
 The code has been tested on toy examples, built with MNIST data:
 
-<img src="img/ocr/res1.png" height="250"> <img src="img/ocr/res2.png" height="250">
+<img src="{{ site.url }}/img/ocr/res1.png" height="250"> <img src="{{ site.url }}/img/ocr/res2.png" height="250">
 
 Then, as classically done in object detection, the code has been evaluated on image crops using multiple layers as in SSD to recognize characters at different scale:
 
-<img src="img/ocr/res3.png" height="250"> <img src="img/ocr/res4.png" height="250">
+<img src="{{ site.url }}/img/ocr/res3.png" height="250"> <img src="{{ site.url }}/img/ocr/res4.png" height="250">
 
 Last, a low resolution and a small batch size have permitted to fit the image and the network in the GPU, and the following result has been achieved, droping the characters of size too big or too small:
 
-<img src="img/ocr/res5.png" height="250">
+<img src="{{ site.url }}/img/ocr/res5.png" height="250">
 
-The full expirement settings and results are described in the [PDF paper](img/ocr/Object_detection_deep_learning_networks_for_Optical_Character_Recognition.pdf).
+The full expirement settings and results are described in the [PDF paper]({{ site.url }}/img/ocr/Object_detection_deep_learning_networks_for_Optical_Character_Recognition.pdf).
 
 We hope that researchers and the open source community will follow up on our work to invent more accurate or more efficient networks for full document processing, that could serve as early layers for further document tasks.
 

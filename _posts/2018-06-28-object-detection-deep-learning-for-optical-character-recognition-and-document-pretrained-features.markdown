@@ -19,15 +19,15 @@ Fitting the full document image is quite challenging, since characters could be 
 
 The code has been tested on toy examples, built with MNIST data:
 
-<img src="{{ site.url }}/img/ocr/res1.png" height="250"> <img src="{{ site.url }}/img/ocr/res2.png" height="250">
+<img src="{{ site.url }}/img/ocr/res1.png" height="500"> <img src="{{ site.url }}/img/ocr/res2.png" height="500">
 
 Then, as classically done in object detection, the code has been evaluated on image crops using multiple layers as in SSD to recognize characters at different scale:
 
-<img src="{{ site.url }}/img/ocr/res3.png" height="250"> <img src="{{ site.url }}/img/ocr/res4.png" height="250">
+<img src="{{ site.url }}/img/ocr/res3.png" height="500"> <img src="{{ site.url }}/img/ocr/res4.png" height="500">
 
 Last, a low resolution and a small batch size have permitted to fit the image and the network in the GPU, and the following result has been achieved, droping the characters of size too big or too small:
 
-<img src="{{ site.url }}/img/ocr/res5.png" height="250">
+<img src="{{ site.url }}/img/ocr/res5.png" height="1000">
 
 The full expirement settings and results are described in the [PDF paper]({{ site.url }}/img/ocr/Object_detection_deep_learning_networks_for_Optical_Character_Recognition.pdf).
 

@@ -38,4 +38,6 @@ The full experiment settings and results are described in the [PDF paper]({{ sit
 
 By releasing our work, we hope to help open source community use and work with us on these nets, to invent more accurate or more efficient networks for full document processing, that could serve as early layers for further document tasks.
 
+[The code on Ivalua's github](https://github.com/Ivalua/object_detection_ocr)
+
 **Well done!**

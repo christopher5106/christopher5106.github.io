@@ -36,6 +36,6 @@ Once the results were good enough, document image resolution and batch size have
 
 The full experiment settings and results are described in the [PDF paper]({{ site.url }}/img/ocr/Object_detection_deep_learning_networks_for_Optical_Character_Recognition.pdf).
 
-We hope that researchers and the open source community will follow up on our work to invent more accurate or more efficient networks for full document processing, that could serve as early layers for further document tasks.
+By releasing our work, we hope to help open source community use and work with us on these nets, to invent more accurate or more efficient networks for full document processing, that could serve as early layers for further document tasks.
 
 **Well done!**

@@ -30,7 +30,7 @@ So, in order to keep a good resolution to read the characters and a document ima
 
 <img src="{{ site.url }}/img/ocr/res3.png" height="500"> <img src="{{ site.url }}/img/ocr/res4.png" height="500">
 
-Once the results were good enough, document image resolution and batch size have been decreased to fit the image and the network in the GPU, and the following result has been achieved, droping the characters of size too big or too small:
+Once the results were good enough, document image resolution and batch size have been decreased to fit the image and the network in the GPU, and the following result has been achieved, dropping the characters of size too big or too small:
 
 <img src="{{ site.url }}/img/ocr/res5.png" height="1000">
 

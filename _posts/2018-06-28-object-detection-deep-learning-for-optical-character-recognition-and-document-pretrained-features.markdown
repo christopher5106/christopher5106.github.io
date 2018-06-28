@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Object detection deep learning frameworks for Optical Character Recognition and Document Pretrained Features"
-date:   2018-02-02 00:00:51
+date:   2018-06-26 00:00:00
 categories: deep learning
 ---
 

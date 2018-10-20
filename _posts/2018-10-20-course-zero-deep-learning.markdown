@@ -35,4 +35,6 @@ $$ x \xrightarrow{f} o = f(x) = \{o_c\}_c \xrightarrow{softmax} \{p_c\}_c $$
 
 where the softmax activation is a normalisation function:
 
-$$ softmax(o) = \left{ \frac{ \e^{-o_i} }{ \sum_c \e^{-o_i}}  \right}_i $$
+$$ softmax(o) = \Big\{ \frac{ \e^{-o_i} }{ \sum_c \e^{-o_i}}  \Big\}_i $$
+
+Note that for the softmax to predict probability for c classes, it requires the output $$ o = f(x) $$ to be c-dimensional.

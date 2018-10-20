@@ -41,7 +41,7 @@ $$ x \xrightarrow{f} o = f(x) = \{o_c\}_c \xrightarrow{softmax} \{p_c\}_c $$
 
 where the softmax normalization function is defined by:
 
-$$ \text{Softmax}(o) = \Big\{ \frac{ e^{-o_i} }{ \sum_c e^{-o_i}}  \Big\}_i $$
+$$ \text{Softmax}(o) = \Big\{ \frac{ e^{-o_i} }{ \sum_c e^{-o_c}}  \Big\}_i $$
 
 Note that for the softmax to predict probability for c classes, it requires the output $$ o = f(x) $$ to be c-dimensional.
 
@@ -59,7 +59,7 @@ To discover many more loss functions, have a look at my [full article about loss
 
 Note that **a loss function always outputs a scalar value**. This scalar value is a measure of fit of the model with the real value.
 
-In **conclusion** of this section, the goal of machine learning is to have a function fit with the real world; and to have this function fit well, we use a loss function.
+In **conclusion** of this section, the goal of machine learning is to have a function fit with the real world; and to have this function fit well, we use a loss function to measure how to reduce this distance.
 
 # Second concept: the Gradient Descent
 

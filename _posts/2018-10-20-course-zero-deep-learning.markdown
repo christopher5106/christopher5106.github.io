@@ -23,9 +23,9 @@ $$d(y, \tilde{y}) $$
 
 The two most important loss functions are:
 
-- Mean Squared Error (MSE) used for regression: $$ \sum_i (y_i - \tilde{y_i})^2 $$
+- **Mean Squared Error (MSE)**, usually used for regression: $$ \sum_i (y_i - \tilde{y_i})^2 $$
 
-- Cross Entropy for probabilities, in particular for classification where the model predicts the probability of the observed object x for each class
+- **Cross Entropy for probabilities**, in particular for classification where the model predicts the probability of the observed object x for each class
 
 <center> $$ x \rightarrow \{p_c\}_c $$ with $$ \sum_c p_c = 1 $$ </center>
 
@@ -33,7 +33,7 @@ Transforming any function output into a probability that sums to 1 is usually pe
 
 $$ x \xrightarrow{f} o = f(x) = \{o_c\}_c \xrightarrow{softmax} \{p_c\}_c $$
 
-where the softmax activation is a normalisation function:
+where the softmax normalization function is defined by:
 
 $$ softmax(o) = \Big\{ \frac{ e^{-o_i} }{ \sum_c e^{-o_i}}  \Big\}_i $$
 

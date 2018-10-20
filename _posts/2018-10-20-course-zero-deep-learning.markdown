@@ -143,11 +143,11 @@ the gradient is given by
 
 $$ \nabla_{\theta_2} L = \nabla_{\theta_2} \Big( \text{CrossEntropy} \circ \text{Softmax} \circ \text{Dense}^2 \Big) $$
 
-$$ = \Big(\nabla_{CE inputs}  \text{CrossEntropy} \times \nabla_{Softmax inputs} \text{Softmax}\Big) \times \nabla_{\theta_2} \text{Dense}^2 $$
+$$ = \Big(\nabla_{\text{CE inputs}}  \text{CrossEntropy} \times \nabla_{\text{Softmax inputs}} \text{Softmax}\Big) \times \nabla_{\theta_2} \text{Dense}^2 $$
 
 and for the layer  $$ \text{Dense}^1 $$,
 
-$$ \nabla_{\theta_1} L = \Big(\nabla_{CE inputs}  \text{CrossEntropy} \times \nabla_{Softmax inputs} \text{Softmax}\Big) \times \nabla_{Dense2 inputs} \text{Dense}^2 \times \nabla_{ReLU inputs} \text{ReLu} \times \nabla_{\theta_1} \text{Dense}^1  $$
+$$ \nabla_{\theta_1} L = \Big(\nabla_{\text{CE inputs}}  \text{CrossEntropy} \times \nabla_{\text{Softmax inputs}} \text{Softmax}\Big) \times \nabla_{\text{Dense2 inputs}} \text{Dense}^2 \times \nabla_{\text{ReLU inputs}} \text{ReLu} \times \nabla_{\theta_1} \text{Dense}^1  $$
 
 To reduce the number of operations, it is better to compute the gradients from the top layer to the bottom layer: matrix multiplication of earlier gradients can be reused.
 

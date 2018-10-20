@@ -35,4 +35,4 @@ $$ x \xrightarrow{f} o = f(x) = \{o_c\}_c \xrightarrow{softmax} \{p_c\}_c $$
 
 where the softmax activation is a normalisation function:
 
-$$ softmax(o) = \left{ \frac{ \exp{-o_i} } / \sum_c \exp{-o_i}  \right}_i $$
+$$ softmax(o) = \left{ \frac{ \e^{-o_i} } / \sum_c \e^{-o_i}  \right}_i $$

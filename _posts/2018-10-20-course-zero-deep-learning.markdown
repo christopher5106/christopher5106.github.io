@@ -108,7 +108,7 @@ where the composition means
 
 $$ L = \text{CrossEntropy} (\text{Softmax} (\text{Dense}_\theta^2 ( \text{ReLu} ( \text{Dense}_\theta^1  (x) ) ) ) ) $$
 
-Here, for example, I have two dense layer and two activations (one ReLu and one Softmax). There are two parameters
+Here, for example, I have two dense layers and two activations (one ReLu and one Softmax). There are two parameters
 
 $$ \theta = [ \theta_1, \theta_2 ] $$
 
@@ -119,6 +119,13 @@ $$ \frac{ \partial }{ \partial x_i} (f \circ g )_k = \sum_c \frac{\partial f_k}{
 which can be rewritten as a simple matrix multiplication
 
 $$ \nabla (f \circ g) = \nabla f \times \nabla g $$
+
+
+What does that mean for deep learning and gradient descent ? In fact, for each layer, we want to compute
+
+$$ \nabla_{\theta_{\text{Layer}}} \text{Layer} $$
+
+
 
 
 <img src="{{ site.url }}/img/deeplearningcourse/DL8.png">

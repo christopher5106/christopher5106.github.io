@@ -9,7 +9,7 @@ You might first check [Course 0: deep learning!](http://christopher5106.github.i
 
 # Your programming environment
 
-Deep learning requires heavy computations so all deep learning libraries offer the possibility of parallel computing on GPU rather CPU, and distributed computed on multiple GPUs or instances.
+Deep learning demands heavy computations so all deep learning libraries offer the possibility of parallel computing on GPU rather CPU, and distributed computed on multiple GPUs or instances.
 
 The use of specific hardwares such as GPUs requires to install an up-to-date driver in the operating system first.
 

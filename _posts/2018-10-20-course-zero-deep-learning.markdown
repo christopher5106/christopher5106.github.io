@@ -48,3 +48,7 @@ Coming from the theory of information, cross-entropy is a distance measure betwe
 $$ crossentropy(p, \tilde{p}) \Sum_c \tilde{p}_c \log(p_c) = \log(p_\hat{c})$$
 
 we want to be the highest possible (maximisation).
+
+The cross entropy is working very well with the softmax function:
+
+$$ \log(p_\hat{c}) = \log \left(  \frac{ e^{-o_\hat{c}} }{ \sum_c e^{-o_i}}  \right) = \log e^{-o_\hat{c}} -  \log \sum_c e^{-o_i}} $$

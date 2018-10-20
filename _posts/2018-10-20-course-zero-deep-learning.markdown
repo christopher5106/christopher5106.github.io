@@ -216,7 +216,7 @@ $$ \frac{\partial o_i}{\partial \theta_{k,j}} = \begin{cases}
 
 so
 
-$$ \frac{\partial}{\partial \theta_{k,j}}  ( L \circ f_\theta )=  \sum_c \frac{\partial L}{\partial o_c}  \cdot \frac{\partial o_c}{\partial \theta_{k,j}}  = ( \delta_{ k, \hat{c}} - v_k) \cdot x_j  $$
+$$ \frac{\partial}{\partial \theta_{k,j}}  ( L \circ f_\theta )=  \sum_c \frac{\partial L}{\partial o_c}  \cdot \frac{\partial o_c}{\partial \theta_{k,j}}  = ( \delta_{ k, \hat{c}} - o_k) \cdot x_j  $$
 
 **Well done!**
 

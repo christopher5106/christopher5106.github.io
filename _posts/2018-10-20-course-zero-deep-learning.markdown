@@ -125,8 +125,17 @@ What does that mean for deep learning and gradient descent ? In fact, for each l
 
 $$ \nabla_{\theta_{\text{Layer}}} \text{Layer} $$
 
+given layer's input to update its parameters $$ \theta_{\text{Layer}} $$.
 
+So, for the layer $$ \text{Dense}^2 $$,
 
+$$ x \xrightarrow{ \text{Dense}^1 }  \xrightarrow{ \text{ReLu} } y  \xrightarrow{ \text{Dense}^2 }  \xrightarrow{ \text{Softmax}}  \xrightarrow{ \text{CrossEntropy} } L $$
+
+the gradient is given by
+
+$$ \nabla_{\theta_2} L = \nabla_{\theta_2} ( \text{CrossEntropy} \circ \text{Softmax} \circ \text{Dense}^2 ) $$
+
+$$ = \nabla_{CE inputs}  \text{CrossEntropy} \times \nabla_{Softmax inputs} \text{Softmax} \times \nabla_{\theta_2} \text{Dense}^2 $$
 
 <img src="{{ site.url }}/img/deeplearningcourse/DL8.png">
 

@@ -48,7 +48,7 @@ print(a.shape.dims) # [Dimension(None), Dimension(None), Dimension(10)]
 print(a.shape.ndims) # 3
 ```
 
-## Dynamic shapes
+## Dynamic Shapes
 
 Of course, during the run of the graph with input values, all shapes become known. Shape at run time are named *dynamic shapes*.
 

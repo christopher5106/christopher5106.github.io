@@ -144,11 +144,11 @@ Let's take, as model, a very simple one with only one Dense layer with 2 filters
 
 Such a layer produces a vector of 2 scalars:
 
-$$ f_\theta : \{x_j\} \rightarrow \Big\{ v_i = \sum_j \theta_{i,j} x_j \Big\}_i$$
+$$ f_\theta : \{x_j\} \rightarrow \Big\{ o_i = \sum_j \theta_{i,j} x_j \Big\}_i$$
 
 Please keep in mind that it is not possible to descend the gradient directly on this output because it is composed of two scalars. We need a loss function, that returns a scalar, and tells us how to combine these two outputs. For example, the Softmax+CrossEntropy we have seen previously:
 
-$$ L = CrossEntropy(Softmax(v)) $$
+$$ L = \txt{CrossEntropy}(\text{Softmax}(o)) $$
 
 <img src="{{ site.url }}/img/deeplearningcourse/DL6.png">
 
@@ -156,14 +156,11 @@ Now we can retropropagate the gradients. Since we are in the case of 2 outputs, 
 
 Let us compute the derivatives of the dense layer:
 
-$$ \frac{\partial v_i}{\partial \theta_{k,j}} = \begin{cases}
+$$ \frac{\partial o_i}{\partial \theta_{k,j}} = \begin{cases}
   x_j, & \text{if } k = i, \\
   0, & \text{otherwise}.
 \end{cases} $$
 
 so
 
-$$ \frac{\partial}{\partial \theta_{k,j}}  ( L \circ f_\theta )=  \sum_c \frac{\partial L}{\partial v_c}   \frac{\partial v_c}{\partial \theta_{k,j}} $$
-
-
-$$ = ( \delta_{ k, \hat{c}} - v_k) x_j  $$
+$$ \frac{\partial}{\partial \theta_{k,j}}  ( L \circ f_\theta )=  \sum_c \frac{\partial L}{\partial o_c}  \dot \frac{\partial o_c}{\partial \theta_{k,j}}  = ( \delta_{ k, \hat{c}} - v_k) \dot x_j  $$

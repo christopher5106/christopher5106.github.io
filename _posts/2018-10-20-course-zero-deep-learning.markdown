@@ -45,6 +45,6 @@ For example, in image classification, X being the image of a cat, we want this o
 
 Coming from the theory of information, cross-entropy is a distance measure between two probabilities defined by :
 
-$$ \Sum_c \tilde{p}_c \log(p_c) $$
+$$ crossentropy(p, \tilde{p}) \Sum_c \tilde{p}_c \log(p_c) = \log(p_\hat{c})$$
 
 we want to be the highest possible (maximisation).

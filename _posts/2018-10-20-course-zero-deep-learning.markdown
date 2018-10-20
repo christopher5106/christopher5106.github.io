@@ -51,4 +51,4 @@ we want to be the highest possible (maximisation).
 
 The cross entropy is working very well with the softmax function:
 
-$$ \log(p_\hat{c}) = \log \left(  \frac{ e^{-o_\hat{c}} }{ \sum_c e^{-o_i}}  \right) = \log e^{-o_\hat{c}} -  \log \sum_c e^{-o_i}} $$
+$$ \log(p_\hat{c}) = \log \Big\(  \frac{ e^{-o_\hat{c}} }{ \sum_c e^{-o_i}}  \Big\) = \log e^{-o_\hat{c}} -  \log \sum_c e^{-o_i}} $$

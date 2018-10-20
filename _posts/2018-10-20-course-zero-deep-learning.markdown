@@ -27,7 +27,7 @@ The two most important loss functions are:
 
 - Cross Entropy for probabilities, in particular for classification where the model predicts the probability of the observed object x for each class
 
-$$ x \rightarrow \{p_c\}_c $$ with $$ \sum_c p_c = 1 $$
+<center> $$ x \rightarrow \{p_c\}_c $$ with $$ \sum_c p_c = 1 $$ </center>
 
 Transforming any function output into a probability that sums to 1 is usually performed thanks to a softmax function
 
@@ -35,4 +35,4 @@ $$ x \xrightarrow{f} o = f(x) = \{o_c\}_c \xrightarrow{softmax} \{p_c\}_c $$
 
 where the softmax activation is a normalisation function:
 
-$$ softmax(o) = \{ \frac{ \exp{-o_i} } / \sum_c \exp{-o_i}  \}_i$$
+$$ softmax(o) = \left{ \frac{ \exp{-o_i} } / \sum_c \exp{-o_i}  \right}_i $$

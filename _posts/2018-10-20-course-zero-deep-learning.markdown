@@ -106,7 +106,7 @@ $$ = \text{CrossEntropy} \circ \text{Softmax} \circ \text{Dense}_{\theta_2}^2 \c
 
 where the composition means
 
-$$ L = \text{CrossEntropy} (\text{Softmax} (\text{Dense}_\theta^2 ( \text{ReLu} ( \text{Dense}_\theta^1  (x) ) ) ) ) $$
+$$ L = \text{CrossEntropy} (\text{Softmax} (\text{Dense}_{\theta_2}^2 ( \text{ReLu} ( \text{Dense}_{\theta_1}^1  (x) ) ) ) ) $$
 
 Here, for example, I have two dense layers and two activations (one ReLu and one Softmax). There are two parameters
 

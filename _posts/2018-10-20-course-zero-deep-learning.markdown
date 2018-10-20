@@ -73,8 +73,12 @@ where L is our cost $$ \L(f_\theta(x), \tilde{y}) $$
 
 <img src="{{ site.url }}/img/deeplearningcourse/DL3.png">
 
+An **update rule** is how to update the parameters of the model to minimize the cost function.
+
+$$\lambda $$ is the learning rate
 
 
+Effect of various learning rates on convergence (Img Credit: cs231n)
 
 
 

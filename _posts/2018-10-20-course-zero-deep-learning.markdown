@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Course 0: deep learning!"
+title:  "Course 0: deep learning in 5 days only!"
 date:   2018-10-20 05:00:00
 categories: deep learning
 ---
@@ -167,4 +167,4 @@ $$ \frac{\partial}{\partial \theta_{k,j}}  ( L \circ f_\theta )=  \sum_c \frac{\
 
 **Well done!**
 
-Now let's go to next course: [Course 1: programming deep learning!]()
+Now let's go to next course: [Course 1: programming deep learning!](http://christopher5106.github.io/deep/learning/2018/10/20/course-one-programming-deep-learning.html)

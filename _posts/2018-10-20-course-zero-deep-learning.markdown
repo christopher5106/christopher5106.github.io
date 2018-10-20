@@ -70,7 +70,7 @@ It is an iterative process in which the update rule simply consists in:
 
 $$ \theta_{t+1} = \theta_{t} - \lambda_\theta L $$
 
-where L is our cost $$ \L(f_\theta(x), \tilde{y}) $$
+where L is our cost $$ L(f_\theta(x), \tilde{y}) $$
 
 <img src="{{ site.url }}/img/deeplearningcourse/DL3.png">
 
@@ -88,7 +88,7 @@ Conclusion: When we have the loss function, the goal is to minimize it. For this
 
 # Cross Entropy with Softmax
 
-Let's come back to the global view: an observation X, a model f depending on parameters $$\theta $$, a softmax to normalize the model's output, and last, our cross entropy outputting a final scalar, measuring the distance between the prediction and the expected value: 
+Let's come back to the global view: an observation X, a model f depending on parameters $$\theta $$, a softmax to normalize the model's output, and last, our cross entropy outputting a final scalar, measuring the distance between the prediction and the expected value:
 
 <img src="{{ site.url }}/img/deeplearningcourse/DL5.png">
 

@@ -72,7 +72,7 @@ It consists in following the gradient to descend to the minima:
 
 It is an iterative process in which the update rule simply consists in:
 
-$$ \theta_{t+1} = \theta_{t} - \lambda_\theta \nabla L $$
+$$ \theta_{t+1} = \theta_{t} - \lambda \nabla_\theta (L \circ f_\theta) $$
 
 where L is our cost $$ L(f_\theta(x), \tilde{y}) $$
 

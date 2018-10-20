@@ -97,6 +97,7 @@ Computing the gradients to use in the SGD update rule is known as *backpropagati
 The reason for this name is the *chaining rule* in computing gradients of function compositions.
 
 
+<img src="{{ site.url }}/img/deeplearningcourse/DL8.png">
 
 Integrating into the full model  
 

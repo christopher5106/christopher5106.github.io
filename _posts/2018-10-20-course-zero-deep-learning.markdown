@@ -25,7 +25,7 @@ In supervised learning we know the real value we want to predict $$\tilde{y}$$, 
 
 We want to be able to measure the difference between what we are predicted with the model $$f$$ and what it should predict, what we call the **ground truth**. For that, there are some cost functions, depending on the problem you want to address.
 
-$$d(y, \tilde{y}) $$
+$$L(y, \tilde{y}) $$
 
 The two most important loss functions are:
 
@@ -65,9 +65,13 @@ It consists in following the gradient to descend to the minima:
 <img src="{{ site.url }}/img/deeplearningcourse/DL2.png">
 
 
+It is an iterative process in which the update rule simply consists in:
 
+$$ \theta_{t+1} = \theta_{t} - \lambda_\theta L
 
+where L is our cost $$ \L(f_\theta(x), \tilde{y})
 
+<img src="{{ site.url }}/img/deeplearningcourse/DL3.png">
 
 
 

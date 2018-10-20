@@ -110,11 +110,11 @@ $$ L = \text{CrossEntropy} (\text{Softmax} (\text{Dense}_\theta^2 ( \text{ReLu} 
 
 Here, for example, I have two dense layer and two activations (one ReLu and one Softmax). There are two parameters
 
-$$ \theta = \[ \theta_1, \theta_2 \] $$
+$$ \theta = [ \theta_1, \theta_2 ] $$
 
 The chaining rules for gradient computation says:
 
-$$ \frac{ \partial }{ \partial x_i} (f \circ g )_k = \sum_c \frac{\partial f_k}{\partial \g_c} \cdot \frac{\partial g_c}{\partial x_i} $$
+$$ \frac{ \partial }{ \partial x_i} (f \circ g )_k = \sum_c \frac{\partial f_k}{\partial g_c} \cdot \frac{\partial g_c}{\partial x_i} $$
 
 <img src="{{ site.url }}/img/deeplearningcourse/DL8.png">
 

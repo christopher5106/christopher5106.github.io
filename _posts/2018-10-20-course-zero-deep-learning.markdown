@@ -124,16 +124,16 @@ To be more precise, g is a function of its inputs and its parameters
 
 $$ g = g(x) = g_{\theta_g} (x) = g(x,\theta_g) $$
 
-and we want the gradient with respect to the parameters of g, that we consider as inputs as well. The correct expression becomes :
+and we want the gradient with respect to the parameters of g, that we can consider as inputs the way. The correct expression becomes :
 
 $$ \nabla_{\theta_g} (f \circ g_{\theta_g}) = \nabla_\text{f inputs} f \times \nabla_{\theta_g} g $$
 
 
 What does that mean for deep learning and gradient descent ? In fact, for each layer, we want to compute
 
-$$ \nabla_{\theta_{\text{Layer}}} \text{Layer} $$
+$$ \nabla_{\theta_{\text{Layer}}} \text{L} $$
 
-given layer's input to update its parameters $$ \theta_{\text{Layer}} $$.
+to update each layer's parameters $$ \theta_{\text{Layer}} $$.
 
 So, for the layer $$ \text{Dense}^2 $$,
 
@@ -149,7 +149,7 @@ and for the layer  $$ \text{Dense}^1 $$,
 
 $$ \nabla_{\theta_1} L = \Big(\nabla_{\text{CE inputs}}  \text{CrossEntropy} \times \nabla_{\text{Softmax inputs}} \text{Softmax}\Big) \times \nabla_{\text{Dense2 inputs}} \text{Dense}^2 \times \nabla_{\text{ReLU inputs}} \text{ReLu} \times \nabla_{\theta_1} \text{Dense}^1  $$
 
-To reduce the number of operations, it is better to compute the gradients from the top layer to the bottom layer: matrix multiplication of earlier gradients can be reused.
+We see that the matrix multiplications inside the brackets for Dense layers are common, and it is possible to compute them once. To reduce the number of matrix mulplications, it is better to compute the gradients from the top layer to the bottom layer and reuse previous computations of matrix multiplication for earlier gradients.
 
 <img src="{{ site.url }}/img/deeplearningcourse/DL8.png">
 

@@ -120,6 +120,14 @@ which can be rewritten as a simple matrix multiplication
 
 $$ \nabla (f \circ g) = \nabla f \times \nabla g $$
 
+To be more precise, g is a function of its inputs and its parameters
+
+$$ g = g(x) = g_{\theta_g} (x) = g(x,\theta_g) $$
+
+and we want the gradient with respect to the parameters of g, that we consider as inputs as well. The correct expression becomes :
+
+$$ \nabla_{\theta_g} (f \circ g_{\theta_g}) = \nabla_\text{f inputs} f \times \nabla_{\theta_g} g $$
+
 
 What does that mean for deep learning and gradient descent ? In fact, for each layer, we want to compute
 

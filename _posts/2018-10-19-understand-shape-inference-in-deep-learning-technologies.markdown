@@ -23,8 +23,9 @@ And you'll get suprised. You'll get two different returns:
 [None, 12, 10]
 ```
 
+If you are not sure why, this article is for you!
 
-# Tensorflow Static Shapes
+## Tensorflow Static Shapes
 
 In Tensorflow, the static shape is given by `.get_shape()` method, which is equivalent to `.shape`.
 
@@ -46,7 +47,7 @@ print(a.shape.dims) # [Dimension(None), Dimension(None), Dimension(10)]
 print(a.shape.ndims) # 3
 ```
 
-# Dynamic shape
+## Dynamic shape
 
 Of course, during the run of the graph with input values, all shapes become known. Shape at run time are named *dynamic shapes*.
 
@@ -64,7 +65,7 @@ print(f( [np.random.random((3,11)) ]))
 returns `[array([ 3, 11], dtype=int32)]`. 3 is the batch size, and 11 the value for the unknown dimension at definition.
 
 
-# Shape setting for Operators
+## Shape setting for Operators
 
 Most operators have an output shape function that enables to infer the static shape, **without running the graph**.
 
@@ -124,7 +125,7 @@ Setting the shape enables further operators to compute the shape.
 Since Tensorflow does not have a concept of Layers (it is much more based on Operators and Scopes), the `set_shape` function is the method for shape inference without running the graph.
 
 
-# Shape settings for Layers
+## Shape settings for Layers
 
 Let's come back to the initial example, where a layer, the `Embedding` layer, is a concept involved in the middle of the Keras graph definition.
 
@@ -143,7 +144,7 @@ returns the name of each layers: `input_1, word_embedding`.
 
 Still, when a shape cannot be inferred, it is possible to set it also, so that further layers benefit from their output shape information.
 
-Let's see in practice, with my own concatenate function, and let me introduce an error in the `compute_output_shape` function, adding 2 to the last shape, as I did in the `Embedding` layer, setting `input_length` to 10 instead of 11:
+Let's see in practice, with my own concatenate function, and let me introduce an error in the `compute_output_shape` function, adding 2 to the last shape, as I did in the `Embedding` layer, setting `input_length` to 10 instead of 12:
 
 
 ```python
@@ -172,8 +173,9 @@ As you can see, Keras adds attributes to Tensor such as `_keras_shape`, to be ab
 
 The Keras `K.int_shape` method relies on `_keras_shape` attribute to return the result, leading to propagation of the error.
 
+Since shapes can vary in rank and their values can be `None`, it is difficult, on such a simple concatenation example, to be sure to cover all cases in the shape inference function and this leads to errors.
 
-# A note on CNTK
+## A note on CNTK
 
 CNTK distinguishes unknown dimensions into 2 categories:
 

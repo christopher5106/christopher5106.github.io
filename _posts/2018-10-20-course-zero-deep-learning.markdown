@@ -41,7 +41,7 @@ $$ x \xrightarrow{f} o = f(x) = \{o_c\}_c \xrightarrow{softmax} \{p_c\}_c $$
 
 where the softmax normalization function is defined by:
 
-$$ softmax(o) = \Big\{ \frac{ e^{-o_i} }{ \sum_c e^{-o_i}}  \Big\}_i $$
+$$ \text{Softmax}(o) = \Big\{ \frac{ e^{-o_i} }{ \sum_c e^{-o_i}}  \Big\}_i $$
 
 Note that for the softmax to predict probability for c classes, it requires the output $$ o = f(x) $$ to be c-dimensional.
 
@@ -51,7 +51,7 @@ For example, in image classification, X being the image of a cat, we want this o
 
 Coming from the theory of information, cross-entropy is a distance measure between two probabilities defined by :
 
-$$ crossentropy(p, \tilde{p}) = - \sum_c \tilde{p}_c \log(p_c) = - \log(p_\hat{c})$$
+$$ \txt{CrossEntropy}(p, \tilde{p}) = - \sum_c \tilde{p}_c \log(p_c) = - \log(p_\hat{c})$$
 
 we want to be the highest possible (maximization).
 
@@ -113,7 +113,7 @@ The cross entropy is working very well with the softmax function and is usually 
 
 Let us see why and study the combination of softmax and cross entropy
 
-$$ o = f(x) = \{o_c\}_c \xrightarrow{softmax}  \xrightarrow{crossentropy} L $$
+$$ o = f(x) = \{o_c\}_c \xrightarrow{ \text{Softmax}}  \xrightarrow{ \txt{CrossEntropy} } L $$
 
 Mathematically,
 

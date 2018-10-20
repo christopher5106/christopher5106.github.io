@@ -99,18 +99,22 @@ The reason for this name is the *chaining rule* in computing gradients of functi
 In fact, models are usually composed of multiple functions:
 
 
-$$ \text{cost} = \text{CrossEntropy} \circ \text{Softmax} \circ f_\theta (x)$$
+$$ L = \text{CrossEntropy} \circ \text{Softmax} \circ f_\theta (x)$$
 
 
 $$ = \text{CrossEntropy} \circ \text{Softmax} \circ \text{Dense}_{\theta_2}^2 \circ \text{ReLu} \circ \text{Dense}_{\theta_1}^1  (x) $$
 
 where the composition means
 
-$$ = \text{CrossEntropy} (\text{Softmax} (\text{Dense}_\theta^2 ( \text{ReLu} ( \text{Dense}_\theta^1  (x) ) ) ) ) $$
+$$ L = \text{CrossEntropy} (\text{Softmax} (\text{Dense}_\theta^2 ( \text{ReLu} ( \text{Dense}_\theta^1  (x) ) ) ) ) $$
 
 Here, for example, I have two dense layer and two activations (one ReLu and one Softmax). There are two parameters
 
 $$ \theta = \[ \theta_1, \theta_2 \] $$
+
+The chaining rules for gradient computation says:
+
+$$ \frac{ \partial }{ \partial x_i} (f \circ g )_k = \sum_c \frac{\partial f_k}{\partial \g_c} \cdot \frac{\partial g_c}{\partial x_i} $$
 
 <img src="{{ site.url }}/img/deeplearningcourse/DL8.png">
 

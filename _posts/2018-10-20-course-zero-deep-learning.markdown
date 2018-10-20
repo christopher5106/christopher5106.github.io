@@ -67,9 +67,9 @@ It consists in following the gradient to descend to the minima:
 
 It is an iterative process in which the update rule simply consists in:
 
-$$ \theta_{t+1} = \theta_{t} - \lambda_\theta L
+$$ \theta_{t+1} = \theta_{t} - \lambda_\theta L $$
 
-where L is our cost $$ \L(f_\theta(x), \tilde{y})
+where L is our cost $$ \L(f_\theta(x), \tilde{y}) $$
 
 <img src="{{ site.url }}/img/deeplearningcourse/DL3.png">
 

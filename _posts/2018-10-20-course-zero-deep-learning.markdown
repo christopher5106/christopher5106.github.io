@@ -135,11 +135,11 @@ the gradient is given by
 
 $$ \nabla_{\theta_2} L = \nabla_{\theta_2} ( \text{CrossEntropy} \circ \text{Softmax} \circ \text{Dense}^2 ) $$
 
-$$ = (\nabla_{CE inputs}  \text{CrossEntropy} \times \nabla_{Softmax inputs} \text{Softmax}) \times \nabla_{\theta_2} \text{Dense}^2 $$
+$$ = \Big(\nabla_{CE inputs}  \text{CrossEntropy} \times \nabla_{Softmax inputs} \text{Softmax}\Big) \times \nabla_{\theta_2} \text{Dense}^2 $$
 
-and for the layer  $$ \text{Dense}^2 $$,
+and for the layer  $$ \text{Dense}^1 $$,
 
-$$ \nabla_{\theta_1} L = (\nabla_{CE inputs}  \text{CrossEntropy} \times \nabla_{Softmax inputs} \text{Softmax} \times \nabla_{Dense2 inputs} \text{Dense}^2 \times \nabla_{ReLU inputs} \text{ReLu}) \times \nabla_{\theta_1} \text{Dense}^1  $$
+$$ \nabla_{\theta_1} L = \Big(\nabla_{CE inputs}  \text{CrossEntropy} \times \nabla_{Softmax inputs} \text{Softmax} \times \nabla_{Dense2 inputs} \text{Dense}^2 \times \nabla_{ReLU inputs} \text{ReLu}\Big) \times \nabla_{\theta_1} \text{Dense}^1  $$
 
 
 

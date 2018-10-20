@@ -116,6 +116,11 @@ The chaining rules for gradient computation says:
 
 $$ \frac{ \partial }{ \partial x_i} (f \circ g )_k = \sum_c \frac{\partial f_k}{\partial g_c} \cdot \frac{\partial g_c}{\partial x_i} $$
 
+which can be rewritten as a simple matrix multiplication
+
+$$ \nabla (f \circ g) = \nabla f \times \nabla g $$
+
+
 <img src="{{ site.url }}/img/deeplearningcourse/DL8.png">
 
 Integrating into the full model  

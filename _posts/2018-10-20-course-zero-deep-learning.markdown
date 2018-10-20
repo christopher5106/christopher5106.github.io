@@ -40,3 +40,7 @@ $$ softmax(o) = \Big\{ \frac{ e^{-o_i} }{ \sum_c e^{-o_i}}  \Big\}_i $$
 Note that for the softmax to predict probability for c classes, it requires the output $$ o = f(x) $$ to be c-dimensional.
 
 You want this output $$\{p_c\}_c $$ to fit the real class probability $$\{\tilde{p}_c\}_c $$, where $$ p_\hat{c} = 1 $$ for the real object class $$ \hat{c} $$ and $$ p_c = 0$$ for all other classes $$ c \neq \hat{c} $$.
+
+Cross-entropy is a distance measure between two probabilities defined by :
+
+$$

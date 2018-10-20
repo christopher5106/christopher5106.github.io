@@ -55,6 +55,7 @@ $$ crossentropy(p, \tilde{p}) = \sum_c \tilde{p}_c \log(p_c) = \log(p_\hat{c})$$
 
 we want to be the highest possible (maximisation).
 
+In conclusion of this section, the goal of machine learning is to have a function fit with the real world; and to have this function fit well, we use a loss function.
 
 # Second concept: the Gradient Descent
 
@@ -82,11 +83,18 @@ Effect of various learning rates on convergence (Img Credit: cs231n)
 
 This simple method is named SGD, after *Stochastic Gradient Descent*. There are many improvements around this simple rule: ADAM, ADADELTA, RMS Prop, ... All of them are using the first order only. Some are adaptive, such as ADAM or ADADELTA, where the learning rate is adapted to each parameter automatically.
 
+Conclusion: When we have the loss function, the goal is to minimize it. For this, we have a very simple update rule which is the gradient descent.
 
 
+# Cross Entropy with Softmax
 
+Let's come back to the global view: an observation X, a model f depending on parameters $$\theta $$, a softmax to normalize the model's output, and last, our cross entropy outputting a final scalar, measuring the distance between the prediction and the expected value: 
 
-The cross entropy is working very well with the softmax function:
+<img src="{{ site.url }}/img/deeplearningcourse/DL5.png">
+
+The cross entropy is working very well with the softmax function and is usually implemented as one layer, for numerical efficiency.
+
+Let us see why:
 
 $$ \log(p_\hat{c}) = \log \Big(  \frac{ e^{-o_\hat{c}} }{ \sum_c e^{-o_i}}  \Big) $$
 

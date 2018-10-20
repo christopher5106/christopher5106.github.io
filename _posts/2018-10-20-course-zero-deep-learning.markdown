@@ -86,6 +86,18 @@ This simple method is named SGD, after *Stochastic Gradient Descent*. There are 
 Conclusion: When we have the loss function, the goal is to minimize it. For this, we have a very simple update rule which is the gradient descent.
 
 
+# Backpropagation
+
+Computing the gradients to use in the SGD update rule is known as *backpropagation*.
+
+The reason for this name is the *chaining rule* in computing gradients of function compositions.
+
+
+
+Integrating into the full model  
+
+
+
 # Cross Entropy with Softmax
 
 Let's come back to the global view: an observation X, a model f depending on parameters $$\theta $$, a softmax to normalize the model's output, and last, our cross entropy outputting a final scalar, measuring the distance between the prediction and the expected value:
@@ -112,4 +124,6 @@ $$ \frac{\partial L}{\partial o_c} =  \delta_{c,\hat{c}} - \frac{ e^{-o_i} }{\su
 
 $$ = \delta_{c,\hat{c}} - p_c $$
 
-Integrating into the full model  
+which is very easy to compute.
+
+Conclusion: it is easier to backprogate gradients computed on Softmax+CrossEntropy rather than backpropagate separately each.

@@ -137,15 +137,15 @@ $$ \nabla L = \tilde{p} - p $$
 
 # Example with a Dense layer
 
-Let's take, as model, a very simple one with only one Dense layer with 2 filters in one dimension:
+Let's take, as model, a very simple one with only one Dense layer with 2 filters in one dimension and an input of dimension 2:
 
 <img src="{{ site.url }}/img/deeplearningcourse/DL7.png">
 
 Such a layer produces a vector of 2 scalars:
 
-$$ v_i = \sum_j \theta_{i,j} x_j $$
+$$ f_\theta : \{x_j\} \rightarrow \Big\{ v_i = \sum_j \theta_{i,j} x_j \Big\}_i$$
 
-Please keep in mind that it is not possible to descend the gradient directly on this output because it is composed of two scalars. We need a loss function, that returns a scalar, and tells us how to combine these two outputs. For example, the addition:
+Please keep in mind that it is not possible to descend the gradient directly on this output because it is composed of two scalars. We need a loss function, that returns a scalar, and tells us how to combine these two outputs. For example, the Softmax+CrossEntropy we have seen previously:
 
 $$ L = CrossEntropy(Softmax(v)) $$
 
@@ -161,3 +161,5 @@ $$ \frac{\partial v_i}{\partial \theta_{k,j}} = \begin{cases}
 \end{cases} $$
 
 so
+
+$$ \nabla_\theta L \circ f_\theta = $$

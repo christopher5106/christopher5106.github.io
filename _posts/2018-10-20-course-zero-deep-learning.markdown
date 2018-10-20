@@ -163,4 +163,7 @@ $$ \frac{\partial v_i}{\partial \theta_{k,j}} = \begin{cases}
 
 so
 
-$$ \nabla_\theta L \circ f_\theta = $$
+$$ \frac{\partial}{\partial \theta_{k,j}}  ( L \circ f_\theta )=  \sum_c \frac{\partial L}{\partial v_c}   \frac{\partial v_c}{\partial \theta_{k,j}} $$
+
+
+$$( \delta_{ k, \hat{c}} - v_k) \times  $$

@@ -133,22 +133,20 @@ $$ x \xrightarrow{ \text{Dense}^1 }  \xrightarrow{ \text{ReLu} } y  \xrightarrow
 
 the gradient is given by
 
-$$ \nabla_{\theta_2} L = \nabla_{\theta_2} ( \text{CrossEntropy} \circ \text{Softmax} \circ \text{Dense}^2 ) $$
+$$ \nabla_{\theta_2} L = \nabla_{\theta_2} \Big( \text{CrossEntropy} \circ \text{Softmax} \circ \text{Dense}^2 \Big) $$
 
 $$ = \Big(\nabla_{CE inputs}  \text{CrossEntropy} \times \nabla_{Softmax inputs} \text{Softmax}\Big) \times \nabla_{\theta_2} \text{Dense}^2 $$
 
 and for the layer  $$ \text{Dense}^1 $$,
 
-$$ \nabla_{\theta_1} L = \Big(\nabla_{CE inputs}  \text{CrossEntropy} \times \nabla_{Softmax inputs} \text{Softmax} \times \nabla_{Dense2 inputs} \text{Dense}^2 \times \nabla_{ReLU inputs} \text{ReLu}\Big) \times \nabla_{\theta_1} \text{Dense}^1  $$
+$$ \nabla_{\theta_1} L = \Big(\nabla_{CE inputs}  \text{CrossEntropy} \times \nabla_{Softmax inputs} \text{Softmax}\Big) \times \nabla_{Dense2 inputs} \text{Dense}^2 \times \nabla_{ReLU inputs} \text{ReLu} \times \nabla_{\theta_1} \text{Dense}^1  $$
 
-
-
+To reduce the number of operations, it is better to compute the gradients from the top layer to the bottom layer: matrix multiplication of earlier gradients can be reused.
 
 <img src="{{ site.url }}/img/deeplearningcourse/DL8.png">
 
-Integrating into the full model  
+In **conclusion**, gradient computation with respect to each layers' parameters is performed by matrix multiplications of gradients of the layers above, so it is more efficient to begin to compute gradients from the top layers, a process we call *retropropagation* or *backpropagation*.
 
-**Conclusion**:
 
 # Cross Entropy with Softmax
 

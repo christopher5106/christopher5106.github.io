@@ -56,8 +56,13 @@ $$ crossentropy(p, \tilde{p}) = \sum_c \tilde{p}_c \log(p_c) = \log(p_\hat{c})$$
 we want to be the highest possible (maximisation).
 
 
-# Gradient Descent
+# Second concept: the Gradient Descent
 
+To minimize the cost function, the most used technique is the Gradient Descent.
+
+It consists in following the gradient to descend to the minima:
+
+<img src="{{ site.url }}/img/deeplearningcourse/DL2.png">
 
 
 

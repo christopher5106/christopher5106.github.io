@@ -55,8 +55,25 @@ $$ crossentropy(p, \tilde{p}) = \sum_c \tilde{p}_c \log(p_c) = \log(p_\hat{c})$$
 
 we want to be the highest possible (maximisation).
 
+
+# Gradient Descent
+
+
+
+
+
+
+
+
+
+
+
+
+
 The cross entropy is working very well with the softmax function:
 
-$$ \log(p_\hat{c}) = \log \(  \frac{ e^{-o_\hat{c}} }{ \sum_c e^{-o_i}}  \) $$
+$$ \log(p_\hat{c}) = \log \Big(  \frac{ e^{-o_\hat{c}} }{ \sum_c e^{-o_i}}  \Big) $$
+
+$$ = \log e^{-o_\hat{c}} -  \log \sum_c e^{-o_i}}  $$
 
 Let's take the derivative of

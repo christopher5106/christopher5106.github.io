@@ -51,7 +51,7 @@ For example, in image classification, X being the image of a cat, we want this o
 
 Coming from the theory of information, cross-entropy is a distance measure between two probabilities defined by :
 
-$$ \txt{CrossEntropy}(p, \tilde{p}) = - \sum_c \tilde{p}_c \log(p_c) = - \log(p_\hat{c})$$
+$$ \text{CrossEntropy}(p, \tilde{p}) = - \sum_c \tilde{p}_c \log(p_c) = - \log(p_\hat{c})$$
 
 we want to be the highest possible (maximization).
 
@@ -113,7 +113,7 @@ The cross entropy is working very well with the softmax function and is usually 
 
 Let us see why and study the combination of softmax and cross entropy
 
-$$ o = f(x) = \{o_c\}_c \xrightarrow{ \text{Softmax}}  \xrightarrow{ \txt{CrossEntropy} } L $$
+$$ o = f(x) = \{o_c\}_c \xrightarrow{ \text{Softmax}}  \xrightarrow{ \text{CrossEntropy} } L $$
 
 Mathematically,
 
@@ -148,7 +148,7 @@ $$ f_\theta : \{x_j\} \rightarrow \Big\{ o_i = \sum_j \theta_{i,j} x_j \Big\}_i$
 
 Please keep in mind that it is not possible to descend the gradient directly on this output because it is composed of two scalars. We need a loss function, that returns a scalar, and tells us how to combine these two outputs. For example, the Softmax+CrossEntropy we have seen previously:
 
-$$ L = \txt{CrossEntropy}(\text{Softmax}(o)) $$
+$$ L = \text{CrossEntropy}(\text{Softmax}(o)) $$
 
 <img src="{{ site.url }}/img/deeplearningcourse/DL6.png">
 

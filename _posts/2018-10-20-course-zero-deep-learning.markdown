@@ -51,7 +51,7 @@ For example, in image classification, X being the image of a cat, we want this o
 
 Coming from the theory of information, cross-entropy is a distance measure between two probabilities defined by :
 
-$$ crossentropy(p, \tilde{p}) = \sum_c \tilde{p}_c \log(p_c) = \log(p_\hat{c})$$
+$$ crossentropy(p, \tilde{p}) = - \sum_c \tilde{p}_c \log(p_c) = - \log(p_\hat{c})$$
 
 we want to be the highest possible (maximisation).
 
@@ -68,7 +68,7 @@ It consists in following the gradient to descend to the minima:
 
 It is an iterative process in which the update rule simply consists in:
 
-$$ \theta_{t+1} = \theta_{t} - \lambda_\theta L $$
+$$ \theta_{t+1} = \theta_{t} - \lambda_\theta \nabla L $$
 
 where L is our cost $$ L(f_\theta(x), \tilde{y}) $$
 
@@ -94,10 +94,16 @@ Let's come back to the global view: an observation X, a model f depending on par
 
 The cross entropy is working very well with the softmax function and is usually implemented as one layer, for numerical efficiency.
 
-Let us see why:
+Let us see why and study the combination of softmax and cross entropy
 
-$$ \log(p_\hat{c}) = \log \Big(  \frac{ e^{-o_\hat{c}} }{ \sum_c e^{-o_i}}  \Big) $$
+$$ o = f(x) = \{o_c\}_c \xrightarrow{softmax}  \xrightarrow{crossentropy} L $$
 
-$$ = \log e^{-o_\hat{c}} -  \log \sum_c e^{-o_i}  $$
+Mathematically,
 
-Let's take the derivative of
+$$ L =  - \log(p_\hat{c}) = - \log \Big(  \frac{ e^{-o_\hat{c}} }{ \sum_c e^{-o_i}}  \Big) $$
+
+$$ = - \log e^{-o_\hat{c}} +  \log \sum_c e^{-o_i}  $$
+
+Let's take the derivative,
+
+$$ \frac{\partial L}{o_c} =  $$  

@@ -11,6 +11,8 @@ You might first check [Course 0: deep learning!](http://christopher5106.github.i
 
 Deep learning requires heavy computations so all deep learning libraries offer the possibility of parallel computing on GPU rather CPU, and distributed computed on multiple GPUs or instances.
 
+The use of specific hardwares such as GPUs requires to install an up-to-date driver in the operating system first.
+
 While OpenCl (not to confuse with OpenGL or OpenCV) is an open standard for GPU programming, the most used GPU library is CUDA, a private library by NVIDIA, to be used on NVIDIA GPUs only.
 
 CUDNN is a second library coming with CUDA providing you with more optimized operators.
@@ -20,3 +22,7 @@ Once installed on your system, these libraries will be called by more high level
 The command `nvidia-smi` enables you to check the status of your GPUs, as with `top` or `ps` commands.
 
 Most recent GPU architectures are Pascal and Volta architectures. The more memory the GPU has, the better. Operations are usually performed with single precision `float16` rather than double precision `float32`, and on new Volta architectures offer Tensor cores specialized with half precision operations.
+
+One of the main difficulties come from the fact that different deep learning frameworks are not available and tested on all CUDA versions, CUDNN versions, and even OS. CUDA versions are not available for all driver versions and OS as well. A good solution to adopt is to use Docker files, which limits the choice of the driver version in the operating system: the compliant CUDA and CUDNN versions as well as the deep learning frameworks can be installed inside the Docker container.
+
+# Pytorch

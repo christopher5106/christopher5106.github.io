@@ -153,6 +153,8 @@ $$ \nabla_{\theta_1} L = \Big(\nabla_{\text{CE inputs}}  \text{CrossEntropy} \ti
 
 We see that the matrix multiplications inside the brackets for Dense layers are common, and it is possible to compute them once. To reduce the number of matrix mulplications, it is better to compute the gradients from the top layer to the bottom layer and reuse previous computations of matrix multiplication for earlier gradients.
 
+<img src="{{ site.url }}/img/deeplearningcourse/DL10.png">
+
 <img src="{{ site.url }}/img/deeplearningcourse/DL8.png">
 
 In **conclusion**, gradient computation with respect to each layers' parameters is performed by matrix multiplications of gradients of the layers above, so it is more efficient to begin to compute gradients from the top layers, a process we call *retropropagation* or *backpropagation*.

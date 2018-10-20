@@ -53,9 +53,13 @@ Coming from the theory of information, cross-entropy is a distance measure betwe
 
 $$ crossentropy(p, \tilde{p}) = - \sum_c \tilde{p}_c \log(p_c) = - \log(p_\hat{c})$$
 
-we want to be the highest possible (maximisation).
+we want to be the highest possible (maximization).
 
-In conclusion of this section, the goal of machine learning is to have a function fit with the real world; and to have this function fit well, we use a loss function.
+To discover many more loss functions, have a look at my [full article about loss functions](http://christopher5106.github.io/deep/learning/2016/09/16/about-loss-functions-multinomial-logistic-logarithm-cross-entropy-square-errors-euclidian-absolute-frobenius-hinge.html).
+
+Note that **a loss function always outputs a scalar value**. This scalar value is a measure of fit of the model with the real value.
+
+In **conclusion** of this section, the goal of machine learning is to have a function fit with the real world; and to have this function fit well, we use a loss function.
 
 # Second concept: the Gradient Descent
 
@@ -83,7 +87,7 @@ $$\lambda $$ is the learning rate and has to be set carefully: Effect of various
 
 This simple method is named SGD, after *Stochastic Gradient Descent*. There are many improvements around this simple rule: ADAM, ADADELTA, RMS Prop, ... All of them are using the first order only. Some are adaptive, such as ADAM or ADADELTA, where the learning rate is adapted to each parameter automatically.
 
-Conclusion: When we have the loss function, the goal is to minimize it. For this, we have a very simple update rule which is the gradient descent.
+**Conclusion**: When we have the loss function, the goal is to minimize it. For this, we have a very simple update rule which is the gradient descent.
 
 
 # Backpropagation
@@ -96,7 +100,7 @@ The reason for this name is the *chaining rule* in computing gradients of functi
 
 Integrating into the full model  
 
-
+**Conclusion**:
 
 # Cross Entropy with Softmax
 
@@ -124,6 +128,36 @@ $$ \frac{\partial L}{\partial o_c} =  \delta_{c,\hat{c}} - \frac{ e^{-o_i} }{\su
 
 $$ = \delta_{c,\hat{c}} - p_c $$
 
-which is very easy to compute.
+which is very easy to compute and can simply be rewritten:
 
-Conclusion: it is easier to backprogate gradients computed on Softmax+CrossEntropy rather than backpropagate separately each.
+$$ \nabla L = \tilde{p} - p $$
+
+**Conclusion**: it is easier to backprogate gradients computed on Softmax+CrossEntropy together rather than backpropagate separately each : the derivative of the Softmax+CrossEntropy with respect to the output of the model for the right class, let's say the "cat" class, will be 1 - 0.8 = 0.2, if the model has predicted a probability of 0.8 for this class, encouraging it to increase this value ; the derivative of the Softmax+CrossEntropy with respect to an output for a different class will be -0.4 is it has predicted a probability of 0.4, encouraging the model to decrease this value.  
+
+
+# Example with a Dense layer
+
+Let's take, as model, a very simple one with only one Dense layer with 2 filters in one dimension:
+
+<img src="{{ site.url }}/img/deeplearningcourse/DL7.png">
+
+Such a layer produces a vector of 2 scalars:
+
+$$ v_i = \sum_j \theta_{i,j} x_j $$
+
+Please keep in mind that it is not possible to descend the gradient directly on this output because it is composed of two scalars. We need a loss function, that returns a scalar, and tells us how to combine these two outputs. For example, the addition:
+
+$$ L = CrossEntropy(Softmax(v)) $$
+
+<img src="{{ site.url }}/img/deeplearningcourse/DL6.png">
+
+Now we can retropropagate the gradients. Since we are in the case of 2 outputs, we call this problem a binary classification problem, let's say: cats and dogs.
+
+Let us compute the derivatives of the dense layer:
+
+$$ \frac{\partial v_i}{\partial \theta_{k,j}} = \begin{cases}
+  x_j, & \text{if } k = i, \\
+  0, & \text{otherwise}.
+\end{cases} $$
+
+so

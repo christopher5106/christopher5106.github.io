@@ -83,6 +83,6 @@ The cross entropy is working very well with the softmax function:
 
 $$ \log(p_\hat{c}) = \log \Big(  \frac{ e^{-o_\hat{c}} }{ \sum_c e^{-o_i}}  \Big) $$
 
-$$ = \log e^{-o_\hat{c}} -  \log \sum_c e^{-o_i}}  $$
+$$ = \log e^{-o_\hat{c}} -  \log \sum_c e^{-o_i}  $$
 
 Let's take the derivative of

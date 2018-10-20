@@ -166,4 +166,4 @@ so
 $$ \frac{\partial}{\partial \theta_{k,j}}  ( L \circ f_\theta )=  \sum_c \frac{\partial L}{\partial v_c}   \frac{\partial v_c}{\partial \theta_{k,j}} $$
 
 
-$$( \delta_{ k, \hat{c}} - v_k) \times  $$
+$$ = ( \delta_{ k, \hat{c}} - v_k) x_j  $$

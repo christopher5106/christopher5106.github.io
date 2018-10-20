@@ -38,7 +38,7 @@ a = Input((None, 10))
 print(a.shape)
 ```
 
-returns `(?, ?, 10)` where unknown dimensions `None` are printed with an interrogation point. Since we are using the Keras `Input` layer,
+returns `(?, ?, 10)` where unknown dimensions `None` are printed with an question mark **?**. Since we are using the Keras `Input` layer,
 the first dimension is systematically `None` for the batch size and cannot be set.
 
 The TensorShape has 2 public attributes, dims and ndims:
@@ -191,10 +191,10 @@ Since shapes can vary in rank and their values can be `None`, it is difficult, o
 
 CNTK distinguishes unknown dimensions into 2 categories:
 
-- the *inferred dimensions* whose value is to be inferred by the system and is printed with **-1**. For example, in the matrix multiplication *A x B* between tensors A and B, the last dimension of A can be inferred by the system given the first dimension of B. See [here](https://docs.microsoft.com/en-us/cognitive-toolkit/parameters-and-constants#automatic-dimension-inference)
+- the *inferred dimensions* whose value is to be inferred by the system and is printed with **-1** instead of the question mark **?**. For example, in the matrix multiplication *A x B* between tensors A and B, the last dimension of A can be inferred by the system given the first dimension of B. See [here](https://docs.microsoft.com/en-us/cognitive-toolkit/parameters-and-constants#automatic-dimension-inference)
 
 - the *free dimensions* whose value is known only when data is bound to the variable and is printed with **-3**
 
-**Well done!**.
+**Well done!**
 
 Now, you are aware of the Why of the shape setting, its advantages and its risks.

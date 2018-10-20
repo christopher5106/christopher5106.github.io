@@ -11,7 +11,7 @@ I hope you'll get some feelings about deep learning you cannot get from reading 
 
 # First concept: loss functions
 
-When we fit a model, we use *loss functions*, or *cost functions*. The main purpose of machine learning of machine learning is to be able to predict given data. Let's say predict the $$y$$ given some observations, let's say the $$x$$, through a function:
+When we fit a model, we use *loss functions*, or *cost functions*, or *objective function*. The main purpose of machine learning of machine learning is to be able to predict given data. Let's say predict the $$y$$ given some observations, let's say the $$x$$, through a function:
 
 $$ f : x \rightarrow y $$
 
@@ -79,6 +79,9 @@ $$\lambda $$ is the learning rate and has to be set carefully:
 
 <img src="{{ site.url }}/img/deeplearningcourse/DL4.png">
 Effect of various learning rates on convergence (Img Credit: cs231n)
+
+This simple method is named SGD, after *Stochastic Gradient Descent*. There are many improvements around this simple rule: ADAM, ADADELTA, RMS Prop, ... All of them are using the first order only. Some are adaptive, such as ADAM or ADADELTA, where the learning rate is adapted to each parameter automatically.
+
 
 
 

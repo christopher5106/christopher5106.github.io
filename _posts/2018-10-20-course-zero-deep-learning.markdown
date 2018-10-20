@@ -104,6 +104,11 @@ $$ L =  - \log(p_\hat{c}) = - \log \Big(  \frac{ e^{-o_\hat{c}} }{ \sum_c e^{-o_
 
 $$ = - \log e^{-o_\hat{c}} +  \log \sum_c e^{-o_i}  $$
 
+$$ = o_\hat{c} +  \log \sum_c e^{-o_i} $$
+
 Let's take the derivative,
 
-$$ \frac{\partial L}{o_c} =  $$  
+$$ \frac{\partial L}{\partial o_c} =  \begin{cases}
+  0, & \text{if } a = 1, \\
+  1, & \text{otherwise}.
+\end{cases} $$  

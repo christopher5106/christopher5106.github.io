@@ -21,5 +21,12 @@ We want to be able to measure the difference between what we are predicted with 
 
 $$d(y, \tilde{y}) $$
 
+The two most important loss functions are:
 
-Mean Squared Error (MSE) $$ \sum_i (y_i - \tilde{y_i})^2 $$ 
+- Mean Squared Error (MSE) used for regression: $$ \sum_i (y_i - \tilde{y_i})^2 $$
+
+- Cross Entropy for probabilities, in particular for classification where the model predicts the probability of the observed object x for each class
+
+$$ f : x \rightarrow {p_c}_c $$
+
+with $$ \sum_c p_c = 1 $$

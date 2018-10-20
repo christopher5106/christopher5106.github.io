@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Course 0: deep learning!"
-date:   2018-10-20 00:00:00
+date:   2018-10-20 05:00:00
 categories: deep learning
 ---
 
@@ -13,10 +13,13 @@ I hope you'll get some feelings about deep learning you cannot get from reading 
 
 When we fit a model, we use *loss functions*, or *cost functions*. The main purpose of machine learning of machine learning is to be able to predict given data. Let's say predict the $$y$$ given some observations, let's say the $$x$$, through a function:
 
-$$ f : x\arrow y $$
+$$ f : x \rightarrow y $$
 
-In supervised learning we know the real value we want to predict $$\tild{y}$$, for example the class of the object we want to predict.
+In supervised learning we know the real value we want to predict $$\tilde{y}$$, for example the class of the object we want to predict.
 
 We want to be able to measure the difference between what we are predicted with the model $$f$$ and what it should predict, what we call the **ground truth**. For that, there are some cost functions, depending on the problem you want to address.
 
-$$d(y, \tild{y}) $$
+$$d(y, \tilde{y}) $$
+
+
+Mean Squared Error (MSE) $$ \sum_i (y_i - \tilde{y_i})^2 $$ 

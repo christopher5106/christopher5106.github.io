@@ -76,10 +76,10 @@ where L is our cost $$ L(f_\theta(x), \tilde{y}) $$
 
 An **update rule** is how to update the parameters of the model to minimize the cost function.
 
-$$\lambda $$ is the learning rate and has to be set carefully:
+$$\lambda $$ is the learning rate and has to be set carefully: Effect of various learning rates on convergence (Img Credit: cs231n)
 
 <img src="{{ site.url }}/img/deeplearningcourse/DL4.png">
-Effect of various learning rates on convergence (Img Credit: cs231n)
+
 
 This simple method is named SGD, after *Stochastic Gradient Descent*. There are many improvements around this simple rule: ADAM, ADADELTA, RMS Prop, ... All of them are using the first order only. Some are adaptive, such as ADAM or ADADELTA, where the learning rate is adapted to each parameter automatically.
 

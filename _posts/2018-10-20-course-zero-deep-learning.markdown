@@ -107,7 +107,7 @@ In **conclusion**, for the case of classification, we use probability values tha
 
 
 
-# Second concept: the Gradient Descent
+# The Gradient Descent
 
 To minimize the cost function, the most used technique is the Gradient Descent.
 

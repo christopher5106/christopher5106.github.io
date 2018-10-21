@@ -184,34 +184,34 @@ which is a simple matrix multiplication
 
 $$ \nabla (f \circ g) = \nabla f \times \nabla g $$
 
-To be more precise, g and f have to be considered as functions of inputs and parameters
-
-$$ g(x) = g_{\theta_g} (x) = g(x,\theta_g) $$
-
-$$ f(y) = f_{\theta_f} (x) = f(y,\theta_f) $$
-
-And it is possible to compute their derivative with respect to either the parameters, or the inputs, which we'll differentiate in notation the following way:
-
-$$ \nabla_{\theta_g} g = \Big\{ \frac{\partial g_i}{\partial {\theta_g}_j } \Big\}_{i,j}  $$
-
-$$ \nabla_I g = \Big\{ \frac{\partial g_i}{\partial x_j} \Big\}_{i,j} $$
-
-Combining them:
-
-$$ (f \circ g)(x) = f_{\theta_f} ( g(x,\theta_g), \theta_f) $$
-
-To update the parameters of g, we need to compute the derivative of the cost with respect to the parameters of g, that is :
-
-$$ \nabla_{\theta_g} (f \circ g_{\theta_g}) = \nabla_I f \times \nabla_{\theta_g} g $$
-
-
 What does that mean for deep learning and gradient descent ? In fact, for each layer, we want to compute
 
 $$ \nabla_{\theta_{\text{Layer}}} \text{cost} $$
 
 to update each layer's parameters $$ \theta_{\text{Layer}} $$.
 
-So, for the layer $$ \text{Dense}^2 $$,
+So, let's consider a two layer network composed of g and f. The functions g and f have to be considered as functions of both inputs and parameters:
+
+$$ g(x) = g_{\theta_g} (x) = g(x,\theta_g) $$
+
+$$ f(y) = f_{\theta_f} (y) = f(y,\theta_f) $$
+
+And the composition becomes
+
+$$ (f \circ g)(x) = f_{\theta_f} ( g(x,\theta_g), \theta_f) $$
+
+It is possible to compute the derivatives of g and f with respect to, either the parameters, or the inputs, which we'll differentiate in notation the following way:
+
+$$ \nabla_{\theta_g} g = \Big\{ \frac{\partial g_i}{\partial {\theta_g}_j } \Big\}_{i,j}  $$
+
+$$ \nabla_I g = \Big\{ \frac{\partial g_i}{\partial x_j} \Big\}_{i,j} $$
+
+To update the parameters of g, we need to compute the derivative of the cost with respect to the parameters of g, that is :
+
+$$ \nabla_{\theta_g} (f \circ g_{\theta_g}) = \nabla_I f \times \nabla_{\theta_g} g $$
+
+
+For example, for the layer $$ \text{Dense}^2 $$,
 
 $$ x \xrightarrow{ \text{Dense}^1 }  \xrightarrow{ \text{ReLu} } y  \xrightarrow{ \text{Dense}^2 }  \xrightarrow{ \text{Softmax}}  \xrightarrow{ \text{CrossEntropy} } \text{cost} $$
 

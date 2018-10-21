@@ -45,11 +45,11 @@ $$ \text{CrossEntropy}(p, \tilde{p}) = - \sum_c \tilde{p}_c \log(p_c) $$
 
 and we want this cost to be the lowest possible (minimization).
 
-To discover many more loss functions, have a look at my [full article about loss functions](http://christopher5106.github.io/deep/learning/2016/09/16/about-loss-functions-multinomial-logistic-logarithm-cross-entropy-square-errors-euclidian-absolute-frobenius-hinge.html).
-
 Note that **a loss function always outputs a scalar value**. This scalar value is a measure of fit of the model with the real value.
 
 In **conclusion** of this section, the goal of machine learning is to have a function fit with the real world; and to have this function fit well, we use a loss function to measure how to reduce this distance.
+
+**Exercice**: discover many more loss functions with my [full article about loss functions](http://christopher5106.github.io/deep/learning/2016/09/16/about-loss-functions-multinomial-logistic-logarithm-cross-entropy-square-errors-euclidian-absolute-frobenius-hinge.html).
 
 
 # Cross entropy in practice

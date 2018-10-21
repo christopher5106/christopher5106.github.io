@@ -305,7 +305,7 @@ for i in range(1000):
 
 Let's consider a more useful case, ie a classification problem with a crossentropy loss:
 
-<img src="{{ site.url }}/img/deeplearningcourse/DL42.png">
+<img src="{{ site.url }}/img/deeplearningcourse/DL18.png">
 
 For that purpose, we'll consider a toy dataset consisting of positions in a square where the target labels depends on a region of the square. Let's create the dataset with Numpy:
 
@@ -320,7 +320,7 @@ plt.scatter(x[:,0], x[:,1], c=labels )
 plt.show()
 ```
 
-<img src="{{ site.url }}/img/deeplearningcourse/DL18.png">
+<img src="{{ site.url }}/img/deeplearningcourse/DL42.png">
 
 And convert the Numpy arrays to Torch Tensors:
 

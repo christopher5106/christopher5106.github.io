@@ -86,7 +86,7 @@ $$ \text{CrossEntropy} \approx - \frac{1}{N} \sum_{x \sim D} \log p_{\hat{c}(x)}
 
 where D is the real sample distribution, N is the number of samples on which the cross entropy is estimated and $$ \hat{c}(x) $$ is the true class of x.
 
-To compute our empirical cross-entropy for one sample (N=1),
+Our empirical cross-entropy for one sample (N=1) becomes
 
 
 $$ \text{CrossEntropy} \approx - \log(p_\hat{c}) $$

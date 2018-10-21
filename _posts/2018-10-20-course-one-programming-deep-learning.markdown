@@ -329,7 +329,7 @@ X = torch.from_numpy(x).type(torch.FloatTensor)
 Y = torch.from_numpy(labels).type(torch.LongTensor)
 ```
 
-The first layer of the neural network takes as input a position, ie a vector of dimension 2, and the second layer is required to output a number of values equal to the number of classes, on top of which we'll place a softmax to normalize them into probabilities. We choose a hidden dimension of 12:
+The first layer of the neural network takes as input a position, ie a vector of dimension 2, and the second layer is required to output a number of values equal to the number of classes (3 in this example), on top of which we'll place a softmax to normalize them into probabilities. We choose a hidden dimension of 12:
 
 ```python
 theta1 =  torch.autograd.Variable(torch.randn(2, 12) *0.01,requires_grad = True)

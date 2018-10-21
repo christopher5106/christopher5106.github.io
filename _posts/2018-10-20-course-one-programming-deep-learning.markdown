@@ -233,7 +233,7 @@ print(x.grad)
 # tensor([32.])
 ```
 
-which is fantastic. In this case, $$ y(x=2) = ( x^2 )^2 = x^4  $$ and  $$ \frac{\partial y}{\partial x} \vert_{x=2} = 4 x^3 = 32 $$.
+which is fantastic. In this case, $$ y(x=2) = ( x^2 )^2 = x^4  $$ and  $$ \frac{\partial y}{\partial x} \big\vert_{x=2} = 4 x^3 = 32 $$.
 
 Note that gradients are computed by retropropagate until a Variable has no `graph_fn` (an input Variable set by the user) or a Variable with `require_grad` set to `False`, which helps save computations.
 

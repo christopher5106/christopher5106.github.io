@@ -235,13 +235,8 @@ print(x.grad)
 
 which is fantastic. In this case, $$ y(x=2) = ( x^2 )^2 = x^4  $$ and  $$ \frac{\partial y}{\partial x} |_{x=2} 4\times x^3 = 32 $$.
 
+Note that gradients are computed by retropropagate until a Variable has no `graph_fn` (an input Variable set by the user) or a Variable with `require_grad` set to `False`, which helps save computations.
 
-
-gradient for complex operators
-no graph
-
-
-require_grad
 
 **Exercise**: compute the derivative with Keras, Tensorflow, CNTK  
 

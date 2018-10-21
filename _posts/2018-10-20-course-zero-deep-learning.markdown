@@ -74,9 +74,9 @@ Note that for the softmax to predict probability for C classes, it requires the 
 
 Cross entropy is usually mentioned without explanations.
 
-In fact, to understand cross-entropy, you need to rewrite its theoretical definition :
+In fact, to understand cross-entropy, you need to rewrite its theoretical definition (1):
 
-$$ \text{CrossEntropy} = - \sum_c \tilde{p_c} \log p_c = - \mathbb{E} \Big( \log p_c \Big) $$ (1)
+$$ \text{CrossEntropy} = - \sum_c \tilde{p_c} \log p_c = - \mathbb{E} \Big( \log p_c \Big) $$
 
 because $$ \tilde{p_c} $$ is the true distribution, so cross entropy is the expectation of the model predicted negative probability under the true distribution.
 
@@ -92,7 +92,7 @@ Our empirical cross-entropy for one sample (N=1) becomes
 $$ \text{CrossEntropy} \approx - \log p_\hat{c}(x) $$
 
 
-which is equivalent to setting the $$ \tilde{p} $$ probability in the theoretical cross-entropy definition with:
+which is equivalent to setting the $$ \tilde{p} $$ probability in the theoretical cross-entropy definition (1) with:
 
 $$ \tilde{p}_c(x) = \begin{cases}
   1, & \text{if } c = \hat{c}(x), \\

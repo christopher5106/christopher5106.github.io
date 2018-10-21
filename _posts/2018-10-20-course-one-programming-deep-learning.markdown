@@ -109,7 +109,7 @@ torch_array = torch.ones(5)
 numpy_array = torch_array.numpy()
 ```
 
-which will
+which will keep the pointers to the same values:
 
 ```python
 numpy_array+= 1
@@ -120,20 +120,30 @@ print(numpy_array) # [3. 3. 3. 3. 3.]
 
 #### 2. GPU computing
 
-To transfer the arrays :
+It is possible to transfer tensors values between RAM and each GPUs:
 
 ```python
-x = torch.ones(5,3)
-y = torch.ones(5,3)
-x = x.cuda()
-y = y.cuda()
-print(x+y)
-# tensor([[2., 2., 2.],
-#         [2., 2., 2.],
-#         [2., 2., 2.],
-#         [2., 2., 2.],
-#         [2., 2., 2.]], device='cuda:0')
+a = torch.ones(5,) # tensor([1., 1., 1., 1., 1.])
+b = torch.ones(5,)
+a_ = a.cuda() # tensor([1., 1., 1., 1., 1.], device='cuda:0')
+b_ = b.cuda()
+x = a_ + b_ # tensor([2., 2., 2., 2., 2.], device='cuda:0')
+y = x + 1 # tensor([3., 3., 3., 3., 3.], device='cuda:0')
+z = y.cuda(1) # tensor([3., 3., 3., 3., 3.], device='cuda:1')
 ```
+
+but keep in mind that synchronization is lost (contrary to Numpy Arrays and Torch Tensors):
+
+```python
+a.add_(1)
+print(a_) # tensor([1., 1., 1., 1., 1.], device='cuda:0')
+```
+
+Tensors behave as classical programming non-reference variables and their content is copied.
+
+
+#### 3. Automatic differentiation
+
 
 
 

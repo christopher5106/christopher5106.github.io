@@ -239,11 +239,19 @@ In fact, to understand cross-entropy, you need to rewritte it :
 
 $$ \text{CrossEntropy} = - \sum_c \tilde{p_c} \log p_c = \mathbb{E} \Big( \log( \frac{1}{p_c}) \Big) $$
 
-because $$ \tilde{p_c} $$ is the true distribution, so we compute the expectation of model predicted inverse probability under the true distribution.
+because $$ \tilde{p_c} $$ is the true distribution, so cross entropy is the expectation of the model predicted inverse probability under the true distribution.
 
-That means that a prediction error when there is a kind of expected certainty in the label will be more heavily weighted, while, when the sample cannot give certainty this is a "cat" in the image, because the image is strongly blurred, the model will be less sanctioned, the increase in distance will be temperated.
+That means that when there is a kind of expected certainty in the label, a prediction error will be more heavily weighted, while, when the sample cannot give certainty this is a "cat" in the image, because the image is strongly blurred, the model will be less sanctioned, the increase in distance will be temperated.
 
-In the case of classification, we use probability values that are either 0 or 1, but it is still possible to train a model with smoother values, for example 0.1 or 0.9, which will help achieve better performances. This technique of *label smoothing* enables in particular to re-introduce the outputs for the negative classes so that it will also sanction wrongly classified negatives, and preserve a symmetry between the negative and positive labels:
+In the case of classification, we use probability values that are either 0 or 1, sounds weird ? We are always certain ?
+
+No, in fact we are in the empiracal case, you need to rewrite it as the empirical expectation:
+
+$$ \text{CrossEntropy} = \mathbb{E} \Big( \log( \frac{1}{p_c}) \Big) = \frac{1}{N} \sum_{\text{x \tilde D}} \tilde{p_c(x)} \log p_c$$
+
+where N is the number of samples on which the cross entropy is estimated.
+
+But: it is still possible to train a model with smoother values, for example 0.1 or 0.9, which will help achieve better performances. This technique of *label smoothing* enables in particular to re-introduce the outputs for the negative classes so that it will also sanction wrongly classified negatives, and preserve a symmetry between the negative and positive labels:
 
 $$ \text{CrossEntropy}(p, \tilde{p}) = - \sum_c \tilde{p}_c \log(p_c) = - 0.9 \times \log(p_\hat{c}) - 0.1 \times \sum_{c \neq \hat{c}} \tilde{p}_c \log(p_c) $$
 

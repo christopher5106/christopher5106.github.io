@@ -176,23 +176,23 @@ Here, for example, I have two dense layers and two activations (one ReLu and one
 
 $$ \theta = [ \theta_1, \theta_2 ] $$
 
-The chaining rules for gradient computation says:
+The chaining rule is a rule for gradient computation of the composition of two functions f and g:
 
 $$ \frac{ \partial }{ \partial x_i} (f \circ g )_k = \sum_c \frac{\partial f_k}{\partial g_c} \cdot \frac{\partial g_c}{\partial x_i} $$
 
-which can be rewritten as a simple matrix multiplication
+which is a simple matrix multiplication
 
 $$ \nabla (f \circ g) = \nabla f \times \nabla g $$
 
-To be more precise, g and f have to be considered a function of its inputs and its parameters
+To be more precise, g and f have to be considered as functions of inputs and parameters
 
 $$ g(x) = g_{\theta_g} (x) = g(x,\theta_g) $$
 
 $$ f(y) = f_{\theta_f} (x) = f(y,\theta_f) $$
 
-So, it is possible to compute the derivative with respect to either the parameters, or the inputs, which we'll differentiate in notation the following way:
+And it is possible to compute their derivative with respect to either the parameters, or the inputs, which we'll differentiate in notation the following way:
 
-$$ \nabla_{\theta_g} g = \Big\{ \frac{\partial g_i}{\partial {\theta_g}_j } \Big\}  $$
+$$ \nabla_{\theta_g} g = \Big\{ \frac{\partial g_i}{\partial {\theta_g}_j } \Big\}_{i,j}  $$
 
 $$ \nabla_I g = \Big\{ \frac{\partial g_i}{\partial x_j} \Big\}_{i,j} $$
 

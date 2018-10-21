@@ -82,3 +82,9 @@ The art of choosing the learning rate
 
 
 # Re-implement with Pytorch modules
+
+
+
+**Well done!**
+
+Now let's go to next course: [Course 2: building deep learning networks!](http://christopher5106.github.io/deep/learning/2018/10/20/course-two-build-deep-learning-networks.html)

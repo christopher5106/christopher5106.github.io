@@ -61,7 +61,7 @@ We also usually compute the precision/recall curve: precision defines the number
 <img src="{{ site.url }}/img/deeplearningcourse/DL11.png">
 
 
-# Programming deep learning
+# A library deep learning
 
 A deep learning library offers the following characteristics :
 
@@ -94,6 +94,8 @@ You can easily check the following commands in Pytorch and Numpy:
 | Addition | +/np.add | +/torch.add |
 | In-place addition | x+= | x.add_() |
 | First column | x[:, 1] | x[:, 1] |
+
+
 
 You can link Numpy array and Torch Tensor, either with
 

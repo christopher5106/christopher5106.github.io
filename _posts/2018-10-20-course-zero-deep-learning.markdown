@@ -194,9 +194,9 @@ $$ f(y) = f_{\theta_f} (x) = f(y,\theta_f) $$
 
 So, it is possible to compute the derivative with respect to either the parameters, or the inputs, which we'll differentiate in notation the following way:
 
-$$ \nabla_{\theta_g} g = \Big{ \frac{\partial g_i}{\partial {\theta_g}_j } \Big}  $$
+$$ \nabla_{\theta_g} g = \Big\{ \frac{\partial g_i}{\partial {\theta_g}_j } \Big\}  $$
 
-$$ \nabla_I g = \Big{ \frac{\partial g_i}{\partial x_j} \Big}_{i,j} $$
+$$ \nabla_I g = \Big\{ \frac{\partial g_i}{\partial x_j} \Big\}_{i,j} $$
 
 Combining them:
 

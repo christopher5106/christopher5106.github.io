@@ -253,7 +253,7 @@ where D is the real sample distribution and N is the number of samples on which 
 
 But still, we can re-introduce a notion of certainty, it is still possible:
 
-- to train a model with smoother values, for example 0.1 or 0.9, which will help achieve better performances. This technique of *label smoothing* enables in particular to re-introduce the outputs for the negative classes so that it will also sanction wrongly classified negatives, and preserve a symmetry between the negative and positive labels:
+- to train a model with smoother values than 0 and 1 for negatives and positives, for example 0.1 or 0.9, which will help achieve better performances. This technique of *label smoothing* or *soft labels* enables in particular to re-introduce the outputs for the negative classes so that it will also sanction wrongly classified negatives, and preserve a symmetry between the negative and positive labels:
 
 $$ \text{CrossEntropy}(p, \tilde{p}) = - \sum_c \tilde{p}_c \log(p_c) = - 0.9 \times \log(p_\hat{c}) - 0.1 \times \sum_{c \neq \hat{c}} \tilde{p}_c \log(p_c) $$
 

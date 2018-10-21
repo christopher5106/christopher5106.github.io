@@ -170,12 +170,29 @@ out.backward(torch.Tensor([1.0]))
 
 # Perform a gradient descent on a classification problem
 
+Let's take back our [Course 0](http://christopher5106.github.io/deep/learning/2018/10/20/course-zero-deep-learning.html)'s perceptron and implement it directly with Pytorch tensors and operators, without other packages.
+
+<img src="{{ site.url }}/img/deeplearningcourse/DL15.png">
+
+We'll implement:
+
+- 2 Dense layers
+
+- 2 different costs
+
+- a training loop with
+
+    - a forward pass (propagate the input values through layers from bottom to top, until the cost)
+
+    - a backward pass (compute the gradients from top to bottom)
+
+    - apply the parameter update rule $$ \theta \leftarraw \theta - \lambda \nabla_{\theta_L} \text{cost} $$ for each layer L
 
 
-We do it by ourself without packages.
+, the square of the sum of the outputs and the crossentropy
 
 
-
+We'll use different
 use of cross entropy
 
 Toy dataset of values between 0 and 1.
@@ -187,7 +204,6 @@ Take an ensemble
 <img src="{{ site.url }}/img/deeplearningcourse/DL18.png">
 
 
-<img src="{{ site.url }}/img/deeplearningcourse/DL15.png">
 
 
 The art of choosing the learning rate
@@ -197,7 +213,7 @@ The art of choosing the learning rate
 The art of choosing initialization
 small variance, positive and negative values
 
-<img src="{{ site.url }}/img/deeplearningcourse/DL30.png">
+<img src="{{ site.url }}/img/deeplearningcourse/DL32.png">
 
 # Program with modules
 

@@ -15,7 +15,7 @@ First, let's recap the basics of machine learning.
 
 # Loss functions
 
-When we fit a model, we use *loss functions*, or *cost functions*, or *objective function*. The main purpose of machine learning of machine learning is to be able to predict given data. Let's say predict the $$y$$ given some observations, let's say the $$x$$, through a function:
+When we fit a model, we use *loss functions*, or *cost functions*, or *objective functions*. The main purpose of machine learning of machine learning is to be able to predict given data. Let's say predict the $$y$$ given some observations, let's say the $$x$$, through a function:
 
 $$ f : x \rightarrow y $$
 
@@ -25,11 +25,13 @@ $$ f = f_\theta $$
 
 and the goal of machine learning is to find the best parameters.
 
-In supervised learning we know the real value we want to predict $$\tilde{y}$$, for example the class of the object we want to predict.
+In supervised learning we know the real value we want to predict $$\tilde{y}$$, for example the class of the object we want to predict, what we call the **ground truth** or the **target**.
 
-We want to be able to measure the difference between what we are predicted with the model $$f$$ and what it should predict, what we call the **ground truth**. For that, there are some cost functions, depending on the problem you want to address.
+We want to be able to measure the difference between what we are predicted with the model $$f$$ and what it should predict. For that, there are some cost functions, depending on the problem you want to address, to measure how far our predictions are from their targets.
 
 $$L(y, \tilde{y}) $$
+
+In order to minimize the cost, we prefer differentiable functions which have simpler optimization algorithms.
 
 The two most important loss functions are:
 

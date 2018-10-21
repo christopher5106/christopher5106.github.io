@@ -107,14 +107,14 @@ The reason for this name is the *chaining rule* in computing gradients of functi
 In fact, models are usually composed of multiple functions:
 
 
-$$ L = \text{CrossEntropy} \circ \text{Softmax} \circ f_\theta (x)$$
+$$ \text{cost} = \text{CrossEntropy} \circ \text{Softmax} \circ f_\theta (x)$$
 
 
 $$ = \text{CrossEntropy} \circ \text{Softmax} \circ \text{Dense}_{\theta_2}^2 \circ \text{ReLu} \circ \text{Dense}_{\theta_1}^1  (x) $$
 
 where the composition means
 
-$$ L = \text{CrossEntropy} (\text{Softmax} (\text{Dense}_{\theta_2}^2 ( \text{ReLu} ( \text{Dense}_{\theta_1}^1  (x) ) ) ) ) $$
+$$ \text{cost} = \text{CrossEntropy} (\text{Softmax} (\text{Dense}_{\theta_2}^2 ( \text{ReLu} ( \text{Dense}_{\theta_1}^1  (x) ) ) ) ) $$
 
 Here, for example, I have two dense layers and two activations (one ReLu and one Softmax). There are two parameters
 
@@ -139,23 +139,23 @@ $$ \nabla_{\theta_g} (f \circ g_{\theta_g}) = \nabla_\text{f inputs} f \times \n
 
 What does that mean for deep learning and gradient descent ? In fact, for each layer, we want to compute
 
-$$ \nabla_{\theta_{\text{Layer}}} \text{L} $$
+$$ \nabla_{\theta_{\text{Layer}}} \text{cost} $$
 
 to update each layer's parameters $$ \theta_{\text{Layer}} $$.
 
 So, for the layer $$ \text{Dense}^2 $$,
 
-$$ x \xrightarrow{ \text{Dense}^1 }  \xrightarrow{ \text{ReLu} } y  \xrightarrow{ \text{Dense}^2 }  \xrightarrow{ \text{Softmax}}  \xrightarrow{ \text{CrossEntropy} } L $$
+$$ x \xrightarrow{ \text{Dense}^1 }  \xrightarrow{ \text{ReLu} } y  \xrightarrow{ \text{Dense}^2 }  \xrightarrow{ \text{Softmax}}  \xrightarrow{ \text{CrossEntropy} } \text{cost} $$
 
 the gradient is given by
 
-$$ \nabla_{\theta_2} L = \nabla_{\theta_2} \Big( \text{CrossEntropy} \circ \text{Softmax} \circ \text{Dense}^2 \Big) $$
+$$ \nabla_{\theta_2} \text{cost} = \nabla_{\theta_2} \Big( \text{CrossEntropy} \circ \text{Softmax} \circ \text{Dense}^2 \Big) $$
 
 $$ = \Big(\nabla_{\text{CE inputs}}  \text{CrossEntropy} \times \nabla_{\text{Softmax inputs}} \text{Softmax}\Big) \times \nabla_{\theta_2} \text{Dense}^2 $$
 
 and for the layer  $$ \text{Dense}^1 $$,
 
-$$ \nabla_{\theta_1} L = \Big(\nabla_{\text{CE inputs}}  \text{CrossEntropy} \times \nabla_{\text{Softmax inputs}} \text{Softmax}\Big) \times \nabla_{\text{Dense2 inputs}} \text{Dense}^2 \times \nabla_{\text{ReLU inputs}} \text{ReLu} \times \nabla_{\theta_1} \text{Dense}^1  $$
+$$ \nabla_{\theta_1} \text{cost} = \Big(\nabla_{\text{CE inputs}}  \text{CrossEntropy} \times \nabla_{\text{Softmax inputs}} \text{Softmax}\Big) \times \nabla_{\text{Dense2 inputs}} \text{Dense}^2 \times \nabla_{\text{ReLU inputs}} \text{ReLu} \times \nabla_{\theta_1} \text{Dense}^1  $$
 
 We see that the matrix multiplications inside the brackets for Dense layers are common, and it is possible to compute them once. To reduce the number of matrix mulplications, it is better to compute the gradients from the top layer to the bottom layer and reuse previous computations of matrix multiplication for earlier gradients.
 
@@ -176,7 +176,7 @@ The cross entropy is working very well with the softmax function and is usually 
 
 Let us see why and study the combination of softmax and cross entropy
 
-$$ o = f(x) = \{o_c\}_c \xrightarrow{ \text{Softmax}}  \xrightarrow{ \text{CrossEntropy} } L $$
+$$ o = f(x) = \{o_c\}_c \xrightarrow{ \text{Softmax}}  \xrightarrow{ \text{CrossEntropy} } \text{cost} $$
 
 Mathematically,
 
@@ -194,7 +194,7 @@ $$ = \delta_{c,\hat{c}} - p_c $$
 
 which is very easy to compute and can simply be rewritten:
 
-$$ \nabla L = \tilde{p} - p $$
+$$ \nabla \text{cost} = \tilde{p} - p $$
 
 **Conclusion**: it is easier to backprogate gradients computed on Softmax+CrossEntropy together rather than backpropagate separately each : the derivative of the Softmax+CrossEntropy with respect to the output of the model for the right class, let's say the "cat" class, will be 1 - 0.8 = 0.2, if the model has predicted a probability of 0.8 for this class, encouraging it to increase this value ; the derivative of the Softmax+CrossEntropy with respect to an output for a different class will be -0.4 is it has predicted a probability of 0.4, encouraging the model to decrease this value.  
 
@@ -211,7 +211,7 @@ $$ f_\theta : \{x_j\} \rightarrow \Big\{ o_i = \sum_j \theta_{i,j} x_j \Big\}_i$
 
 Please keep in mind that it is not possible to descend the gradient directly on this output because it is composed of two scalars. We need a loss function, that returns a scalar, and tells us how to combine these two outputs. For example, the Softmax+CrossEntropy we have seen previously:
 
-$$ L = \text{CrossEntropy}(\text{Softmax}(o)) $$
+$$ L :o  \rightarrow \text{CrossEntropy}(\text{Softmax}(o)) $$
 
 <img src="{{ site.url }}/img/deeplearningcourse/DL6.png">
 

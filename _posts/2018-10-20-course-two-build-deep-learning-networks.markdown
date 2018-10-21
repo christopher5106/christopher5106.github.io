@@ -14,3 +14,22 @@ hidden information
 
 
 <img src="{{ site.url }}/img/deeplearningcourse/DL21.png">
+
+
+convolutions
+<img src="{{ site.url }}/img/deeplearningcourse/DL24.png">
+
+<img src="{{ site.url }}/img/deeplearningcourse/DL25.png">
+
+<img src="{{ site.url }}/img/deeplearningcourse/DL26.png">
+
+dilated conv
+<img src="{{ site.url }}/img/deeplearningcourse/DL29.png">
+
+Global averaging
+
+<img src="{{ site.url }}/img/deeplearningcourse/DL27.png">
+
+
+Max pooling
+<img src="{{ site.url }}/img/deeplearningcourse/DL28.png">

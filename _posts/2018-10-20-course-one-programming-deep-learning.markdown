@@ -81,7 +81,17 @@ The art of choosing the learning rate
 <img src="{{ site.url }}/img/deeplearningcourse/DL20.png">
 
 
-# Re-implement with Pytorch modules
+# Program with modules
+
+A module is an object to learn specifically designed for deep learning neural networks.
+
+A layer is a module:
+<img src="{{ site.url }}/img/deeplearningcourse/DL31.png">
+because it has weights and a forward function.
+
+The composition of modules makes a module:
+
+<img src="{{ site.url }}/img/deeplearningcourse/DL30.png">
 
 
 

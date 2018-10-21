@@ -240,9 +240,9 @@ Note that gradients are computed by retropropagate until a Variable has no `grap
 
 **Exercise**: compute the derivative with Keras, Tensorflow, CNTK  
 
-# Descend a gradient on a classification problem
+# Training loop
 
-Let's take back our [Course 0](http://christopher5106.github.io/deep/learning/2018/10/20/course-zero-deep-learning.html)'s perceptron and implement it directly with Pytorch tensors and operators, without other packages.
+Let's take back our [Course 0](http://christopher5106.github.io/deep/learning/2018/10/20/course-zero-deep-learning.html)'s perceptron and implement its training directly with Pytorch tensors and operators, without other packages.
 
 <img src="{{ site.url }}/img/deeplearningcourse/DL15.png">
 

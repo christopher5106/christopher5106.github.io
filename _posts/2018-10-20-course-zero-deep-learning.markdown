@@ -245,9 +245,9 @@ That means that when there is a kind of expected certainty in the label, a predi
 
 In the case of classification, we use probability values that are either 0 or 1, sounds weird ? We are always certain ?
 
-No, in fact we are in the empiracal case, you need to rewrite it as the empirical expectation:
+No, in fact we are in the empirical case, you need to rewrite it as the empirical expectation:
 
-$$ \text{CrossEntropy} = \mathbb{E} \Big( \log( \frac{1}{p_c}) \Big) \approx \frac{1}{N} \sum_{x \sim D} \log \frac{1}{p_c}$$
+$$ \text{CrossEntropy} = \mathbb{E} \Big( \log( \frac{1}{p_c}) \Big) \approx \frac{1}{N} \sum_{x \sim D} \log \frac{1}{p_c(x)}$$
 
 where D is the real sample distribution and N is the number of samples on which the cross entropy is estimated. So, in fact, our 1 values becomes $$ \frac{1}{N} $$ when they are computed over multiple samples and they become the label probability.
 

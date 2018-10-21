@@ -11,6 +11,8 @@ Please find the [course syllabus here]({{ site.url }}/img/deeplearningcourse/DST
 
 I hope you'll get some feelings about deep learning you cannot get from reading else where.
 
+First, let's recap the basics of machine learning.
+
 # First concept: loss functions
 
 When we fit a model, we use *loss functions*, or *cost functions*, or *objective function*. The main purpose of machine learning of machine learning is to be able to predict given data. Let's say predict the $$y$$ given some observations, let's say the $$x$$, through a function:

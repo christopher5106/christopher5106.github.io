@@ -57,7 +57,7 @@ In **conclusion** of this section, the goal of machine learning is to have a fun
 Two problems arise: first, most mathematical functions do not output a probability that sums to 1. Second, how do I evaluate the true distribution $$ \tilde{p} $$ ?
 
 
-### Normalizing model outputs
+#### Normalizing model outputs
 
 Usually, we transforming any model output into a probability that sums to 1 is usually performed thanks to a softmax function set on top of the model outputs :
 
@@ -70,7 +70,7 @@ $$ \text{Softmax}(o) = \Big\{ \frac{ e^{-o_i} }{ \sum_c e^{-o_c}}  \Big\}_i $$
 Note that for the softmax to predict probability for C classes, it requires the output $$ o = f(x) $$ to be C-dimensional.
 
 
-### Estimating the true distribution
+#### Estimating the true distribution
 
 Cross entropy is usually mentioned without explanations.
 
@@ -276,7 +276,7 @@ $$ \frac{\partial}{\partial \theta_{k,j}}  ( L \circ f_\theta )=  \sum_c \frac{\
 # Generalize beyond cross entropy
 
 
-### Re-weighting probabilities
+#### Re-weighting probabilities
 
 Cross-entropy is built upon the probability of the label:
 
@@ -301,7 +301,7 @@ $$ \text{CrossEntropy}(p, \tilde{p}) = - ( 1 - p_\hat{c} )^\gamma \times \log p_
 as in the Focal Loss for object detection where background negatives are too numerous and tend to take over the positives.
 
 
-### Reinforcement
+#### Reinforcement
 
 That is where the magic happens ;-)
 

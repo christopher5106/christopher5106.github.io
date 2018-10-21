@@ -72,9 +72,15 @@ It consists in following the gradient to descend to the minima:
 
 It is an iterative process in which the update rule simply consists in:
 
-$$ \theta_{t+1} = \theta_{t} - \lambda \nabla_\theta (L \circ f_\theta) $$
+$$ \theta_{t+1} = \theta_{t} - \lambda \nabla_\theta \text{cost} $$
 
-where L is our cost $$ L(f_\theta(x), \tilde{y}) $$
+where our cost is defined as a result of the previous section
+
+$$ \text{cost}_\theta (x, \tilde{p}) = \text{CrossEntropy} ( \text{Softmax}( f_\theta (x) ) , \tilde{p}) $$
+
+We call $$ \tilde{p} $$ the target (in fact the target distribution). We usually omit the fact the cost is a function of the input and the parameters and write it directly as "cost". We can also write with the composition symbol:
+
+$$ \text{cost} = \text{CrossEntropy} ( \cdot, \tilde{y}) \circ \text{Softmax} \circ  f_\theta $$
 
 <img src="{{ site.url }}/img/deeplearningcourse/DL3.png">
 

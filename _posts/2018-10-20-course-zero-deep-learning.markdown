@@ -251,15 +251,19 @@ $$ \text{CrossEntropy} = \mathbb{E} \Big( \log( \frac{1}{p_c}) \Big) \approx \fr
 
 where N is the number of samples on which the cross entropy is estimated. So, in fact, our 1 values becomes $$ \frac{1}{N} $$ when they are computed over multiple samples and they become the label probability.
 
-But: it is still possible to train a model with smoother values, for example 0.1 or 0.9, which will help achieve better performances. This technique of *label smoothing* enables in particular to re-introduce the outputs for the negative classes so that it will also sanction wrongly classified negatives, and preserve a symmetry between the negative and positive labels:
+But still, we can re-introduce a notion of certainty, it is still possible:
+
+- to train a model with smoother values, for example 0.1 or 0.9, which will help achieve better performances. This technique of *label smoothing* enables in particular to re-introduce the outputs for the negative classes so that it will also sanction wrongly classified negatives, and preserve a symmetry between the negative and positive labels:
 
 $$ \text{CrossEntropy}(p, \tilde{p}) = - \sum_c \tilde{p}_c \log(p_c) = - 0.9 \times \log(p_\hat{c}) - 0.1 \times \sum_{c \neq \hat{c}} \tilde{p}_c \log(p_c) $$
 
-It is also possible to use smoother value when the labels in the groundtruth are less certain, or to rebalance the dataset with $$ \alpha_{c} $$ the inverse class frequency :
+- to use smoother value when the labels in the groundtruth are less certain,
+
+- to rebalance the dataset with $$ \alpha_{c} $$ the inverse class frequency :
 
 $$ \text{CrossEntropy}(p, \tilde{p}) = - \alpha_{\hat{c}} \times \log(p_\hat{c}) $$
 
-or to focus more on wrongly classified examples
+- to focus more on wrongly classified examples
 
 $$ \text{CrossEntropy}(p, \tilde{p}) = - ( 1 - p_\hat{c} )^\gamma \times \log(p_\hat{c}) $$
 

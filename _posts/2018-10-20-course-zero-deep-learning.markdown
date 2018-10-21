@@ -389,7 +389,7 @@ Instead of 1 and 0 in case of classification, you use the global reward R as tar
 
 <img src="{{ site.url }}/img/deeplearningcourse/DL41.png">
 
-A complete fantastic demonstration [Williams, 1992] of reweighting the cross-entropy where the eligibility of each parameter to the gradient is multiplied by the reward or the progress in the goal we want to achieve.
+A fantastic demonstration [Williams, 1992] of re-weighting the cross-entropy, where the eligibility of each parameter to the gradient has been multiplied by the reward or the progress in the goal we want to achieve.
 
 Classical cross-entropy definition can be seen as a specific case of this more global theorization.
 

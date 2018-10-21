@@ -215,7 +215,7 @@ small variance, positive and negative values
 
 <img src="{{ site.url }}/img/deeplearningcourse/DL32.png">
 
-# Program with modules
+# Modules
 
 A module is an object to learn specifically designed for deep learning neural networks.
 
@@ -232,6 +232,9 @@ The modules help organize layers and reuse their definitions.
 
 
 1- rewrite the model as module using nn modules
+
+# Packages
+
 2- rewrite training loop using the optim package (zeroing gradients + applying the gradients with an update rule)
 3- look at different update rules
 4- plot the training curves (loss,...)

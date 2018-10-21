@@ -53,7 +53,7 @@ Coming from the theory of information, cross-entropy is a distance measure betwe
 
 $$ \text{CrossEntropy}(p, \tilde{p}) = - \sum_c \tilde{p}_c \log(p_c) = - \log(p_\hat{c})$$
 
-we want to be the highest possible (maximization).
+we want to be the lowest possible (minimization).
 
 To discover many more loss functions, have a look at my [full article about loss functions](http://christopher5106.github.io/deep/learning/2016/09/16/about-loss-functions-multinomial-logistic-logarithm-cross-entropy-square-errors-euclidian-absolute-frobenius-hinge.html).
 

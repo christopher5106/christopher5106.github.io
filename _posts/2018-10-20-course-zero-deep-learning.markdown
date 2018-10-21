@@ -379,6 +379,8 @@ which looks exactly the same as the derivative of the cross entropy:
 
 <img src="{{ site.url }}/img/deeplearningcourse/DL38.png">
 
+<img src="{{ site.url }}/img/deeplearningcourse/DL39.png">
+
 **Well done!**
 
 Now let's go to next course: [Course 1: programming deep learning!](http://christopher5106.github.io/deep/learning/2018/10/20/course-one-programming-deep-learning.html)

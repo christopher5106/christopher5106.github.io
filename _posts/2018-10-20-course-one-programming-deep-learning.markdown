@@ -431,7 +431,7 @@ The modules help organize layers and reuse their definitions.
 
 # Packages
 
-Packages avoid to reprogram common functions for deep learning and help the reuse of code.
+Packages help you reuse common functions for deep learning.
 
 
 2- rewrite training loop using the optim package (zeroing gradients + applying the gradients with an update rule)

@@ -93,11 +93,13 @@ $$ \tilde{p_c(x)} \begin{cases}
   0, & \text{otherwise}.
 \end{cases} $$
 
-which we will write $$ \tilde{p_c(x)} = \delta(c,\hat{c}) $$.
+which we will write $$ \tilde{p_c(x)} = \delta(c,\hat{c}) $$. If more samples are considered, usually we average the individual losses for stability, leading back to the desired empirical estimation:
 
-The cross-entropy forumulation becomes:
+$$ \frac{1}{N} \sum_{x \sim D} L(x) = - \frac{1}{N} \sum_{x \sim D} \log p_{\hat{c}(x)}(x) \approx \text{CrossEntropy}$$
 
-$$ \text{CrossEntropy}(p, \tilde{p}) = - \sum_c \tilde{p}_c \log(p_c) = - \log(p_\hat{c})$$
+In the future, we'll consider the following cross-entropy forumulation for a single sample:
+
+$$ \text{CrossEntropy}(p, \tilde{p}) = - \log(p_\hat{c})$$
 
 In **conclusion**, for the case of classification, we use probability values that are either 0 or 1: X being the image of a cat, we want this output $$\{p_c\}_c $$ to fit the real empirical class probability $$\{\tilde{p}_c\}_c $$, where $$ p_\hat{c} = 1 $$ for the real object class $$ \hat{c} $$ "cat" and $$ p_c = 0$$ for all other classes $$ c \neq \hat{c} $$:
 

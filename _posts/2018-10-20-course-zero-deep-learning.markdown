@@ -184,11 +184,9 @@ which can be rewritten as a simple matrix multiplication
 
 $$ \nabla (f \circ g) = \nabla f \times \nabla g $$
 
-To be more precise, g has to be considered a function of its inputs and its parameters
+To be more precise, g and f have to be considered a function of its inputs and its parameters
 
 $$ g(x) = g_{\theta_g} (x) = g(x,\theta_g) $$
-
-The same for f:
 
 $$ f(y) = f_{\theta_f} (x) = f(y,\theta_f) $$
 
@@ -202,8 +200,7 @@ Combining them:
 
 $$ (f \circ g)(x) = f_{\theta_f} ( g(x,\theta_g), \theta_f) $$
 
-
-and we want the gradient with respect to the parameters of g, that we can consider as inputs the way. The correct expression becomes :
+To update the parameters of g, we need to compute the derivative of the cost with respect to the parameters of g, that is :
 
 $$ \nabla_{\theta_g} (f \circ g_{\theta_g}) = \nabla_I f \times \nabla_{\theta_g} g $$
 

@@ -88,12 +88,12 @@ where D is the real sample distribution, N is the number of samples on which the
 
 To compute our empirical cross-entropy for one sample (N=1), we can use
 
-$$ \tilde{p_c(x)} \begin{cases}
-  1, & \text{if } c = \hat{c(x)}, \\
+$$ \tilde{p}_c(x) \begin{cases}
+  1, & \text{if } c = \hat{c}(x), \\
   0, & \text{otherwise}.
 \end{cases} $$
 
-which we will write $$ \tilde{p_c(x)} = \delta(c,\hat{c}) $$. If more samples are considered, usually we average the individual losses for stability, leading back to the desired empirical estimation:
+which we will write $$ \tilde{p}_c(x) = \delta(c,\hat{c}) $$. If more samples are considered, usually we average the individual losses for stability, leading back to the desired empirical estimation:
 
 $$ \frac{1}{N} \sum_{x \sim D} L(x) = - \frac{1}{N} \sum_{x \sim D} \log p_{\hat{c}(x)}(x) \approx \text{CrossEntropy}$$
 

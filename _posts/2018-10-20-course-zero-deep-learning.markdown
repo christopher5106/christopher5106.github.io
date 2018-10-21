@@ -223,7 +223,7 @@ $$ = \Big(\nabla_I  \text{CrossEntropy} \times \nabla_I \text{Softmax}\Big) \tim
 
 and for the layer  $$ \text{Dense}^1 $$,
 
-$$ \nabla_{\theta_1} \text{cost} = \Big(\nabla_I  \text{CrossEntropy} \times \nabla_I \text{Softmax}\Big) \times \nabla_I \text{Dense}^2 \times \nabla_I \text{ReLu} \times \nabla_{\theta_1} \text{Dense}^1  $$
+$$ \nabla_{\theta_1} \text{cost} = \color{red} \Big(\nabla_I  \text{CrossEntropy} \times \nabla_I \text{Softmax}\Big) \times \nabla_I \text{Dense}^2 \times \nabla_I \text{ReLu} \times \nabla_{\theta_1} \text{Dense}^1  $$
 
 We see that the matrix multiplications inside the brackets for Dense layers are common, and it is possible to compute them once. To reduce the number of matrix mulplications, it is better to compute the gradients from the top layer to the bottom layer and reuse previous computations of matrix multiplication for earlier gradients.
 

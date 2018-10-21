@@ -329,7 +329,73 @@ X = torch.from_numpy(x).type(torch.FloatTensor)
 Y = torch.from_numpy(labels).type(torch.LongTensor)
 ```
 
+```python
+theta1 =  torch.autograd.Variable(torch.randn(2, 12) *0.01,requires_grad = True)
+bias1 = torch.autograd.Variable(torch.randn(12)*0.01,requires_grad = True)
+theta2 = torch.autograd.Variable(torch.randn(12, 3)*0.01,requires_grad = True)
+bias2 = torch.autograd.Variable(torch.randn(3)*0.01,requires_grad = True)
 
+def forward(x):
+    y = x.mm(theta1) + bias1 # (batch_size, 2) x (2, 12) + (batch_size, 12) => (batch_size, 12)
+    y = torch.max(y, torch.autograd.Variable(torch.Tensor([0])))
+    y = y.mm(theta2) + bias2 # (batch_size, 12) x (12, 3) + (batch_size, 3) => (batch_size, 3)
+    return y
+
+def softmax(z):
+    e = torch.exp(z)
+    s = torch.sum(e, 1, keepdim = True)
+    return e / s
+
+def crossentropy(s, l):
+    v = torch.gather(s, 1, torch.unsqueeze(l,-1))
+    v = torch.log(v)
+    return -torch.mean(v)
+
+batch_size = 20
+for i in range(min(dataset_size, 100000) // batch_size ):
+    lr = 0.5 * (.1 ** ( max(i - 100 , 0) // 1000))
+
+    batch = X[batch_size*i:batch_size*(i+1)] # size (batchsize, 2)
+    z = forward(torch.autograd.Variable(batch, requires_grad=False))
+    z = softmax(z)
+    c = crossentropy(z, torch.autograd.Variable(Y[batch_size*i:batch_size*(i+1)]))
+    print("iter {} - cost {} - learning rate {}".format(i, c.data.item(), lr))
+
+    # compute the gradients
+    c.backward()
+
+    # apply the gradients
+    theta1.data = theta1.data - lr * theta1.grad.data
+    bias1.data = bias1.data - lr * bias1.grad.data
+    theta2.data = theta2.data - lr * theta2.grad.data
+    bias2.data = bias2.data - lr * bias2.grad.data
+
+    # clear the grad
+    theta1.grad.zero_()
+    bias1.grad.zero_()
+    theta2.grad.zero_()
+    bias2.grad.zero_()
+# iter 4999 - cost 0.07717917114496231 - learning rate 5.000000000000001e-05
+```
+
+The network has converged. To check everything is fine, one might compute the accuracy, a classical metric:
+
+```python
+accuracy = 0
+nb = 10000
+for i in range(min(dataset_size, nb)):
+    z = forward(torch.autograd.Variable(X[i:i+1], requires_grad=False))
+    p = softmax(z)
+    l = torch.max(p, -1)[1]
+    #print(l.data.numpy()[0], labels[i])
+    if l.data.numpy()[0] == labels[i]:
+        accuracy += 1
+
+print("accuracy {}%".format(round(accuracy / min(dataset_size, nb) * 100,2)))
+# accuracy 99.46%
+```
+
+**Exercise**: compute precision, recall, and AUC.
 
 Take an ensemble
 

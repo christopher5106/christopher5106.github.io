@@ -351,13 +351,13 @@ Still, there is a very important theoretical generalization of cross-entropy thr
 
 In reinforcement, given an observation $$ x_t $$ at a certain timestep, you're going to perform an action, for example driving car, going right, left, or straight, or in a game, using some keyboard commands. Then the environment is modified and you'll need to decide of the next action... and sometimes you get a reward $$ r_t $$, a feedback from the environment, good news or bad news, gain some points... In the case of reinforcement learning, we do not have any labels as targets or groundtruth. We just want to perform the best, which means maximizing the expected reward :
 
-$$ R = \mathbb{E} \sum_{t} r_t $$
+$$ R = \mathbb{E}_{\text{seq}} \sum_{t} r_t $$
 
 over all possible sequence of actions.
 
 <img src="{{ site.url }}/img/deeplearningcourse/DL35.png">
 
-When my actions are parametrized by a model $$ f_\theta $$, the probability of a sequence is
+The probability of a sequence is
 
 $$ p({a_0, a_1, ..., a_T}) = p (a_0 | x_0) p( a_1 | a_0, x_0, x_1)... = \prod_{t=0}^T p(a_t | a_0, x_0, ... x_T) $$
 
@@ -365,7 +365,19 @@ so R can be written
 
 $$ R = \sum_{a_0, a_1, ..., a_T} \big( \prod_{t=0}^T p(a_t | a_0, x_0, ... x_T) \big) (\sum_{t=0}^T r_t) $$
 
+$$ = \mathbb{E}_{a_0 \sim p(\cdot |x_0)} \mathbb{E}_{a_1 \sim p(\cdot | a_0, x_0, x_1)} ... \mathbb{E}_{a_T \sim p(\cdot | a_0, x_0, ... x_T)}  \sum_{t=0}^T r_t $$
 
+When my actions are parametrized by a model $$ p = f_\theta $$, everything must becomes parametrized by $$ \theta $$
+
+<img src="{{ site.url }}/img/deeplearningcourse/DL36.png">
+
+and it is possible to maximize the reward by following the gradient of the expected reward:
+
+<img src="{{ site.url }}/img/deeplearningcourse/DL37.png">
+
+which looks exactly the same as the derivative of the cross entropy:
+
+<img src="{{ site.url }}/img/deeplearningcourse/DL38.png">
 
 **Well done!**
 

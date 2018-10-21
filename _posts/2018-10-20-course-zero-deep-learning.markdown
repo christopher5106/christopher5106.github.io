@@ -13,7 +13,7 @@ I hope you'll get some feelings about deep learning you cannot get from reading 
 
 First, let's recap the basics of machine learning.
 
-# First concept: loss functions
+# Loss functions
 
 When we fit a model, we use *loss functions*, or *cost functions*, or *objective function*. The main purpose of machine learning of machine learning is to be able to predict given data. Let's say predict the $$y$$ given some observations, let's say the $$x$$, through a function:
 
@@ -39,23 +39,9 @@ The two most important loss functions are:
 
 <center> $$ x \rightarrow \{p_c\}_c $$ with $$ \sum_c p_c = 1 $$ </center>
 
-Transforming any function output into a probability that sums to 1 is usually performed thanks to a softmax function
-
-$$ x \xrightarrow{f} o = f(x) = \{o_c\}_c \xrightarrow{softmax} \{p_c\}_c $$
-
-where the softmax normalization function is defined by:
-
-$$ \text{Softmax}(o) = \Big\{ \frac{ e^{-o_i} }{ \sum_c e^{-o_c}}  \Big\}_i $$
-
-Note that for the softmax to predict probability for c classes, it requires the output $$ o = f(x) $$ to be c-dimensional.
-
-For example, in image classification, X being the image of a cat, we want this output $$\{p_c\}_c $$ to fit the real class probability $$\{\tilde{p}_c\}_c $$, where $$ p_\hat{c} = 1 $$ for the real object class $$ \hat{c} $$ "cat" and $$ p_c = 0$$ for all other classes $$ c \neq \hat{c} $$:
-
-<img src="{{ site.url }}/img/deeplearningcourse/DL1.png">
-
 Coming from the theory of information, cross-entropy is a distance measure between two probabilities defined by :
 
-$$ \text{CrossEntropy}(p, \tilde{p}) = - \sum_c \tilde{p}_c \log(p_c) = - \log(p_\hat{c})$$
+$$ \text{CrossEntropy}(p, \tilde{p}) = - \sum_c \tilde{p}_c \log(p_c) $$
 
 we want to be the lowest possible (minimization).
 
@@ -64,6 +50,60 @@ To discover many more loss functions, have a look at my [full article about loss
 Note that **a loss function always outputs a scalar value**. This scalar value is a measure of fit of the model with the real value.
 
 In **conclusion** of this section, the goal of machine learning is to have a function fit with the real world; and to have this function fit well, we use a loss function to measure how to reduce this distance.
+
+
+# Cross entropy in practice
+
+Two problems arise: first, most mathematical functions do not output a probability that sums to 1. Second, how do I evaluate the true distribution $$ \tilde{p} $$ ?
+
+
+### Normalizing model outputs
+
+Usually, we transforming any model output into a probability that sums to 1 is usually performed thanks to a softmax function set on top of the model outputs :
+
+$$ x \xrightarrow{f} o = f(x) = \{o_c\}_c \xrightarrow{softmax} \{p_c\}_c $$
+
+The softmax normalization function is defined by:
+
+$$ \text{Softmax}(o) = \Big\{ \frac{ e^{-o_i} }{ \sum_c e^{-o_c}}  \Big\}_i $$
+
+Note that for the softmax to predict probability for C classes, it requires the output $$ o = f(x) $$ to be C-dimensional.
+
+
+### Estimating the true distribution
+
+Cross entropy is usually mentioned without explanations.
+
+In fact, to understand cross-entropy, you need to rewrite it :
+
+$$ \text{CrossEntropy} = - \sum_c \tilde{p_c} \log p_c = - \mathbb{E} \Big( \log p_c \Big) $$
+
+because $$ \tilde{p_c} $$ is the true distribution, so cross entropy is the expectation of the model predicted negative probability under the true distribution.
+
+The, we rewrite it as the empirical expectation:
+
+$$ \text{CrossEntropy} \approx - \frac{1}{N} \sum_{x \sim D} \log p_{\hat{c}(x)}(x) $$
+
+where D is the real sample distribution, N is the number of samples on which the cross entropy is estimated and $$ \hat{c}(x) $$ is the true class of x.
+
+To compute our empirical cross-entropy for one sample (N=1), we can use
+
+$$ \tilde{p_c(x)} \begin{cases}
+  1, & \text{if } c = \hat{c(x)}, \\
+  0, & \text{otherwise}.
+\end{cases}
+
+which we will write $$ \tilde{p_c(x)} = \delta(c,\hat{c}) $$.
+
+The cross-entropy forumulation becomes:
+
+$$ \text{CrossEntropy}(p, \tilde{p}) = - \sum_c \tilde{p}_c \log(p_c) = - \log(p_\hat{c})$$
+
+In **conclusion**, for the case of classification, we use probability values that are either 0 or 1: X being the image of a cat, we want this output $$\{p_c\}_c $$ to fit the real empirical class probability $$\{\tilde{p}_c\}_c $$, where $$ p_\hat{c} = 1 $$ for the real object class $$ \hat{c} $$ "cat" and $$ p_c = 0$$ for all other classes $$ c \neq \hat{c} $$:
+
+<img src="{{ site.url }}/img/deeplearningcourse/DL1.png">
+
+
 
 # Second concept: the Gradient Descent
 
@@ -233,27 +273,16 @@ so
 $$ \frac{\partial}{\partial \theta_{k,j}}  ( L \circ f_\theta )=  \sum_c \frac{\partial L}{\partial o_c}  \cdot \frac{\partial o_c}{\partial \theta_{k,j}}  = ( \delta_{ k, \hat{c}} - o_k) \cdot x_j  $$
 
 
-# Understand the cross entropy
+# Generalize beyond cross entropy
 
-Cross entropy is usually mentioned without explanations.
 
-In fact, to understand cross-entropy, you need to rewritte it :
+### Re-weighting probabilities
 
-$$ \text{CrossEntropy} = - \sum_c \tilde{p_c} \log p_c = \mathbb{E} \Big( \log \frac{1}{p_c} \Big) $$
+Cross-entropy is built upon the probability of the label:
 
-because $$ \tilde{p_c} $$ is the true distribution, so cross entropy is the expectation of the model predicted inverse probability under the true distribution.
+$$ \text{CrossEntropy} = - \sum_c \tilde{p_c} \log p_c $$
 
-That means that when there is a kind of expected certainty in the label, a prediction error will be more heavily weighted, while, when the sample cannot give certainty this is a "cat" in the image, because the image is strongly blurred, the model will be less sanctioned, the increase in distance will be temperated.
-
-In the case of classification, we use probability values that are either 0 or 1, sounds weird ? We are always certain ?
-
-No, in fact we are in the empirical case, you need to rewrite it as the empirical expectation:
-
-$$ \text{CrossEntropy} = \mathbb{E} \Big( \log \frac{1}{p_c} \Big) \approx \frac{1}{N} \sum_{x \sim D} \log \frac{1}{p_c(x)}$$
-
-where D is the real sample distribution and N is the number of samples on which the cross entropy is estimated. So, in fact, our 1 values becomes $$ \frac{1}{N} $$ when they are computed over multiple samples and they become the label probability.
-
-But still, we can re-introduce a notion of certainty, it is still possible:
+In our section on practical cross-entropy, we have considered that we knew the true label with certainty, that the goal to achieve was maximize the objective under the real distribution of labels, even if they are unbalanced in the dataset, leading to strong bias. In practice, we can go one step further, rebalancing these probability as Bayes rules would suggest, or integrate the notion of incertainty in the groundtruth label, to reduce the influence of noise. Here are a few techniques we can use in practice. It is still possible:
 
 - to train a model with smoother values than 0 and 1 for negatives and positives, for example 0.1 or 0.9, which will help achieve better performances. This technique of *label smoothing* or *soft labels* enables in particular to re-introduce the outputs for the negative classes so that it will also sanction wrongly classified negatives, and preserve a symmetry between the negative and positive labels:
 
@@ -272,9 +301,14 @@ $$ \text{CrossEntropy}(p, \tilde{p}) = - ( 1 - p_\hat{c} )^\gamma \times \log p_
 as in the Focal Loss for object detection where background negatives are too numerous and tend to take over the positives.
 
 
-# Generalize beyond cross entropy
+### Reinforcement
 
 That is where the magic happens ;-)
+
+As you might have understood, the cross entropy comes from theory of information, but the definition of the probabilities and their weighting scheme can be adapted to the problem we want to solve. That is where we leave theory for practice.
+
+Still, there is a very important theoretical generalization of cross-entropy.
+
 
 
 

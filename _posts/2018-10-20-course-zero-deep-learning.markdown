@@ -7,6 +7,8 @@ categories: deep learning
 
 In this course, we'll first begin by checking where you are in data science, how far you have been, and if you have the basic concepts because main concepts in deep learning comes from datascience. Then, we'll go for a bit more in marchine learning, and introduction to deep learning, programming, coding few functions under a deep learning technologies, Pytorch, and I'll explain why Pytorch is a great technology. We'll compare it with other technologies, which is not so easy at the beginning. And then we'll go further and further with deep neural networks, to address different subjects.
 
+Please find the [course syllabus here]({{ site.url }}/img/deeplearningcourse/DSTI_Syllabus.pdf).
+
 I hope you'll get some feelings about deep learning you cannot get from reading else where.
 
 # First concept: loss functions
@@ -78,9 +80,9 @@ where our cost is defined as a result of the previous section
 
 $$ \text{cost}_\theta (x, \tilde{p}) = \text{CrossEntropy} ( \text{Softmax}( f_\theta (x) ) , \tilde{p}) $$
 
-We call $$ \tilde{p} $$ the target (in fact the target distribution). We usually omit the fact the cost is a function of the input and the parameters and write it directly as "cost". We can also write with the composition symbol:
+We call $$ \tilde{p} $$ the target (in fact the target distribution). We usually omit the fact the cost is a function of the input, the target and the model parameters and write it directly as "cost". We can also write with the composition symbol:
 
-$$ \text{cost} = \text{CrossEntropy} ( \cdot, \tilde{y}) \circ \text{Softmax} \circ  f_\theta $$
+$$ \text{cost} = \text{CrossEntropy} ( \cdot, \tilde{p}) \circ \text{Softmax} \circ  f_\theta $$
 
 <img src="{{ site.url }}/img/deeplearningcourse/DL3.png">
 
@@ -107,14 +109,14 @@ The reason for this name is the *chaining rule* in computing gradients of functi
 In fact, models are usually composed of multiple functions:
 
 
-$$ \text{cost} = \text{CrossEntropy} \circ \text{Softmax} \circ f_\theta (x)$$
+$$ \text{cost} = \text{CrossEntropy} \circ \text{Softmax} \circ f_\theta$$
 
 
-$$ = \text{CrossEntropy} \circ \text{Softmax} \circ \text{Dense}_{\theta_2}^2 \circ \text{ReLu} \circ \text{Dense}_{\theta_1}^1  (x) $$
+$$ = \text{CrossEntropy} \circ \text{Softmax} \circ \text{Dense}_{\theta_2}^2 \circ \text{ReLu} \circ \text{Dense}_{\theta_1}^1  $$
 
 where the composition means
 
-$$ \text{cost} = \text{CrossEntropy} (\text{Softmax} (\text{Dense}_{\theta_2}^2 ( \text{ReLu} ( \text{Dense}_{\theta_1}^1  (x) ) ) ) ) $$
+$$ \text{cost}(x) = \text{CrossEntropy} (\text{Softmax} (\text{Dense}_{\theta_2}^2 ( \text{ReLu} ( \text{Dense}_{\theta_1}^1  (x) ) ) ) ) $$
 
 Here, for example, I have two dense layers and two activations (one ReLu and one Softmax). There are two parameters
 
@@ -186,7 +188,7 @@ $$ = - \log e^{-o_\hat{c}} +  \log \sum_c e^{-o_i}  $$
 
 $$ = o_\hat{c} +  \log \sum_c e^{-o_i} $$
 
-Let's take the derivative,
+Let's take the derivative with respect to the model output (before softmax normalization):
 
 $$ \frac{\partial \text{cost}}{\partial o_c} =  \delta_{c,\hat{c}} - \frac{ e^{-o_i} }{\sum_c e^{-o_i}}  $$
 
@@ -227,6 +229,40 @@ $$ \frac{\partial o_i}{\partial \theta_{k,j}} = \begin{cases}
 so
 
 $$ \frac{\partial}{\partial \theta_{k,j}}  ( L \circ f_\theta )=  \sum_c \frac{\partial L}{\partial o_c}  \cdot \frac{\partial o_c}{\partial \theta_{k,j}}  = ( \delta_{ k, \hat{c}} - o_k) \cdot x_j  $$
+
+
+# Understand the cross entropy
+
+Cross entropy is usually mentioned without explanations.
+
+In fact, to understand cross-entropy, you need to rewritte it :
+
+$$ \text{CrossEntropy} = - \sum_c \tilde{p_c} \log p_c = \mathbb{E} \Big( \log( \frac{1}{p_c}) \Big) $$
+
+because $$ \tilde{p_c} $$ is the true distribution, so we compute the expectation of model predicted inverse probability under the true distribution.
+
+That means that a prediction error when there is a kind of expected certainty in the label will be more heavily weighted, while, when the sample cannot give certainty this is a "cat" in the image, because the image is strongly blurred, the model will be less sanctioned, the increase in distance will be temperated.
+
+In the case of classification, we use probability values that are either 0 or 1, but it is still possible to train a model with smoother values, for example 0.1 or 0.9, which will help achieve better performances. This technique of *label smoothing* enables in particular to re-introduce the outputs for the negative classes so that it will also sanction wrongly classified negatives, and preserve a symmetry between the negative and positive labels:
+
+$$ \text{CrossEntropy}(p, \tilde{p}) = - \sum_c \tilde{p}_c \log(p_c) = - 0.9 \times \log(p_\hat{c}) - 0.1 \times \sum_{c \neq \hat{c}} \tilde{p}_c \log(p_c) $$
+
+It is also possible to use smoother value when the labels in the groundtruth are less certain, or to rebalance the dataset with $$ \alpha_{c} $$ the inverse class frequency :
+
+$$ \text{CrossEntropy}(p, \tilde{p}) = - \alpha_{\hat{c}} \times \log(p_\hat{c}) $$
+
+or to focus more on wrongly classified examples
+
+$$ \text{CrossEntropy}(p, \tilde{p}) = - ( 1 - p_\hat{c} )^\gamma \times \log(p_\hat{c}) $$
+
+as in the Focal Loss for object detection where background negatives are too numerous and tend to take over the positives.
+
+
+# Generalize beyond cross entropy
+
+That is where the magic happens ;-)
+
+
 
 **Well done!**
 

@@ -389,7 +389,7 @@ Instead of 1 and 0 in case of classification, you use the global reward R as tar
 
 A complete fantastic demonstration of reweighting the cross-entropy where the eligibility of each parameter to the gradient is multiplied by the reward or the progress in the goal we want to achieve.
 
-Classical cross-entropy is a specific case of the reinforcement theory.
+Classical cross-entropy definition can be seen as a specific case of the reinforcement theory.
 
 **Well done!**
 

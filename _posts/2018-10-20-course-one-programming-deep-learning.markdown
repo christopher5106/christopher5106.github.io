@@ -84,7 +84,7 @@ print(torch.cuda.is_available()) # True
 
 You can easily check the following commands in Pytorch and Numpy:
 
-| Command  | Numpy  | Pytorch  |
+| ####### Command ####### | Numpy  | Pytorch  |
 |---|---|---|
 | 5x3 matrix, uninitialized  |  x = np.empty((5,3)) | x = torch.Tensor(5,3)  |
 | initialized with ones | x = np.ones((5,3)) | x = torch.ones(5,3) |
@@ -96,16 +96,21 @@ You can easily check the following commands in Pytorch and Numpy:
 | First column | x[:, 1] | x[:, 1] |
 
 You can link Numpy array and Torch Tensor, either with
+
 ```python
 numpy_array = np.ones(5)
 torch_array = torch.from_numpy(numpy_array)
 ```
+
 or
+
 ```python
 torch_array = torch.ones(5)
 numpy_array = torch_array.numpy()
 ```
+
 which will
+
 ```python
 numpy_array+= 1
 print(torch_array) # tensor([2., 2., 2., 2., 2.])

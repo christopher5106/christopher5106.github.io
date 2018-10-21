@@ -7,6 +7,8 @@ categories: deep learning
 
 You might first check [Course 0: deep learning!](http://christopher5106.github.io/deep/learning/2018/10/20/course-zero-deep-learning.html) if you have not read it.
 
+In this deep learning course, we'll use Pytorch as deep learning framework, which is the most modern technology in the area... believe me... and we'll explain you later the burden of other technologies.
+
 # Your programming environment
 
 Deep learning demands heavy computations so all deep learning libraries offer the possibility of parallel computing on GPU rather CPU, and distributed computed on multiple GPUs or instances.

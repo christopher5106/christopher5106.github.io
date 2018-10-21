@@ -84,7 +84,7 @@ print(torch.cuda.is_available()) # True
 
 You can easily check the following commands in Pytorch and Numpy:
 
-| ####### Command ####### | Numpy  | Pytorch  |
+| ####### Command ####### | ####### Numpy ####### | ####### Pytorch ####### |
 |---|---|---|
 | 5x3 matrix, uninitialized  |  x = np.empty((5,3)) | x = torch.Tensor(5,3)  |
 | initialized with ones | x = np.ones((5,3)) | x = torch.ones(5,3) |

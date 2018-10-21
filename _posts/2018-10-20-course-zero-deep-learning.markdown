@@ -111,7 +111,7 @@ In the future, we consider as cross-entropy the following formulation for a sing
 
 $$ \text{EmpiricalCrossEntropy}(p) = - \log p_\hat{c}(x)$$
 
-In **conclusion**, for the case of classification, we compute the cross-entropy with values that are either 0 or 1 at the sample level for the "true" probability: x being the image of a cat, we want the model output $$\{p_c\}_c $$ to fit the empirical class probability $$\{\tilde{p}_c\}_c $$ at the sample level, where $$ \tilde{p}_\hat{c} = 1 $$ for the real object class $$ \hat{c} $$ "cat" and $$ \tilde{p}_c = 0$$ for all other classes $$ c \neq \hat{c} $$: then at the dataset level, averaging these values lead to the empirical estimates of the true probabilities.
+In **conclusion**, for the case of classification, we compute the cross-entropy with values that are either 0 or 1 at the sample level for the "true" probability: x being the image of a cat, we want the model output $$\{p_c\}_c $$ to fit the empirical class probability $$\{\tilde{p}_c\}_c $$ at the sample level, where $$ \tilde{p}_\hat{c} = 1 $$ for the real object class $$ \hat{c} $$ "cat" and $$ \tilde{p}_c = 0$$ for all other classes $$ c \neq \hat{c} $$: then at the dataset level, averaging these values lead to the empirical estimates of the true probabilities we are used to.
 
 <img src="{{ site.url }}/img/deeplearningcourse/DL1.png">
 
@@ -371,13 +371,15 @@ When my actions are parametrized by a model $$ p = f_\theta $$, the whole proble
 
 <img src="{{ site.url }}/img/deeplearningcourse/DL36.png">
 
-and it is possible to maximize the reward by following the gradient of the expected reward:
+and it is possible to find the $$\theta$$ that maximizes the reward by following the gradient of the expected reward:
 
 <img src="{{ site.url }}/img/deeplearningcourse/DL37.png">
 
 which looks exactly the same as the derivative of the cross entropy:
 
 <img src="{{ site.url }}/img/deeplearningcourse/DL38.png">
+
+except that you the expected reward in place of the true probability:
 
 <img src="{{ site.url }}/img/deeplearningcourse/DL39.png">
 

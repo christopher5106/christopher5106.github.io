@@ -237,7 +237,7 @@ Cross entropy is usually mentioned without explanations.
 
 In fact, to understand cross-entropy, you need to rewritte it :
 
-$$ \text{CrossEntropy} = - \sum_c \tilde{p_c} \log p_c = \mathbb{E} \Big( \log( \frac{1}{p_c}) \Big) $$
+$$ \text{CrossEntropy} = - \sum_c \tilde{p_c} \log p_c = \mathbb{E} \Big( \log \frac{1}{p_c} \Big) $$
 
 because $$ \tilde{p_c} $$ is the true distribution, so cross entropy is the expectation of the model predicted inverse probability under the true distribution.
 
@@ -247,7 +247,7 @@ In the case of classification, we use probability values that are either 0 or 1,
 
 No, in fact we are in the empirical case, you need to rewrite it as the empirical expectation:
 
-$$ \text{CrossEntropy} = \mathbb{E} \Big( \log( \frac{1}{p_c}) \Big) \approx \frac{1}{N} \sum_{x \sim D} \log \frac{1}{p_c(x)}$$
+$$ \text{CrossEntropy} = \mathbb{E} \Big( \log \frac{1}{p_c} \Big) \approx \frac{1}{N} \sum_{x \sim D} \log \frac{1}{p_c(x)}$$
 
 where D is the real sample distribution and N is the number of samples on which the cross entropy is estimated. So, in fact, our 1 values becomes $$ \frac{1}{N} $$ when they are computed over multiple samples and they become the label probability.
 
@@ -255,17 +255,17 @@ But still, we can re-introduce a notion of certainty, it is still possible:
 
 - to train a model with smoother values than 0 and 1 for negatives and positives, for example 0.1 or 0.9, which will help achieve better performances. This technique of *label smoothing* or *soft labels* enables in particular to re-introduce the outputs for the negative classes so that it will also sanction wrongly classified negatives, and preserve a symmetry between the negative and positive labels:
 
-$$ \text{CrossEntropy}(p, \tilde{p}) = - \sum_c \tilde{p}_c \log(p_c) = - 0.9 \times \log(p_\hat{c}) - 0.1 \times \sum_{c \neq \hat{c}} \tilde{p}_c \log(p_c) $$
+$$ \text{CrossEntropy}(p, \tilde{p}) = - \sum_c \tilde{p}_c \log p_c = - 0.9 \times \log p_\hat{c}  - 0.1 \times \sum_{c \neq \hat{c}} \tilde{p}_c \log p_c  $$
 
 - to use smoother value when the labels in the groundtruth are less certain,
 
 - to rebalance the dataset with $$ \alpha_{c} $$ the inverse class frequency :
 
-$$ \text{CrossEntropy}(p, \tilde{p}) = - \alpha_{\hat{c}} \times \log(p_\hat{c}) $$
+$$ \text{CrossEntropy}(p, \tilde{p}) = - \alpha_{\hat{c}} \times \log p_\hat{c}  $$
 
 - to focus more on wrongly classified examples
 
-$$ \text{CrossEntropy}(p, \tilde{p}) = - ( 1 - p_\hat{c} )^\gamma \times \log(p_\hat{c}) $$
+$$ \text{CrossEntropy}(p, \tilde{p}) = - ( 1 - p_\hat{c} )^\gamma \times \log p_\hat{c} $$
 
 as in the Focal Loss for object detection where background negatives are too numerous and tend to take over the positives.
 

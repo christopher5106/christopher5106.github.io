@@ -175,7 +175,11 @@ $$ \text{cost} = \text{CrossEntropy} \circ \text{Softmax} \circ \text{Dense}_{\t
 
 $$ \text{cost}(x) = \text{CrossEntropy} (\text{Softmax} (\text{Dense}_{\theta_2}^2 ( \text{ReLu} ( \text{Dense}_{\theta_1}^1  (x) ) ) ) ) $$
 
-Without a ReLu activation the two Dense layers would be mathematically equivalent to only 1 Dense layer. Hence the model has two sets of parameters
+This model is called **perceptron** and the output of the first Dense layer is a **hidden representation** of the data, while the second layer is used to reduce the number of outputs to the number of classes, to predict class probabilities with a softmax normalization:
+
+<img src="{{ site.url }}/img/deeplearningcourse/DL15.png">
+
+Without a ReLu activation in the middle, the two Dense layers would be mathematically equivalent to only 1 Dense layer. Hence the model has two sets of parameters
 
 $$ \theta = [ \theta_1, \theta_2 ] $$
 
@@ -282,7 +286,7 @@ Let's take, as model, a very simple one with only one Dense layer with 2 filters
 
 <img src="{{ site.url }}/img/deeplearningcourse/DL7.png">
 
-Such a layer produces a vector of 2 scalars:
+This is the smallest model we can ever imagine. Such a layer produces a vector of 2 scalars:
 
 $$ f_\theta : \{x_j\} \rightarrow \Big\{ o_i = \sum_j \theta_{i,j} x_j \Big\}_i$$
 

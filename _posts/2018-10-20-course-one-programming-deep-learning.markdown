@@ -60,4 +60,25 @@ We also usually compute the precision/recall curve: precision defines the number
 
 <img src="{{ site.url }}/img/deeplearningcourse/DL11.png">
 
-# Pytorch
+# Perform a gradient descent on a classification problem
+
+We do it by ourself without packages.
+
+use of cross entropy
+
+Toy dataset of values between 0 and 1.
+
+
+Take an ensemble
+
+<img src="{{ site.url }}/img/deeplearningcourse/DL18.png">
+
+
+<img src="{{ site.url }}/img/deeplearningcourse/DL15.png">
+
+
+The art of choosing the learning rate
+<img src="{{ site.url }}/img/deeplearningcourse/DL20.png">
+
+
+# Re-implement with Pytorch modules

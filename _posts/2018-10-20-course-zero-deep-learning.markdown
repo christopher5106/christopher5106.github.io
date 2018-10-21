@@ -76,7 +76,7 @@ Cross entropy is usually mentioned without explanations.
 
 In fact, to understand cross-entropy, you need to rewrite its theoretical definition :
 
-$$ \text{CrossEntropy} = - \sum_c \tilde{p_c} \log p_c = - \mathbb{E} \Big( \log p_c \Big) $$
+$$ \text{CrossEntropy} = - \sum_c \tilde{p_c} \log p_c = - \mathbb{E} \Big( \log p_c \Big) $$ (1)
 
 because $$ \tilde{p_c} $$ is the true distribution, so cross entropy is the expectation of the model predicted negative probability under the true distribution.
 
@@ -86,18 +86,26 @@ $$ \text{CrossEntropy} \approx - \frac{1}{N} \sum_{x \sim D} \log p_{\hat{c}(x)}
 
 where D is the real sample distribution, N is the number of samples on which the cross entropy is estimated and $$ \hat{c}(x) $$ is the true class of x.
 
-To compute our empirical cross-entropy for one sample (N=1), it is equivalent to defining the $$ \tilde{p} $$ probability in the theoretical cross-entropy definition by:
+To compute our empirical cross-entropy for one sample (N=1),
+
+
+$$ \text{CrossEntropy} \approx - \log(p_\hat{c}) $$
+
+
+which is equivalent to defining the $$ \tilde{p} $$ probability in the theoretical cross-entropy definition by:
 
 $$ \tilde{p}_c(x) = \begin{cases}
   1, & \text{if } c = \hat{c}(x), \\
   0, & \text{otherwise}.
 \end{cases} $$
 
-which we will write $$ \tilde{p}_c(x) = \delta(c,\hat{c}) $$. If more samples are considered, usually we average the individual losses for stability, leading back to the desired empirical estimation:
+which we will write $$ \tilde{p}_c(x) = \delta(c,\hat{c}) $$.
+
+If more samples are considered, usually we average the individual losses for stability, leading back to the desired empirical estimation:
 
 $$ \frac{1}{N} \sum_{x \sim D} L(x) = - \frac{1}{N} \sum_{x \sim D} \log p_{\hat{c}(x)}(x) \approx \text{CrossEntropy}$$
 
-In the future, we'll consider the following cross-entropy forumulation for a single sample:
+In the future, we'll consider the following cross-entropy formulation for a single sample:
 
 $$ \text{EmpiricalCrossEntropy}(p) = - \log(p_\hat{c})$$
 

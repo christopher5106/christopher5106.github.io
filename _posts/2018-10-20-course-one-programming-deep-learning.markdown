@@ -80,7 +80,7 @@ print(torch.__version__) # 0.4.1
 print(torch.cuda.is_available()) # True
 ```
 
-#### Numpy compatibility
+#### 1. Numpy compatibility
 
 You can easily check the following commands in Pytorch and Numpy:
 
@@ -105,7 +105,7 @@ or
 torch_array = torch.ones(5)
 numpy_array = torch_array.numpy()
 ```
-which will 
+which will
 ```python
 numpy_array+= 1
 print(torch_array) # tensor([2., 2., 2., 2., 2.])
@@ -113,12 +113,22 @@ torch_array.add_(1)
 print(numpy_array) # [3. 3. 3. 3. 3.]
 ```
 
+#### 2. GPU computing
 
+To transfer the arrays :
 
-####
-
-
-
+```python
+x = torch.ones(5,3)
+y = torch.ones(5,3)
+x = x.cuda()
+y = y.cuda()
+print(x+y)
+# tensor([[2., 2., 2.],
+#         [2., 2., 2.],
+#         [2., 2., 2.],
+#         [2., 2., 2.],
+#         [2., 2., 2.]], device='cuda:0')
+```
 
 
 

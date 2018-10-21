@@ -61,7 +61,7 @@ We also usually compute the precision/recall curve: precision defines the number
 <img src="{{ site.url }}/img/deeplearningcourse/DL11.png">
 
 
-# A library deep learning
+# A library for deep learning
 
 A deep learning library offers the following characteristics :
 
@@ -168,7 +168,7 @@ out.backward(torch.Tensor([1.0]))
 
 
 
-# Perform a gradient descent on a classification problem
+# Descend a gradient on a classification problem
 
 Let's take back our [Course 0](http://christopher5106.github.io/deep/learning/2018/10/20/course-zero-deep-learning.html)'s perceptron and implement it directly with Pytorch tensors and operators, without other packages.
 

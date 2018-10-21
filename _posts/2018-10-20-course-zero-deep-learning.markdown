@@ -247,7 +247,7 @@ In the case of classification, we use probability values that are either 0 or 1,
 
 No, in fact we are in the empiracal case, you need to rewrite it as the empirical expectation:
 
-$$ \text{CrossEntropy} = \mathbb{E} \Big( \log( \frac{1}{p_c}) \Big) = \frac{1}{N} \sum_{\text{x \tilde D}} \tilde{p_c(x)} \log \frac{1}{p_c}$$
+$$ \text{CrossEntropy} = \mathbb{E} \Big( \log( \frac{1}{p_c}) \Big) = \frac{1}{N} \sum_{\text{x \sim D}} \tilde{p_c(x)} \log \frac{1}{p_c}$$
 
 where N is the number of samples on which the cross entropy is estimated. So, in fact, our 1 values becomes $$ \frac{1}{N} $$ when they are computed over multiple samples and they become the label probability.
 

@@ -196,7 +196,7 @@ So, it is possible to compute the derivative with respect to either the paramete
 
 $$ \nabla_{\theta_g} g = \Big{ \frac{\partial g_i}{\partial {\theta_g}_j } \Big}  $$
 
-$$ \nabla_{I} g = \Big{ \frac{\partial g_i}{\partial x_j} \Big}_{i,j} $$
+$$ \nabla_I g = \Big{ \frac{\partial g_i}{\partial x_j} \Big}_{i,j} $$
 
 Combining them:
 
@@ -205,7 +205,7 @@ $$ (f \circ g)(x) = f_{\theta_f} ( g(x,\theta_g), \theta_f) $$
 
 and we want the gradient with respect to the parameters of g, that we can consider as inputs the way. The correct expression becomes :
 
-$$ \nabla_{\theta_g} (f \circ g_{\theta_g}) = \nabla_\text{f inputs} f \times \nabla_{\theta_g} g $$
+$$ \nabla_{\theta_g} (f \circ g_{\theta_g}) = \nabla_I f \times \nabla_{\theta_g} g $$
 
 
 What does that mean for deep learning and gradient descent ? In fact, for each layer, we want to compute
@@ -222,11 +222,11 @@ the gradient is given by
 
 $$ \nabla_{\theta_2} \text{cost} = \nabla_{\theta_2} \Big( \text{CrossEntropy} \circ \text{Softmax} \circ \text{Dense}^2 \Big) $$
 
-$$ = \Big(\nabla_{\text{CE inputs}}  \text{CrossEntropy} \times \nabla_{\text{Softmax inputs}} \text{Softmax}\Big) \times \nabla_{\theta_2} \text{Dense}^2 $$
+$$ = \Big(\nabla_I  \text{CrossEntropy} \times \nabla_I \text{Softmax}\Big) \times \nabla_{\theta_2} \text{Dense}^2 $$
 
 and for the layer  $$ \text{Dense}^1 $$,
 
-$$ \nabla_{\theta_1} \text{cost} = \Big(\nabla_{\text{CE inputs}}  \text{CrossEntropy} \times \nabla_{\text{Softmax inputs}} \text{Softmax}\Big) \times \nabla_{\text{Dense2 inputs}} \text{Dense}^2 \times \nabla_{\text{ReLU inputs}} \text{ReLu} \times \nabla_{\theta_1} \text{Dense}^1  $$
+$$ \nabla_{\theta_1} \text{cost} = \Big(\nabla_I  \text{CrossEntropy} \times \nabla_I \text{Softmax}\Big) \times \nabla_I \text{Dense}^2 \times \nabla_I \text{ReLu} \times \nabla_{\theta_1} \text{Dense}^1  $$
 
 We see that the matrix multiplications inside the brackets for Dense layers are common, and it is possible to compute them once. To reduce the number of matrix mulplications, it is better to compute the gradients from the top layer to the bottom layer and reuse previous computations of matrix multiplication for earlier gradients.
 

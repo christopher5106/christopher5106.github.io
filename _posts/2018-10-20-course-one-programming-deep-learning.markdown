@@ -303,11 +303,11 @@ for i in range(1000):
 
 **Exercise**: check that the norm of the parameters converge to zero.
 
-Let's consider a more useful case, ie a classification problem with a crossentropy loss:
+Let's consider a more useful case, ie a classification problem with the cross-entropy loss we have seen in [Course 0](http://christopher5106.github.io/deep/learning/2018/10/20/course-zero-deep-learning.html) :
 
 <img src="{{ site.url }}/img/deeplearningcourse/DL18.png">
 
-For that purpose, we'll consider a toy dataset consisting of positions in a square where the target labels depends on a region of the square. Let's create the dataset with Numpy:
+For that purpose, we'll consider a toy dataset consisting of positions in a square where the target label is a simple function of the position in the square. Let's create the dataset with Numpy:
 
 ```python
 import matplotlib.pyplot as plt
@@ -328,6 +328,8 @@ And convert the Numpy arrays to Torch Tensors:
 X = torch.from_numpy(x).type(torch.FloatTensor)
 Y = torch.from_numpy(labels).type(torch.LongTensor)
 ```
+
+The first layer of the neural network takes as input a position, ie a vector of dimension 2, and the second layer is required to output a number of values equal to the number of classes, on top of which we'll place a softmax to normalize them into probabilities. We choose a hidden dimension of 12:
 
 ```python
 theta1 =  torch.autograd.Variable(torch.randn(2, 12) *0.01,requires_grad = True)
@@ -350,7 +352,11 @@ def crossentropy(s, l):
     v = torch.gather(s, 1, torch.unsqueeze(l,-1))
     v = torch.log(v)
     return -torch.mean(v)
+```
 
+For more efficiency, let's train 20 samples at each step, hence a batch size of 20:
+
+```python
 batch_size = 20
 for i in range(min(dataset_size, 100000) // batch_size ):
     lr = 0.5 * (.1 ** ( max(i - 100 , 0) // 1000))
@@ -378,7 +384,7 @@ for i in range(min(dataset_size, 100000) // batch_size ):
 # iter 4999 - cost 0.07717917114496231 - learning rate 5.000000000000001e-05
 ```
 
-The network has converged. To check everything is fine, one might compute the accuracy, a classical metric:
+The network converges. To check everything is fine, one might compute the accuracy, a classical metric for classification problems:
 
 ```python
 accuracy = 0
@@ -387,7 +393,6 @@ for i in range(min(dataset_size, nb)):
     z = forward(torch.autograd.Variable(X[i:i+1], requires_grad=False))
     p = softmax(z)
     l = torch.max(p, -1)[1]
-    #print(l.data.numpy()[0], labels[i])
     if l.data.numpy()[0] == labels[i]:
         accuracy += 1
 

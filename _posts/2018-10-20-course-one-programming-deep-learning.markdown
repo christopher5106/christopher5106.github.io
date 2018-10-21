@@ -141,32 +141,109 @@ a.add_(1)
 print(a_) # tensor([1., 1., 1., 1., 1.], device='cuda:0')
 ```
 
-Tensors behave as classical programming non-reference variables and their content is copied from device to the other.
+Tensors behave as classical programming non-reference variables and their content is copied from device to the other. This way, you decide when to transfer the data.
 
+Contrary to other frameworks, Pytorch does not require to build a graph of operators and execute the graph on a device. Pytorch programming is as normal Python programming.
 
 #### 3. Automatic differentiation
 
 To compute the gradient automatically, you need to wrap the tensors in Variable objects:
 
 ```python
-x = torch.autograd.Variable(torch.ones(2, 2), requires_grad=True)
+x = torch.autograd.Variable(torch.ones(1)+1, requires_grad=True)
+print(x.data)
+#tensor([2.])
+print(x.grad)
+# None
+print(x.grad_fn)
+# None
 ```
 
+The Variable contains the original data in the `data` attribute.
 
-backward => grad_fn
+When you add an operation such as for example the square operator, the newly created Variable is populated with the result in the `data` attribute as well as an history `grad_fn` function :
 
-where are the gradients
+```python
+y = x ** 2
+print(y.data)
+# tensor([4.])
+print(y.grad)
+# None
+print(y.grad_fn)
+# <PowBackward0 object at 0x7ffaf1ae0160>
+```
 
-gradients are accumulated
+The `grad_fn` Function enables to compute the derivative thanks to the Variable's `backward()` method:
+
+```python
+y.backward()
+print(x.data)
+# tensor([2.])
+print(x.grad)
+# tensor([4.])
+```
+
+Since $$ \frac{\partial x^2}{\partial x} = 2 x $$, the gradient of the cost y with respect to the input x is placed in `x.grad` and its value is 4 at x=2.
+
+Calling `y.backward()` a second time will lead to a RunTime Error. In order to accumulate the gradients into `x.grad`, you need to set `retain_graph=True` during the first backward call.
+
+Let's confirm this in a  case where the input is multi-dimensional:
+
+```python
+x = torch.autograd.Variable(torch.ones(2), requires_grad=True)
+y = x.sum()
+y.backward(retain_graph=True)
+print(x.grad)
+# tensor([1., 1.])
+y.backward()
+print(x.grad)
+# tensor([2., 2.])
+y.backward()
+print(x.grad)
+# tensor([3., 3.])
+```
+
+Since $$ \frac{\partial}{\partial x_1} (x_1 + x_2) = 1 $$ and $$ \frac{\partial}{\partial x_2} (x_1 + x_2) = 1 $$, the `x.grad` tensor is populated with ones.
+
+Applying the `backward()` method multiple times accumulates the gradients.
+
+It is also possible to apply the `backward()` method on something else than a cost (scalar), for example on a layer or operation with a multi-dimensional output, as in the middle of a neural network, but in this case, you need to provide as argument to the `backward()` method the $$ \nabla_{I \text{layer above} \text{cost}$$ gradient of the layer above with respect to its input, which will be multiplied by $$ \nabla_{\theta_t} $$ the current layer's gradient with respect to its parameter:
+
+```python
+x = torch.autograd.Variable(torch.ones(2), requires_grad=True)
+y = x ** 2
+print(y.data)
+# tensor([1., 1.])
+y.backward(torch.tensor([-1., 1.]))
+print(x.grad)
+# tensor([-2.,  2.])
+```
+
+As Pytorch does not require to introduce complex graph operators as in other technologies (switches, comparisons, dependency controls, scans/loops... ), it enables you to program as normally, and gradients are well propagated through your Python code:
+
+```python
+x = torch.autograd.Variable(torch.ones(1) +1, requires_grad=True)
+y = x
+while y < 10:
+  y = y**2
+print(y.data)
+# tensor([16.])
+y.backward()
+print(x.grad)
+# tensor([32.])
+```
+
+which is fantastic. In this case, $$ y(x=2) = ( x^2 )^2 = x^4  $$ and  $$ \frac{\partial y}{\partial x} |_{x=2} 4\times x^3 = 32 $$.
+
+
 
 gradient for complex operators
+no graph
 
 
+require_grad
 
-backward with multiple output
-out.backward(torch.Tensor([1.0]))
-
-
+**Exercise**: compute the derivative with Keras, Tensorflow, CNTK  
 
 # Descend a gradient on a classification problem
 
@@ -233,7 +310,12 @@ The modules help organize layers and reuse their definitions.
 
 1- rewrite the model as module using nn modules
 
+**Exercise**: program a training loop with Keras, Tensorflow, CNTK  
+
 # Packages
+
+Packages avoid to reprogram common functions for deep learning and help the reuse of code.
+
 
 2- rewrite training loop using the optim package (zeroing gradients + applying the gradients with an update rule)
 3- look at different update rules
@@ -243,6 +325,7 @@ The modules help organize layers and reuse their definitions.
 
 view reshape
 
+**Exercise**: replace your functions with package functions in Keras, Tensorflow, CNTK  
 
 **Well done!**
 

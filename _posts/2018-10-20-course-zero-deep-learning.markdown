@@ -249,7 +249,7 @@ No, in fact we are in the empiracal case, you need to rewrite it as the empirica
 
 $$ \text{CrossEntropy} = \mathbb{E} \Big( \log( \frac{1}{p_c}) \Big) = \frac{1}{N} \sum_{\text{x \tilde D}} \tilde{p_c(x)} \log p_c$$
 
-where N is the number of samples on which the cross entropy is estimated.
+where N is the number of samples on which the cross entropy is estimated. So, in fact, our 1 values becomes $$ \frac{1}{N} $$ when they are computed over multiple samples and they become the label probability.
 
 But: it is still possible to train a model with smoother values, for example 0.1 or 0.9, which will help achieve better performances. This technique of *label smoothing* enables in particular to re-introduce the outputs for the negative classes so that it will also sanction wrongly classified negatives, and preserve a symmetry between the negative and positive labels:
 

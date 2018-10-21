@@ -387,6 +387,8 @@ Instead of 1 and 0 in case of classification, you use the global reward R as tar
 
 <img src="{{ site.url }}/img/deeplearningcourse/DL41.png">
 
+A complete fantastic demonstration of reweighting the cross-entropy where the elibility of each parameter is multiplied by the goal we want to achieve.
+
 **Well done!**
 
 Now let's go to next course: [Course 1: programming deep learning!](http://christopher5106.github.io/deep/learning/2018/10/20/course-one-programming-deep-learning.html)

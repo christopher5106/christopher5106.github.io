@@ -207,7 +207,7 @@ Since $$ \frac{\partial}{\partial x_1} (x_1 + x_2) = 1 $$ and $$ \frac{\partial}
 
 Applying the `backward()` method multiple times accumulates the gradients.
 
-It is also possible to apply the `backward()` method on something else than a cost (scalar), for example on a layer or operation with a multi-dimensional output, as in the middle of a neural network, but in this case, you need to provide as argument to the `backward()` method the $$ \nabla_{I \text{layer above} \text{cost}$$ gradient of the layer above with respect to its input, which will be multiplied by $$ \nabla_{\theta_t} $$ the current layer's gradient with respect to its parameter:
+It is also possible to apply the `backward()` method on something else than a cost (scalar), for example on a layer or operation with a multi-dimensional output, as in the middle of a neural network, but in this case, you need to provide as argument to the `backward()` method the $$ \nabla_\text{input of layer above} \text{cost}$$ gradient of the layer above with respect to its input, which will be multiplied by $$ \nabla_{\theta_t} $$ the current layer's gradient with respect to its parameter:
 
 ```python
 x = torch.autograd.Variable(torch.ones(2), requires_grad=True)
@@ -233,7 +233,7 @@ print(x.grad)
 # tensor([32.])
 ```
 
-which is fantastic. In this case, $$ y(x=2) = ( x^2 )^2 = x^4  $$ and  $$ \frac{\partial y}{\partial x} |_{x=2} 4\times x^3 = 32 $$.
+which is fantastic. In this case, $$ y(x=2) = ( x^2 )^2 = x^4  $$ and  $$ \frac{\partial y}{\partial x} \|_{x=2} 4\times x^3 = 32 $$.
 
 Note that gradients are computed by retropropagate until a Variable has no `graph_fn` (an input Variable set by the user) or a Variable with `require_grad` set to `False`, which helps save computations.
 

@@ -246,36 +246,92 @@ Let's take back our [Course 0](http://christopher5106.github.io/deep/learning/20
 
 <img src="{{ site.url }}/img/deeplearningcourse/DL15.png">
 
-We'll implement:
 
-- 2 Dense layers
+Pytorch only requires to implement the forward pass of our perceptron. Each Dense layer is composed of multiplicative weights and a bias:
 
-- 2 different costs
+```python
+theta1 =  torch.autograd.Variable(torch.randn(32,20) *0.1,requires_grad = True)
+bias1 = torch.autograd.Variable(torch.randn(32)*0.1,requires_grad = True)
+theta2 = torch.autograd.Variable(torch.randn(32,32)*0.1,requires_grad = True)
+bias2 = torch.autograd.Variable(torch.randn(32)*0.1,requires_grad = True)
 
-- a training loop with
+def forward(x):
+    y = theta1.mv(x) + bias1
+    y = torch.max(y, torch.autograd.Variable(torch.Tensor([0])))
+    return theta2.mv(y) + bias2
+```
 
-    - a forward pass (propagate the input values through layers from bottom to top, until the cost)
+As first loss function, let's use the square of the sum of the outputs:
 
-    - a backward pass (compute the gradients from top to bottom)
+```python
+def cost(z):
+    return (torch.sum(z)) ** 2
+```
 
-    - apply the parameter update rule $$ \theta \leftarrow \theta - \lambda \nabla_{\theta_L} \text{cost} $$ for each layer L
+A training loop consists in
 
+- a forward pass : propagate the input values through layers from bottom to top, until the cost
 
-, the square of the sum of the outputs and the crossentropy
+- a backward pass : compute the gradients from top to bottom
 
+- apply the parameter update rule $$ \theta \leftarrow \theta - \lambda \nabla_{\theta_L} \text{cost} $$ for each layer L
 
-We'll use different
-use of cross entropy
+```python
+for i in range(1000):
+    lr = 0.001 * (.1 ** ( max(i - 500 , 0) // 100))
 
-Toy dataset of values between 0 and 1.
+    x = torch.autograd.Variable(torch.randn(20), requires_grad=False)
+    z = forward(x)
+    c = cost(z)
+    print("cost {} - learning rate {}".format(c.data.item(), lr))
+
+    # compute the gradients
+    c.backward()
+
+    # apply the gradients
+    theta1.data = theta1.data - lr * theta1.grad.data
+    bias1.data = bias1.data - lr * bias1.grad.data
+    theta2.data = theta2.data - lr * theta2.grad.data
+    bias2.data = bias2.data - lr * bias2.grad.data
+
+    # clear the grad
+    theta1.grad.zero_()
+    bias1.grad.zero_()
+    theta2.grad.zero_()
+    bias2.grad.zero_()
+```
+
+**Exercise**: check that the norm of the parameters converge to zero.
+
+Let's consider a more useful case, ie a classification problem with a crossentropy loss:
 
 <img src="{{ site.url }}/img/deeplearningcourse/DL42.png">
 
-Take an ensemble
+For that purpose, we'll consider a toy dataset consisting of positions in a square where the target labels depends on a region of the square. Let's create the dataset with Numpy:
+
+```python
+import matplotlib.pyplot as plt
+dataset_size = 200000
+x = np.random.rand(dataset_size, 2)
+labels = np.zeros(dataset_size)
+labels[x[:, 0] > x[:,1]] = 2
+labels[x[:,1] + x[:, 0] > 1] = 1
+plt.scatter(x[:,0], x[:,1], c=labels )
+plt.show()
+```
 
 <img src="{{ site.url }}/img/deeplearningcourse/DL18.png">
 
+And convert the Numpy arrays to Torch Tensors:
 
+```python
+X = torch.from_numpy(x).type(torch.FloatTensor)
+Y = torch.from_numpy(labels).type(torch.LongTensor)
+```
+
+
+
+Take an ensemble
 
 
 The art of choosing the learning rate

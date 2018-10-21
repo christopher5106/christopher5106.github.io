@@ -122,7 +122,7 @@ print(numpy_array) # [3. 3. 3. 3. 3.]
 
 #### 2. GPU computing
 
-It is possible to transfer tensors values between RAM and each GPUs:
+It is possible to transfer tensors values between devices, ie RAM memory and each GPUs' memory:
 
 ```python
 a = torch.ones(5,) # tensor([1., 1., 1., 1., 1.])
@@ -141,11 +141,30 @@ a.add_(1)
 print(a_) # tensor([1., 1., 1., 1., 1.], device='cuda:0')
 ```
 
-Tensors behave as classical programming non-reference variables and their content is copied.
+Tensors behave as classical programming non-reference variables and their content is copied from device to the other.
 
 
 #### 3. Automatic differentiation
 
+To compute the gradient automatically, you need to wrap the tensors in Variable objects:
+
+```python
+x = torch.autograd.Variable(torch.ones(2, 2), requires_grad=True)
+```
+
+
+backward => grad_fn
+
+where are the gradients
+
+gradients are accumulated
+
+gradient for complex operators
+
+
+
+backward with multiple output
+out.backward(torch.Tensor([1.0]))
 
 
 

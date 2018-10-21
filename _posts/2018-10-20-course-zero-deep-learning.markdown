@@ -89,7 +89,7 @@ where D is the real sample distribution, N is the number of samples on which the
 Our empirical cross-entropy for one sample (N=1) becomes
 
 
-$$ \text{CrossEntropy} \approx - \log(p_\hat{c}) $$
+$$ \text{CrossEntropy} \approx - \log p_\hat{c}(x) $$
 
 
 which is equivalent to defining the $$ \tilde{p} $$ probability in the theoretical cross-entropy definition by:
@@ -109,7 +109,7 @@ In the future, we'll consider the following cross-entropy formulation for a sing
 
 $$ \text{EmpiricalCrossEntropy}(p) = - \log(p_\hat{c})$$
 
-In **conclusion**, for the case of classification, we use probability values that are either 0 or 1: X being the image of a cat, we want the model output $$\{p_c\}_c $$ to fit the real empirical class probability $$\{\tilde{p}_c\}_c $$, where $$ p_\hat{c} = 1 $$ for the real object class $$ \hat{c} $$ "cat" and $$ p_c = 0$$ for all other classes $$ c \neq \hat{c} $$:
+In **conclusion**, for the case of classification, we use probability values that are either 0 or 1: x being the image of a cat, we want the model output $$\{p_c\}_c $$ to fit the real empirical class probability $$\{\tilde{p}_c\}_c $$, where $$ p_\hat{c} = 1 $$ for the real object class $$ \hat{c} $$ "cat" and $$ p_c = 0$$ for all other classes $$ c \neq \hat{c} $$:
 
 <img src="{{ site.url }}/img/deeplearningcourse/DL1.png">
 

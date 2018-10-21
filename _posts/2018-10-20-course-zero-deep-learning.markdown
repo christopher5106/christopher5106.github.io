@@ -51,7 +51,7 @@ Note that **a loss function always outputs a scalar value**. This scalar value i
 
 In **conclusion** of this section, the goal of machine learning is to have a function fit with the real world; and to have this function fit well, we use a loss function to measure how to reduce this distance.
 
-**Exercice**: discover many more loss functions with my [full article about loss functions](http://christopher5106.github.io/deep/learning/2016/09/16/about-loss-functions-multinomial-logistic-logarithm-cross-entropy-square-errors-euclidian-absolute-frobenius-hinge.html).
+**Exercise**: discover many more loss functions with my [full article about loss functions](http://christopher5106.github.io/deep/learning/2016/09/16/about-loss-functions-multinomial-logistic-logarithm-cross-entropy-square-errors-euclidian-absolute-frobenius-hinge.html).
 
 
 # Cross entropy in practice
@@ -254,7 +254,7 @@ $$ \nabla \text{cost} = \tilde{p} - p $$
 
 **Conclusion**: it is easier to backprogate gradients computed on Softmax+CrossEntropy together rather than backpropagate separately each : the derivative of the Softmax+CrossEntropy with respect to the output of the model for the right class, let's say the "cat" class, will be 1 - 0.8 = 0.2, if the model has predicted a probability of 0.8 for this class, encouraging it to increase this value ; the derivative of the Softmax+CrossEntropy with respect to an output for a different class will be -0.4 is it has predicted a probability of 0.4, encouraging the model to decrease this value.  
 
-**Exercice**: Compute the derivative of Sigmoid+MSE combined.
+**Exercise**: Compute the derivative of Sigmoid+MSE combined.
 
 
 # Example with a Dense layer

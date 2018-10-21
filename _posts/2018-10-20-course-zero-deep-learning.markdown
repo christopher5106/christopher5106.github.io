@@ -54,12 +54,12 @@ In **conclusion** of this section, the goal of machine learning is to have a fun
 
 # Cross entropy in practice
 
-Two problems arise: first, most mathematical functions do not output a probability that sums to 1. Second, how do I evaluate the true distribution $$ \tilde{p} $$ ?
+Two problems arise: first, most mathematical functions do not output a probability vector which values sum to 1. Second, how do I evaluate the true distribution $$ \tilde{p} $$ ?
 
 
 #### Normalizing model outputs
 
-Usually, we transforming any model output into a probability that sums to 1 is usually performed thanks to a softmax function set on top of the model outputs :
+Usually, we transform any model output into a probability that sums to 1 is usually performed thanks to a softmax function set on top of the model outputs :
 
 $$ x \xrightarrow{f} o = f(x) = \{o_c\}_c \xrightarrow{softmax} \{p_c\}_c $$
 
@@ -80,7 +80,7 @@ $$ \text{CrossEntropy} = - \sum_c \tilde{p_c} \log p_c = - \mathbb{E} \Big( \log
 
 because $$ \tilde{p_c} $$ is the true distribution, so cross entropy is the expectation of the model predicted negative probability under the true distribution.
 
-The, we rewrite it as the empirical expectation:
+Then, we use the formula for the empirical estimation of the expectation:
 
 $$ \text{CrossEntropy} \approx - \frac{1}{N} \sum_{x \sim D} \log p_{\hat{c}(x)}(x) $$
 
@@ -91,7 +91,7 @@ To compute our empirical cross-entropy for one sample (N=1), we can use
 $$ \tilde{p_c(x)} \begin{cases}
   1, & \text{if } c = \hat{c(x)}, \\
   0, & \text{otherwise}.
-\end{cases}
+\end{cases} $$
 
 which we will write $$ \tilde{p_c(x)} = \delta(c,\hat{c}) $$.
 

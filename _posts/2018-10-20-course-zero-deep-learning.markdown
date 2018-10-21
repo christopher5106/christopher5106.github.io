@@ -101,7 +101,7 @@ In the future, we'll consider the following cross-entropy forumulation for a sin
 
 $$ \text{CrossEntropy}(p, \tilde{p}) = - \log(p_\hat{c})$$
 
-In **conclusion**, for the case of classification, we use probability values that are either 0 or 1: X being the image of a cat, we want this output $$\{p_c\}_c $$ to fit the real empirical class probability $$\{\tilde{p}_c\}_c $$, where $$ p_\hat{c} = 1 $$ for the real object class $$ \hat{c} $$ "cat" and $$ p_c = 0$$ for all other classes $$ c \neq \hat{c} $$:
+In **conclusion**, for the case of classification, we use probability values that are either 0 or 1: X being the image of a cat, we want the model output $$\{p_c\}_c $$ to fit the real empirical class probability $$\{\tilde{p}_c\}_c $$, where $$ p_\hat{c} = 1 $$ for the real object class $$ \hat{c} $$ "cat" and $$ p_c = 0$$ for all other classes $$ c \neq \hat{c} $$:
 
 <img src="{{ site.url }}/img/deeplearningcourse/DL1.png">
 

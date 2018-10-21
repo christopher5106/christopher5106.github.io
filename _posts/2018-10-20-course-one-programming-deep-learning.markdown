@@ -7,7 +7,7 @@ categories: deep learning
 
 You might first check [Course 0: deep learning!](http://christopher5106.github.io/deep/learning/2018/10/20/course-zero-deep-learning.html) if you have not read it.
 
-In this deep learning course, we'll use Pytorch as deep learning framework, which is the most modern technology in the area... believe me... and we'll explain you later the burden of other technologies.
+In this deep learning course, we'll use Pytorch as deep learning framework, the most modern technology in the area.
 
 # Your programming environment
 
@@ -28,7 +28,7 @@ Most recent GPU architectures are Pascal and Volta architectures. The more memor
 One of the main difficulties come from the fact that different deep learning frameworks are not available and tested on all CUDA versions, CUDNN versions, and even OS. CUDA versions are not available for all driver versions and OS as well. A good solution to adopt is to use Docker files, which limits the choice of the driver version in the operating system: the compliant CUDA and CUDNN versions as well as the deep learning frameworks can be installed inside the Docker container.
 
 
-# First concept: the batch
+# The batch
 
 When applying the update rule, the best is to compute the gradients on the whole dataset but it is too costly. Usually we use a batch of training examples, it is a trade-off that performs better than a single example and is not too long to compute.
 
@@ -44,7 +44,7 @@ This format is very common and called *channel last*. Some deep learning framewo
 To distribute the training on multiple GPU or instances, the easiest way is to split along the batch dimension, which we call *data parallellism*, and dispatch the different splits to their respective instance. The parameter update step requires to synchronize more or less the gradient computations. NVIDIA provides fast multi-gpu collectives in its library NCCL, and fast connections between GPUs with NVLINK2.0.
 
 
-# Second concept: training curves and metrics
+# Training curves and metrics
 
 As we have seen on [Course 0](http://christopher5106.github.io/deep/learning/2018/10/20/course-zero-deep-learning.html), we use a *cost function* to fit the model to the goal.
 
@@ -60,14 +60,81 @@ We also usually compute the precision/recall curve: precision defines the number
 
 <img src="{{ site.url }}/img/deeplearningcourse/DL11.png">
 
+
+# Programming deep learning
+
+A deep learning library offers the following characteristics :
+
+1. It works very well with Numpy arrays. Arrays are called **Tensors**. Moreover, operations on Tensors follow lot's of Numpy conventions.
+
+2. It provides abstract classes, such as Tensors, for parallel computing on GPU rather CPU, and distributed computing on multiple GPUs or instances, since Deep learning demands huge computations.
+
+3. Operators have a 'backward' implementation, computing the gradients for you, with respect to the inputs or parameters.
+
+Let's load Pytorch Python module into a Python shell, as well as Numpy library, check the Pytorch version is correct and the Cuda library is correctly installed:
+
+```python
+import torch
+import numpy as np
+print(torch.__version__) # 0.4.1
+print(torch.cuda.is_available()) # True
+```
+
+#### Numpy compatibility
+
+You can easily check the following commands in Pytorch and Numpy:
+
+| Command  | Numpy  | Pytorch  |
+|---|---|---|
+| 5x3 matrix, uninitialized  |  x = np.empty((5,3)) | x = torch.Tensor(5,3)  |
+| initialized with ones | x = np.ones((5,3)) | x = torch.ones(5,3) |
+| initialized with zeros | x = np.zeros((5,3)) | x = torch.zeros(5,3) |
+| randomly initialized matrix  |  x = np.random.random((5,3)) | x = torch.rand(5, 3)  |
+| Shape/size  |  x.shape | x.size  |
+| Addition | +/np.add | +/torch.add |
+| In-place addition | x+= | x.add_() |
+| First column | x[:, 1] | x[:, 1] |
+
+You can link Numpy array and Torch Tensor, either with
+```python
+numpy_array = np.ones(5)
+torch_array = torch.from_numpy(numpy_array)
+```
+or
+```python
+torch_array = torch.ones(5)
+numpy_array = torch_array.numpy()
+```
+which will 
+```python
+numpy_array+= 1
+print(torch_array) # tensor([2., 2., 2., 2., 2.])
+torch_array.add_(1)
+print(numpy_array) # [3. 3. 3. 3. 3.]
+```
+
+
+
+####
+
+
+
+
+
+
 # Perform a gradient descent on a classification problem
 
+
+
 We do it by ourself without packages.
+
+
 
 use of cross entropy
 
 Toy dataset of values between 0 and 1.
 
+<img src="{{ site.url }}/img/deeplearningcourse/DL42.png">
 
 Take an ensemble
 

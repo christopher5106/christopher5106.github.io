@@ -381,6 +381,12 @@ which looks exactly the same as the derivative of the cross entropy:
 
 <img src="{{ site.url }}/img/deeplearningcourse/DL39.png">
 
+Instead of 1 and 0 in case of classification, you use the global reward R as target label for each timestep and you can consider each time step as individual samples.
+
+<img src="{{ site.url }}/img/deeplearningcourse/DL40.png">
+
+<img src="{{ site.url }}/img/deeplearningcourse/DL41.png">
+
 **Well done!**
 
 Now let's go to next course: [Course 1: programming deep learning!](http://christopher5106.github.io/deep/learning/2018/10/20/course-one-programming-deep-learning.html)

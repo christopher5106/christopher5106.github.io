@@ -74,7 +74,7 @@ Note that for the softmax to predict probability for C classes, it requires the 
 
 Cross entropy is usually mentioned without explanations.
 
-In fact, to understand cross-entropy, you need to rewrite it :
+In fact, to understand cross-entropy, you need to rewrite its theoretical definition :
 
 $$ \text{CrossEntropy} = - \sum_c \tilde{p_c} \log p_c = - \mathbb{E} \Big( \log p_c \Big) $$
 
@@ -86,9 +86,9 @@ $$ \text{CrossEntropy} \approx - \frac{1}{N} \sum_{x \sim D} \log p_{\hat{c}(x)}
 
 where D is the real sample distribution, N is the number of samples on which the cross entropy is estimated and $$ \hat{c}(x) $$ is the true class of x.
 
-To compute our empirical cross-entropy for one sample (N=1), we can use
+To compute our empirical cross-entropy for one sample (N=1), it is equivalent to defining the $$ \tilde{p} $$ probability in the theoretical cross-entropy definition by:
 
-$$ \tilde{p}_c(x) \begin{cases}
+$$ \tilde{p}_c(x) = \begin{cases}
   1, & \text{if } c = \hat{c}(x), \\
   0, & \text{otherwise}.
 \end{cases} $$
@@ -99,7 +99,7 @@ $$ \frac{1}{N} \sum_{x \sim D} L(x) = - \frac{1}{N} \sum_{x \sim D} \log p_{\hat
 
 In the future, we'll consider the following cross-entropy forumulation for a single sample:
 
-$$ \text{CrossEntropy}(p, \tilde{p}) = - \log(p_\hat{c})$$
+$$ \text{EmpiricalCrossEntropy}(p) = - \log(p_\hat{c})$$
 
 In **conclusion**, for the case of classification, we use probability values that are either 0 or 1: X being the image of a cat, we want the model output $$\{p_c\}_c $$ to fit the real empirical class probability $$\{\tilde{p}_c\}_c $$, where $$ p_\hat{c} = 1 $$ for the real object class $$ \hat{c} $$ "cat" and $$ p_c = 0$$ for all other classes $$ c \neq \hat{c} $$:
 
@@ -243,6 +243,8 @@ which is very easy to compute and can simply be rewritten:
 $$ \nabla \text{cost} = \tilde{p} - p $$
 
 **Conclusion**: it is easier to backprogate gradients computed on Softmax+CrossEntropy together rather than backpropagate separately each : the derivative of the Softmax+CrossEntropy with respect to the output of the model for the right class, let's say the "cat" class, will be 1 - 0.8 = 0.2, if the model has predicted a probability of 0.8 for this class, encouraging it to increase this value ; the derivative of the Softmax+CrossEntropy with respect to an output for a different class will be -0.4 is it has predicted a probability of 0.4, encouraging the model to decrease this value.  
+
+**Exercice**: Compute the derivative of Sigmoid+MSE combined.
 
 
 # Example with a Dense layer

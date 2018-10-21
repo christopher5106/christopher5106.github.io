@@ -33,3 +33,10 @@ Global averaging
 
 Max pooling
 <img src="{{ site.url }}/img/deeplearningcourse/DL28.png">
+
+
+Batch normalization
+statistics at the output are
+variance 1, mean 0
+training layers on statistics not changning
+learning a scale and a bias after normalization

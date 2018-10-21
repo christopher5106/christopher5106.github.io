@@ -81,6 +81,11 @@ The art of choosing the learning rate
 <img src="{{ site.url }}/img/deeplearningcourse/DL20.png">
 
 
+The art of choosing initialization
+small variance, positive and negative values
+
+<img src="{{ site.url }}/img/deeplearningcourse/DL30.png">
+
 # Program with modules
 
 A module is an object to learn specifically designed for deep learning neural networks.
@@ -93,6 +98,18 @@ The composition of modules makes a module:
 
 <img src="{{ site.url }}/img/deeplearningcourse/DL30.png">
 
+The modules help organize layers and reuse their definitions.
+
+
+
+1- rewrite the model as module using nn modules
+2- rewrite training loop using the optim package (zeroing gradients + applying the gradients with an update rule)
+3- look at different update rules
+4- plot the training curves (loss,...)
+5- gpu
+
+
+view reshape
 
 
 **Well done!**

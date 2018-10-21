@@ -347,8 +347,23 @@ That is where the magic happens ;-)
 
 As you might have understood, the cross entropy comes from theory of information, but the definition of the probabilities and their weighting scheme can be adapted to the problem we want to solve. That is where we leave theory for practice.
 
-Still, there is a very important theoretical generalization of cross-entropy.
+Still, there is a very important theoretical generalization of cross-entropy through reinforcement learning which is very easy to understand.
 
+In reinforcement, given an observation $$ x_t $$ at a certain timestep, you're going to perform an action, for example driving car, going right, left, or straight, or in a game, using some keyboard commands. Then the environment is modified and you'll need to decide of the next action... and sometimes you get a reward $$ r_t $$, a feedback from the environment, good news or bad news, gain some points... In the case of reinforcement learning, we do not have any labels as targets or groundtruth. We just want to perform the best, which means maximizing the expected reward :
+
+$$ R = \mathbb{E} \sum_{t} r_t $$
+
+over all possible sequence of actions.
+
+<img src="{{ site.url }}/img/deeplearningcourse/DL35.png">
+
+When my actions are parametrized by a model $$ f_\theta $$, the probability of a sequence is
+
+$$ p({a_0, a_1, ..., a_T}) = p (a_0 | x_0) p( a_1 | a_0, x_0, x_1)... = \prod_{t=0}^T p(a_t | a_0, x_0, ... x_T) $$
+
+so R can be written
+
+$$ R = \sum_{a_0, a_1, ..., a_T} \big( \prod_{t=0}^T p(a_t | a_0, x_0, ... x_T) \big) (\sum_{t=0}^T r_t) $$
 
 
 

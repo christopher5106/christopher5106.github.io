@@ -184,9 +184,24 @@ which can be rewritten as a simple matrix multiplication
 
 $$ \nabla (f \circ g) = \nabla f \times \nabla g $$
 
-To be more precise, g is a function of its inputs and its parameters
+To be more precise, g has to be considered a function of its inputs and its parameters
 
-$$ g = g(x) = g_{\theta_g} (x) = g(x,\theta_g) $$
+$$ g(x) = g_{\theta_g} (x) = g(x,\theta_g) $$
+
+The same for f:
+
+$$ f(y) = f_{\theta_f} (x) = f(y,\theta_f) $$
+
+So, it is possible to compute the derivative with respect to either the parameters, or the inputs, which we'll differentiate in notation the following way:
+
+$$ \nabla_{\theta_g} g = \Big{ \frac{\partial g_i}{\partial {\theta_g}_j } \Big}  $$
+
+$$ \nabla_{I} g = \Big{ \frac{\partial g_i}{\partial x_j} \Big}_{i,j} $$
+
+Combining them:
+
+$$ (f \circ g)(x) = f_{\theta_f} ( g(x,\theta_g), \theta_f) $$
+
 
 and we want the gradient with respect to the parameters of g, that we can consider as inputs the way. The correct expression becomes :
 

@@ -160,19 +160,22 @@ Computing the gradients to use in the SGD update rule is known as *backpropagati
 
 The reason for this name is the *chaining rule* in computing gradients of function compositions.
 
-In fact, models are usually composed of multiple functions:
-
+First, adding the softmax and cross-entropy to the model outputs is a composition of 3 functions:
 
 $$ \text{cost} = \text{CrossEntropy} \circ \text{Softmax} \circ f_\theta$$
 
-
-$$ = \text{CrossEntropy} \circ \text{Softmax} \circ \text{Dense}_{\theta_2}^2 \circ \text{ReLu} \circ \text{Dense}_{\theta_1}^1  $$
-
 where the composition means
+
+$$ \text{cost}(x) = \text{CrossEntropy} (\text{Softmax} (  f_\theta(x)  )  )  $$
+
+
+But models are also composed of multiple functions, for example let us consider a model composed of 2 dense layers:
+
+$$ \text{cost} = \text{CrossEntropy} \circ \text{Softmax} \circ \text{Dense}_{\theta_2}^2 \circ \text{ReLu} \circ \text{Dense}_{\theta_1}^1  $$
 
 $$ \text{cost}(x) = \text{CrossEntropy} (\text{Softmax} (\text{Dense}_{\theta_2}^2 ( \text{ReLu} ( \text{Dense}_{\theta_1}^1  (x) ) ) ) ) $$
 
-Here, for example, I have two dense layers and two activations (one ReLu and one Softmax). There are two parameters
+Without a ReLu activation the two Dense layers would be mathematically equivalent to only 1 Dense layer. Hence the model has two sets of parameters
 
 $$ \theta = [ \theta_1, \theta_2 ] $$
 
@@ -268,6 +271,8 @@ $$ \nabla \text{cost} = \tilde{p} - p $$
 
 **Conclusion**: it is easier to backprogate gradients computed on Softmax+CrossEntropy together rather than backpropagate separately each : the derivative of the Softmax+CrossEntropy with respect to the output of the model for the right class, let's say the "cat" class, will be 1 - 0.8 = 0.2, if the model has predicted a probability of 0.8 for this class, encouraging it to increase this value ; the derivative of the Softmax+CrossEntropy with respect to an output for a different class will be -0.4 is it has predicted a probability of 0.4, encouraging the model to decrease this value.  
 
+**Exercise**: Compute the derivative of Sigmoid+BinaryEntropy combined.
+
 **Exercise**: Compute the derivative of Sigmoid+MSE combined.
 
 
@@ -300,6 +305,9 @@ so
 
 $$ \frac{\partial}{\partial \theta_{k,j}}  ( L \circ f_\theta )=  \sum_c \frac{\partial L}{\partial o_c}  \cdot \frac{\partial o_c}{\partial \theta_{k,j}}  = ( \delta_{ k, \hat{c}} - o_k) \cdot x_j  $$
 
+A Dense layer with 4 outputs:
+
+<img src="{{ site.url }}/img/deeplearningcourse/DL17.png">
 
 # Generalize beyond cross entropy
 

@@ -188,7 +188,7 @@ $$ = o_\hat{c} +  \log \sum_c e^{-o_i} $$
 
 Let's take the derivative,
 
-$$ \frac{\partial L}{\partial o_c} =  \delta_{c,\hat{c}} - \frac{ e^{-o_i} }{\sum_c e^{-o_i}}  $$
+$$ \frac{\partial \text{cost}}{\partial o_c} =  \delta_{c,\hat{c}} - \frac{ e^{-o_i} }{\sum_c e^{-o_i}}  $$
 
 $$ = \delta_{c,\hat{c}} - p_c $$
 

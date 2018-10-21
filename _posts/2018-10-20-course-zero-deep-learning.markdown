@@ -39,11 +39,11 @@ The two most important loss functions are:
 
 <center> $$ x \rightarrow \{p_c\}_c $$ with $$ \sum_c p_c = 1 $$ </center>
 
-Coming from the theory of information, cross-entropy is a distance measure between two probabilities defined by :
+Coming from the theory of information, cross-entropy measures the distance between two probabilities by :
 
 $$ \text{CrossEntropy}(p, \tilde{p}) = - \sum_c \tilde{p}_c \log(p_c) $$
 
-we want to be the lowest possible (minimization).
+and we want this cost to be the lowest possible (minimization).
 
 To discover many more loss functions, have a look at my [full article about loss functions](http://christopher5106.github.io/deep/learning/2016/09/16/about-loss-functions-multinomial-logistic-logarithm-cross-entropy-square-errors-euclidian-absolute-frobenius-hinge.html).
 

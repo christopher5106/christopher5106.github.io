@@ -367,7 +367,7 @@ $$ R = \sum_{a_0, a_1, ..., a_T} \big( \prod_{t=0}^T p(a_t | a_0, x_0, ... x_T) 
 
 $$ = \mathbb{E}_{a_0 \sim p(\cdot |x_0)} \mathbb{E}_{a_1 \sim p(\cdot | a_0, x_0, x_1)} ... \mathbb{E}_{a_T \sim p(\cdot | a_0, x_0, ... x_T)}  \sum_{t=0}^T r_t $$
 
-When my actions are parametrized by a model $$ p = f_\theta $$, everything must becomes parametrized by $$ \theta $$
+When my actions are parametrized by a model $$ p = f_\theta $$, the whole problem becomes parametrized by $$ \theta $$
 
 <img src="{{ site.url }}/img/deeplearningcourse/DL36.png">
 

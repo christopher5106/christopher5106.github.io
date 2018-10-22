@@ -469,7 +469,9 @@ Note also that, if there is a backward function for every operation, there is no
 A module is an object that encapsulates learnable parameters and is specifically suited to design deep learning neural networks.
 
 A layer is a module:
+
 <img src="{{ site.url }}/img/deeplearningcourse/DL31.png">
+
 because it has weights and a forward function.
 
 The composition of modules makes a module:

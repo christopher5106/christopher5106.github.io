@@ -160,7 +160,8 @@ Contrary to other frameworks, Pytorch does not require to build a graph of opera
 To compute the gradient automatically, you need to wrap the tensors in Variable objects:
 
 ```python
-x = torch.autograd.Variable(torch.ones(1)+1, requires_grad=True)
+from torch.autograd import Variable
+x = Variable(torch.ones(1)+1, requires_grad=True)
 print(x.data)
 #tensor([2.])
 print(x.grad)
@@ -200,7 +201,7 @@ Calling `y.backward()` a second time will lead to a RunTime Error. In order to a
 Let's confirm this in a  case where the input is multi-dimensional:
 
 ```python
-x = torch.autograd.Variable(torch.ones(2), requires_grad=True)
+x = Variable(torch.ones(2), requires_grad=True)
 y = x.sum()
 y.backward(retain_graph=True)
 print(x.grad)
@@ -224,7 +225,7 @@ $$ \nabla_{\theta_t} \text{cost} =  \nabla_{\theta_t} \Big[ ( \text{cost} \circ 
 as given by the chaining rule seen in [Course 0](http://christopher5106.github.io/deep/learning/2018/10/20/course-zero-deep-learning.html).
 
 ```python
-x = torch.autograd.Variable(torch.ones(2), requires_grad=True)
+x = Variable(torch.ones(2), requires_grad=True)
 y = x ** 2
 print(y.data)
 # tensor([1., 1.])
@@ -238,7 +239,7 @@ The gradient of the final cost with respect to the output of the current operato
 As Pytorch does not require to introduce complex graph operators as in other technologies (switches, comparisons, dependency controls, scans/loops... ), it enables you to program as normally, and gradients are well propagated through your Python code:
 
 ```python
-x = torch.autograd.Variable(torch.ones(1) +1, requires_grad=True)
+x = Variable(torch.ones(1) +1, requires_grad=True)
 y = x
 while y < 10:
   y = y**2
@@ -267,16 +268,16 @@ Let's consider the input is 20 dimensional, and the number of outputs for each d
 Pytorch only requires to implement the forward pass of our perceptron. Each Dense layer is composed of two learnable parameters or weights:
 
 ```python
-theta1 =  torch.autograd.Variable(torch.randn(32,20) *0.1,requires_grad = True)
-bias1 = torch.autograd.Variable(torch.randn(32)*0.1,requires_grad = True)
-theta2 = torch.autograd.Variable(torch.randn(32,32)*0.1,requires_grad = True)
-bias2 = torch.autograd.Variable(torch.randn(32)*0.1,requires_grad = True)
+theta1 =  Variable(torch.randn(32,20) *0.1,requires_grad = True)
+bias1 = Variable(torch.randn(32)*0.1,requires_grad = True)
+theta2 = Variable(torch.randn(32,32)*0.1,requires_grad = True)
+bias2 = Variable(torch.randn(32)*0.1,requires_grad = True)
 
 def forward(x):
     # affine operation of the first Dense layer
     y = theta1.mv(x) + bias1
     # ReLu activation
-    y = torch.max(y, torch.autograd.Variable(torch.Tensor([0])))
+    y = torch.max(y, Variable(torch.Tensor([0])))
     # affine operation of the second Dense layer
     return theta2.mv(y) + bias2
 ```
@@ -302,7 +303,7 @@ Let's train this network on random inputs, one sample at a time:
 for i in range(1000):
     lr = 0.001 * (.1 ** ( max(i - 500 , 0) // 100))
 
-    x = torch.autograd.Variable(torch.randn(20), requires_grad=False)
+    x = Variable(torch.randn(20), requires_grad=False)
     z = forward(x)
     c = cost(z)
     print("cost {} - learning rate {}".format(c.data.item(), lr))
@@ -367,14 +368,14 @@ The input is defined by a position, ie a vector of dimension 2 for each sample, 
 Let's choose as hidden dimension (number of outputs of first layer/ inputs of second layers) 12:
 
 ```python
-theta1 =  torch.autograd.Variable(torch.randn(2, 12) *0.01,requires_grad = True)
-bias1 = torch.autograd.Variable(torch.randn(12)*0.01,requires_grad = True)
-theta2 = torch.autograd.Variable(torch.randn(12, 3)*0.01,requires_grad = True)
-bias2 = torch.autograd.Variable(torch.randn(3)*0.01,requires_grad = True)
+theta1 =  Variable(torch.randn(2, 12) *0.01,requires_grad = True)
+bias1 = Variable(torch.randn(12)*0.01,requires_grad = True)
+theta2 = Variable(torch.randn(12, 3)*0.01,requires_grad = True)
+bias2 = Variable(torch.randn(3)*0.01,requires_grad = True)
 
 def forward(x):
     y = x.mm(theta1) + bias1 # (B, 2) x (2, 12) + (B, 12) => (B, 12)
-    y = torch.max(y, torch.autograd.Variable(torch.Tensor([0])))
+    y = torch.max(y, Variable(torch.Tensor([0])))
     y = y.mm(theta2) + bias2 # (B, 12) x (12, 3) + (B, 3) => (B, 3)
     return y
 
@@ -397,10 +398,10 @@ for i in range(min(dataset_size, 100000) // batch_size ):
     lr = 0.5 * (.1 ** ( max(i - 100 , 0) // 1000))
 
     batch = X[batch_size*i:batch_size*(i+1)] # size (batchsize, 2)
-    z = forward(torch.autograd.Variable(batch, requires_grad=False))
+    z = forward(Variable(batch, requires_grad=False))
     z = softmax(z)
-    loss = crossentropy(z, torch.autograd.Variable(Y[batch_size*i:batch_size*(i+1)]))
-    print("iter {} - cost {} - learning rate {}".format(i, c.data.item(), lr))
+    loss = crossentropy(z, Variable(Y[batch_size*i:batch_size*(i+1)]))
+    print("iter {} - cost {} - learning rate {}".format(i, loss.data.item(), lr))
 
     # compute the gradients
     loss.backward()
@@ -436,7 +437,7 @@ To check everything is fine, one might compute the accuracy, a classical metric 
 accuracy = 0
 nb = 10000
 for i in range(min(dataset_size, nb)):
-    z = forward(torch.autograd.Variable(X[i:i+1], requires_grad=False))
+    z = forward(Variable(X[i:i+1], requires_grad=False))
     p = softmax(z)
     l = torch.max(p, -1)[1]
     if l.data.numpy()[0] == labels[i]:
@@ -468,26 +469,23 @@ Note also that, if there is a backward function for every operation, there is no
 
 A module is an object that encapsulates learnable parameters and is specifically suited to design deep learning neural networks.
 
-A layer is a module:
+A layer is the smallest module, it has weights and a forward function.:
 
 <img src="{{ site.url }}/img/deeplearningcourse/DL31.png">
 
-because it has weights and a forward function.
-
-The composition of modules makes a module:
+The composition of multiple modules builds a new module:
 
 <img src="{{ site.url }}/img/deeplearningcourse/DL30.png">
 
-The modules help organize layers and reuse their definitions.
+that can be reused at multiple places in the network architecture.
 
-move to GPU
-exporting, loading
+The organization into modules helps interoperability and reuse of snippets of codes into a deep neural network definition.
 
-1- rewrite the model as module using nn modules
+Then, calling the forward or backward propogations, transfering the module to GPU, saving or loading weights, is applied to all submodules without extra code.
+
+Let's rewrite the previous model with the concept of modules provided by the `nn.modules` package.
 
 ```python
-import torch
-from torch.autograd import Variable
 import torch.nn as nn
 import torch.nn.functional as F
 
@@ -504,25 +502,129 @@ class SimpleNetTest(nn.Module):
         return x       
 
 net = SimpleNetTest()
-
-# to move network to GPU
-net.cuda()
-
 print(net)
+# SimpleNetTest(
+#   (lin1): Linear(in_features=2, out_features=12, bias=True)
+#   (lin2): Linear(in_features=12, out_features=3, bias=True)
+# )
 ```
 
-The learnable parameters are returned by net.parameters()
+The learnable parameters are returned by net.parameters():
 
 ```python
 params = list(net.parameters())
 print(params)
+# [Parameter containing:
+# tensor([[ 0.5115, -0.1418],
+#         [-0.5533, -0.1273],
+#         [-0.2584, -0.0393],
+#         [-0.6614, -0.3380],
+#         [-0.1831,  0.4581],
+#         [ 0.3085, -0.6811],
+#         [-0.4236, -0.6968],
+#         [ 0.2943, -0.2573],
+#         [ 0.4532, -0.3313],
+#         [ 0.0415, -0.6035],
+#         [ 0.0736, -0.0780],
+#         [ 0.3948,  0.4727]], requires_grad=True), Parameter containing:
+# tensor([ 0.3995,  0.2957,  0.4611, -0.6316, -0.4317,  0.3888, -0.2252,  0.2357,
+#          0.0351, -0.0223, -0.2179, -0.0943], requires_grad=True), Parameter containing:
+# tensor([[-0.1178,  0.0759,  0.2238, -0.1543,  0.2471,  0.2617,  0.0897, -0.1238,
+#          -0.2371,  0.2220, -0.2427, -0.0141],
+#         [ 0.2623,  0.2131,  0.0291, -0.1194, -0.1685, -0.1901, -0.0905,  0.1825,
+#          -0.0384,  0.2694,  0.0682, -0.0157],
+#         [ 0.2674,  0.0229, -0.0429,  0.1274,  0.1928,  0.1575,  0.2514, -0.1529,
+#          -0.0460,  0.0187, -0.1481, -0.1473]], requires_grad=True), Parameter containing:
+# tensor([-0.2622,  0.0747, -0.2832], requires_grad=True)]
+```
 
-SimpleNetTest(
-  (lin1): Linear(in_features=2, out_features=12, bias=True)
-  (lin2): Linear(in_features=12, out_features=3, bias=True)
-)
+In place of our previous `forward(batch)` function, we simply apply the batch to the module with `net(batch)` and loop over the parameters to update them:
+
+```python
+batch_size = 20
+for i in range(min(dataset_size, 100000) // batch_size ):
+    lr = 0.5 * (.1 ** ( max(i - 100 , 0) // 1000))
+
+    batch = X[batch_size*i:batch_size*(i+1)] # size (batchsize, 2)
+    z = net(Variable(batch, requires_grad=False))
+    z = softmax(z)
+    loss = crossentropy(z, Variable(Y[batch_size*i:batch_size*(i+1)]))
+    print("iter {} - cost {} - learning rate {}".format(i, loss.data.item(), lr))
+
+    # compute the gradients
+    loss.backward()
+
+    # apply the gradients
+    for param in net.parameters():
+        param.data.sub_( lr * param.grad.data )
+        param.grad.zero_()
 
 ```
+
+For the same training on GPU, let's move our datasets as well the module to GPU:
+
+```python
+X = X.cuda()
+Y = Y.cuda()
+net.cuda()
+params = list(net.parameters())
+print(params)
+# [Parameter containing:
+# tensor([[ 2.9374, -2.9921],
+#         [-1.8221, -0.3139],
+#         [-2.7522, -0.8614],
+#         [-0.6614, -0.3380],
+#         [-0.1840,  0.4384],
+#         [-1.9955, -3.9197],
+#         [-0.4236, -0.6968],
+#         [ 2.0039,  0.7968],
+#         [ 2.5727, -3.4312],
+#         [ 0.0331, -0.6036],
+#         [ 0.0736, -0.0780],
+#         [ 3.9596,  5.2725]], device='cuda:0', requires_grad=True), Parameter containing:
+# tensor([ 0.2908,  1.7123,  2.7156, -0.6316, -0.4515,  3.9756, -0.2252, -0.6254,
+#          0.6207, -0.0313, -0.2179, -3.2287],
+#        device='cuda:0', requires_grad=True), Parameter containing:
+# tensor([[-2.8967,  1.5755,  2.2599, -0.1543,  0.2469,  0.7531,  0.0897, -1.1861,
+#          -3.3350,  0.2220, -0.2427, -2.1395],
+#         [ 2.1709, -0.9695, -1.7979, -0.1194, -0.1682, -3.0841, -0.0905,  1.1191,
+#           1.7238,  0.2693,  0.0682,  4.0227],
+#         [ 1.1377, -0.2940, -0.2520,  0.1274,  0.1927,  2.5601,  0.2514, -0.0273,
+#           1.2897,  0.0188, -0.1481, -2.0602]],
+#        device='cuda:0', requires_grad=True), Parameter containing:
+# tensor([ 0.7422, -0.9477, -0.2653], device='cuda:0', requires_grad=True)]
+```
+
+All the parameters appear on the first GPU (cuda:0).
+
+When the GPU has been used for training, it is a good practice to use it for inference on the test data as well, so we need to rewrite it to train batches of samples rather than samples indiviually:
+
+```python
+accuracy = 0
+nb = 1000
+for i in range(min(dataset_size, nb)):
+    z = net(Variable(X[i:i+1], requires_grad=False))
+    l = torch.max(z, -1)[1]
+    if l.data.cpu().numpy()[0] == Y[i]:
+        accuracy += 1
+
+print("accuracy {}%".format(round(accuracy / min(dataset_size, nb) * 100, 2)))
+# accuracy 99.2
+```
+
+**Exercise**: program with packages in Keras, Tensorflow, CNTK, MXNet
+
+
+# Packages
+
+Packages help you reuse common functions for deep learning.
+
+
+2- rewrite training loop using the optim package (zeroing gradients + applying the gradients with an update rule)
+3- look at different update rules
+4- plot the training curves (loss,...)
+5- gpu
+
 
 ```python
 import torch.optim as optim
@@ -534,7 +636,9 @@ criterion = nn.CrossEntropyLoss()
 # optimizer = optim.SGD(net.parameters(), lr=0.001, momentum=0.9)
 # optimizer = torch.optim.Adam(net.parameters())
 optimizer = torch.optim.Adadelta(net.parameters())
+```
 
+```python
 loss_curve = list()
 
 batch_size = 500
@@ -542,8 +646,8 @@ for i in range(min(dataset_size, 1000000) // batch_size ):
 
     batch = x[batch_size*i:batch_size*(i+1)] # size (batchsize, 2)
 
-    batch = torch.autograd.Variable(batch.cuda(), requires_grad=False)
-    batchLabel = torch.autograd.Variable(labels[batch_size*i:batch_size*(i+1)].cuda())
+    batch = Variable(batch.cuda(), requires_grad=False)
+    batchLabel = Variable(labels[batch_size*i:batch_size*(i+1)].cuda())
 
     # zero the parameter gradients
     optimizer.zero_grad()
@@ -569,23 +673,10 @@ print("final cost {}".format(round(loss.data[0], 2)))
 
 ```python
 accuracy = 0
-nb = 1000
-for i in range(min(dataset_size, nb)):
-    z = net(torch.autograd.Variable(x[i:i+1].cuda(), requires_grad=False))
-    l = torch.max(z, -1)[1]
-    if l.data.cpu().numpy()[0] == labels[i]:
-        accuracy += 1
-
-print("accuracy {}%".format(round(accuracy / min(dataset_size, nb) * 100, 2)))
-# accuracy 95.40
-```
-
-```python
-accuracy = 0
-z = net(torch.autograd.Variable(x.cuda(), requires_grad=False))
+z = net(Variable(x.cuda(), requires_grad=False))
 
 l = torch.max(z, 1)[1]
-ll = torch.autograd.Variable(labels.cuda())
+ll = Variable(labels.cuda())
 
 accuracy = int(torch.sum(torch.eq(l, ll).type(torch.cuda.LongTensor)))
 print("accuracy {}%".format(accuracy / dataset_size * 100))
@@ -600,20 +691,6 @@ plt.plot(range(1, len(nplc)+1), nplc, 'ro')
 
 <img src="{{ site.url }}/img/deeplearningcourse/DL43.png">
 
-**Exercise**: program with packages in Keras, Tensorflow, CNTK, MXNet
-
-# Packages
-
-Packages help you reuse common functions for deep learning.
-
-
-2- rewrite training loop using the optim package (zeroing gradients + applying the gradients with an update rule)
-3- look at different update rules
-4- plot the training curves (loss,...)
-5- gpu
-
-
-view reshape
 
 **Exercise**: replace your functions with package functions in Keras, Tensorflow, CNTK  
 

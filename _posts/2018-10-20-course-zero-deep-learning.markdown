@@ -15,7 +15,7 @@ First, let's recap the basics of machine learning.
 
 # Loss functions
 
-When we fit a model, we use *loss functions*, or *cost functions*, or *objective functions*. The main purpose of machine learning of machine learning is to be able to predict given data. Let's say predict the $$y$$ given some observations, let's say the $$x$$, through a function:
+When we fit a model, we use *loss functions*, or *cost functions*, or *objective functions*. The main purpose of machine learning is to be able to predict given data. Let's say predict the $$y$$ given some observations, let's say the $$x$$, through a function:
 
 $$ f : x \rightarrow y $$
 

@@ -86,15 +86,20 @@ You can easily check the following commands in Pytorch and Numpy:
 
 | ####### Command ####### | ####### Numpy ####### | ####### Pytorch ####### |
 |---|---|---|
+| Array conversion | np.array([[1,2]]) | torch.Tensor([[1,2]]) |
 | 5x3 matrix, uninitialized  |  x = np.empty((5,3)) | x = torch.Tensor(5,3)  |
 | initialized with ones | x = np.ones((5,3)) | x = torch.ones(5,3) |
 | initialized with zeros | x = np.zeros((5,3)) | x = torch.zeros(5,3) |
-| randomly initialized matrix  |  x = np.random.random((5,3)) | x = torch.rand(5, 3)  |
+| uniformly randomly initialized matrix  |  x = np.random.rand(5,3) | x = torch.rand(5, 3)  |
+| normal randomly initialized matrix  |  x = np.random.randn(5,3) | x = torch.randn(5, 3)  |
 | Shape/size  |  x.shape | x.size  |
 | Addition | +/np.add | +/torch.add |
 | In-place addition | x+= | x.add_() |
 | First column | x[:, 1] | x[:, 1] |
-
+| Matrix multiplication | .matmul() | .mm() |
+| Matrix-Vector multiplication | - | .mv() |
+| Reshape | .reshape(shape) | .view(size) |
+| Concatenate | np.concatenate([]) | torch.cat([]) |
 
 
 You can link Numpy array and Torch Tensor, either with
@@ -132,6 +137,7 @@ b_ = b.cuda()
 x = a_ + b_ # tensor([2., 2., 2., 2., 2.], device='cuda:0')
 y = x + 1 # tensor([3., 3., 3., 3., 3.], device='cuda:0')
 z = y.cuda(1) # tensor([3., 3., 3., 3., 3.], device='cuda:1')
+t = z.cpu() # tensor([3., 3., 3., 3., 3.])
 ```
 
 but keep in mind that synchronization is lost (contrary to Numpy Arrays and Torch Tensors):

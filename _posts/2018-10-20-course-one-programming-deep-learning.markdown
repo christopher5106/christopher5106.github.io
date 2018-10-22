@@ -670,7 +670,7 @@ plt.plot(range(1, len(nplc)+1), nplc, 'ro')
 
 <img src="{{ site.url }}/img/deeplearningcourse/DL43.png">
 
-To compute the accuracy, we can also forward the full dataset and use efficient matrix opertions on tensors:
+To compute the accuracy, we can also forward the full dataset and use efficient matrix opertions on the final tensors:
 
 ```python
 accuracy = 0

@@ -379,7 +379,7 @@ which looks exactly the same as the derivative of the cross entropy:
 
 <img src="{{ site.url }}/img/deeplearningcourse/DL38.png">
 
-except that you the expected reward in place of the true probability:
+except that you replace the expected reward in place of the true probability:
 
 <img src="{{ site.url }}/img/deeplearningcourse/DL39.png">
 

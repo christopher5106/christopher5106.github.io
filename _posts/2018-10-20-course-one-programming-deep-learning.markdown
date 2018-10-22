@@ -483,7 +483,7 @@ The organization into modules helps interoperability and reuse of snippets of co
 
 Then, calling the forward or backward propogations, transfering the module to GPU, saving or loading weights, is applied to all submodules without extra code.
 
-Let's rewrite the previous model with the concept of modules provided by the `nn.modules` package.
+Let's rewrite the previous model as a module, an interface provided by the `torch.nn` module package, and compose it with prebuilt submodules from the `torch.nn.function` package:
 
 ```python
 import torch.nn as nn
@@ -558,7 +558,6 @@ for i in range(min(dataset_size, 100000) // batch_size ):
     for param in net.parameters():
         param.data.sub_( lr * param.grad.data )
         param.grad.zero_()
-
 ```
 
 For the same training on GPU, let's move our datasets as well the module to GPU:
@@ -595,7 +594,7 @@ print(params)
 # tensor([ 0.7422, -0.9477, -0.2653], device='cuda:0', requires_grad=True)]
 ```
 
-All the parameters appear on the first GPU (cuda:0).
+All the parameters appear on the first GPU (cuda:0). Note that we transfered the full dataset to the GPU, while in most applications, it is not possible since the memory of the GPU is limited, we only transfer the batch.
 
 When the GPU has been used for training, it is a good practice to use it for inference on the test data as well, so we need to rewrite it to train batches of samples rather than samples indiviually:
 
@@ -617,80 +616,71 @@ print("accuracy {}%".format(round(accuracy / min(dataset_size, nb) * 100, 2)))
 
 # Packages
 
-Packages help you reuse common functions for deep learning.
+Packages help you reuse common functions for deep learning. We already introduced the **torch.nn** package containing the module interface as well as prebuilt modules.
 
-
-2- rewrite training loop using the optim package (zeroing gradients + applying the gradients with an update rule)
-3- look at different update rules
-4- plot the training curves (loss,...)
-5- gpu
-
+Let us rewrite the training loop using the `torch.optim` package (zeroing gradients + applying the gradients with an update rule), plot the training curves (loss,...) and try different update rules/optimizers.
 
 ```python
-import torch.optim as optim
-
 criterion = nn.CrossEntropyLoss()
 
+import torch.optim as optim
 # try various optimizer
-
 # optimizer = optim.SGD(net.parameters(), lr=0.001, momentum=0.9)
 # optimizer = torch.optim.Adam(net.parameters())
 optimizer = torch.optim.Adadelta(net.parameters())
 ```
 
+The `optimizer` provides a method `zero_grad()` to clear the previous gradient values and a `step()` method to apply the update rule
+
 ```python
 loss_curve = list()
-
 batch_size = 500
 for i in range(min(dataset_size, 1000000) // batch_size ):
 
-    batch = x[batch_size*i:batch_size*(i+1)] # size (batchsize, 2)
-
-    batch = Variable(batch.cuda(), requires_grad=False)
-    batchLabel = Variable(labels[batch_size*i:batch_size*(i+1)].cuda())
+    batch = X[batch_size*i:batch_size*(i+1)]
+    batch = Variable(batch, requires_grad=False)
+    batchLabel = Variable(Y[batch_size*i:batch_size*(i+1)])
 
     # zero the parameter gradients
     optimizer.zero_grad()
 
     # forward
     outputs = net(batch)
+    loss = criterion(outputs, batchLabel)
 
     # backward
-    loss = criterion(outputs, batchLabel)
     loss.backward()
 
     # update network parameters
     optimizer.step()
 
-    # print("iter {} - cost {}".format(i, loss.data[0]))
+    # print("iter {} - cost {}".format(i, loss.data.item()))
 
-    loss_curve.append(loss.data[0])
+    loss_curve.append(loss.data.item())
 
-print("final cost {}".format(round(loss.data[0], 2)))
-# final cost 0.16
+print("final cost {}".format(round(loss.data.item(), 2)))
+# final cost 0.04
 ```
 
-
-```python
-accuracy = 0
-z = net(Variable(x.cuda(), requires_grad=False))
-
-l = torch.max(z, 1)[1]
-ll = Variable(labels.cuda())
-
-accuracy = int(torch.sum(torch.eq(l, ll).type(torch.cuda.LongTensor)))
-print("accuracy {}%".format(accuracy / dataset_size * 100))
-```
-
-
+Let's plot the training loss:
 
 ```python
 plt.plot(range(1, len(nplc)+1), nplc, 'ro')
 ```
 
-
 <img src="{{ site.url }}/img/deeplearningcourse/DL43.png">
 
+To compute the accuracy, we can also forward the full dataset and use opertors on tensors:
+
+```python
+accuracy = 0
+z = net(Variable(X, requires_grad=False))
+l = torch.max(z, 1)[1]
+ll = Variable(Y)
+accuracy = int(torch.sum(torch.eq(l, ll).type(torch.cuda.LongTensor)))
+print("accuracy {}%".format(round(accuracy / dataset_size * 100,2)))
+# accuracy 99.62%
+```
 
 **Exercise**: replace your functions with package functions in Keras, Tensorflow, CNTK  
 

@@ -455,7 +455,6 @@ Note that convergence is strongly influenced
 
 
 - by the art of choosing the right layer initialization: a small variance, with positive and negative values to dissociate the neural outputs (neurons that fire together wire together) helps. In fact, we'll see in the next section Pytorch packages that provide a correct implementation of the variance choice given the number of input and output connections:
-
 <img src="{{ site.url }}/img/deeplearningcourse/DL32.png">
 
 To improve the results, it is possible to train multiple times the network from scratch, and average the ensemble of parameters from each training.

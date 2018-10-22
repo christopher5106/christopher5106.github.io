@@ -207,9 +207,11 @@ Since $$ \frac{\partial}{\partial x_1} (x_1 + x_2) = 1 $$ and $$ \frac{\partial}
 
 Applying the `backward()` method multiple times accumulates the gradients.
 
-It is also possible to apply the `backward()` method on something else than a cost (scalar), for example on a layer or operation with a multi-dimensional output, as in the middle of a neural network, but in this case, you need to provide as argument to the `backward()` method $$ \Big( \nabla_{I_{t+1}} \text{cost} \Big)$$, the gradient of the layer above with respect to its input, which will be multiplied by $$ \Big( \nabla_{\theta_t} L_t \Big) $$, the current layer's gradient with respect to its parameter to compute the final derivative of the cost with respect to its parameters:
+It is also possible to apply the `backward()` method on something else than a cost (scalar), for example on a layer or operation with a multi-dimensional output, as in the middle of a neural network, but in this case, you need to provide as argument to the `backward()` method $$ \Big( \nabla_{I_{t+1}} \text{cost} \Big)$$, the gradient of the cost with respect to the output of the current operator/layer (which is written here as the input of the operator/layer above), which will be multiplied by $$ \Big( \nabla_{\theta_t} L_t \Big) $$, the gradient of the current operator/layer's output with respect to its parameters, in order to produce the gradient of the cost with respect to its parameters:
 
 $$ \nabla_{\theta_t} \text{cost} =  \nabla_{\theta_t} \Big( L_{t+1} \leftarrow \text{cost} \Big) \circ L_t    = \Big( \nabla_{I_{t+1}} \text{cost} \Big) \times \nabla_{\theta_t} L_t  $$
+
+as given by the chaining rule seen in our previous course 0.
 
 ```python
 x = torch.autograd.Variable(torch.ones(2), requires_grad=True)
@@ -220,6 +222,8 @@ y.backward(torch.tensor([-1., 1.]))
 print(x.grad)
 # tensor([-2.,  2.])
 ```
+
+The gradient of the final cost with respect to the output of the current operator/layer indicates how to combine the derivatives of different output values in the current layer in the production of a derivative with respect to each parameter.
 
 As Pytorch does not require to introduce complex graph operators as in other technologies (switches, comparisons, dependency controls, scans/loops... ), it enables you to program as normally, and gradients are well propagated through your Python code:
 

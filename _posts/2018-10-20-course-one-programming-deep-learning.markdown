@@ -665,7 +665,7 @@ print("final cost {}".format(round(loss.data.item(), 2)))
 Let's plot the training loss:
 
 ```python
-plt.plot(range(1, len(nplc)+1), nplc, 'ro')
+plt.plot(range(1, len(loss_curve)+1), loss_curve, 'ro')
 ```
 
 <img src="{{ site.url }}/img/deeplearningcourse/DL43.png">

@@ -207,7 +207,9 @@ Since $$ \frac{\partial}{\partial x_1} (x_1 + x_2) = 1 $$ and $$ \frac{\partial}
 
 Applying the `backward()` method multiple times accumulates the gradients.
 
-It is also possible to apply the `backward()` method on something else than a cost (scalar), for example on a layer or operation with a multi-dimensional output, as in the middle of a neural network, but in this case, you need to provide as argument to the `backward()` method $$ \Big( \nabla_\text{input of layer above} \text{cost} \Big)$$, the gradient of the layer above with respect to its input, which will be multiplied by $$ \Big( \nabla_{\theta_t} \text{layer outputs} \Big) $$, the current layer's gradient with respect to its parameter:
+It is also possible to apply the `backward()` method on something else than a cost (scalar), for example on a layer or operation with a multi-dimensional output, as in the middle of a neural network, but in this case, you need to provide as argument to the `backward()` method $$ \Big( \nabla_{I_{t+1}} \text{cost} \Big)$$, the gradient of the layer above with respect to its input, which will be multiplied by $$ \Big( \nabla_{\theta_t} L_t \Big) $$, the current layer's gradient with respect to its parameter to
+
+$$ \nabla_{\theta_t} \text{cost} =  \nabla_{\theta_t} \Big( L_{t+1} \leftarrow \text{cost} \Big) \circ L_t    = \Big( \nabla_{I_{t+1}} \text{cost} \Big) \times \nabla_{\theta_t} L_t  $$
 
 ```python
 x = torch.autograd.Variable(torch.ones(2), requires_grad=True)

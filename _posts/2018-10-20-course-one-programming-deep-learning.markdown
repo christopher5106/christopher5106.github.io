@@ -250,7 +250,7 @@ which is fantastic. In this case, $$ y\vert_{x=2} = ( x^2 )^2 = x^4  $$ and  $$ 
 Note that gradients are computed by retropropagate until a Variable has no `graph_fn` (an input Variable set by the user) or a Variable with `require_grad` set to `False`, which helps save computations.
 
 
-**Exercise**: compute the derivative with Keras, Tensorflow, CNTK  
+**Exercise**: compute the derivative with Keras, Tensorflow, CNTK, MXNet  
 
 # Training loop
 
@@ -426,6 +426,8 @@ small variance, positive and negative values
 
 <img src="{{ site.url }}/img/deeplearningcourse/DL32.png">
 
+**Exercise**: program a training loop with Keras, Tensorflow, CNTK, MXNet
+
 # Modules
 
 A module is an object to learn specifically designed for deep learning neural networks.
@@ -444,7 +446,104 @@ The modules help organize layers and reuse their definitions.
 
 1- rewrite the model as module using nn modules
 
-**Exercise**: program a training loop with Keras, Tensorflow, CNTK  
+
+import torch
+from torch.autograd import Variable
+import torch.nn as nn
+import torch.nn.functional as F
+
+class SimpleNetTest(nn.Module):
+
+    def __init__(self):
+        super(SimpleNetTest, self).__init__()
+        self.lin1 = nn.Linear(2, 12)
+        self.lin2 = nn.Linear(12, 3)
+
+    def forward(self, input):
+        x = F.relu(self.lin1(input))
+        x = self.lin2(x)
+        return x       
+
+net = SimpleNetTest()
+
+# to move network to GPU
+net.cuda()
+
+print(net)
+
+SimpleNetTest(
+  (lin1): Linear(in_features=2, out_features=12, bias=True)
+  (lin2): Linear(in_features=12, out_features=3, bias=True)
+)
+import torch.optim as optim
+
+criterion = nn.CrossEntropyLoss()
+
+# try various optimizer
+
+# optimizer = optim.SGD(net.parameters(), lr=0.001, momentum=0.9)
+# optimizer = torch.optim.Adam(net.parameters())
+optimizer = torch.optim.Adadelta(net.parameters())
+
+loss_curve = list()
+
+batch_size = 500
+for i in range(min(dataset_size, 1000000) // batch_size ):
+
+    batch = x[batch_size*i:batch_size*(i+1)] # size (batchsize, 2)
+
+    batch = torch.autograd.Variable(batch.cuda(), requires_grad=False)
+    batchLabel = torch.autograd.Variable(labels[batch_size*i:batch_size*(i+1)].cuda())
+
+    # zero the parameter gradients
+    optimizer.zero_grad()
+
+    # forward
+    outputs = net(batch)
+
+    # backward
+    loss = criterion(outputs, batchLabel)
+    loss.backward()
+
+    # update network parameters
+    optimizer.step()
+
+    # print("iter {} - cost {}".format(i, loss.data[0]))
+
+    loss_curve.append(loss.data[0])
+
+print("final cost {}".format(loss.data[0]))
+final cost 0.16278570890426636
+
+accuracy = 0
+nb = 1000
+for i in range(min(dataset_size, nb)):
+    z = net(torch.autograd.Variable(x[i:i+1].cuda(), requires_grad=False))
+    # p = softmax(z)
+    # l = torch.max(p, -1)[1]
+
+    l = torch.max(z, -1)[1]
+
+    #print(l.data.numpy()[0], labels[i])
+    if l.data.cpu().numpy()[0] == labels[i]:
+        accuracy += 1
+
+print("accuracy {}%".format(round(accuracy / min(dataset_size, nb) * 100, 2)))
+accuracy 95.40
+accuracy = 0
+z = net(torch.autograd.Variable(x.cuda(), requires_grad=False))
+
+l = torch.max(z, 1)[1]
+ll = torch.autograd.Variable(labels.cuda())
+
+accuracy = int(torch.sum(torch.eq(l, ll).type(torch.cuda.LongTensor)))
+print("accuracy {}%".format(accuracy / dataset_size * 100))
+
+plt.plot(range(1, len(nplc)+1), nplc, 'ro')
+
+<img src="{{ site.url }}/img/deeplearningcourse/DL43.png">
+
+**Exercise**: program with packages in Keras, Tensorflow, CNTK, MXNet
 
 # Packages
 

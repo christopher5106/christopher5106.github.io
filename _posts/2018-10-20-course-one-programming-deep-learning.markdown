@@ -624,10 +624,7 @@ Let us rewrite the training loop using the `torch.optim` package (zeroing gradie
 criterion = nn.CrossEntropyLoss()
 
 import torch.optim as optim
-# try various optimizer
-# optimizer = optim.SGD(net.parameters(), lr=0.001, momentum=0.9)
-# optimizer = torch.optim.Adam(net.parameters())
-optimizer = torch.optim.Adadelta(net.parameters())
+optimizer = optim.SGD(net.parameters(), lr=0.1, momentum=0.9)
 ```
 
 The `optimizer` provides a method `zero_grad()` to clear the previous gradient values and a `step()` method to apply the update rule
@@ -679,8 +676,19 @@ l = torch.max(z, 1)[1]
 ll = Variable(Y)
 accuracy = int(torch.sum(torch.eq(l, ll).type(torch.cuda.LongTensor)))
 print("accuracy {}%".format(round(accuracy / dataset_size * 100,2)))
-# accuracy 99.62%
+# accuracy 96.73%
 ```
+
+
+**Exercise**: try various optimizers and learning rates
+
+```python
+optimizer = torch.optim.Adam(net.parameters())
+optimizer = torch.optim.Adadelta(net.parameters())
+```
+
+and confirm that Adadelta achieves best accuracy: 99.62%.
+
 
 **Exercise**: replace your functions with package functions in Keras, Tensorflow, CNTK  
 

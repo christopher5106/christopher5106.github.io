@@ -100,7 +100,8 @@ You can easily check the following commands in Pytorch and Numpy:
 | Matrix-Vector multiplication | - | .mv() |
 | Reshape | .reshape(shape) | .view(size) |
 | Concatenate | np.concatenate([]) | torch.cat([]) |
-
+| Add a dimension | np.expand_dims(, axis) | .unsqueeze(axis) |
+| Range of values | np.arange() | torch.arange() |
 
 You can link Numpy array and Torch Tensor, either with
 
@@ -165,7 +166,7 @@ print(x.grad_fn)
 # None
 ```
 
-The Variable contains the original data in the `data` attribute.
+The Variable contains the original data in the `data` attribute. The API for Tensors is also available for Variables.
 
 When you add an operation such as for example the square operator, the newly created Variable is populated with the result in the `data` attribute as well as an history `grad_fn` function :
 
@@ -179,7 +180,7 @@ print(y.grad_fn)
 # <PowBackward0 object at 0x7ffaf1ae0160>
 ```
 
-The `grad_fn` Function enables to compute the derivative thanks to the Variable's `backward()` method:
+The `grad_fn` Function contains the history or the link to x, which enables to compute the derivative thanks to the Variable's `backward()` method:
 
 ```python
 y.backward()
@@ -189,7 +190,7 @@ print(x.grad)
 # tensor([4.])
 ```
 
-Since $$ \frac{\partial x^2}{\partial x} = 2 x $$, the gradient of the cost y with respect to the input x is placed in `x.grad` and its value is 4 at x=2.
+The gradient of the cost y with respect to the input x is placed in `x.grad` and since $$ \frac{\partial x^2}{\partial x} = 2 x $$, its value is 4 at x=2.
 
 Calling `y.backward()` a second time will lead to a RunTime Error. In order to accumulate the gradients into `x.grad`, you need to set `retain_graph=True` during the first backward call.
 
@@ -255,11 +256,12 @@ Note that gradients are computed by retropropagate until a Variable has no `grap
 # Training loop
 
 Let's take back our [Course 0](http://christopher5106.github.io/deep/learning/2018/10/20/course-zero-deep-learning.html)'s perceptron and implement its training directly with Pytorch tensors and operators, without other packages.
+Let's consider the input is 20 dimensional, and the number of outputs for each dense layer is 32.
 
 <img src="{{ site.url }}/img/deeplearningcourse/DL15.png">
 
 
-Pytorch only requires to implement the forward pass of our perceptron. Each Dense layer is composed of multiplicative weights and a bias:
+Pytorch only requires to implement the forward pass of our perceptron. Each Dense layer is composed of two learnable parameters or weights:
 
 ```python
 theta1 =  torch.autograd.Variable(torch.randn(32,20) *0.1,requires_grad = True)
@@ -268,23 +270,26 @@ theta2 = torch.autograd.Variable(torch.randn(32,32)*0.1,requires_grad = True)
 bias2 = torch.autograd.Variable(torch.randn(32)*0.1,requires_grad = True)
 
 def forward(x):
+    # affine operation of the first Dense layer
     y = theta1.mv(x) + bias1
+    # ReLu activation
     y = torch.max(y, torch.autograd.Variable(torch.Tensor([0])))
+    # affine operation of the second Dense layer
     return theta2.mv(y) + bias2
 ```
 
-As first loss function, let's use the square of the sum of the outputs:
+As first loss function, let's use the square of the sum of the outputs. We can take whatever we want, as soon as it returns a scalar value to minimize:
 
 ```python
 def cost(z):
     return (torch.sum(z)) ** 2
 ```
 
-A training loop consists in
+A training loop iterates over a dataset of training examples and each iteration consists in
 
-- a forward pass : propagate the input values through layers from bottom to top, until the cost
+- a forward pass : propagate the input values through layers from bottom to top, until the cost/loss
 
-- a backward pass : compute the gradients from top to bottom
+- a backward pass : propagate the gradients from top to bottom and into each of the parameters
 
 - apply the parameter update rule $$ \theta \leftarrow \theta - \lambda \nabla_{\theta_L} \text{cost} $$ for each layer L
 
@@ -426,11 +431,15 @@ small variance, positive and negative values
 
 <img src="{{ site.url }}/img/deeplearningcourse/DL32.png">
 
+Forward
+no function, backward yes
+
+
 **Exercise**: program a training loop with Keras, Tensorflow, CNTK, MXNet
 
 # Modules
 
-A module is an object to learn specifically designed for deep learning neural networks.
+A module is an object that encapsulates learnable parameters and is specifically suited to design deep learning neural networks.
 
 A layer is a module:
 <img src="{{ site.url }}/img/deeplearningcourse/DL31.png">
@@ -442,11 +451,12 @@ The composition of modules makes a module:
 
 The modules help organize layers and reuse their definitions.
 
-
+move to GPU
+exporting, loading
 
 1- rewrite the model as module using nn modules
 
-
+```python
 import torch
 from torch.autograd import Variable
 import torch.nn as nn
@@ -470,11 +480,22 @@ net = SimpleNetTest()
 net.cuda()
 
 print(net)
+```
+
+The learnable parameters are returned by net.parameters()
+
+```python
+params = list(net.parameters())
+print(params)
 
 SimpleNetTest(
   (lin1): Linear(in_features=2, out_features=12, bias=True)
   (lin2): Linear(in_features=12, out_features=3, bias=True)
 )
+
+```
+
+```python
 import torch.optim as optim
 
 criterion = nn.CrossEntropyLoss()
@@ -512,24 +533,25 @@ for i in range(min(dataset_size, 1000000) // batch_size ):
 
     loss_curve.append(loss.data[0])
 
-print("final cost {}".format(loss.data[0]))
-final cost 0.16278570890426636
+print("final cost {}".format(round(loss.data[0], 2)))
+# final cost 0.16
+```
 
+
+```python
 accuracy = 0
 nb = 1000
 for i in range(min(dataset_size, nb)):
     z = net(torch.autograd.Variable(x[i:i+1].cuda(), requires_grad=False))
-    # p = softmax(z)
-    # l = torch.max(p, -1)[1]
-
     l = torch.max(z, -1)[1]
-
-    #print(l.data.numpy()[0], labels[i])
     if l.data.cpu().numpy()[0] == labels[i]:
         accuracy += 1
 
 print("accuracy {}%".format(round(accuracy / min(dataset_size, nb) * 100, 2)))
-accuracy 95.40
+# accuracy 95.40
+```
+
+```python
 accuracy = 0
 z = net(torch.autograd.Variable(x.cuda(), requires_grad=False))
 
@@ -538,8 +560,14 @@ ll = torch.autograd.Variable(labels.cuda())
 
 accuracy = int(torch.sum(torch.eq(l, ll).type(torch.cuda.LongTensor)))
 print("accuracy {}%".format(accuracy / dataset_size * 100))
+```
 
+
+
+```python
 plt.plot(range(1, len(nplc)+1), nplc, 'ro')
+```
+
 
 <img src="{{ site.url }}/img/deeplearningcourse/DL43.png">
 

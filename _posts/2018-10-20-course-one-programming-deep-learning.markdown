@@ -219,9 +219,9 @@ Applying the `backward()` method multiple times accumulates the gradients.
 
 It is also possible to apply the `backward()` method on something else than a cost (scalar), for example on a layer or operation with a multi-dimensional output, as in the middle of a neural network, but in this case, you need to provide as argument to the `backward()` method $$ \Big( \nabla_{I_{t+1}} \text{cost} \Big)$$, the gradient of the cost with respect to the output of the current operator/layer (which is written here as the input of the operator/layer above), which will be multiplied by $$ \Big( \nabla_{\theta_t} L_t \Big) $$, the gradient of the current operator/layer's output with respect to its parameters, in order to produce the gradient of the cost with respect to its parameters:
 
-$$ \nabla_{\theta_t} \text{cost} =  \nabla_{\theta_t} \Big(  \text{cost} \circ S \circ ... \circ L_{t+1}  \Big) \circ L_t    = \Big( \nabla_{I_{t+1}} \text{cost} \Big) \times \nabla_{\theta_t} L_t  $$
+$$ \nabla_{\theta_t} \text{cost} =  \nabla_{\theta_t} \Big[ ( \text{cost} \circ S \circ ... \circ L_{t+1}  ) \circ L_t \Big]   = \Big( \nabla_{I_{t+1}} \text{cost} \Big) \times \nabla_{\theta_t} L_t  $$
 
-as given by the chaining rule seen in our previous course 0.
+as given by the chaining rule seen in [Course 0](http://christopher5106.github.io/deep/learning/2018/10/20/course-zero-deep-learning.html).
 
 ```python
 x = torch.autograd.Variable(torch.ones(2), requires_grad=True)
@@ -373,9 +373,9 @@ theta2 = torch.autograd.Variable(torch.randn(12, 3)*0.01,requires_grad = True)
 bias2 = torch.autograd.Variable(torch.randn(3)*0.01,requires_grad = True)
 
 def forward(x):
-    y = x.mm(theta1) + bias1 # (batch_size, 2) x (2, 12) + (batch_size, 12) => (batch_size, 12)
+    y = x.mm(theta1) + bias1 # (B, 2) x (2, 12) + (B, 12) => (B, 12)
     y = torch.max(y, torch.autograd.Variable(torch.Tensor([0])))
-    y = y.mm(theta2) + bias2 # (batch_size, 12) x (12, 3) + (batch_size, 3) => (batch_size, 3)
+    y = y.mm(theta2) + bias2 # (B, 12) x (12, 3) + (B, 3) => (B, 3)
     return y
 
 def softmax(z):
@@ -399,17 +399,17 @@ for i in range(min(dataset_size, 100000) // batch_size ):
     batch = X[batch_size*i:batch_size*(i+1)] # size (batchsize, 2)
     z = forward(torch.autograd.Variable(batch, requires_grad=False))
     z = softmax(z)
-    c = crossentropy(z, torch.autograd.Variable(Y[batch_size*i:batch_size*(i+1)]))
+    loss = crossentropy(z, torch.autograd.Variable(Y[batch_size*i:batch_size*(i+1)]))
     print("iter {} - cost {} - learning rate {}".format(i, c.data.item(), lr))
 
     # compute the gradients
-    c.backward()
+    loss.backward()
 
     # apply the gradients
-    theta1.data = theta1.data - lr * theta1.grad.data
-    bias1.data = bias1.data - lr * bias1.grad.data
-    theta2.data = theta2.data - lr * theta2.grad.data
-    bias2.data = bias2.data - lr * bias2.grad.data
+    theta1.data.sub_( lr * theta1.grad.data )
+    bias1.data.sub_( lr * bias1.grad.data)
+    theta2.data.sub_( lr * theta2.grad.data )
+    bias2.data.sub_( lr * bias2.grad.data )
 
     # clear the grad
     theta1.grad.zero_()
@@ -419,7 +419,18 @@ for i in range(min(dataset_size, 100000) // batch_size ):
 # iter 4999 - cost 0.07717917114496231 - learning rate 5.000000000000001e-05
 ```
 
-The network converges. To check everything is fine, one might compute the accuracy, a classical metric for classification problems:
+The network converges.
+
+When `loss.backward()` is called, the whole graph is differentiated w.r.t. the loss, and all Variables in the graph will have their .grad Variable accumulated with the gradient.
+
+```python
+print(loss.grad_fn)  # NegBackward
+print(loss.grad_fn.next_functions[0][0])  # MeanBackward1
+print(loss.grad_fn.next_functions[0][0].next_functions[0][0])  # LogBackward
+print(loss.grad_fn.next_functions[0][0].next_functions[0][0].next_functions[0][0])  # GatherBackward
+```
+
+To check everything is fine, one might compute the accuracy, a classical metric for classification problems:
 
 ```python
 accuracy = 0
@@ -437,32 +448,22 @@ print("accuracy {}%".format(round(accuracy / min(dataset_size, nb) * 100,2)))
 
 **Exercise**: compute precision, recall, and AUC.
 
-Take an ensemble
+Note that convergence is strongly influenced
 
-
-The art of choosing the learning rate
+- by the art of choosing the learning rate
 <img src="{{ site.url }}/img/deeplearningcourse/DL20.png">
 
 
-The art of choosing initialization
-small variance, positive and negative values
+- by the art of choosing the right layer initialization: a small variance, with positive and negative values to dissociate the neural outputs (neurons that fire together wire together) helps. In fact, we'll see in the next section Pytorch packages that provide a correct implementation of the variance choice given the number of input and output connections:
 
 <img src="{{ site.url }}/img/deeplearningcourse/DL32.png">
 
-Forward
-no function, backward yes
+To improve the results, it is possible to train multiple times the network from scratch, and average the ensemble of parameters from each training.
 
-So, when we call loss.backward(), the whole graph is differentiated w.r.t. the loss, and all Variables in the graph will have their .grad Variable accumulated with the gradient.
-
-print(loss.grad_fn)  # MSELoss
-print(loss.grad_fn.next_functions[0][0])  # Linear
-print(loss.grad_fn.next_functions[0][0].next_functions[0][0])  # ReLU
-
-learning_rate = 0.01
-for f in net.parameters():
-    f.data.sub_(f.grad.data * learning_rate)
+Note also that, if there is a backward function for every operation, there is no forward function: evaluation is performed when the operator is applied to the variable as in a classical program. You can still create your own function as in a classical program. The backward function works as a kind of history of the operations in order to retropropagate the gradient. So, it is very different from the concept of "graph of operators".
 
 **Exercise**: program a training loop with Keras, Tensorflow, CNTK, MXNet
+
 
 # Modules
 

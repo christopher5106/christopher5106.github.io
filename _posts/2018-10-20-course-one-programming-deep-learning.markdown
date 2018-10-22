@@ -434,6 +434,15 @@ small variance, positive and negative values
 Forward
 no function, backward yes
 
+So, when we call loss.backward(), the whole graph is differentiated w.r.t. the loss, and all Variables in the graph will have their .grad Variable accumulated with the gradient.
+
+print(loss.grad_fn)  # MSELoss
+print(loss.grad_fn.next_functions[0][0])  # Linear
+print(loss.grad_fn.next_functions[0][0].next_functions[0][0])  # ReLU
+
+learning_rate = 0.01
+for f in net.parameters():
+    f.data.sub_(f.grad.data * learning_rate)
 
 **Exercise**: program a training loop with Keras, Tensorflow, CNTK, MXNet
 

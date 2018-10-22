@@ -296,6 +296,8 @@ A training loop iterates over a dataset of training examples and each iteration 
 
 - apply the parameter update rule $$ \theta \leftarrow \theta - \lambda \nabla_{\theta_L} \text{cost} $$ for each layer L
 
+Let's train this network on random inputs, one sample at a time:
+
 ```python
 for i in range(1000):
     lr = 0.001 * (.1 ** ( max(i - 500 , 0) // 100))
@@ -323,11 +325,22 @@ for i in range(1000):
 
 **Exercise**: check that the norm of the parameters converge to zero.
 
-Let's consider a more useful case, ie a classification problem with the cross-entropy loss we have seen in [Course 0](http://christopher5106.github.io/deep/learning/2018/10/20/course-zero-deep-learning.html) :
+In a classification task,
+
+- training is usually performed on batch of samples, instead of 1 sample, at each iteration, to get a faster training, but also to reduce the cost of the transfer of data when the data is moved to GPU
+
+- the model is required to output a number of values equal to the number of classes, normalized by softmax activation
+
+- the loss is the cross-entropy
+
+as we have seen in [Course 0](http://christopher5106.github.io/deep/learning/2018/10/20/course-zero-deep-learning.html).
+
+Let us consider a toy data, in which the label of a sample depends on its position in 2D, with 3 labels corresponding to 3 zones:
+
 
 <img src="{{ site.url }}/img/deeplearningcourse/DL18.png">
 
-For that purpose, we'll consider a toy dataset consisting of positions in a square where the target label is a simple function of the position in the square. Let's create the dataset with Numpy:
+The dataset creation or preprocessing is usually performed with Numpy:
 
 ```python
 import matplotlib.pyplot as plt
@@ -342,14 +355,16 @@ plt.show()
 
 <img src="{{ site.url }}/img/deeplearningcourse/DL42.png">
 
-And convert the Numpy arrays to Torch Tensors:
+Let's convert the Numpy arrays to Torch Tensors:
 
 ```python
 X = torch.from_numpy(x).type(torch.FloatTensor)
 Y = torch.from_numpy(labels).type(torch.LongTensor)
 ```
 
-The first layer of the neural network takes as input a position, ie a vector of dimension 2, and the second layer is required to output a number of values equal to the number of classes (3 in this example), on top of which we'll place a softmax to normalize them into probabilities. We choose a hidden dimension of 12:
+The input is defined by a position, ie a vector of dimension 2 for each sample, leading to a Tensor of size `(B, 2)`, where B is the batch size.
+
+Let's choose as hidden dimension (number of outputs of first layer/ inputs of second layers) 12:
 
 ```python
 theta1 =  torch.autograd.Variable(torch.randn(2, 12) *0.01,requires_grad = True)

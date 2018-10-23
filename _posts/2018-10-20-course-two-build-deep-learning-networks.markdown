@@ -340,6 +340,8 @@ The diagram below illustrates that accepting a (slightly) lower accuracy than th
 <img src="{{ site.url }}/img/deeplearningcourse/DL57.png">
 
 
+**Exercise**: use a Pytorch model to predict the class of an image.
+
 # Audio
 
 

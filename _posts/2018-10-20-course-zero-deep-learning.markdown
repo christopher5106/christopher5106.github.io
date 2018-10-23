@@ -351,7 +351,7 @@ It is also possible to regularize with label smoothing, by drawing with probabil
 
 $$ \tilde{p}' (c) =(1-\epsilon) \delta_{c,\hat{c}} + \frac{\epsilon}{C} $$
 
-$$ \text{CrossEntropy'}(p, \tilde{p}) = (1-\epsilon) \text{CrossEntropy}(p, \tilde{p}) + \epsilon \text{CrossEntropy'}(p, \text{uniform}) $$
+$$ \text{CrossEntropy'}(p, \tilde{p}) = (1-\epsilon) \text{CrossEntropy}(p, \tilde{p}) + \epsilon \text{CrossEntropy}(p, \text{uniform}) $$
 
 - to use smoother values than 0 and 1 when the labels in the groundtruth are less certain,
 

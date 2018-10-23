@@ -333,7 +333,7 @@ There has been also recently some effort to adapt neural networks to less powerf
 
 The diagram below illustrates that accepting a (slightly) lower accuracy than the state of the art, it is possible to create networks much less demanding in terms of resources (note that the multiply/add axis is on a logarithmic scale).
 
-<img src="{{ site.url }}/img/deeplearningcourse/DL58.png">
+<img src="{{ site.url }}/img/deeplearningcourse/DL59.png">
 
 #### ShuffleNet
 
@@ -344,6 +344,8 @@ The diagram below illustrates that accepting a (slightly) lower accuracy than th
 
 
 # Object detection
+
+<img src="{{ site.url }}/img/deeplearningcourse/DL58.png">
 
 # Segmentation
 

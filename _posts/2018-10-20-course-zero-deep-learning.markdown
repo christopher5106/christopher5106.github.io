@@ -106,7 +106,9 @@ $$ \tilde{p}_c(x) = \begin{cases}
   0, & \text{otherwise}.
 \end{cases} $$
 
-which we will write $$ \tilde{p}_c(x) = \delta(c,\hat{c}) $$. $$ \tilde{p} $$ is a vector of zero values except for the true class, where it is one: which we call **one-hot encoding**.
+which we will write $$ \tilde{p}_c(x) = \delta(c,\hat{c}) $$.
+
+$$ \tilde{p} $$ is a vector of zero values except for the true class, where it is one: which we call **one-hot encoding**.
 
 If more samples are considered, usually we average the individual losses for stability, leading back to the desired empirical estimation:
 

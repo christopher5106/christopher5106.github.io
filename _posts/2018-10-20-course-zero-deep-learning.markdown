@@ -75,6 +75,7 @@ The softmax is the equivalent to the signmoid but in the multi-dimensional case.
 
 Note that for the softmax to predict probability for C classes, it requires the output $$ o = f(x) $$ to be C-dimensional.
 
+$$ \{o_c\}_c $$ are called the **logits**.
 
 #### Estimating the true distribution
 
@@ -334,15 +335,25 @@ $$ \text{CrossEntropy} = - \sum_c \tilde{p_c} \log p_c $$
 
 In our section on practical cross-entropy, we have considered that we knew the true label with certainty, that the goal to achieve was maximize the objective under the real distribution of labels, even if they are unbalanced in the dataset, leading to strong bias. In practice, we can go one step further, rebalancing these probability as Bayes rules would suggest, or integrate the notion of incertainty in the groundtruth label, to reduce the influence of noise. Here are a few techniques we can use in practice. It is still possible:
 
-- to train a model with smoother values than 0 and 1 for negatives and positives, for example 0.1 or 0.9, which will help achieve better performances. This technique of *label smoothing* or *soft labels* enables in particular to re-introduce the outputs for the negative classes so that it will also sanction wrongly classified negatives, and preserve a symmetry between the negative and positive labels:
-
-$$ \text{CrossEntropy}(p, \tilde{p}) = - 0.9 \times \log p_\hat{c}  - 0.1 \times \sum_{c \neq \hat{c}} \log p_c  $$
-
-- to use smoother value when the labels in the groundtruth are less certain,
-
 - to rebalance the dataset with $$ \alpha_{c} $$ the inverse class frequency :
 
 $$ \text{CrossEntropy}(p, \tilde{p}) = - \alpha_{\hat{c}} \times \log p_\hat{c}  $$
+
+This could also be performed by replacing the current sampling schema ($$ \tilde{p} $$), by sampling following uniformly a class and the sample belonging to this class.
+
+- to train a model with smoother values than 0 and 1 for negatives and positives, for example 0.1 or 0.9, which will help achieve better performances. This technique of *label smoothing* or *soft labels* enables in particular to re-introduce the outputs for the negative classes so that it will preserve a symmetry between the negative and positive labels:
+
+$$ \text{CrossEntropy}(p, \tilde{p}) = - 0.9 \times \log p_\hat{c}  - 0.1 \times \sum_{c \neq \hat{c}} \log p_c  $$
+
+This technique reduces the confidence in the targets, and the network overfitting. It discourages too high differences between the logits for the true class and for the other classes.
+
+It is also possible to regularize with label smoothing, by drawing with probability $$ \epsilon $$ a class among C classes uniformly:
+
+$$ \tilde{p}' (c) =(1-\epsilon) \delta_{c,\hat{c}} + \frac{\epsilon}{C} $$
+
+$$ \text{CrossEntropy'}(p, \tilde{p}) = (1-\epsilon) \text{CrossEntropy}(p, \tilde{p}) + \epsilon \text{CrossEntropy'}(p, \text{uniform}) $$
+
+- to use smoother values than 0 and 1 when the labels in the groundtruth are less certain,
 
 - to focus more on wrongly classified examples
 

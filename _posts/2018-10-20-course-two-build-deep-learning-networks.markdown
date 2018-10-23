@@ -294,3 +294,9 @@ statistics at the output are
 variance 1, mean 0
 training layers on statistics not changning
 learning a scale and a bias after normalization
+
+
+
+**Well done!**
+
+[Next course ! natural language and deep learning](http://christopher5106.github.io/deep/learning/2018/10/20/course-three-natural-language-and-deep-learning.html)

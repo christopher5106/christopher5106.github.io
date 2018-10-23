@@ -9,6 +9,90 @@ Here is my course of deep learning in 5 days only!
 
 You might first check [Course 0: deep learning!](http://christopher5106.github.io/deep/learning/2018/10/20/course-zero-deep-learning.html) and [Course 1: program deep learning!](http://christopher5106.github.io/deep/learning/2018/10/20/course-one-programming-deep-learning.html) if you have not read them.
 
+# Common layers for deep learning
+
+After the Dense layer seen in Courses 0 and 1, let's go further with new layer.
+
+
+#### Convolutions
+
+Convolution layers are locally linear layers, defined by a kernel consisting of weights working on a local zone of the input.
+
+On a 1-dimensional input, a 1D-convolution of kernel k=3 is defined by 3 weights $$ w_1, w_2, w_3 $$. The first output is computed:
+
+$$ y_1 = w_1 x_1 + w_2 x_2 + w_3 x_3 $$
+
+Then next output is the result of shifting the previous computation by one:
+
+$$ y_2 = w_1 x_2 + w_2 x_3 + w_3 x_4 $$
+
+And
+
+$$ y_3 = w_1 x_3 + w_2 x_4 + w_3 x_5 $$
+
+If the input is of length $$ l_I $$, a 1D-convolution of kernel 3 can only produce values for  
+
+$$ l_{Out} = l_{In} - \text{kernel_size} +1  $$
+
+positions, hence $$ (n -2) $$ positions in the case of kernel 3.
+
+It is also possible to define the stride of the convolution, for example with stride 2, the convolution is shifted by 2 positions, leading to $$ l_{Out} = \text{ceil}((l_{In} - 2) / 2)  $$ output positions.
+
+Last, a 1D-convolution can also be applied on matrices, where the first dimension is the length of the sequence and the second dimension is the dimensionality of the data, and modify the dimensionality of the data (number of channels):
+
+$$ \text{shape}_{In}=(l_{In}, d_{In}) \rightarrow \text{shape}_{Out} = (l_{Out}, d_{Out}) $$
+
+$$ y_{1,j} = \sum_{0\leq i \leq d_{In}} w_{1,i,j} x_{1,i} + w_{2,i,j} x_{2,i} + w_{3,i,j} x_{3,i} $$
+
+<img src="{{ site.url }}/img/deeplearningcourse/DL24.png">
+
+A 2D-convolution performs the same kind of computations on 2-dimensional inputs, with a 2-dimensional kernel $$ (k_1, k_2) $$:
+
+$$ \text{shape}_{In}=(h_{In}, w_{In}, d_{In}) \rightarrow \text{shape}_{Out} = (h_{Out}, w_{Out}, d_{Out}) $$
+
+Contrary to Linear/Dense layers, where there is one weight (or 2, with the bias) per couple of input value and output value, which can be huge, a 1D-convolution has $$ k \times d_{In} \times d_{Out} $$ weights, a 2D-convolution has $$ k_1 \times k_2 \times d_{In} \times d_{Out} $$ weights if d is the number of output values:
+
+<img src="{{ site.url }}/img/deeplearningcourse/DL26.png">
+
+One of the difficulty with convolutions is due to the fact the output featuremap shape depends on the kernel size and the stride:
+
+$$ \text{ceil}((n - \text{kernel}) / \text{stride})  $$
+
+To avoid that, it is possible to pad the input with 0 to create a larger input so that input and output featuremaps keep the same size. This simplifies the design of architectures:
+
+<img src="{{ site.url }}/img/deeplearningcourse/DL25.png">
+
+
+Last, convolutions can be dilated, in order to change the sampling scheme and the reach / the receptive field of the network. A dilated convolution of kernel 3 looks like a normal convolution of kernel 5 for which 2/5 of the kernel weights have been set to 0:
+
+<img src="{{ site.url }}/img/deeplearningcourse/DL29.png">
+
+
+
+#### Pooling
+
+Pooling operations are like Dense and Convolution Layers, but do not have weights. Instead, it performs a max or an averaging operation on the input.
+
+There exists MaxPooling and AveragePooling, in 1D and 2D, as for convolutions:
+
+<img src="{{ site.url }}/img/deeplearningcourse/DL28.png">
+
+Usually used with a stride of 2, a MaxPooling of size 2 downsamples the input by 2, which helps summarizing the information towards the output, increases the invariance to small translations, while reducing the number of operations in the layers above.
+
+There exists GlobalAveraging and GlobalMax, working the full input, as Dense layers do:
+
+<img src="{{ site.url }}/img/deeplearningcourse/DL27.png">
+
+When a computer vision network transforms an image of shape (h,w,3) to an output of shape (H,W,C) where $$ H \ll h $$ and $$ W \ll w $$, then a global average pooling layer takes the average over all positions HxW : this helps build networks less sensitive to big translations of the object of interest in the image.
+
+
+#### Normalization
+Batch normalization
+statistics at the output are
+variance 1, mean 0
+training layers on statistics not changning
+learning a scale and a bias after normalization
+
 
 # Image classification
 
@@ -113,7 +197,7 @@ It resulted into SqueezeNet, which is a convolutional neural network architectur
 
 - Replace the majority of 3x3 filters with 1x1 filters (to fit within a budget of a certain number of convolution filters).
 
-- Decrease the number of input channels to 3x3 filters, using dedicated filters names squeeze layers.
+- Decrease the number of input channels to 3x3 filters, using dedicated filters named squeeze layers.
 
 - Downsample late in the network so that convolution layers have large activation maps.
 
@@ -209,91 +293,54 @@ Two new modules have been found to achieve state-of-the-art accuracy.
 
 #### SENet (2017)
 
-Typical convolutional neural networks builds a description of its input image by progressively capturing patterns in each of its layers. For each of them, a set of filters are learnt to express local spatial connectivity patterns from its input channels. Convolutional filters captures informative combinations by fusing spatial and channel-wise information together within local receptive fields.
+Typical convolutional neural networks builds a description of its input image by progressively capturing patterns in each of its layers. For each of them, a set of filters are learned to express local spatial connectivity patterns from its input channels. Convolutional filters captures informative combinations by fusing spatial and channel-wise information together within local receptive fields.
 
 SENet (Squeeze-and-Excitation Networks) focuses on the relation between channels and recalibrates at transformation step its features so that informative features are emphazised and less useful ones suppressed (independently of their spatial location).
 
 To do so, SENet uses a new architectural unit that consists of 2 steps :
 
-First, squeeze the block input (typically the output of any other convolutional layer) to create a global information using global average pooling,
+- First, squeeze the block input (typically the output of any other convolutional layer) to create a global information using global average pooling,
 
-Then, “excite” the most informative features using adaptive recalibration.
+- Then, “excite” the most informative features using adaptive recalibration.
+
+<img src="{{ site.url }}/img/deeplearningcourse/DL55.png">
+
 
 The adaptative recalibration is done as follows :
 
-reduce the dimension of its input using a fully connected layer (noted FC below),
+- reduce the dimension of its input using a fully connected layer (noted FC below),
 
-go through a non-linearity function (ReLU function),
+- go through a non-linearity function (ReLU function),
 
-restore the dimension of its data using another fully connected layer,
+- restore the dimension of its data using another fully connected layer,
 
-use sigmoid function to transform each output into a scale parameter between 0 and 1,
+- use sigmoid function to transform each output into a scale parameter between 0 and 1,
 
-linearly rescale each original input of the SE unit according to the scale parameters.
+- linearly rescale each original input of the SE unit according to the scale parameters.
 
-
-X : input of the block that will be enhanced by the squeeze and excitation method Ftr : original convolutional operator to be enhanced
-
-U  : output of Ftr
-
-Fsq   : squeeze function
-
-Fex   : excitation function (creates the scaling parameters)
-
-Fscale : scaling function (scale the original output of Ftr according to the SENet calibration ouput)
-
-X̃  : recalibrated Ftr output
-
-Below are 2 examples of existing blocks enhanced with an SE unit:
-
+<img src="{{ site.url }}/img/deeplearningcourse/DL55.jpg">
 
 The winner of the classification task of ILSVRC 2017 is a modified ResNeXt integrating SE blocks.
 
 #### MobileNet v1/v2
 
-There has been also recently some effort to adapt neural networks to less powerfull architecture such as mobile devices, leading to the creation of a class of networks names MobileNet.
+There has been also recently some effort to adapt neural networks to less powerful architecture such as mobile devices, leading to the creation of a class of networks named MobileNet.
+
+<img src="{{ site.url }}/img/deeplearningcourse/DL56.png">
 
 The diagram below illustrates that accepting a (slightly) lower accuracy than the state of the art, it is possible to create networks much less demanding in terms of resources (note that the multiply/add axis is on a logarithmic scale).
 
-However since this study focuses on state of the art performances, those networks are not studied further.
+#### ShuffleNet
+
+<img src="{{ site.url }}/img/deeplearningcourse/DL57.png">
+
+
+# Audio
 
 
 
 
-# Under construction
 
-a recurrent network is a feedforward network with two inputs
-<img src="{{ site.url }}/img/deeplearningcourse/DL20.png">
-hidden information
-
-
-<img src="{{ site.url }}/img/deeplearningcourse/DL21.png">
-
-
-convolutions
-<img src="{{ site.url }}/img/deeplearningcourse/DL24.png">
-
-<img src="{{ site.url }}/img/deeplearningcourse/DL25.png">
-
-<img src="{{ site.url }}/img/deeplearningcourse/DL26.png">
-
-dilated conv
-<img src="{{ site.url }}/img/deeplearningcourse/DL29.png">
-
-Global averaging
-
-<img src="{{ site.url }}/img/deeplearningcourse/DL27.png">
-
-
-Max pooling
-<img src="{{ site.url }}/img/deeplearningcourse/DL28.png">
-
-
-Batch normalization
-statistics at the output are
-variance 1, mean 0
-training layers on statistics not changning
-learning a scale and a bias after normalization
 
 
 

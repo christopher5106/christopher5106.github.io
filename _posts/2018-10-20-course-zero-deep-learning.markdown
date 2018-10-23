@@ -45,9 +45,11 @@ Coming from the theory of information, cross-entropy measures the distance betwe
 
 $$ \text{CrossEntropy}(p, \tilde{p}) = - \sum_c \tilde{p}_c \log(p_c) $$
 
-and we want this cost to be the lowest possible (minimization).
+which can be defined as the expected log-likelihood of the predicted label under the true label distribution, and we want this cost to be the lowest possible (minimization).
 
-Note that **a loss function always outputs a scalar value**. This scalar value is a measure of fit of the model with the real value.
+Note that **a loss function always outputs a scalar value**. This scalar value is a measure of fit of the model with the real value. Since the a loss function outputs a scalar, the shape of its Jacobian with respect to an input is the same as the shape of the input, for example for an input of rank 4:
+
+$$ \nabla f = \Big[ \frac{\partial f}{\partial I_{a,b,c,d}} \Big]_{a,b,c,d} $$
 
 In **conclusion** of this section, the goal of machine learning is to have a function fit with the real world; and to have this function fit well, we use a loss function to measure how to reduce this distance.
 
@@ -67,7 +69,9 @@ $$ x \xrightarrow{f} o = f(x) = \{o_c\}_c \xrightarrow{softmax} \{p_c\}_c $$
 
 The softmax normalization function is defined by:
 
-$$ \text{Softmax}(o) = \Big\{ \frac{ e^{-o_i} }{ \sum_c e^{-o_c}}  \Big\}_i $$
+$$ \text{Softmax}(o) = \Big\{ \frac{ e^{o_i} }{ \sum_c e^{o_c}}  \Big\}_i $$
+
+The softmax is the equivalent to the signmoid but in the multi-dimensional case.
 
 Note that for the softmax to predict probability for C classes, it requires the output $$ o = f(x) $$ to be C-dimensional.
 
@@ -101,7 +105,7 @@ $$ \tilde{p}_c(x) = \begin{cases}
   0, & \text{otherwise}.
 \end{cases} $$
 
-which we will write $$ \tilde{p}_c(x) = \delta(c,\hat{c}) $$.
+which we will write $$ \tilde{p}_c(x) = \delta(c,\hat{c}) $$. $$ \tilde{p} $$ is a vector of zero values except for the true class, where it is one: which we call **one-hot encoding**.
 
 If more samples are considered, usually we average the individual losses for stability, leading back to the desired empirical estimation:
 
@@ -125,6 +129,7 @@ It consists in following the gradient to descend to the minima:
 
 <img src="{{ site.url }}/img/deeplearningcourse/DL2.png">
 
+In other words, we follow the negative slope of the mountain to find the bottom of the valley. In order to avoid a local minima, initialization (the choice of initial values for the parameters, where to start the descent from) is very important, and multiple runs can help find the best solution.
 
 It is an iterative process in which the update rule simply consists in:
 
@@ -141,6 +146,8 @@ $$ \text{cost} = \text{CrossEntropy} ( \cdot, \tilde{p}) \circ \text{Softmax} \c
 <img src="{{ site.url }}/img/deeplearningcourse/DL3.png">
 
 An **update rule** is how to update the parameters of the model to minimize the cost function.
+
+Since the cost is a scalar, the Jacobian has the same shape as the parameters, and gives a derivative value with respect to every parameter, telling us how to update it.
 
 <img src="{{ site.url }}/img/deeplearningcourse/DL9.png">
 
@@ -209,14 +216,15 @@ $$ (f \circ g)(x) = f_{\theta_f} ( g(x,\theta_g), \theta_f) $$
 
 It is possible to compute the derivatives of g and f with respect to, either the parameters, or the inputs, which we'll differentiate in notation the following way:
 
-$$ \nabla_{\theta_g} g = \Big\{ \frac{\partial g_i}{\partial {\theta_g}_j } \Big\}_{i,j}  $$
+$$ \nabla_{\theta_g} g = \Big\{ \frac{\partial g_j}{\partial {\theta_g}_i } \Big\}_{i,j}  $$
 
-$$ \nabla_I g = \Big\{ \frac{\partial g_i}{\partial x_j} \Big\}_{i,j} $$
+$$ \nabla_I g = \Big\{ \frac{\partial g_j}{\partial x_i} \Big\}_{i,j} $$
 
 To update the parameters of g, we need to compute the derivative of the cost with respect to the parameters of g, that is :
 
 $$ \nabla_{\theta_g} (f \circ g_{\theta_g}) = \nabla_I f \times \nabla_{\theta_g} g $$
 
+all other parameters ($$ \theta_f $$) and inputs (x) being constant.
 
 For example, for the layer $$ \text{Dense}^2 $$,
 
@@ -232,9 +240,9 @@ and for the layer  $$ \text{Dense}^1 $$,
 
 $$ \nabla_{\theta_1} \text{cost} = \Big(\nabla_I  \text{CrossEntropy} \times \nabla_I \text{Softmax}\Big) \times \nabla_I \text{Dense}^2 \times \nabla_I \text{ReLu} \times \nabla_{\theta_1} \text{Dense}^1  $$
 
-We see that the matrix multiplications inside the brackets for Dense layers are common, and it is possible to compute them once. To reduce the number of matrix mulplications, it is better to compute the gradients from the top layer to the bottom layer and reuse previous computations of matrix multiplication for earlier gradients.
+We see that $$ \Big(\nabla_I  \text{CrossEntropy} \times \nabla_I \text{Softmax}\Big) $$ is common to the computation of \nabla_{\theta_1} \text{cost} and \nabla_{\theta_2} \text{cost}, and it is possible to compute them once. This will be true for any other layer below.
 
-Note also, that each gradient is computed given an input, is a function of the layer input.
+So, to reduce the number of matrix mulplications, it is better to compute the gradients from the top layer to the bottom layer and reuse previous computations of matrix multiplication for earlier gradients.
 
 <img src="{{ site.url }}/img/deeplearningcourse/DL10.png">
 
@@ -257,25 +265,27 @@ $$ o = f(x) = \{o_c\}_c \xrightarrow{ \text{Softmax}}  \xrightarrow{ \text{Cross
 
 Mathematically,
 
-$$ \text{cost} =  - \log(p_\hat{c}) = - \log \Big(  \frac{ e^{-o_\hat{c}} }{ \sum_c e^{-o_i}}  \Big) $$
+$$ \text{cost} =  - \log(p_\hat{c}) = - \log \Big(  \frac{ e^{o_\hat{c}} }{ \sum_c e^{o_i}}  \Big) $$
 
-$$ = - \log e^{-o_\hat{c}} +  \log \sum_c e^{-o_i}  $$
+$$ = - \log e^{o_\hat{c}} +  \log \sum_c e^{o_i}  $$
 
-$$ = o_\hat{c} +  \log \sum_c e^{-o_i} $$
+$$ = - o_\hat{c} +  \log \sum_c e^{-o_i} $$
 
 Let's take the derivative with respect to the model output (before softmax normalization):
 
-$$ \frac{\partial \text{cost}}{\partial o_c} =  \delta_{c,\hat{c}} - \frac{ e^{-o_i} }{\sum_c e^{-o_i}}  $$
+$$ \frac{\partial \text{cost}}{\partial o_c} = - \delta_{c,\hat{c}} + \frac{ e^{o_i} }{\sum_c e^{o_i}}  $$
 
-$$ = \delta_{c,\hat{c}} - p_c $$
+$$ = - \delta_{c,\hat{c}} + p_c $$
 
 which is very easy to compute and can simply be rewritten:
 
-$$ \nabla \text{cost} = \tilde{p} - p $$
+$$ \nabla_o \text{cost} = p - \tilde{p} $$
 
-**Conclusion**: it is easier to backprogate gradients computed on Softmax+CrossEntropy together rather than backpropagate separately each : the derivative of the Softmax+CrossEntropy with respect to the output of the model for the right class, let's say the "cat" class, will be 1 - 0.8 = 0.2, if the model has predicted a probability of 0.8 for this class, encouraging it to increase this value ; the derivative of the Softmax+CrossEntropy with respect to an output for a different class will be -0.4 is it has predicted a probability of 0.4, encouraging the model to decrease this value.  
+Note that the gradient is between -1 and 1: for a negative class ($$ \tilde{p} == 0 $$), the derivative is positive, and the highest the prediction has been positive, the higher the derivative it will be; for a positive class, the derivative will always be negative, and the lowest the prediction to be positive, the more negative the derivative will be.
 
-**Exercise**: Compute the derivative of Sigmoid+BinaryEntropy combined.
+**Conclusion**: it is easier to backprogate gradients computed on Softmax+CrossEntropy together rather than backpropagate separately each : the derivative of the Softmax+CrossEntropy with respect to the output of the model for the right class, let's say the "cat" class, will be 0.8 - 1 = - 0.2, if the model has predicted a probability of 0.8 for this class, and the update will follow the negative slope to encourage to increase the prediction ; the derivative of the Softmax+CrossEntropy with respect to an output for a different class will be 0.4 is it has predicted a probability of 0.4, encouraging the model to decrease this value.  
+
+**Exercise**: Compute the derivative of Sigmoid+BinaryCrossEntropy combined.
 
 **Exercise**: Compute the derivative of Sigmoid+MSE combined.
 
@@ -288,7 +298,7 @@ Let's take, as model, a very simple one with only one Dense layer with 2 filters
 
 This is the smallest model we can ever imagine. Such a layer produces a vector of 2 scalars:
 
-$$ f_\theta : \{x_j\} \rightarrow \Big\{ o_i = \sum_j \theta_{i,j} x_j \Big\}_i$$
+$$ f_\theta : \{x_i\} \rightarrow \Big\{ o_j = \sum_i \theta_{i,j} x_i + b_j \Big\}_j $$
 
 Please keep in mind that it is not possible to descend the gradient directly on this output because it is composed of two scalars. We need a loss function, that returns a scalar, and tells us how to combine these two outputs. For example, the Softmax+CrossEntropy we have seen previously:
 
@@ -300,14 +310,14 @@ Now we can retropropagate the gradients. Since we are in the case of 2 outputs, 
 
 Let us compute the derivatives of the dense layer:
 
-$$ \frac{\partial o_i}{\partial \theta_{k,j}} = \begin{cases}
-  x_j, & \text{if } k = i, \\
+$$ \frac{\partial o_j}{\partial \theta_{i,k}} = \begin{cases}
+  x_i, & \text{if } k = j, \\
   0, & \text{otherwise}.
 \end{cases} $$
 
 so
 
-$$ \frac{\partial}{\partial \theta_{k,j}}  ( L \circ f_\theta )=  \sum_c \frac{\partial L}{\partial o_c}  \cdot \frac{\partial o_c}{\partial \theta_{k,j}}  = ( \delta_{ k, \hat{c}} - o_k) \cdot x_j  $$
+$$ \frac{\partial}{\partial \theta_{i,j}}  ( L \circ f_\theta )=  \sum_c \frac{\partial L}{\partial o_c}  \cdot \frac{\partial o_c}{\partial \theta_{i,j}} = \frac{\partial L}{\partial o_j}  \cdot \frac{\partial o_j}{\partial \theta_{i,j}}  = ( \delta_{ j, \hat{c}} - L(o_j)) \cdot x_i  $$
 
 A Dense layer with 4 outputs:
 
@@ -338,7 +348,7 @@ $$ \text{CrossEntropy}(p, \tilde{p}) = - \alpha_{\hat{c}} \times \log p_\hat{c} 
 
 $$ \text{CrossEntropy}(p, \tilde{p}) = - ( 1 - p_\hat{c} )^\gamma \times \log p_\hat{c} $$
 
-as in the Focal Loss for object detection where background negatives are too numerous and tend to take over the positives.
+as in the Focal Loss for object detection where background negatives are too numerous and tend to take over the positives. This technique replaces **hard negative mining**.
 
 
 #### Reinforcement

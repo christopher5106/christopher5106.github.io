@@ -8,6 +8,9 @@ categories: deep learning
 You might first check [Course 0: deep learning!](http://christopher5106.github.io/deep/learning/2018/10/20/course-zero-deep-learning.html) and [Course 1: program deep learning!](http://christopher5106.github.io/deep/learning/2018/10/20/course-one-programming-deep-learning.html) if you have not read them.
 
 
+
+# Under construction
+
 a recurrent network is a feedforward network with two inputs
 <img src="{{ site.url }}/img/deeplearningcourse/DL20.png">
 hidden information

@@ -11,7 +11,7 @@ You might first check [Course 0: deep learning!](http://christopher5106.github.i
 
 # Common layers for deep learning
 
-After the Dense layer seen in Courses 0 and 1, let's go further with new layer.
+After the **Dense** layer seen in Courses 0 and 1, also commonly called **fully connected (FC)** or **Linear** layers, let's go further with new layer.
 
 
 #### Convolutions
@@ -68,6 +68,9 @@ Last, convolutions can be dilated, in order to change the sampling scheme and th
 <img src="{{ site.url }}/img/deeplearningcourse/DL29.png">
 
 
+Note that a convolution of kernel 1 or (1x1) is called a **pointwise convolution** or **projection convolution** or **expansion convolution**, because it is used to change the dimensionality of the data (number of channels) without changing the length or the width and height of the data.
+
+A convolution that applies convolutions on each channel without connections between channels is called a **depthwise convolution**. The combination of a depthwise convolution followed by projection convolution helps reduce the number of computations while maintaining the accuracy roughly.
 
 #### Pooling
 
@@ -329,6 +332,8 @@ There has been also recently some effort to adapt neural networks to less powerf
 <img src="{{ site.url }}/img/deeplearningcourse/DL56.png">
 
 The diagram below illustrates that accepting a (slightly) lower accuracy than the state of the art, it is possible to create networks much less demanding in terms of resources (note that the multiply/add axis is on a logarithmic scale).
+
+<img src="{{ site.url }}/img/deeplearningcourse/DL58.png">
 
 #### ShuffleNet
 

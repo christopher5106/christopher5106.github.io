@@ -1,13 +1,13 @@
 ---
 layout: post
-title:  "Course 0: deep learning in 5 days only!"
+title:  "Course 0: Why targets 0 and 1 in machine learning ?"
 date:   2018-10-20 05:00:00
 categories: deep learning
 ---
 
-In this course, we'll first begin by checking where you are in data science, how far you have been, and if you have the basic concepts because main concepts in deep learning comes from datascience. Then, we'll go for a bit more in marchine learning, and introduction to deep learning, programming, coding few functions under a deep learning technologies, Pytorch, and I'll explain why Pytorch is a great technology. We'll compare it with other technologies, which is not so easy at the beginning. And then we'll go further and further with deep neural networks, to address different subjects.
+Here is my course of deep learning in 5 days only!
 
-Please find the [course syllabus here]({{ site.url }}/img/deeplearningcourse/DSTI_Syllabus.pdf).
+First, we'll begin by the basic concepts in this article, because main deep learning concepts come from datascience. This is a great article for an experienced datascientist also.
 
 I hope you'll get some feelings about deep learning you cannot get from reading else where.
 

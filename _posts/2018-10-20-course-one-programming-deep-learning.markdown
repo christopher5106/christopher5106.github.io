@@ -5,9 +5,13 @@ date:   2018-10-20 06:00:00
 categories: deep learning
 ---
 
-You might first check [Course 0: deep learning!](http://christopher5106.github.io/deep/learning/2018/10/20/course-zero-deep-learning.html) if you have not read it.
+Here is my course of deep learning in 5 days only!
 
-In this deep learning course, we'll use Pytorch as deep learning framework, the most modern technology in the area.
+You might first check [Course 0: deep learning!](http://christopher5106.github.io/deep/learning/2018/10/20/course-zero-deep-learning.html) if you have not read it. A great article about cross-entropy and its generalization.
+
+In this article, I'll go for the introduction to deep learning and programming, coding few functions under a deep learning technologies.
+
+I'll present them under Pytorch, the most modern deep learning technology in the area.
 
 # Your programming environment
 

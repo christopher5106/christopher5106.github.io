@@ -342,6 +342,11 @@ The diagram below illustrates that accepting a (slightly) lower accuracy than th
 
 **Exercise**: use a Pytorch model to predict the class of an image.
 
+
+# Object detection
+
+# Segmentation
+
 # Audio
 
 

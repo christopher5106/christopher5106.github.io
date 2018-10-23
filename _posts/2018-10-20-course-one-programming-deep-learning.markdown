@@ -25,7 +25,31 @@ The command `nvidia-smi` enables you to check the status of your GPUs, as with `
 
 Most recent GPU architectures are Pascal and Volta architectures. The more memory the GPU has, the better. Operations are usually performed with single precision `float16` rather than double precision `float32`, and on new Volta architectures offer Tensor cores specialized with half precision operations.
 
-One of the main difficulties come from the fact that different deep learning frameworks are not available and tested on all CUDA versions, CUDNN versions, and even OS. CUDA versions are not available for all driver versions and OS as well. A good solution to adopt is to use Docker files, which limits the choice of the driver version in the operating system: the compliant CUDA and CUDNN versions as well as the deep learning frameworks can be installed inside the Docker container.
+One of the main difficulties come from the fact that different deep learning frameworks are not available and tested on all CUDA versions, CUDNN versions, and even OS. CUDA versions are not available for all driver versions and OS as well.
+
+Solutions are:
+
+- use Docker containers, which limit the choice of the driver version in the operating system: the compliant CUDA and CUDNN versions as well as the deep learning frameworks can be installed inside the Docker container.
+
+- or use environment managers such as `conda` or `virtualenv`. A few commands to know:
+
+```bash
+#create an environment named pytorch
+conda create -n pytorch python=3.4
+
+# activate it
+source activate pytorch
+
+# install pytorch in this environment
+conda install pytorch
+
+# you are done!
+# Run either a python shell
+python
+# or jupyter notebook
+conda install jupyter
+jupyter notebook
+```
 
 
 # The batch

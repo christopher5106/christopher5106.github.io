@@ -55,7 +55,7 @@ conda install jupyter
 jupyter notebook
 ```
 
-It is possible to combine CUDA and OpenGL for [graphical applications requiring deep learning predictions: the image data is full processed on GPU](http://www.nvidia.com/content/gtc/documents/1055_gtc09.pdf).
+It is possible to combine CUDA and OpenGL for [graphical applications requiring deep learning predictions: the image data is fully processed on GPU](http://www.nvidia.com/content/gtc/documents/1055_gtc09.pdf).
 
 # The batch
 
@@ -234,6 +234,8 @@ print(x.grad)
 ```
 
 The gradient of the cost y with respect to the input x is placed in `x.grad` and since $$ \frac{\partial x^2}{\partial x} = 2 x $$, its value is 4 at x=2.
+
+**Exercise**: with Torch, compute the gradient of $$ z = 3 x + 2 y $$ with respect to x=5 and y=2.
 
 Calling `y.backward()` a second time will lead to a RunTime Error. In order to accumulate the gradients into `x.grad`, you need to set `retain_graph=True` during the first backward call.
 

@@ -501,7 +501,7 @@ Note that convergence is strongly influenced
 
 To improve the results, it is possible to train multiple times the network from scratch, and average the predictions coming from the ensemble of trained networks.
 
-Note also that, if there is a backward function for every operation, there is no forward function: evaluation is performed when the operator is applied to the variable as in a classical program. You can still create your own function as in a classical program. The backward function works as a kind of history of the operations in order to retropropagate the gradient. So, it is very different from the concept of "graph of operators".
+Note also that, if there is a backward function for every operation, there is no forward function: evaluation is performed when the operator is applied to the variable as in a classical program. It is up to you to create your own forward function as in a classical program. The backward function works as a kind of history of the operations in order to retropropagate the gradient. So, it is very different from the concept of "graph of operators".
 
 **Exercise**: program a training loop with Keras, Tensorflow, CNTK, MXNet
 

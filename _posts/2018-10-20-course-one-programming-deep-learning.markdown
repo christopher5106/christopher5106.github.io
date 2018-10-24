@@ -21,7 +21,7 @@ While OpenCL (not to confuse with OpenGL for graphics or OpenCV for images) is a
 
 CUDNN is a second library coming with CUDA providing you with more optimized operators.
 
-Once installed on your system, these libraries will be called by more high level deep learning frameworks, such as Caffe, Tensorflow, MXNet, CNTK, Torch or Pytorch.
+Once installed on your system, these libraries will be called by higher level deep learning frameworks, such as Caffe, Tensorflow, MXNet, CNTK, Torch or Pytorch.
 
 The command `nvidia-smi` enables you to check the status of your GPUs, as with `top` or `ps` commands.
 

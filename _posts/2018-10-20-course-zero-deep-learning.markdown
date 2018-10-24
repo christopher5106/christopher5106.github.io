@@ -252,15 +252,15 @@ and for the layer  $$ \text{Dense}^1 $$,
 
 $$ \nabla_{\theta_1} \text{cost} = \Big(\nabla_I  \text{CrossEntropy} \times \nabla_I \text{Softmax}\Big) \times \nabla_I \text{Dense}^2 \times \nabla_I \text{ReLu} \times \nabla_{\theta_1} \text{Dense}^1  $$
 
-We see that $$ \Big(\nabla_I  \text{CrossEntropy} \times \nabla_I \text{Softmax}\Big) $$ is common to the computation of $$ \nabla_{\theta_1} \text{cost} $$ and $$ \nabla_{\theta_2} \text{cost} $$, and it is possible to compute them once. This will be true for any other layer below.
+We see that $$ \Big(\nabla_I  \text{CrossEntropy} \times \nabla_I \text{Softmax}\Big) $$ is common to the computation of $$ \nabla_{\theta_1} \text{cost} $$ and $$ \nabla_{\theta_2} \text{cost} $$, and it is possible to compute them once.
 
-So, to reduce the number of matrix mulplications, it is better to compute the gradients from the top layer to the bottom layer and reuse previous computations of matrix multiplication for earlier gradients.
+So, to reduce the number of matrix mulplications, it is better to compute the gradients from the top layer to the bottom layer and reuse previous computations of matrix multiplication from earlier layers.
 
 <img src="{{ site.url }}/img/deeplearningcourse/DL10.png">
 
 <img src="{{ site.url }}/img/deeplearningcourse/DL8.png">
 
-In **conclusion**, gradient computation with respect to each layers' parameters is performed by matrix multiplications of gradients of the layers above, so it is more efficient to begin to compute gradients from the top layers, a process we call *retropropagation* or *backpropagation*.
+In **conclusion**, gradient computation with respect to each layer's parameters is performed via matrix multiplications of gradients of the layers above, so it is more efficient to begin to compute gradients from the top layers, a process we call *retropropagation* or *backpropagation*.
 
 
 # Cross Entropy with Softmax
@@ -293,7 +293,7 @@ which is very easy to compute and can simply be rewritten:
 
 $$ \nabla_o \text{cost} = p - \tilde{p} $$
 
-Note that the gradient is between -1 and 1: for a negative class ($$ \tilde{p} == 0 $$), the derivative is positive, and the highest the prediction has been positive, the higher the derivative it will be; for a positive class, the derivative will always be negative, and the lowest the prediction to be positive, the more negative the derivative will be.
+Note that the gradient is between -1 and 1: for a negative class ($$ \tilde{p} = 0 $$), the derivative is positive, and the highest the prediction has been positive, the higher the derivative it will be; for a positive class, the derivative will always be negative, and the lowest the prediction to be positive, the more negative the derivative will be.
 
 Since Softmax is monotonic, Softmax output computation is not required for inference, the highest logit corresponds to the highest probability... except if you need the probability to estimate the confidence.
 

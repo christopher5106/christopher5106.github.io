@@ -1,0 +1,20 @@
+from keras import backend as K
+K.variable(value=[[1,2]])
+K.ones((5,3))
+K.zeros((5,3))
+K.random_uniform_variable((5, 3))
+K.random_normal_variable((5, 3))
+K.random_normal_variable((5, 3))
+K.shape(K.ones((5,3))) # dynamic
+K.int_shape(K.ones((5,3))) # static shape
+K.dot(K.ones((5,3)), K.ones((3,4)))
+K.reshape(K.ones((5,3)), (3,5))
+K.permute_dimensions(K.ones((5,3,4)), (1,0,2))
+K.concatenate([K.ones((5,3)), K.ones((5,2))], axis = 1)
+K.stack([K.ones((5,3)), K.ones((5,3))], axis = 1)
+K.expand_dims(K.ones((5,3)), 1)
+K.squeeze(K.ones((5,1,3)), 1)
+K.arange(0,10)
+K.max(K.random_normal((5,3)))
+K.max(K.random_normal((5,3)), 1)
+K.maximum(K.ones((5,3))*.5, K.random_normal((5,3)))

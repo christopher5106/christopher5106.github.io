@@ -129,7 +129,9 @@ You can easily check the following commands in Pytorch and Numpy:
 | Matrix multiplication | .matmul() | .mm() |
 | Matrix-Vector multiplication | - | .mv() |
 | Reshape | .reshape(shape) | .view(size) |
+| Transpose | np.transpose(,(1,0)) | torch.transpose(,0,1) |
 | Concatenate | np.concatenate([]) | torch.cat([]) |
+| Stack | np.stack([], 1) | torch.stack([], 1) |
 | Add a dimension | np.expand_dims(, axis) | .unsqueeze(axis) |
 | Squeeze a dimension | np.squeeze(, axis) | .squeeze(axis)
 | Range of values | np.arange() | torch.arange() |

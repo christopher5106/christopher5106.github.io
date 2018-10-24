@@ -155,7 +155,7 @@ torch_array = torch.ones(5)
 numpy_array = torch_array.numpy()
 ```
 
-which will keep the pointers to the same values:
+which will keep the pointers to the original values:
 
 ```python
 numpy_array+= 1
@@ -164,13 +164,13 @@ torch_array.add_(1)
 print(numpy_array) # [3. 3. 3. 3. 3.]
 ```
 
-**Exercise**: find the equivalent under Tensorflow, Keras, CNTK, MXNET
+**Exercise**: find the equivalent operations under Tensorflow, Keras, CNTK, MXNET
 
 **Solution**: [tensorflow]({{ site.url }}/img/deeplearningcourse/tensorflow_commands.txt), [keras]({{ site.url }}/img/deeplearningcourse/keras_commands.txt), [mxnet]({{ site.url }}/img/deeplearningcourse/mxnet_commands.txt),  [cntk]({{ site.url }}/img/deeplearningcourse/cntk_commands.txt)
 
 #### 2. GPU computing
 
-It is possible to transfer tensors values between devices, ie RAM memory and each GPUs' memory:
+It is possible to transfer tensors between devices, ie RAM memory and each GPUs' memory:
 
 ```python
 a = torch.ones(5,) # tensor([1., 1., 1., 1., 1.])
@@ -183,7 +183,7 @@ z = y.cuda(1) # tensor([3., 3., 3., 3., 3.], device='cuda:1')
 t = z.cpu() # tensor([3., 3., 3., 3., 3.])
 ```
 
-but keep in mind that synchronization is lost (contrary to Numpy Arrays and Torch Tensors):
+but keep in mind that synchronization is lost (contrary to Numpy Arrays and Torch Tensors, it cannot be pointers since the values are not anymore on the same device):
 
 ```python
 a.add_(1)

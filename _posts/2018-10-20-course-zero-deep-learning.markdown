@@ -47,7 +47,7 @@ $$ \text{CrossEntropy}(p, \tilde{p}) = - \sum_c \tilde{p}_c \log(p_c) $$
 
 which can be defined as the expected log-likelihood of the predicted label under the true label distribution, and we want this cost to be the lowest possible (minimization).
 
-Note that **a loss function always outputs a scalar value**. This scalar value is a measure of fit of the model with the real value. Since the a loss function outputs a scalar, the shape of its Jacobian with respect to an input is the same as the shape of the input, for example for an input of rank 4:
+Note that **a loss function always outputs a scalar value**. This scalar value is a measure of fit of the model with the real value. Since a loss function outputs a scalar, the shape of its Jacobian with respect to an input is the same as the shape of the input, for example for an input of rank 4:
 
 $$ \nabla f = \Big[ \frac{\partial f}{\partial I_{a,b,c,d}} \Big]_{a,b,c,d} $$
 
@@ -76,6 +76,12 @@ The softmax is the equivalent to the signmoid but in the multi-dimensional case.
 Note that for the softmax to predict probability for C classes, it requires the output $$ o = f(x) $$ to be C-dimensional.
 
 $$ \{o_c\}_c $$ are called the **logits**.
+
+Softmax is the equivalent of the `sigmoid()` in binary classification:
+
+$$ x \rightarrow \frac{1}{1+e^{-x}} $$
+
+If you do not remember which one between the softmax and the sigmoid has a negative sign in the exponant, ie $$ e^x $$ or $$ e^{-x} $$, remember that Softmax and Sigmoid are both **monotonic** functions.
 
 #### Estimating the true distribution
 
@@ -161,6 +167,8 @@ $$\lambda $$ is the learning rate and has to be set carefully: Effect of various
 
 This simple method is named SGD, after *Stochastic Gradient Descent*. There are many improvements around this simple rule: ADAM, ADADELTA, RMS Prop, ... All of them are using the first order only. Some are adaptive, such as ADAM or ADADELTA, where the learning rate is adapted to each parameter automatically.
 
+There exists some second order optimization methods also but they are not very common in the deep learning practice.
+
 **Conclusion**: When we have the loss function, the goal is to minimize it. For this, we have a very simple update rule which is the gradient descent.
 
 
@@ -219,9 +227,9 @@ $$ (f \circ g)(x) = f_{\theta_f} ( g(x,\theta_g), \theta_f) $$
 
 It is possible to compute the derivatives of g and f with respect to, either the parameters, or the inputs, which we'll differentiate in notation the following way:
 
-$$ \nabla_{\theta_g} g = \Big\{ \frac{\partial g_j}{\partial {\theta_g}_i } \Big\}_{i,j}  $$
+$$ \nabla_{\theta_g} g = \Big\{ \frac{\partial g_i}{\partial {\theta_g}_j } \Big\}_{i,j}  $$
 
-$$ \nabla_I g = \Big\{ \frac{\partial g_j}{\partial x_i} \Big\}_{i,j} $$
+$$ \nabla_I g = \Big\{ \frac{\partial g_i}{\partial x_j} \Big\}_{i,j} $$
 
 To update the parameters of g, we need to compute the derivative of the cost with respect to the parameters of g, that is :
 
@@ -243,7 +251,7 @@ and for the layer  $$ \text{Dense}^1 $$,
 
 $$ \nabla_{\theta_1} \text{cost} = \Big(\nabla_I  \text{CrossEntropy} \times \nabla_I \text{Softmax}\Big) \times \nabla_I \text{Dense}^2 \times \nabla_I \text{ReLu} \times \nabla_{\theta_1} \text{Dense}^1  $$
 
-We see that $$ \Big(\nabla_I  \text{CrossEntropy} \times \nabla_I \text{Softmax}\Big) $$ is common to the computation of \nabla_{\theta_1} \text{cost} and \nabla_{\theta_2} \text{cost}, and it is possible to compute them once. This will be true for any other layer below.
+We see that $$ \Big(\nabla_I  \text{CrossEntropy} \times \nabla_I \text{Softmax}\Big) $$ is common to the computation of $$ \nabla_{\theta_1} \text{cost} $$ and $$ \nabla_{\theta_2} \text{cost} $$, and it is possible to compute them once. This will be true for any other layer below.
 
 So, to reduce the number of matrix mulplications, it is better to compute the gradients from the top layer to the bottom layer and reuse previous computations of matrix multiplication for earlier gradients.
 
@@ -286,6 +294,8 @@ $$ \nabla_o \text{cost} = p - \tilde{p} $$
 
 Note that the gradient is between -1 and 1: for a negative class ($$ \tilde{p} == 0 $$), the derivative is positive, and the highest the prediction has been positive, the higher the derivative it will be; for a positive class, the derivative will always be negative, and the lowest the prediction to be positive, the more negative the derivative will be.
 
+Since Softmax is monotonic, Softmax output computation is not required for inference, the highest logit corresponds to the highest probability... except if you need the probability to estimate the confidence.
+
 **Conclusion**: it is easier to backprogate gradients computed on Softmax+CrossEntropy together rather than backpropagate separately each : the derivative of the Softmax+CrossEntropy with respect to the output of the model for the right class, let's say the "cat" class, will be 0.8 - 1 = - 0.2, if the model has predicted a probability of 0.8 for this class, and the update will follow the negative slope to encourage to increase the prediction ; the derivative of the Softmax+CrossEntropy with respect to an output for a different class will be 0.4 is it has predicted a probability of 0.4, encouraging the model to decrease this value.  
 
 **Exercise**: Compute the derivative of Sigmoid+BinaryCrossEntropy combined.
@@ -301,7 +311,7 @@ Let's take, as model, a very simple one with only one Dense layer with 2 filters
 
 This is the smallest model we can ever imagine. Such a layer produces a vector of 2 scalars:
 
-$$ f_\theta : \{x_i\} \rightarrow \Big\{ o_j = \sum_i \theta_{i,j} x_i + b_j \Big\}_j $$
+$$ f_\theta : \{x_j\} \rightarrow \Big\{ o_i = \sum_j \theta_{i,j} x_j + b_i \Big\}_i $$
 
 Please keep in mind that it is not possible to descend the gradient directly on this output because it is composed of two scalars. We need a loss function, that returns a scalar, and tells us how to combine these two outputs. For example, the Softmax+CrossEntropy we have seen previously:
 
@@ -313,14 +323,14 @@ Now we can retropropagate the gradients. Since we are in the case of 2 outputs, 
 
 Let us compute the derivatives of the dense layer:
 
-$$ \frac{\partial o_j}{\partial \theta_{i,k}} = \begin{cases}
-  x_i, & \text{if } k = j, \\
+$$ \frac{\partial o_i}{\partial \theta_{k,j}} = \begin{cases}
+  x_j, & \text{if } k = i, \\
   0, & \text{otherwise}.
 \end{cases} $$
 
 so
 
-$$ \frac{\partial}{\partial \theta_{i,j}}  ( L \circ f_\theta )=  \sum_c \frac{\partial L}{\partial o_c}  \cdot \frac{\partial o_c}{\partial \theta_{i,j}} = \frac{\partial L}{\partial o_j}  \cdot \frac{\partial o_j}{\partial \theta_{i,j}}  = ( \delta_{ j, \hat{c}} - L(o_j)) \cdot x_i  $$
+$$ \frac{\partial}{\partial \theta_{i,j}}  ( L \circ f_\theta )=  \sum_c \frac{\partial L}{\partial o_c}  \cdot \frac{\partial o_c}{\partial \theta_{i,j}} = \frac{\partial L}{\partial o_i}  \cdot \frac{\partial o_i}{\partial \theta_{i,j}}  = ( \delta_{ i, \hat{c}} - L(o_i)) \cdot x_j  $$
 
 A Dense layer with 4 outputs:
 

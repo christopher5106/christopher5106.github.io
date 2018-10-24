@@ -239,7 +239,7 @@ The gradient of the cost y with respect to the input x is placed in `x.grad` and
 
 Calling `y.backward()` a second time will lead to a RunTime Error. In order to accumulate the gradients into `x.grad`, you need to set `retain_graph=True` during the first backward call.
 
-Let's confirm this in a  case where the input is multi-dimensional:
+Let's confirm this in a  case where the input is multi-dimensional and reduced into a scalar with a sum operator:
 
 ```python
 x = Variable(torch.ones(2), requires_grad=True)
@@ -259,7 +259,7 @@ Since $$ \frac{\partial}{\partial x_1} (x_1 + x_2) = 1 $$ and $$ \frac{\partial}
 
 Applying the `backward()` method multiple times accumulates the gradients.
 
-It is also possible to apply the `backward()` method on something else than a cost (scalar), for example on a layer or operation with a multi-dimensional output, as in the middle of a neural network, but in this case, you need to provide as argument to the `backward()` method $$ \Big( \nabla_{I_{t+1}} \text{cost} \Big)$$, the gradient of the cost with respect to the output of the current operator/layer (which is written here as the input of the operator/layer above), which will be multiplied by $$ \Big( \nabla_{\theta_t} L_t \Big) $$, the gradient of the current operator/layer's output with respect to its parameters, in order to produce the gradient of the cost with respect to its parameters:
+It is also possible to apply the `backward()` method on something else than a cost (scalar), for example on a layer or operation with a multi-dimensional output, as in the middle of a neural network, but in this case, you need to provide as argument to the `backward()` method $$ \Big( \nabla_{I_{t+1}} \text{cost} \Big)$$, the gradient of the cost with respect to the output of the current operator/layer (which is written here as the input of the operator/layer above), which will be multiplied by $$ \Big( \nabla_{\theta_t} L_t \Big) $$, the gradient of the current operator/layer's output with respect to its parameters, in order to produce the gradient of the cost with respect to the current layer's parameters:
 
 $$ \nabla_{\theta_t} \text{cost} =  \nabla_{\theta_t} \Big[ ( \text{cost} \circ S \circ ... \circ L_{t+1}  ) \circ L_t \Big]   = \Big( \nabla_{I_{t+1}} \text{cost} \Big) \times \nabla_{\theta_t} L_t  $$
 
@@ -293,7 +293,7 @@ print(x.grad)
 
 which is fantastic. In this case, $$ y\vert_{x=2} = ( x^2 )^2 = x^4  $$ and  $$ \frac{\partial y}{\partial x} \big\vert_{x=2} = 4 x^3 = 32 $$.
 
-Note that gradients are computed by retropropagate until a Variable has no `graph_fn` (an input Variable set by the user) or a Variable with `require_grad` set to `False`, which helps save computations.
+Note that gradients are computed by retropropagation until a Variable has no `graph_fn` (an input Variable set by the user) or a Variable with `require_grad` set to `False`, which helps save computations.
 
 
 **Exercise**: compute the derivative with Keras, Tensorflow, CNTK, MXNet  
@@ -406,7 +406,7 @@ Y = torch.from_numpy(labels).type(torch.LongTensor)
 
 The input is defined by a position, ie a vector of dimension 2 for each sample, leading to a Tensor of size `(B, 2)`, where B is the batch size.
 
-Let's choose as hidden dimension (number of outputs of first layer/ inputs of second layers) 12:
+Let's choose as hidden dimension (number of outputs of first layer/ inputs of second layer) 12:
 
 ```python
 theta1 =  Variable(torch.randn(2, 12) *0.01,requires_grad = True)
@@ -463,7 +463,7 @@ for i in range(min(dataset_size, 100000) // batch_size ):
 
 The network converges.
 
-When `loss.backward()` is called, the whole graph is differentiated w.r.t. the loss, and all Variables in the graph will have their .grad Variable accumulated with the gradient.
+When `loss.backward()` is called, the derivatives are propagated through all Variables in the graph, and their .grad attribute accumulated with the gradient.
 
 ```python
 print(loss.grad_fn)  # NegBackward

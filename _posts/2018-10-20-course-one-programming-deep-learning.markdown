@@ -293,7 +293,7 @@ print(x.grad)
 
 which is fantastic. In this case, $$ y\vert_{x=2} = ( x^2 )^2 = x^4  $$ and  $$ \frac{\partial y}{\partial x} \big\vert_{x=2} = 4 x^3 = 32 $$.
 
-Note that gradients are computed by retropropagation until a Variable has no `graph_fn` (an input Variable set by the user) or a Variable with `require_grad` set to `False`, which helps save computations.
+Note that gradients are computed by retropropagation until a Variable has no `graph_fn` (an input Variable set by the user) or a Variable with `requires_grad` set to `False`, which helps save computations.
 
 
 **Exercise**: compute the derivative with Keras, Tensorflow, CNTK, MXNet  
@@ -463,7 +463,7 @@ for i in range(min(dataset_size, 100000) // batch_size ):
 
 The network converges.
 
-When `loss.backward()` is called, the derivatives are propagated through all Variables in the graph, and their .grad attribute accumulated with the gradient.
+When `loss.backward()` is called, the derivatives are propagated through all Variables in the graph, and their .grad attribute accumulated with the gradient (except those with `requires_grad` set to False):
 
 ```python
 print(loss.grad_fn)  # NegBackward
@@ -499,7 +499,7 @@ Note that convergence is strongly influenced
 - by the art of choosing the right layer initialization: a small variance, with positive and negative values to dissociate the neural outputs (neurons that fire together wire together) helps. In fact, we'll see in the next section Pytorch packages that provide a correct implementation of the variance choice given the number of input and output connections:
 <img src="{{ site.url }}/img/deeplearningcourse/DL32.png">
 
-To improve the results, it is possible to train multiple times the network from scratch, and average the ensemble of parameters from each training.
+To improve the results, it is possible to train multiple times the network from scratch, and average the predictions coming from the ensemble of trained networks.
 
 Note also that, if there is a backward function for every operation, there is no forward function: evaluation is performed when the operator is applied to the variable as in a classical program. You can still create your own function as in a classical program. The backward function works as a kind of history of the operations in order to retropropagate the gradient. So, it is very different from the concept of "graph of operators".
 

@@ -93,7 +93,7 @@ Then, we use the formula for the empirical estimation of the expectation:
 
 $$ \text{CrossEntropy} \approx - \frac{1}{N} \sum_{x \sim D} \log p_{\hat{c}(x)}(x) $$
 
-where D is the real sample distribution, N is the number of samples on which the cross entropy is estimated and $$ \hat{c}(x) $$ is the true class of x.
+where D is the real sample distribution, N is the number of samples on which the cross entropy is estimated ($$ N \gg 1 $$) and $$ \hat{c}(x) $$ is the true class of x.
 
 Our empirical cross-entropy for one sample (N=1) becomes
 

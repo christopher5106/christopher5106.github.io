@@ -164,6 +164,10 @@ torch_array.add_(1)
 print(numpy_array) # [3. 3. 3. 3. 3.]
 ```
 
+**Exercise**: find the equivalent under Tensorflow, Keras, CNTK, MXNET
+
+**Solution**: [tensorflow]({{ site.url }}/img/deeplearningcourse/tensorflow_commands.txt"), [keras]({{ site.url }}/img/deeplearningcourse/keras_commands.txt")
+
 #### 2. GPU computing
 
 It is possible to transfer tensors values between devices, ie RAM memory and each GPUs' memory:

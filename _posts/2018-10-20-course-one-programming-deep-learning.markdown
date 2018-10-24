@@ -521,7 +521,7 @@ The composition of multiple modules builds a new module:
 
 that can be reused at multiple places in the network architecture.
 
-The organization into modules helps interoperability and reuse of snippets of codes into a deep neural network definition.
+The organization into modules helps interoperability and reuse of modules into a deep neural network definition.
 
 Then, calling the forward or backward propogations, transfering the module to GPU, saving or loading weights, is applied to all submodules without extra code.
 
@@ -636,7 +636,7 @@ print(params)
 # tensor([ 0.7422, -0.9477, -0.2653], device='cuda:0', requires_grad=True)]
 ```
 
-All the parameters appear on the first GPU (cuda:0). Note that we transfered the full dataset to the GPU, while in most applications, it is not possible since the memory of the GPU is limited, we only transfer the batch.
+All the parameters appear on the first GPU (cuda:0). Note that we transfered the full dataset to the GPU, while in most applications, it is not possible since the memory of the GPU is limited, we only transfer the batch at each iteration.
 
 When the GPU has been used for training, it is a good practice to use it for inference on the test data as well, so we need to rewrite it to train batches of samples rather than samples indiviually:
 
@@ -653,7 +653,7 @@ print("accuracy {}%".format(round(accuracy / min(dataset_size, nb) * 100, 2)))
 # accuracy 99.2
 ```
 
-**Exercise**: program with packages in Keras, Tensorflow, CNTK, MXNet
+**Exercise**: program the training loop with packages in Keras, Tensorflow, CNTK, MXNet
 
 
 # Packages
@@ -669,7 +669,7 @@ import torch.optim as optim
 optimizer = optim.SGD(net.parameters(), lr=0.1, momentum=0.9)
 ```
 
-The `optimizer` provides a method `zero_grad()` to clear the previous gradient values and a `step()` method to apply the update rule
+The `optimizer` provides a method `zero_grad()` to clear the previous gradient values and a `step()` method to apply the update rule to the parameters:
 
 ```python
 loss_curve = list()
@@ -709,7 +709,7 @@ plt.plot(range(1, len(loss_curve)+1), loss_curve, 'ro')
 
 <img src="{{ site.url }}/img/deeplearningcourse/DL43.png">
 
-To compute the accuracy, we can also forward the full dataset and use efficient matrix opertions on the final tensors, removing the for loop:
+To compute the accuracy, we can also forward the full dataset and use efficient matrix operations on the final tensors, removing the for loop:
 
 ```python
 accuracy = 0

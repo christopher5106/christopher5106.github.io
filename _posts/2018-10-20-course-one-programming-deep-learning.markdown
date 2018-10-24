@@ -17,7 +17,7 @@ Deep learning demands heavy computations so all deep learning libraries offer th
 
 The use of specific hardwares such as GPUs requires to install an up-to-date driver in the operating system first.
 
-While OpenCl (not to confuse with OpenGL or OpenCV) is an open standard for GPU programming, the most used GPU library is CUDA, a private library by NVIDIA, to be used on NVIDIA GPUs only.
+While OpenCL (not to confuse with OpenGL for graphics or OpenCV for images) is an open standard for scientific GPU programming, the most used GPU library is CUDA, a private library by NVIDIA, to be used on NVIDIA GPUs only.
 
 CUDNN is a second library coming with CUDA providing you with more optimized operators.
 

@@ -133,6 +133,8 @@ You can easily check the following commands in Pytorch and Numpy:
 | Add a dimension | np.expand_dims(, axis) | .unsqueeze(axis) |
 | Squeeze a dimension | np.squeeze(, axis) | .squeeze(axis)
 | Range of values | np.arange() | torch.arange() |
+| Maximum of the array | np.amax(, axis) | torch.max(, axis) |
+| Elementwise max | np.maximum(a,b) | torch.max(a,b) |
 
 
 

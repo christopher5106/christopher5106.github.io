@@ -91,15 +91,22 @@ because $$ \tilde{p_c} $$ is the true label distribution, so cross entropy is th
 
 Then, we use the formula for the empirical estimation of the expectation:
 
-$$ \text{CrossEntropy} \approx - \frac{1}{N} \sum_{x \sim D} \log p_{\hat{c}(x)}(x) $$
+$$ \text{CrossEntropy} \approx - \frac{1}{N} \sum_{x \sim D} \log p_{\hat{c}(x)}(x) = \text{EmpiricalCrossEntropy}(p)$$
 
 where D is the real sample distribution, N is the number of samples on which the cross entropy is estimated ($$ N \gg 1 $$) and $$ \hat{c}(x) $$ is the true class of x.
 
-Our empirical cross-entropy for one sample (N=1) becomes
-
+When we compute the cross-entropy, we set an empirical cross-entropy for one sample (N=1) to
 
 $$ \text{CrossEntropy} \approx - \log p_\hat{c}(x) $$
 
+so that when we average the individual losses over more samples for stability, we find back to the desired empirical estimation:
+
+$$ \frac{1}{N} \sum_{x \sim D} L(x) = - \frac{1}{N} \sum_{x \sim D} \log p_{\hat{c}(x)}(x) = \text{EmpiricalCrossEntropy}(p)$$
+
+
+In the future, we adopt the following formulation for a single sample:
+
+$$ \text{CrossEntropy}(p) = - \log p_\hat{c}(x)$$
 
 which is equivalent to setting the $$ \tilde{p} $$ probability in the theoretical cross-entropy definition (1) with:
 
@@ -108,17 +115,9 @@ $$ \tilde{p}_c(x) = \begin{cases}
   0, & \text{otherwise}.
 \end{cases} $$
 
-which we will write $$ \tilde{p}_c(x) = \delta(c,\hat{c}) $$.
+which we will write $$ \tilde{p}_c(x) = \delta(c,\hat{c}) $$. That is why the target for the predicted probability for the true class is 1.
 
-$$ \tilde{p} $$ is a vector of zero values except for the true class, where it is one: which we call **one-hot encoding**.
-
-If more samples are considered, usually we average the individual losses for stability, leading back to the desired empirical estimation:
-
-$$ \frac{1}{N} \sum_{x \sim D} L(x) = - \frac{1}{N} \sum_{x \sim D} \log p_{\hat{c}(x)}(x) \approx \text{CrossEntropy}$$
-
-In the future, we consider as cross-entropy the following formulation for a single sample:
-
-$$ \text{EmpiricalCrossEntropy}(p) = - \log p_\hat{c}(x)$$
+$$ \tilde{p} $$ is a vector of zero values except for the true class, where it has a one: we name $$ \tilde{p} $$ the **one-hot encoding**.
 
 In **conclusion**, for the case of classification, we compute the cross-entropy with values that are either 0 or 1 at the sample level for the "true" probability: x being the image of a cat, we want the model output $$\{p_c\}_c $$ to fit the empirical class probability $$\{\tilde{p}_c\}_c $$ at the sample level, where $$ \tilde{p}_\hat{c} = 1 $$ for the real object class $$ \hat{c} $$ "cat" and $$ \tilde{p}_c = 0$$ for all other classes $$ c \neq \hat{c} $$: then at the dataset level, averaging these values lead to the empirical estimates of the true probabilities we are used to.
 

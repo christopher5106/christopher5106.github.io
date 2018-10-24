@@ -133,7 +133,7 @@ It consists in following the gradient to descend to the minima:
 
 <img src="{{ site.url }}/img/deeplearningcourse/DL2.png">
 
-In other words, we follow the negative slope of the mountain to find the bottom of the valley. In order to avoid a local minima, initialization (the choice of initial values for the parameters, where to start the descent from) is very important, and multiple runs can help find the best solution.
+In other words, we follow the negative slope of the mountain to find the bottom/lowest position of the valley. In order to avoid a local minima, initialization (the choice of initial values for the parameters, where to start the descent from) is very important, and multiple runs can also help find the best solution.
 
 It is an iterative process in which the update rule simply consists in:
 
@@ -162,7 +162,7 @@ $$\lambda $$ is the learning rate and has to be set carefully: Effect of various
 
 This simple method is named SGD, after *Stochastic Gradient Descent*. There are many improvements around this simple rule: ADAM, ADADELTA, RMS Prop, ... All of them are using the first order only. Some are adaptive, such as ADAM or ADADELTA, where the learning rate is adapted to each parameter automatically.
 
-There exists some second order optimization methods also but they are not very common in the deep learning practice.
+There exists some second order optimization methods also but they are not very common in practice.
 
 **Conclusion**: When we have the loss function, the goal is to minimize it. For this, we have a very simple update rule which is the gradient descent.
 
@@ -192,7 +192,9 @@ This model is called **perceptron** and the output of the first Dense layer is a
 
 <img src="{{ site.url }}/img/deeplearningcourse/DL15.png">
 
-Without a ReLu activation in the middle, the two Dense layers would be mathematically equivalent to only 1 Dense layer. Hence the model has two sets of parameters
+Without a ReLu activation in the middle, the two Dense layers would be mathematically equivalent to only 1 Dense layer.
+
+The model has two sets of parameters:
 
 $$ \theta = [ \theta_1, \theta_2 ] $$
 
@@ -204,7 +206,11 @@ which is a simple matrix multiplication
 
 $$ \nabla (f \circ g) = \nabla f \times \nabla g $$
 
-What does that mean for deep learning and gradient descent ? In fact, for each layer, we want to compute
+if
+
+$$ \nabla f = \Big\{ \frac{\partial g_i}{\partial x_j} \Big\}_{i,j} $$
+
+What does that mean for deep learning and gradient descent ? In fact, for each layer, to follow the negative slope, we need to compute
 
 $$ \nabla_{\theta_{\text{Layer}}} \text{cost} $$
 

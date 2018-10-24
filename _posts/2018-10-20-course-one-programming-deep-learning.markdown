@@ -55,6 +55,7 @@ conda install jupyter
 jupyter notebook
 ```
 
+It is possible to combine CUDA and OpenGL for [graphical applications requiring deep learning predictions: the image data is full processed on GPU](http://www.nvidia.com/content/gtc/documents/1055_gtc09.pdf).
 
 # The batch
 
@@ -121,7 +122,8 @@ You can easily check the following commands in Pytorch and Numpy:
 | uniformly randomly initialized matrix  |  x = np.random.rand(5,3) | x = torch.rand(5, 3)  |
 | normal randomly initialized matrix  |  x = np.random.randn(5,3) | x = torch.randn(5, 3)  |
 | Shape/size  |  x.shape | x.size  |
-| Addition | +/np.add | +/torch.add |
+| Elementwise Addition | +/np.add | +/torch.add |
+| In-place multiplication | * | * |
 | In-place addition | x+= | x.add_() |
 | First column | x[:, 1] | x[:, 1] |
 | Matrix multiplication | .matmul() | .mm() |
@@ -129,6 +131,7 @@ You can easily check the following commands in Pytorch and Numpy:
 | Reshape | .reshape(shape) | .view(size) |
 | Concatenate | np.concatenate([]) | torch.cat([]) |
 | Add a dimension | np.expand_dims(, axis) | .unsqueeze(axis) |
+| Squeeze a dimension | np.squeeze(, axis) | .squeeze(axis)
 | Range of values | np.arange() | torch.arange() |
 
 

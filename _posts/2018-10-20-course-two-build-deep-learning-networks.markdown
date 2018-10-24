@@ -90,11 +90,22 @@ When a computer vision network transforms an image of shape (h,w,3) to an output
 
 
 #### Normalization
-Batch normalization
-statistics at the output are
-variance 1, mean 0
-training layers on statistics not changning
-learning a scale and a bias after normalization
+
+A last type of layers are normalization layers: their purpose is to avoid an *internal covariance shift* during training, i.e. last layers learning on first layers outputs which statistics evolve during training.
+
+Normalization layers are placed between other layers to ensure stable statistics: the mean and variance of the outputs are brought back to 0 and 1, by substraction and division, after which the normalization will learn a new scale and bias.
+
+The statistics can be computed on different set:
+
+- per channel but for all data in batch: batch normalization
+
+- all channels but for one sample : layer normalization
+
+- per channel and sample : instance normalization
+
+- for a group of channels and per sample: group norm
+
+<img src="{{ site.url }}/img/deeplearningcourse/DL60.png">
 
 
 # Image classification

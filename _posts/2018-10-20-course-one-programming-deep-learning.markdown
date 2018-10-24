@@ -166,7 +166,7 @@ print(numpy_array) # [3. 3. 3. 3. 3.]
 
 **Exercise**: find the equivalent under Tensorflow, Keras, CNTK, MXNET
 
-**Solution**: [tensorflow]({{ site.url }}/img/deeplearningcourse/tensorflow_commands.txt), [keras]({{ site.url }}/img/deeplearningcourse/keras_commands.txt)
+**Solution**: [tensorflow]({{ site.url }}/img/deeplearningcourse/tensorflow_commands.txt), [keras]({{ site.url }}/img/deeplearningcourse/keras_commands.txt), [mxnet]({{ site.url }}/img/deeplearningcourse/mxnet_commands.txt)
 
 #### 2. GPU computing
 

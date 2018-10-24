@@ -293,9 +293,9 @@ which is very easy to compute and can simply be rewritten:
 
 $$ \nabla_o \text{cost} = p - \tilde{p} $$
 
-Note that the gradient is between -1 and 1: for a negative class ($$ \tilde{p} = 0 $$), the derivative is positive, and the highest the prediction has been positive, the higher the derivative it will be; for a positive class, the derivative will always be negative, and the lowest the prediction to be positive, the more negative the derivative will be.
+Note that the gradient is between -1 and 1: for a negative class ($$ \tilde{p} = 0 $$), the derivative is positive, and the higher the prediction has been positive, the higher the derivative will be; for a positive class, the derivative will always be negative, and the lower the prediction to be positive, the lower the derivative will be.
 
-Since Softmax is monotonic, Softmax output computation is not required for inference, the highest logit corresponds to the highest probability... except if you need the probability to estimate the confidence.
+Since Softmax is monotonic, Softmax output computation is not required for inference, the highest logit corresponds to the highest probability... except if you need the probability to estimate the confidence of the predicted class.
 
 **Conclusion**: it is easier to backprogate gradients computed on Softmax+CrossEntropy together rather than backpropagate separately each : the derivative of the Softmax+CrossEntropy with respect to the output of the model for the right class, let's say the "cat" class, will be 0.8 - 1 = - 0.2, if the model has predicted a probability of 0.8 for this class, and the update will follow the negative slope to encourage to increase the prediction ; the derivative of the Softmax+CrossEntropy with respect to an output for a different class will be 0.4 is it has predicted a probability of 0.4, encouraging the model to decrease this value.  
 
@@ -352,7 +352,7 @@ In our section on practical cross-entropy, we have considered that we knew the t
 
 $$ \text{CrossEntropy}(p, \tilde{p}) = - \alpha_{\hat{c}} \times \log p_\hat{c}  $$
 
-This could also be performed by replacing the current sampling schema ($$ \tilde{p} $$), by sampling following uniformly a class and the sample belonging to this class.
+This could also be performed by replacing the current sampling schema ($$ \tilde{p} $$), by sampling uniformly the class first, then a sample belonging to this class.
 
 - to train a model with smoother values than 0 and 1 for negatives and positives, for example 0.1 or 0.9, which will help achieve better performances. This technique of *label smoothing* or *soft labels* enables in particular to re-introduce the outputs for the negative classes so that it will preserve a symmetry between the negative and positive labels:
 
@@ -379,11 +379,11 @@ as in the Focal Loss for object detection where background negatives are too num
 
 That is where the magic happens ;-)
 
-As you might have understood, the cross entropy comes from theory of information, but the definition of the probabilities and their weighting scheme can be adapted to the problem we want to solve. That is where we leave theory for practice.
+As you might have understood, the cross entropy comes from the theory of information, but the definition of the probabilities and their weighting scheme can be adapted to the problem we want to solve. That is where we leave theory for practice.
 
 Still, there is a very important theoretical generalization of cross-entropy through reinforcement learning which is very easy to understand.
 
-In reinforcement, given an observation $$ x_t $$ at a certain timestep, you're going to perform an action, for example driving car, going right, left, or straight, or in a game, using some keyboard commands. Then the environment is modified and you'll need to decide of the next action... and sometimes you get a reward $$ r_t $$, a feedback from the environment, good news or bad news, gain some points... In the case of reinforcement learning, we do not have any labels as targets or groundtruth. We just want to perform the best, which means maximizing the expected reward :
+In reinforcement, given an observation $$ x_t $$ at a certain timestep, you're going to perform an action, for example driving car, going right, left, or straight, or in a game, using some keyboard commands. Then the environment is modified and you'll need to decide of the next action... and sometimes you get a reward $$ r_t $$, a feedback from the environment, good news or bad news, gain some points... In the case of reinforcement learning, we do not have any labels as targets or groundtruth. We just want to get the best reward :
 
 $$ R = \mathbb{E}_{\text{seq}} \sum_{t} r_t $$
 
@@ -413,11 +413,11 @@ which looks exactly the same as the derivative of the cross entropy:
 
 <img src="{{ site.url }}/img/deeplearningcourse/DL38.png">
 
-except that you replace the expected reward in place of the true probability:
+except that you replace the expected reward in place of the true label probability:
 
 <img src="{{ site.url }}/img/deeplearningcourse/DL39.png">
 
-Instead of 1 and 0 in case of classification, you use the global reward R as target label for each timestep and you can consider each time step as individual samples.
+In **conclusion**, in place of the 1 and 0 of the classification case, reinforcement learning proposes to use the global reward R as target label for each timestep that led to this reward, considering each time step as individual samples.
 
 <img src="{{ site.url }}/img/deeplearningcourse/DL40.png">
 

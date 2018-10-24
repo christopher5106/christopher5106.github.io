@@ -5,9 +5,9 @@ C.input_variable((5,3)) # placeholder
 C.Parameter((5,3)) # learnable tensor
 C.parameter(shape=(5,3), init=0).value
 C.parameter(shape=(5,3), init=1).value
-C.parameter(shape=(5,3), init=C.initializer.he_uniform() )
-C.parameter(shape=(5,3), init=C.initializer.he_normal() )
-C.parameter(shape=(5,3), init=C.initializer.he_normal() ).shape
+C.parameter(shape=(5,3), init=C.initializer.uniform() )
+C.parameter(shape=(5,3), init=C.initializer.normal() )
+C.parameter(shape=(5,3), init=C.initializer.normal() ).shape
 C.squeeze(x[:,1],1) # be careful x[:,1] is not following Numpy convention
 C.times( C.Parameter((5,3)), C.Parameter((3,4)) ) # .eval to get the value from the ops
 C.reshape(C.parameter(shape=(5,3)), (3,5))

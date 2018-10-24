@@ -365,7 +365,7 @@ for i in range(1000):
     bias2.grad.zero_()
 ```
 
-**Exercise**: check that the norm of the parameters converge to zero.
+**Exercise**: check that the norm of the parameters converges to zero.
 
 In a classification task,
 
@@ -505,6 +505,7 @@ Note also that, if there is a backward function for every operation, there is no
 
 **Exercise**: program a training loop with Keras, Tensorflow, CNTK, MXNet
 
+**Solution**: [cntk training]({{ site.url }}/img/deeplearningcourse/cntk_training.py)
 
 # Modules
 

@@ -338,7 +338,7 @@ The winner of the classification task of ILSVRC 2017 is a modified ResNeXt integ
 
 #### MobileNet v1/v2
 
-There has been also recently some effort to adapt neural networks to less powerful architecture such as mobile devices, leading to the creation of a class of networks named MobileNet.
+There has been also recently some effort to adapt neural networks to less powerful architecture such as mobile devices, leading to the creation of a class of networks named MobileNet, with a new module optimized for mobility:
 
 <img src="{{ site.url }}/img/deeplearningcourse/DL56.png">
 
@@ -348,6 +348,8 @@ The diagram below illustrates that accepting a (slightly) lower accuracy than th
 
 #### ShuffleNet
 
+ShuffleNet goes one step further 
+
 <img src="{{ site.url }}/img/deeplearningcourse/DL57.png">
 
 
@@ -355,6 +357,8 @@ The diagram below illustrates that accepting a (slightly) lower accuracy than th
 
 
 # Object detection
+
+For object detection, the first layers of the Image classification networks serve as a basis as "features", on top of which new neural network parts are learned, using different techniques. Indeed, the layers of Image classification networks have learned a "representation" of the data on high volume of images. Below is a diagram presenting differente object detection techniques (Faster-RCNN, R-FCN, SSD, ...) with different features. When the feature network is more efficient for image classification, results in object detection are also better.
 
 <img src="{{ site.url }}/img/deeplearningcourse/DL58.png">
 

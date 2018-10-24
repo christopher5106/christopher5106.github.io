@@ -119,7 +119,7 @@ which we will write $$ \tilde{p}_c(x) = \delta(c,\hat{c}) $$. That is why the ta
 
 $$ \tilde{p} $$ is a vector of zero values except for the true class, where it has a one: we name $$ \tilde{p} $$ the **one-hot encoding**.
 
-In **conclusion**, for the case of classification, we compute the cross-entropy with values that are either 0 or 1 at the sample level for the "true" probability: x being the image of a cat, we want the model output $$\{p_c\}_c $$ to fit the empirical class probability $$\{\tilde{p}_c\}_c $$ at the sample level, where $$ \tilde{p}_\hat{c} = 1 $$ for the real object class $$ \hat{c} $$ "cat" and $$ \tilde{p}_c = 0$$ for all other classes $$ c \neq \hat{c} $$: then at the dataset level, averaging these values lead to the empirical estimates of the true probabilities we are used to.
+In **conclusion**, for the case of classification, we compute the cross-entropy with values that are either 0 or 1 at the sample level for the "true" probability: x being the image of a cat, we want the model output $$\{p_c\}_c $$ to fit the empirical class probability $$\{\tilde{p}_c\}_c $$ at the sample level, that we set to $$ \tilde{p}_\hat{c} = 1 $$ for the real object class $$ \hat{c} $$ "cat" and $$ \tilde{p}_c = 0$$ for all other classes $$ c \neq \hat{c} $$: then at the dataset level, averaging these values lead to the empirical estimates of the true probabilities we are used to.
 
 <img src="{{ site.url }}/img/deeplearningcourse/DL1.png">
 

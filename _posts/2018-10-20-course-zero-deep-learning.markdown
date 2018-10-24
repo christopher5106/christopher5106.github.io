@@ -37,7 +37,7 @@ The two most important loss functions are:
 
 - **Mean Squared Error (MSE)**, usually used for regression: $$ \sum_i (y_i - \tilde{y_i})^2 $$
 
-- **Cross Entropy for probabilities**, in particular for classification where the model predicts the probability of the observed object x for each class
+- **Cross Entropy for probabilities**, in particular for classification where the model predicts the probability of the observed object x for each class or "label":
 
 <center> $$ x \rightarrow \{p_c\}_c $$ with $$ \sum_c p_c = 1 $$ </center>
 
@@ -63,7 +63,7 @@ Two problems arise: first, most mathematical functions do not output a probabili
 
 #### Normalizing model outputs
 
-Usually, we transform any model output into a probability that sums to 1 is usually performed thanks to a softmax function set on top of the model outputs :
+Usually, transforming any model output into a probability that sums to 1 is usually performed thanks to a softmax function set on top of the model outputs :
 
 $$ x \xrightarrow{f} o = f(x) = \{o_c\}_c \xrightarrow{softmax} \{p_c\}_c $$
 
@@ -71,17 +71,13 @@ The softmax normalization function is defined by:
 
 $$ \text{Softmax}(o) = \Big\{ \frac{ e^{o_i} }{ \sum_c e^{o_c}}  \Big\}_i $$
 
-The softmax is the equivalent to the signmoid but in the multi-dimensional case.
-
-Note that for the softmax to predict probability for C classes, it requires the output $$ o = f(x) $$ to be C-dimensional.
-
-$$ \{o_c\}_c $$ are called the **logits**.
+Note that for the softmax to predict probability for C classes, it requires the output $$ o = f(x) $$ to be C-dimensional. $$ \{o_c\}_c $$ are called the **logits**.
 
 Softmax is the equivalent of the `sigmoid()` in binary classification:
 
 $$ x \rightarrow \frac{1}{1+e^{-x}} $$
 
-If you do not remember which one between the softmax and the sigmoid has a negative sign in the exponant, ie $$ e^x $$ or $$ e^{-x} $$, remember that Softmax and Sigmoid are both **monotonic** functions.
+in the multi-class case. If you do not remember which one between the softmax and the sigmoid has a negative sign in the exponant, ie $$ e^x $$ or $$ e^{-x} $$, remember that Softmax and Sigmoid are both **monotonic** functions.
 
 #### Estimating the true distribution
 
@@ -91,7 +87,7 @@ In fact, to understand cross-entropy, you need to rewrite its theoretical defini
 
 $$ \text{CrossEntropy} = - \sum_c \tilde{p_c} \log p_c = - \mathbb{E} \Big( \log p_c \Big) $$
 
-because $$ \tilde{p_c} $$ is the true distribution, so cross entropy is the expectation of the model predicted negative probability under the true distribution.
+because $$ \tilde{p_c} $$ is the true label distribution, so cross entropy is the expectation of the negative log-probability predicted by the model under the true distribution.
 
 Then, we use the formula for the empirical estimation of the expectation:
 

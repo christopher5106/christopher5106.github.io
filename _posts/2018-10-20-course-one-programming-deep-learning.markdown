@@ -139,7 +139,7 @@ You can easily check the following commands in Pytorch and Numpy:
 | Elementwise max | np.maximum(a,b) | torch.max(a,b) |
 
 
-
+.
 
 You can link Numpy array and Torch Tensor, either with
 

@@ -1,0 +1,22 @@
+import cntk as C
+C.parameter(init=[[1,2]]) # add .value to show the content
+# no empty but placeholders:
+C.input_variable((5,3)) # placeholder
+C.Parameter((5,3)) # learnable tensor
+C.parameter(shape=(5,3), init=0).value
+C.parameter(shape=(5,3), init=1).value
+C.parameter(shape=(5,3), init=C.initializer.he_uniform() )
+C.parameter(shape=(5,3), init=C.initializer.he_normal() )
+C.parameter(shape=(5,3), init=C.initializer.he_normal() ).shape
+C.squeeze(x[:,1],1) # be careful x[:,1] is not following Numpy convention
+C.times( C.Parameter((5,3)), C.Parameter((3,4)) ) # .eval to get the value from the ops
+C.reshape(C.parameter(shape=(5,3)), (3,5))
+C.transpose(C.parameter(shape=(5,3)), perm=(1,0))
+C.splice( C.parameter((5,3)), C.parameter((5,4)), 1 )
+# no stack ops : use expand_dims + splice
+C.expand_dims(C.parameter((5,3)), 0 ) # careful: axis count 0 is equivalent to 1 in TF/Pytorch
+C.squeeze(C.parameter((5,1, 3)), 1)
+C.parameter(shape=(5,3), init=np.arange(10))
+C.reduce_max( C.parameter((5,3))  )
+C.squeeze(C.reduce_max( C.parameter((5,3)) , 1 ), 1) # keepdims not working
+C.element_max( C.parameter((5,3)), C.parameter((5,3))   )

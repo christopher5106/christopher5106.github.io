@@ -1,7 +1,8 @@
 import tensorflow as tf
 tf.enable_eager_execution() # to check the content
 tf.convert_to_tensor([[1,2]])
-# no equivalent to empty
+# no equivalent to empty but placeholders:
+tf.placeholder(tf.float32, shape=(5,3))
 tf.ones((5,3))
 tf.zeros((5,3))
 tf.random_uniform((5,3))

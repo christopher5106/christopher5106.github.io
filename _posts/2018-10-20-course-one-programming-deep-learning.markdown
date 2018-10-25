@@ -9,9 +9,7 @@ Here is my course of deep learning in 5 days only!
 
 You might first check [Course 0: deep learning!](http://christopher5106.github.io/deep/learning/2018/10/20/course-zero-deep-learning.html) if you have not read it. A great article about cross-entropy and its generalization.
 
-In this article, I'll go for the introduction to deep learning and programming, coding few functions under a deep learning technologies.
-
-I'll present them under Pytorch, the most modern deep learning technology in the area.
+In this article, I'll go for the introduction to deep learning and programming, coding few functions under deep learning technologies: Pytorch, Keras, Tensorflow, MXNet, CNTK.
 
 # Your programming environment
 
@@ -19,13 +17,13 @@ Deep learning demands heavy computations so all deep learning libraries offer th
 
 The use of specific hardwares such as GPUs requires to install an up-to-date driver in the operating system first.
 
-While OpenCl (not to confuse with OpenGL or OpenCV) is an open standard for GPU programming, the most used GPU library is CUDA, a private library by NVIDIA, to be used on NVIDIA GPUs only.
+While OpenCL (not to confuse with OpenGL for graphics or OpenCV for images) is an open standard for scientific GPU programming, the most used GPU library is CUDA, a private library by NVIDIA, to be used on NVIDIA GPUs only.
 
 CUDNN is a second library coming with CUDA providing you with more optimized operators.
 
-Once installed on your system, these libraries will be called by more high level deep learning frameworks, such as Caffe, Tensorflow, MXNet, CNTK, Torch or Pytorch.
+Once installed on your system, these libraries will be called by higher level deep learning frameworks, such as Caffe, Tensorflow, MXNet, CNTK, Torch or Pytorch.
 
-The command `nvidia-smi` enables you to check the status of your GPUs, as with `top` or `ps` commands.
+The command `nvidia-smi` enables you to check the status of your GPUs, as with `top` or `ps` commands for CPUs.
 
 Most recent GPU architectures are Pascal and Volta architectures. The more memory the GPU has, the better. Operations are usually performed with single precision `float16` rather than double precision `float32`, and on new Volta architectures offer Tensor cores specialized with half precision operations.
 
@@ -33,7 +31,7 @@ One of the main difficulties come from the fact that different deep learning fra
 
 Solutions are:
 
-- use Docker containers, which limit the choice of the driver version in the operating system: the compliant CUDA and CUDNN versions as well as the deep learning frameworks can be installed inside the Docker container.
+- use Docker containers, which limit the choice of the driver version in the host operating system. For the compliant CUDA and CUDNN versions as well as the deep learning frameworks, you install them in the Docker container.
 
 - or use environment managers such as `conda` or `virtualenv`. A few commands to know:
 
@@ -55,6 +53,8 @@ conda install jupyter
 jupyter notebook
 ```
 
+Jupyter UI proposes to choose the Conda environment inside the notebook.
+
 It is possible to combine CUDA and OpenGL for [graphical applications requiring deep learning predictions: the image data is fully processed on GPU](http://www.nvidia.com/content/gtc/documents/1055_gtc09.pdf).
 
 # The batch
@@ -63,14 +63,14 @@ When applying the update rule, the best is to compute the gradients on the whole
 
 The learning rate needs to be adjusted depending on the batch size. The bigger the batch is, the bigger the learning rate can be.
 
-So, most deep learning programms and frameworks consider the first dimension in your data as the batch size. All other dimensions are the data dimensionality. For an image, it is `BxHxWxC`, written as a shape `(B, H, W, C)`. After a few layers, the shape of the data will change to `(b, h, w, c)` : the batch size remains, the number of channels usually increases $$ c \geq C $$ and the feature map decreases $$ h \leq H, w \leq W$$ for top layers' outputs' shapes.
+All deep learning programms and frameworks consider the first dimension in your data as the batch size. All other dimensions are the data dimensionality. For an image, it is `BxHxWxC`, written as a shape `(B, H, W, C)`. After a few layers, the shape of the data will change to `(B, h, w, c)` : the batch size remains constant, the number of channels usually increases $$ c \geq C $$ with network depth while the feature map decreases $$ h \leq H, w \leq W$$ for top layers' outputs' shapes.
 
-This format is very common and called *channel last*. Some deep learning frameworks work with *channel first*, such as CNTK, or enables to change the format as in Keras, to `(B, C, W, H)`.
+This format is very common and is called *channel last*. Some deep learning frameworks work with *channel first*, such as CNTK, or enables to change the format as in Keras, to `(B, C, W, H)`.
 
 
 <img src="{{ site.url }}/img/deeplearningcourse/DL14.png">
 
-To distribute the training on multiple GPU or instances, the easiest way is to split along the batch dimension, which we call *data parallellism*, and dispatch the different splits to their respective instance. The parameter update step requires to synchronize more or less the gradient computations. NVIDIA provides fast multi-gpu collectives in its library NCCL, and fast connections between GPUs with NVLINK2.0.
+To distribute the training on multiple GPU or instances, the easiest way is to split along the batch dimension, which we call *data parallellism*, and dispatch the different splits to their respective instance/GPU. The parameter update step requires to synchronize more or less the gradient computations. NVIDIA provides fast multi-gpu collectives in its library NCCL, and fast hardware connections between GPUs with NVLINK2.0.
 
 
 # Training curves and metrics
@@ -81,11 +81,11 @@ So, during training of a model, we usually plot the **training loss**, and if th
 
 <img src="{{ site.url }}/img/deeplearningcourse/DL16.png">
 
-Nevertheless, we usually keep 2 to 10 percent of the training set aside from the training process, which we call the **validation dataset** and compute the loss on this set as well. Depending if the model has enough capacity or not, the **validation loss** might increase after a certain step: we call this situation **overfitting**, where the model has too much learned the training dataset, but does not generalize on unseen examples. To avoid this situation to happen, we monitor the validation metrics as well to decide when to stop the training process, after which the model will perform less.
+Nevertheless, we usually keep 2 to 10 percent of the training set aside from the training process, which we call the **validation dataset** and compute the loss on this set as well. Depending if the model has enough capacity or not, the **validation loss** might increase after a certain step: we call this situation **overfitting**, where the model has too much learned the training dataset, but does not generalize on unseen examples. To avoid this situation to happen, we monitor the validation metrics and stop the training process when the validation metrics increase, after which the model will perform less.
 
-On top of the loss, it is possible to monitor other metrics, such as for example the accuracy. Metrics might not be differentiable, and minimizing the loss might not minimize the metrics. In image classification, a very classical one is the accuracy, that is the ratio of correctly classified examples in the dataset.
+On top of the loss, it is possible to monitor other metrics, such as for example the accuracy. Metrics might not be differentiable, and minimizing the loss might not minimize the metrics. In image classification, a very classical one is the **accuracy**, that is the ratio of correctly classified examples in the dataset. The opposite is the **error rate**.
 
-We also usually compute the precision/recall curve: precision defines the number of true positive in the examples predicted as positive by the model (true positives + false positives) while the recall is the number of true positives of the total number of positives (true positives + false negatives). While for some applications, such as document retrieval, we prefer to have higher recall, for some other applications, such as automatic document classification, we prefer to have a high precision for automatically classified documents, and leave ambiguities to a human operators. The area under the precision/recall curve (AUC), gives a good estimate of the discrimination quality of our model.
+We also usually compute the precision/recall curve: precision defines the number of true positive in the examples predicted as positive by the model (true positives + false positives) while the recall is the number of true positives of the total number of positives (true positives + false negatives). While for some applications, such as document retrieval, we prefer to have higher recall, for some other applications, such as automatic document classification, we prefer to have a high precision for automatically classified documents, and leave ambiguities to human operators. The area under the precision/recall curve (AUC), gives a good estimate of the discrimination quality of our model.
 
 <img src="{{ site.url }}/img/deeplearningcourse/DL11.png">
 
@@ -100,7 +100,7 @@ A deep learning library offers the following characteristics :
 
 3. Operators have a 'backward' implementation, computing the gradients for you, with respect to the inputs or parameters.
 
-Let's load Pytorch Python module into a Python shell, as well as Numpy library, check the Pytorch version is correct and the Cuda library is correctly installed:
+Let's load Pytorch module into a Python shell, as well as Numpy library, check the Pytorch version is correct and the Cuda library is correctly installed (if you have a GPU only):
 
 ```python
 import torch
@@ -139,7 +139,7 @@ You can easily check the following commands in Pytorch and Numpy:
 | Elementwise max | np.maximum(a,b) | torch.max(a,b) |
 
 
-
+.
 
 You can link Numpy array and Torch Tensor, either with
 
@@ -155,7 +155,7 @@ torch_array = torch.ones(5)
 numpy_array = torch_array.numpy()
 ```
 
-which will keep the pointers to the same values:
+which will keep the pointers to the original values:
 
 ```python
 numpy_array+= 1
@@ -164,13 +164,13 @@ torch_array.add_(1)
 print(numpy_array) # [3. 3. 3. 3. 3.]
 ```
 
-**Exercise**: find the equivalent under Tensorflow, Keras, CNTK, MXNET
+**Exercise**: find the equivalent operations under Tensorflow, Keras, CNTK, MXNET
 
 **Solution**: [tensorflow]({{ site.url }}/img/deeplearningcourse/tensorflow_commands.txt), [keras]({{ site.url }}/img/deeplearningcourse/keras_commands.txt), [mxnet]({{ site.url }}/img/deeplearningcourse/mxnet_commands.txt),  [cntk]({{ site.url }}/img/deeplearningcourse/cntk_commands.txt)
 
 #### 2. GPU computing
 
-It is possible to transfer tensors values between devices, ie RAM memory and each GPUs' memory:
+It is possible to transfer tensors between devices, ie RAM memory and each GPUs' memory:
 
 ```python
 a = torch.ones(5,) # tensor([1., 1., 1., 1., 1.])
@@ -183,7 +183,7 @@ z = y.cuda(1) # tensor([3., 3., 3., 3., 3.], device='cuda:1')
 t = z.cpu() # tensor([3., 3., 3., 3., 3.])
 ```
 
-but keep in mind that synchronization is lost (contrary to Numpy Arrays and Torch Tensors):
+but keep in mind that synchronization is lost (contrary to Numpy Arrays and Torch Tensors, it cannot be pointers since the values are not anymore on the same device):
 
 ```python
 a.add_(1)
@@ -239,7 +239,7 @@ The gradient of the cost y with respect to the input x is placed in `x.grad` and
 
 Calling `y.backward()` a second time will lead to a RunTime Error. In order to accumulate the gradients into `x.grad`, you need to set `retain_graph=True` during the first backward call.
 
-Let's confirm this in a  case where the input is multi-dimensional:
+Let's confirm this in a  case where the input is multi-dimensional and reduced into a scalar with a sum operator:
 
 ```python
 x = Variable(torch.ones(2), requires_grad=True)
@@ -259,7 +259,7 @@ Since $$ \frac{\partial}{\partial x_1} (x_1 + x_2) = 1 $$ and $$ \frac{\partial}
 
 Applying the `backward()` method multiple times accumulates the gradients.
 
-It is also possible to apply the `backward()` method on something else than a cost (scalar), for example on a layer or operation with a multi-dimensional output, as in the middle of a neural network, but in this case, you need to provide as argument to the `backward()` method $$ \Big( \nabla_{I_{t+1}} \text{cost} \Big)$$, the gradient of the cost with respect to the output of the current operator/layer (which is written here as the input of the operator/layer above), which will be multiplied by $$ \Big( \nabla_{\theta_t} L_t \Big) $$, the gradient of the current operator/layer's output with respect to its parameters, in order to produce the gradient of the cost with respect to its parameters:
+It is also possible to apply the `backward()` method on something else than a cost (scalar), for example on a layer or operation with a multi-dimensional output, as in the middle of a neural network, but in this case, you need to provide as argument to the `backward()` method $$ \Big( \nabla_{I_{t+1}} \text{cost} \Big)$$, the gradient of the cost with respect to the output of the current operator/layer (which is written here as the input of the operator/layer above), which will be multiplied by $$ \Big( \nabla_{\theta_t} L_t \Big) $$, the gradient of the current operator/layer's output with respect to its parameters, in order to produce the gradient of the cost with respect to the current layer's parameters:
 
 $$ \nabla_{\theta_t} \text{cost} =  \nabla_{\theta_t} \Big[ ( \text{cost} \circ S \circ ... \circ L_{t+1}  ) \circ L_t \Big]   = \Big( \nabla_{I_{t+1}} \text{cost} \Big) \times \nabla_{\theta_t} L_t  $$
 
@@ -293,7 +293,7 @@ print(x.grad)
 
 which is fantastic. In this case, $$ y\vert_{x=2} = ( x^2 )^2 = x^4  $$ and  $$ \frac{\partial y}{\partial x} \big\vert_{x=2} = 4 x^3 = 32 $$.
 
-Note that gradients are computed by retropropagate until a Variable has no `graph_fn` (an input Variable set by the user) or a Variable with `require_grad` set to `False`, which helps save computations.
+Note that gradients are computed by retropropagation until a Variable has no `graph_fn` (an input Variable set by the user) or a Variable with `requires_grad` set to `False`, which helps save computations.
 
 
 **Exercise**: compute the derivative with Keras, Tensorflow, CNTK, MXNet  
@@ -406,7 +406,7 @@ Y = torch.from_numpy(labels).type(torch.LongTensor)
 
 The input is defined by a position, ie a vector of dimension 2 for each sample, leading to a Tensor of size `(B, 2)`, where B is the batch size.
 
-Let's choose as hidden dimension (number of outputs of first layer/ inputs of second layers) 12:
+Let's choose as hidden dimension (number of outputs of first layer/ inputs of second layer) 12:
 
 ```python
 theta1 =  Variable(torch.randn(2, 12) *0.01,requires_grad = True)
@@ -463,7 +463,7 @@ for i in range(min(dataset_size, 100000) // batch_size ):
 
 The network converges.
 
-When `loss.backward()` is called, the whole graph is differentiated w.r.t. the loss, and all Variables in the graph will have their .grad Variable accumulated with the gradient.
+When `loss.backward()` is called, the derivatives are propagated through all Variables in the graph, and their .grad attribute accumulated with the gradient (except those with `requires_grad` set to False):
 
 ```python
 print(loss.grad_fn)  # NegBackward
@@ -499,9 +499,9 @@ Note that convergence is strongly influenced
 - by the art of choosing the right layer initialization: a small variance, with positive and negative values to dissociate the neural outputs (neurons that fire together wire together) helps. In fact, we'll see in the next section Pytorch packages that provide a correct implementation of the variance choice given the number of input and output connections:
 <img src="{{ site.url }}/img/deeplearningcourse/DL32.png">
 
-To improve the results, it is possible to train multiple times the network from scratch, and average the ensemble of parameters from each training.
+To improve the results, it is possible to train multiple times the network from scratch, and average the predictions coming from the ensemble of trained networks.
 
-Note also that, if there is a backward function for every operation, there is no forward function: evaluation is performed when the operator is applied to the variable as in a classical program. You can still create your own function as in a classical program. The backward function works as a kind of history of the operations in order to retropropagate the gradient. So, it is very different from the concept of "graph of operators".
+Note also that, if there is a backward function for every operation, there is no forward function: evaluation is performed when the operator is applied to the variable as in a classical program. It is up to you to create your own forward function as in a classical program. The backward function works as a kind of history of the operations in order to retropropagate the gradient. So, it is very different from the concept of "graph of operators".
 
 **Exercise**: program a training loop with Keras, Tensorflow, CNTK, MXNet
 
@@ -521,7 +521,7 @@ The composition of multiple modules builds a new module:
 
 that can be reused at multiple places in the network architecture.
 
-The organization into modules helps interoperability and reuse of snippets of codes into a deep neural network definition.
+The organization into modules helps interoperability and reuse of modules into a deep neural network definition.
 
 Then, calling the forward or backward propogations, transfering the module to GPU, saving or loading weights, is applied to all submodules without extra code.
 
@@ -636,7 +636,7 @@ print(params)
 # tensor([ 0.7422, -0.9477, -0.2653], device='cuda:0', requires_grad=True)]
 ```
 
-All the parameters appear on the first GPU (cuda:0). Note that we transfered the full dataset to the GPU, while in most applications, it is not possible since the memory of the GPU is limited, we only transfer the batch.
+All the parameters appear on the first GPU (cuda:0). Note that we transfered the full dataset to the GPU, while in most applications, it is not possible since the memory of the GPU is limited, we only transfer the batch at each iteration.
 
 When the GPU has been used for training, it is a good practice to use it for inference on the test data as well, so we need to rewrite it to train batches of samples rather than samples indiviually:
 
@@ -653,7 +653,7 @@ print("accuracy {}%".format(round(accuracy / min(dataset_size, nb) * 100, 2)))
 # accuracy 99.2
 ```
 
-**Exercise**: program with packages in Keras, Tensorflow, CNTK, MXNet
+**Exercise**: program the training loop with packages in Keras, Tensorflow, CNTK, MXNet
 
 
 # Packages
@@ -669,7 +669,7 @@ import torch.optim as optim
 optimizer = optim.SGD(net.parameters(), lr=0.1, momentum=0.9)
 ```
 
-The `optimizer` provides a method `zero_grad()` to clear the previous gradient values and a `step()` method to apply the update rule
+The `optimizer` provides a method `zero_grad()` to clear the previous gradient values and a `step()` method to apply the update rule to the parameters:
 
 ```python
 loss_curve = list()
@@ -709,7 +709,7 @@ plt.plot(range(1, len(loss_curve)+1), loss_curve, 'ro')
 
 <img src="{{ site.url }}/img/deeplearningcourse/DL43.png">
 
-To compute the accuracy, we can also forward the full dataset and use efficient matrix opertions on the final tensors, removing the for loop:
+To compute the accuracy, we can also forward the full dataset and use efficient matrix operations on the final tensors, removing the for loop:
 
 ```python
 accuracy = 0

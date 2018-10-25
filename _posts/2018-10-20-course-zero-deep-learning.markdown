@@ -37,7 +37,7 @@ The two most important loss functions are:
 
 - **Mean Squared Error (MSE)**, usually used for regression: $$ \sum_i (y_i - \tilde{y_i})^2 $$
 
-- **Cross Entropy for probabilities**, in particular for classification where the model predicts the probability of the observed object x for each class
+- **Cross Entropy for probabilities**, in particular for classification where the model predicts the probability of the observed object x for each class or "label":
 
 <center> $$ x \rightarrow \{p_c\}_c $$ with $$ \sum_c p_c = 1 $$ </center>
 
@@ -63,7 +63,7 @@ Two problems arise: first, most mathematical functions do not output a probabili
 
 #### Normalizing model outputs
 
-Usually, we transform any model output into a probability that sums to 1 is usually performed thanks to a softmax function set on top of the model outputs :
+Usually, transforming any model output into a probability that sums to 1 is usually performed thanks to a softmax function set on top of the model outputs :
 
 $$ x \xrightarrow{f} o = f(x) = \{o_c\}_c \xrightarrow{softmax} \{p_c\}_c $$
 
@@ -71,17 +71,13 @@ The softmax normalization function is defined by:
 
 $$ \text{Softmax}(o) = \Big\{ \frac{ e^{o_i} }{ \sum_c e^{o_c}}  \Big\}_i $$
 
-The softmax is the equivalent to the signmoid but in the multi-dimensional case.
-
-Note that for the softmax to predict probability for C classes, it requires the output $$ o = f(x) $$ to be C-dimensional.
-
-$$ \{o_c\}_c $$ are called the **logits**.
+Note that for the softmax to predict probability for C classes, it requires the output $$ o = f(x) $$ to be C-dimensional. $$ \{o_c\}_c $$ are called the **logits**.
 
 Softmax is the equivalent of the `sigmoid()` in binary classification:
 
 $$ x \rightarrow \frac{1}{1+e^{-x}} $$
 
-If you do not remember which one between the softmax and the sigmoid has a negative sign in the exponant, ie $$ e^x $$ or $$ e^{-x} $$, remember that Softmax and Sigmoid are both **monotonic** functions.
+in the multi-class case. If you do not remember which one between the softmax and the sigmoid has a negative sign in the exponant, ie $$ e^x $$ or $$ e^{-x} $$, remember that Softmax and Sigmoid are both **monotonic** functions.
 
 #### Estimating the true distribution
 
@@ -91,19 +87,26 @@ In fact, to understand cross-entropy, you need to rewrite its theoretical defini
 
 $$ \text{CrossEntropy} = - \sum_c \tilde{p_c} \log p_c = - \mathbb{E} \Big( \log p_c \Big) $$
 
-because $$ \tilde{p_c} $$ is the true distribution, so cross entropy is the expectation of the model predicted negative probability under the true distribution.
+because $$ \tilde{p_c} $$ is the true label distribution, so cross entropy is the expectation of the negative log-probability predicted by the model under the true distribution.
 
 Then, we use the formula for the empirical estimation of the expectation:
 
-$$ \text{CrossEntropy} \approx - \frac{1}{N} \sum_{x \sim D} \log p_{\hat{c}(x)}(x) $$
+$$ \text{CrossEntropy} \approx - \frac{1}{N} \sum_{x \sim D} \log p_{\hat{c}(x)}(x) = \text{EmpiricalCrossEntropy}(p)$$
 
-where D is the real sample distribution, N is the number of samples on which the cross entropy is estimated and $$ \hat{c}(x) $$ is the true class of x.
+where D is the real sample distribution, N is the number of samples on which the cross entropy is estimated ($$ N \gg 1 $$) and $$ \hat{c}(x) $$ is the true class of x.
 
-Our empirical cross-entropy for one sample (N=1) becomes
-
+When we compute the cross-entropy, we set an empirical cross-entropy for one sample (N=1) to
 
 $$ \text{CrossEntropy} \approx - \log p_\hat{c}(x) $$
 
+so that when we average the individual losses over more samples for stability, we find back to the desired empirical estimation:
+
+$$ \frac{1}{N} \sum_{x \sim D} L(x) = - \frac{1}{N} \sum_{x \sim D} \log p_{\hat{c}(x)}(x) = \text{EmpiricalCrossEntropy}(p)$$
+
+
+In the future, we adopt the following formulation for a single sample:
+
+$$ \text{CrossEntropy}(p) = - \log p_\hat{c}(x)$$
 
 which is equivalent to setting the $$ \tilde{p} $$ probability in the theoretical cross-entropy definition (1) with:
 
@@ -112,19 +115,11 @@ $$ \tilde{p}_c(x) = \begin{cases}
   0, & \text{otherwise}.
 \end{cases} $$
 
-which we will write $$ \tilde{p}_c(x) = \delta(c,\hat{c}) $$.
+which we will write $$ \tilde{p}_c(x) = \delta(c,\hat{c}) $$. That is why the target for the predicted probability for the true class is 1.
 
-$$ \tilde{p} $$ is a vector of zero values except for the true class, where it is one: which we call **one-hot encoding**.
+$$ \tilde{p} $$ is a vector of zero values except for the true class, where it has a one: we name $$ \tilde{p} $$ the **one-hot encoding**.
 
-If more samples are considered, usually we average the individual losses for stability, leading back to the desired empirical estimation:
-
-$$ \frac{1}{N} \sum_{x \sim D} L(x) = - \frac{1}{N} \sum_{x \sim D} \log p_{\hat{c}(x)}(x) \approx \text{CrossEntropy}$$
-
-In the future, we consider as cross-entropy the following formulation for a single sample:
-
-$$ \text{EmpiricalCrossEntropy}(p) = - \log p_\hat{c}(x)$$
-
-In **conclusion**, for the case of classification, we compute the cross-entropy with values that are either 0 or 1 at the sample level for the "true" probability: x being the image of a cat, we want the model output $$\{p_c\}_c $$ to fit the empirical class probability $$\{\tilde{p}_c\}_c $$ at the sample level, where $$ \tilde{p}_\hat{c} = 1 $$ for the real object class $$ \hat{c} $$ "cat" and $$ \tilde{p}_c = 0$$ for all other classes $$ c \neq \hat{c} $$: then at the dataset level, averaging these values lead to the empirical estimates of the true probabilities we are used to.
+In **conclusion**, for the case of classification, we compute the cross-entropy with values that are either 0 or 1 at the sample level for the "true" probability: x being the image of a cat, we want the model output $$\{p_c\}_c $$ to fit the empirical class probability $$\{\tilde{p}_c\}_c $$ at the sample level, that we set to $$ \tilde{p}_\hat{c} = 1 $$ for the real object class $$ \hat{c} $$ "cat" and $$ \tilde{p}_c = 0$$ for all other classes $$ c \neq \hat{c} $$: then at the dataset level, averaging these values lead to the empirical estimates of the true probabilities we are used to.
 
 <img src="{{ site.url }}/img/deeplearningcourse/DL1.png">
 
@@ -138,7 +133,7 @@ It consists in following the gradient to descend to the minima:
 
 <img src="{{ site.url }}/img/deeplearningcourse/DL2.png">
 
-In other words, we follow the negative slope of the mountain to find the bottom of the valley. In order to avoid a local minima, initialization (the choice of initial values for the parameters, where to start the descent from) is very important, and multiple runs can help find the best solution.
+In other words, we follow the negative slope of the mountain to find the bottom/lowest position of the valley. In order to avoid a local minima, initialization (the choice of initial values for the parameters, where to start the descent from) is very important, and multiple runs can also help find the best solution.
 
 It is an iterative process in which the update rule simply consists in:
 
@@ -167,7 +162,7 @@ $$\lambda $$ is the learning rate and has to be set carefully: Effect of various
 
 This simple method is named SGD, after *Stochastic Gradient Descent*. There are many improvements around this simple rule: ADAM, ADADELTA, RMS Prop, ... All of them are using the first order only. Some are adaptive, such as ADAM or ADADELTA, where the learning rate is adapted to each parameter automatically.
 
-There exists some second order optimization methods also but they are not very common in the deep learning practice.
+There exists some second order optimization methods also but they are not very common in practice.
 
 **Conclusion**: When we have the loss function, the goal is to minimize it. For this, we have a very simple update rule which is the gradient descent.
 
@@ -197,7 +192,9 @@ This model is called **perceptron** and the output of the first Dense layer is a
 
 <img src="{{ site.url }}/img/deeplearningcourse/DL15.png">
 
-Without a ReLu activation in the middle, the two Dense layers would be mathematically equivalent to only 1 Dense layer. Hence the model has two sets of parameters
+Without a ReLu activation in the middle, the two Dense layers would be mathematically equivalent to only 1 Dense layer.
+
+The model has two sets of parameters:
 
 $$ \theta = [ \theta_1, \theta_2 ] $$
 
@@ -209,7 +206,11 @@ which is a simple matrix multiplication
 
 $$ \nabla (f \circ g) = \nabla f \times \nabla g $$
 
-What does that mean for deep learning and gradient descent ? In fact, for each layer, we want to compute
+if
+
+$$ \nabla f = \Big\{ \frac{\partial g_i}{\partial x_j} \Big\}_{i,j} $$
+
+What does that mean for deep learning and gradient descent ? In fact, for each layer, to follow the negative slope, we need to compute
 
 $$ \nabla_{\theta_{\text{Layer}}} \text{cost} $$
 
@@ -251,15 +252,15 @@ and for the layer  $$ \text{Dense}^1 $$,
 
 $$ \nabla_{\theta_1} \text{cost} = \Big(\nabla_I  \text{CrossEntropy} \times \nabla_I \text{Softmax}\Big) \times \nabla_I \text{Dense}^2 \times \nabla_I \text{ReLu} \times \nabla_{\theta_1} \text{Dense}^1  $$
 
-We see that $$ \Big(\nabla_I  \text{CrossEntropy} \times \nabla_I \text{Softmax}\Big) $$ is common to the computation of $$ \nabla_{\theta_1} \text{cost} $$ and $$ \nabla_{\theta_2} \text{cost} $$, and it is possible to compute them once. This will be true for any other layer below.
+We see that $$ \Big(\nabla_I  \text{CrossEntropy} \times \nabla_I \text{Softmax}\Big) $$ is common to the computation of $$ \nabla_{\theta_1} \text{cost} $$ and $$ \nabla_{\theta_2} \text{cost} $$, and it is possible to compute them once.
 
-So, to reduce the number of matrix mulplications, it is better to compute the gradients from the top layer to the bottom layer and reuse previous computations of matrix multiplication for earlier gradients.
+So, to reduce the number of matrix mulplications, it is better to compute the gradients from the top layer to the bottom layer and reuse previous computations of matrix multiplication from earlier layers.
 
 <img src="{{ site.url }}/img/deeplearningcourse/DL10.png">
 
 <img src="{{ site.url }}/img/deeplearningcourse/DL8.png">
 
-In **conclusion**, gradient computation with respect to each layers' parameters is performed by matrix multiplications of gradients of the layers above, so it is more efficient to begin to compute gradients from the top layers, a process we call *retropropagation* or *backpropagation*.
+In **conclusion**, gradient computation with respect to each layer's parameters is performed via matrix multiplications of gradients of the layers above, so it is more efficient to begin to compute gradients from the top layers, a process we call *retropropagation* or *backpropagation*.
 
 
 # Cross Entropy with Softmax
@@ -292,9 +293,9 @@ which is very easy to compute and can simply be rewritten:
 
 $$ \nabla_o \text{cost} = p - \tilde{p} $$
 
-Note that the gradient is between -1 and 1: for a negative class ($$ \tilde{p} == 0 $$), the derivative is positive, and the highest the prediction has been positive, the higher the derivative it will be; for a positive class, the derivative will always be negative, and the lowest the prediction to be positive, the more negative the derivative will be.
+Note that the gradient is between -1 and 1: for a negative class ($$ \tilde{p} = 0 $$), the derivative is positive, and the higher the prediction has been positive, the higher the derivative will be; for a positive class, the derivative will always be negative, and the lower the prediction to be positive, the lower the derivative will be.
 
-Since Softmax is monotonic, Softmax output computation is not required for inference, the highest logit corresponds to the highest probability... except if you need the probability to estimate the confidence.
+Since Softmax is monotonic, Softmax output computation is not required for inference, the highest logit corresponds to the highest probability... except if you need the probability to estimate the confidence of the predicted class.
 
 **Conclusion**: it is easier to backprogate gradients computed on Softmax+CrossEntropy together rather than backpropagate separately each : the derivative of the Softmax+CrossEntropy with respect to the output of the model for the right class, let's say the "cat" class, will be 0.8 - 1 = - 0.2, if the model has predicted a probability of 0.8 for this class, and the update will follow the negative slope to encourage to increase the prediction ; the derivative of the Softmax+CrossEntropy with respect to an output for a different class will be 0.4 is it has predicted a probability of 0.4, encouraging the model to decrease this value.  
 
@@ -351,7 +352,7 @@ In our section on practical cross-entropy, we have considered that we knew the t
 
 $$ \text{CrossEntropy}(p, \tilde{p}) = - \alpha_{\hat{c}} \times \log p_\hat{c}  $$
 
-This could also be performed by replacing the current sampling schema ($$ \tilde{p} $$), by sampling following uniformly a class and the sample belonging to this class.
+This could also be performed by replacing the current sampling schema ($$ \tilde{p} $$), by sampling uniformly the class first, then a sample belonging to this class.
 
 - to train a model with smoother values than 0 and 1 for negatives and positives, for example 0.1 or 0.9, which will help achieve better performances. This technique of *label smoothing* or *soft labels* enables in particular to re-introduce the outputs for the negative classes so that it will preserve a symmetry between the negative and positive labels:
 
@@ -378,11 +379,11 @@ as in the Focal Loss for object detection where background negatives are too num
 
 That is where the magic happens ;-)
 
-As you might have understood, the cross entropy comes from theory of information, but the definition of the probabilities and their weighting scheme can be adapted to the problem we want to solve. That is where we leave theory for practice.
+As you might have understood, the cross entropy comes from the theory of information, but the definition of the probabilities and their weighting scheme can be adapted to the problem we want to solve. That is where we leave theory for practice.
 
 Still, there is a very important theoretical generalization of cross-entropy through reinforcement learning which is very easy to understand.
 
-In reinforcement, given an observation $$ x_t $$ at a certain timestep, you're going to perform an action, for example driving car, going right, left, or straight, or in a game, using some keyboard commands. Then the environment is modified and you'll need to decide of the next action... and sometimes you get a reward $$ r_t $$, a feedback from the environment, good news or bad news, gain some points... In the case of reinforcement learning, we do not have any labels as targets or groundtruth. We just want to perform the best, which means maximizing the expected reward :
+In reinforcement, given an observation $$ x_t $$ at a certain timestep, you're going to perform an action, for example driving car, going right, left, or straight, or in a game, using some keyboard commands. Then the environment is modified and you'll need to decide of the next action... and sometimes you get a reward $$ r_t $$, a feedback from the environment, good news or bad news, gain some points... In the case of reinforcement learning, we do not have any labels as targets or groundtruth. We just want to get the best reward :
 
 $$ R = \mathbb{E}_{\text{seq}} \sum_{t} r_t $$
 
@@ -412,11 +413,11 @@ which looks exactly the same as the derivative of the cross entropy:
 
 <img src="{{ site.url }}/img/deeplearningcourse/DL38.png">
 
-except that you replace the expected reward in place of the true probability:
+except that you replace the expected reward in place of the true label probability:
 
 <img src="{{ site.url }}/img/deeplearningcourse/DL39.png">
 
-Instead of 1 and 0 in case of classification, you use the global reward R as target label for each timestep and you can consider each time step as individual samples.
+In **conclusion**, in place of the 1 and 0 of the classification case, reinforcement learning proposes to use the global reward R as target label for each timestep that led to this reward, considering each time step as individual samples.
 
 <img src="{{ site.url }}/img/deeplearningcourse/DL40.png">
 

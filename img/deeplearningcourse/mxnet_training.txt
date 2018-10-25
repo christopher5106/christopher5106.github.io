@@ -48,8 +48,6 @@ for i in range(min(dataset_size, 100000) // batch_size ):
   z.backward()
   for p in params:
     p[:,:] = p - lr * p.grad
-    #print(p.grad)
-  print(theta1[0,0])
 
 
 accuracy = 0
@@ -57,7 +55,6 @@ for i in range(1000):
   x = mx.nd.array(X[i:i+1])
   t = mx.nd.array(labels[i:i+1])
   y = forward(x)
-  print(y, t)
   eq= (t.argmax(axis=1) == y.argmax(axis=1))
   accuracy +=  eq.asnumpy()[0]
 

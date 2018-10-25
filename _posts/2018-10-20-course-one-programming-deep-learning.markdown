@@ -442,7 +442,7 @@ for i in range(min(dataset_size, 100000) // batch_size ):
     z = forward(Variable(batch, requires_grad=False))
     z = softmax(z)
     loss = crossentropy(z, Variable(Y[batch_size*i:batch_size*(i+1)]))
-    print("iter {} - cost {} - learning rate {}".format(i, loss.data.item(), lr))
+    print("iter {} - cost {} - learning rate {}".format(i, loss.data[0], lr))
 
     # compute the gradients
     loss.backward()
@@ -505,7 +505,7 @@ Note also that, if there is a backward function for every operation, there is no
 
 **Exercise**: program a training loop with Keras, Tensorflow, CNTK, MXNet
 
-**Solution**: [cntk training]({{ site.url }}/img/deeplearningcourse/cntk_training.txt)
+**Solution**: [cntk training]({{ site.url }}/img/deeplearningcourse/cntk_training.txt), [mxnet]({{ site.url }}/img/deeplearningcourse/mxnet_training.txt)
 
 # Modules
 

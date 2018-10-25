@@ -6,6 +6,7 @@ mx.nd.zeros((5,3))
 mxnet.nd.random.normal(shape=(5,3))
 mxnet.nd.random.uniform(shape=(5,3))
 mxnet.nd.random.uniform(shape=(5,3)).shape
+mxnet.ndarray.linalg.gemm2(mxnet.nd.random.uniform(shape=(5,3)), mxnet.nd.random.uniform(shape=(3,4)))
 mxnet.nd.random.uniform(shape=(5,3)).reshape((3,5))
 mxnet.nd.random.uniform(shape=(5,3)).transpose(axes=(1,0))
 mxnet.ndarray.concat(mx.nd.ones((5,3)), mx.nd.ones((5,2)), dim=1)

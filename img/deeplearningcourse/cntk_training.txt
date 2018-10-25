@@ -25,7 +25,17 @@ def forward(x):
     y = C.element_max(y, 0.)
     return C.times(y, theta2) + bias2
 
-y = C.reduce_mean(C.cross_entropy_with_softmax(forward(x), t, axis=1))
+def softmax(x):
+    e = C.exp(x)
+    s = C.reduce_sum(e, axis=1)
+    return e/s
+
+def crossentropy(y, t):
+    prob = C.squeeze(C.reduce_sum(y*t, axis=1), 1)
+    return - C.reduce_mean(C.log(prob))
+
+#y = C.reduce_mean(C.cross_entropy_with_softmax(forward(x), t, axis=1))
+y = crossentropy(softmax(forward(x)),t)
 
 for i in range(min(dataset_size, 100000) // batch_size ):
     lr = 0.5 * (.1 ** ( max(i - 100 , 0) // 1000))
@@ -45,4 +55,5 @@ for i in range(1000):
     tt = y.eval({x:sample})[0]
     accuracy += np.sum(tt == np.argmax(target, axis=1))
 
-print(accuracy / 1000. /batch_size)
+print("Accuracy", accuracy / 1000. /batch_size)
+# accuracy 99.36

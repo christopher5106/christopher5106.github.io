@@ -58,4 +58,5 @@ for i in range(1000):
   eq= (t.argmax(axis=1) == y.argmax(axis=1))
   accuracy +=  eq.asnumpy()[0]
 
-print(accuracy / 1000.)
+print("Accuracy", accuracy / 1000.)
+# accuracy > 99.

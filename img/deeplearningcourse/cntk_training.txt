@@ -8,9 +8,8 @@ labels[X[:, 0] > X[:,1]] = [0,0,1]
 labels[X[:, 0] <= X[:,1]] = [1,0,0]
 labels[X[:,1] + X[:, 0] > 1] = [0, 1, 0]
 
-batch_size = 20
-x = C.input_variable(shape=(batch_size, 2), needs_gradient=False)
-t = C.input_variable(shape=(batch_size, 3), needs_gradient=False)
+x = C.input_variable(shape=(-1, 2), needs_gradient=False)
+t = C.input_variable(shape=(-1, 3), needs_gradient=False)
 
 init = C.initializer.normal(0.01)
 
@@ -37,6 +36,7 @@ def crossentropy(y, t):
 #y = C.reduce_mean(C.cross_entropy_with_softmax(forward(x), t, axis=1))
 y = crossentropy(softmax(forward(x)),t)
 
+batch_size = 20
 for i in range(min(dataset_size, 100000) // batch_size ):
     lr = 0.5 * (.1 ** ( max(i - 100 , 0) // 1000))
     sample = X[batch_size*i:batch_size*(i+1)]

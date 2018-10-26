@@ -20,7 +20,6 @@ bias1 = tf.get_variable("bias1", (1,12), initializer=init)
 theta2 = tf.get_variable("theta2", (12,3), initializer=init)
 bias2 = tf.get_variable("bias2", (1,3), initializer=init)
 
-
 def forward(x):
     y = tf.matmul(x, theta1) + bias1
     y = tf.maximum(y, 0.)
@@ -37,10 +36,10 @@ def crossentropy(y, t):
 
 loss = crossentropy(softmax(forward(x)),t)
 params= [theta1, bias1, theta2, bias2]
-grads = tf.gradients(loss, params)
+grads = tf.gradients(ys=loss, xs=params)
 assignments = []
 for param,grad in zip(params, grads):
-  assignments.append(tf.assign(param, param - learning_rate * grad))
+  assignments.append(tf.assign(param, param - learning_rate * grad ))
 
 
 init = tf.global_variables_initializer()
@@ -51,7 +50,7 @@ with tf.Session() as sess:
       lr = 0.5 * (.1 ** ( max(i - 100 , 0) // 1000))
       sample = X[batch_size*i:batch_size*(i+1)]
       target = labels[batch_size*i:batch_size*(i+1)]
-      init.run()
+      sess.run(init)
       outputs = sess.run([loss] + assignments, feed_dict={x:sample, t:target, learning_rate:lr})
       print("cost {} - learning rate {}".format(outputs[0], lr))
       print(outputs[1][0,0])

@@ -1,0 +1,53 @@
+import tensorflow as tf
+import numpy as np
+
+dataset_size = 200000
+X = np.random.rand(dataset_size, 2)
+labels = np.zeros((dataset_size, 3))
+labels[X[:, 0] > X[:,1]] = [0,0,1]
+labels[X[:, 0] <= X[:,1]] = [1,0,0]
+labels[X[:,1] + X[:, 0] > 1] = [0, 1, 0]
+
+x = tf.placeholder(shape=(None, 2), dtype="float32")
+t = tf.placeholder(shape=(None, 3), dtype="float32")
+learning_rate = tf.placeholder(shape=(), dtype="float32")
+
+theta1 = tf.random_normal(shape=(2, 12), stddev=0.01)
+bias1 = tf.random_normal(shape=(1, 12), stddev=0.01)
+
+theta2 = tf.random_normal(shape=(12, 3), stddev=0.01)
+bias2 = tf.random_normal(shape=(1, 3), stddev=0.01)
+
+def forward(x):
+    y = tf.matmul(x, theta1) + bias1
+    y = tf.maximum(y, 0.)
+    return tf.matmul(y, theta2) + bias2
+
+def softmax(x):
+    e = tf.exp(x)
+    s = tf.reduce_sum(e, axis=1, keepdims=True)
+    return e/s
+
+def crossentropy(y, t):
+    prob = tf.reduce_sum(y*t, axis=1)
+    return - tf.reduce_mean(tf.log(prob))
+
+loss = crossentropy(softmax(forward(x)),t)
+params= [theta1, bias1, theta2, bias2]
+grads = tf.gradients(loss, params)
+assignments = []
+for param,grad in zip(params, grads):
+  assignments.append(tf.assign(param, param - learning_rate * grad))
+
+
+init = tf.global_variables_initializer()
+
+batch_size = 20
+with tf.Session() as sess:
+  for i in range(min(dataset_size, 100000) // batch_size ):
+      lr = 0.5 * (.1 ** ( max(i - 100 , 0) // 1000))
+      sample = X[batch_size*i:batch_size*(i+1)]
+      target = labels[batch_size*i:batch_size*(i+1)]
+      init.run()
+      outputs = sess.run([loss] + assignments, feed_dict={x:sample, t:target, learning_rate:lr})
+      print("cost {} - learning rate {}".format(outputs[0], lr))

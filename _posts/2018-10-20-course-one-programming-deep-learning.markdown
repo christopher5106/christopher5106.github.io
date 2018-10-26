@@ -505,7 +505,7 @@ Note also that, if there is a backward function for every operation, there is no
 
 **Exercise**: program a training loop with Keras, Tensorflow, CNTK, MXNet
 
-**Solution**: [cntk training]({{ site.url }}/img/deeplearningcourse/cntk_training.txt), [mxnet training]({{ site.url }}/img/deeplearningcourse/mxnet_training.txt), [keras training]({{ site.url }}/img/deeplearningcourse/keras_training.txt)
+**Solution**: [cntk training]({{ site.url }}/img/deeplearningcourse/cntk_training.txt), [mxnet training]({{ site.url }}/img/deeplearningcourse/mxnet_training.txt), [keras training]({{ site.url }}/img/deeplearningcourse/keras_training.txt), [tensorflow training]({{ site.url }}/img/deeplearningcourse/tensorflow_training.txt)
 
 # Modules
 

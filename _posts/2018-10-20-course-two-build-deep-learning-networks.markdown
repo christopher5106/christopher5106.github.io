@@ -36,7 +36,7 @@ $$ l_{Out} = l_{In} - \text{kernel_size} +1  $$
 
 positions, hence $$ (n -2) $$ positions in the case of kernel 3.
 
-It is also possible to define the stride of the convolution, for example with stride 2, the convolution is shifted by 2 positions, leading to $$ l_{Out} = \text{ceil}((l_{In} - 2) / 2)  $$ output positions.
+It is also possible to define the stride of the convolution, for example with stride 2, the convolution is shifted by 2 positions, leading to $$ l_{Out} = \text{floor}((l_{In} - 3) / 2) +1  $$ output positions.
 
 Last, a 1D-convolution can also be applied on matrices, where the first dimension is the length of the sequence and the second dimension is the dimensionality of the data, and modify the dimensionality of the data (number of channels):
 
@@ -56,7 +56,9 @@ Contrary to Linear/Dense layers, where there is one weight (or 2, with the bias)
 
 One of the difficulty with convolutions is due to the fact the output featuremap shape depends on the kernel size and the stride:
 
-$$ \text{ceil}((n - \text{kernel}) / \text{stride})  $$
+$$ \text{floor}((\text{dimension} - \text{kernel}) / \text{stride}) +1  $$
+
+since we want $$ \text{kernel} + (n-1) \times \text{stride} \leq \text{dim} $$
 
 To avoid that, it is possible to pad the input with 0 to create a larger input so that input and output featuremaps keep the same size. This simplifies the design of architectures:
 
@@ -348,7 +350,7 @@ The diagram below illustrates that accepting a (slightly) lower accuracy than th
 
 #### ShuffleNet
 
-ShuffleNet goes one step further 
+ShuffleNet goes one step further
 
 <img src="{{ site.url }}/img/deeplearningcourse/DL57.png">
 

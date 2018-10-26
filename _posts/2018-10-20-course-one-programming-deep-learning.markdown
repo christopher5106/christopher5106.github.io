@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Course 1: programming deep learning in 5 days only!"
+title:  "Course 1: learn to program deep learning in Pytorch, MXnet, CNTK, Tensorflow and Keras!"
 date:   2018-10-20 06:00:00
 categories: deep learning
 ---

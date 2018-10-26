@@ -12,11 +12,14 @@ x = tf.placeholder(shape=(None, 2), dtype="float32")
 t = tf.placeholder(shape=(None, 3), dtype="float32")
 learning_rate = tf.placeholder(shape=(), dtype="float32")
 
-theta1 = tf.random_normal(shape=(2, 12), stddev=0.01)
-bias1 = tf.random_normal(shape=(1, 12), stddev=0.01)
+init = tf.random_normal_initializer(stddev=0.01)
 
-theta2 = tf.random_normal(shape=(12, 3), stddev=0.01)
-bias2 = tf.random_normal(shape=(1, 3), stddev=0.01)
+theta1 = tf.get_variable("theta1", (2,12), initializer=init)
+bias1 = tf.get_variable("bias1", (1,12), initializer=init)
+
+theta2 = tf.get_variable("theta2", (12,3), initializer=init)
+bias2 = tf.get_variable("bias2", (1,3), initializer=init)
+
 
 def forward(x):
     y = tf.matmul(x, theta1) + bias1
@@ -51,6 +54,7 @@ with tf.Session() as sess:
       init.run()
       outputs = sess.run([loss] + assignments, feed_dict={x:sample, t:target, learning_rate:lr})
       print("cost {} - learning rate {}".format(outputs[0], lr))
+      print(outputs[1][0,0])
 
 
 accuracy = 0

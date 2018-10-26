@@ -58,7 +58,9 @@ One of the difficulty with convolutions is due to the fact the output featuremap
 
 $$ \text{floor}((\text{dimension} - \text{kernel}) / \text{stride}) +1  $$
 
-since we want $$ \text{kernel} + (n-1) \times \text{stride} \leq \text{dim} $$
+since we want
+
+$$ \text{kernel} + (n-1) \times \text{stride} \leq \text{dim} $$
 
 To avoid that, it is possible to pad the input with 0 to create a larger input so that input and output featuremaps keep the same size. This simplifies the design of architectures:
 
@@ -72,7 +74,9 @@ Last, convolutions can be dilated, in order to change the sampling scheme and th
 
 Note that a convolution of kernel 1 or (1x1) is called a **pointwise convolution** or **projection convolution** or **expansion convolution**, because it is used to change the dimensionality of the data (number of channels) without changing the length or the width and height of the data.
 
-A convolution that applies convolutions on each channel without connections between channels is called a **depthwise convolution**. The combination of a depthwise convolution followed by projection convolution helps reduce the number of computations while maintaining the accuracy roughly.
+A convolution that applies convolutions on each channel without connections between channels is called a **depthwise convolution**. The combination of a depthwise convolution followed by projection convolution helps reduces the number of computations while maintaining the accuracy roughly.
+
+Last, convolutions with kernel (k,1) or (1,k), processing only one dimension, either height or width, are called **separable convolutions**.
 
 #### Pooling
 
@@ -93,9 +97,11 @@ When a computer vision network transforms an image of shape (h,w,3) to an output
 
 #### Normalization
 
-A last type of layers are normalization layers: their purpose is to avoid an *internal covariance shift* during training, i.e. last layers learning on first layers outputs which statistics evolve during training.
+Normalization layers are placed between other layers to ensure robustness of the trained neural network.
 
-Normalization layers are placed between other layers to ensure stable statistics: the mean and variance of the outputs are brought back to 0 and 1, by substraction and division, after which the normalization will learn a new scale and bias.
+A first category of normalization layers aims at reducing *internal covariance shift* during training, i.e. that the statistics of the first layer below remains stable during training to help next layer better perform.
+
+The mean and variance of the outputs are brought back to 0 and 1, by substraction and division, after which the normalization learn new scale and bias parameters.
 
 The statistics can be computed on different set:
 
@@ -108,6 +114,9 @@ The statistics can be computed on different set:
 - for a group of channels and per sample: group norm
 
 <img src="{{ site.url }}/img/deeplearningcourse/DL60.png">
+
+
+Another type of normalization layers are **dropout** layers that drops some values by setting them to zero with a *dropout probability* in order to have the neural networks become more robust and regularized. In the **stochastic depth training**, some complete layers are dropped, a technique used in very deep networks such as ResNets and DenseNets.
 
 
 # Image classification

@@ -507,6 +507,15 @@ Note also that, if there is a backward function for every operation, there is no
 
 **Solution**: [cntk training]({{ site.url }}/img/deeplearningcourse/cntk_training.txt), [mxnet training]({{ site.url }}/img/deeplearningcourse/mxnet_training.txt), [keras training]({{ site.url }}/img/deeplearningcourse/keras_training.txt), [tensorflow training]({{ site.url }}/img/deeplearningcourse/tensorflow_training.txt)
 
+Pytorch and MXNet work about the same. In MXNet, use `attach_grad()` on the `NDarray` with respect to which you'd like to compute the gradient of the cost, and start recording the history of operations with `with mx.autograd.record()`, then you can use directly `backward()`. No wrapping in a Variable object as in Pytorch.
+
+In CNTK, Tensorflow and Keras, you build a graph, so you do not get instantly the result of your operation, for example an addition does not give a result but an object that will evaluated in a session on a device by feeding data into the inputs.
+- in CNTK, the `Parameter` and `input_variable` are subclasses of the Variable class so you do not need to wrap them into a Variable object as in Pytorch, but since you build a graph, so you have to call `eval` or `grad` methods on any element of the graph with input values to evaluate them.
+- Tensorflow is the most complex, but leaves lot's of freedom. You need to instantiate a session on the device yourself and call the initialization of your variables in the session. The gradient as well as the assignation of values are available operators so that everything can be designed in the graph, but the benefits are extremely small.
+- Keras is an abstraction over Tensorflow and CNTK, so you retrieve the points discussed above in the implementation.
+
+Tensorflow has an `eager` mode option, which enables to get the results of the operator instantly as in Pytorch and MXNet.
+
 # Modules
 
 A module is an object that encapsulates learnable parameters and is specifically suited to design deep learning neural networks.

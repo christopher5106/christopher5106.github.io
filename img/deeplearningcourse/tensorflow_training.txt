@@ -36,34 +36,28 @@ def crossentropy(y, t):
 
 loss = crossentropy(softmax(forward(x)),t)
 params= [theta1, bias1, theta2, bias2]
-grads = tf.gradients(ys=loss, xs=params)
+grads = tf.gradients(loss, params)
 assignments = []
 for param,grad in zip(params, grads):
-  assignments.append(tf.assign(param, param - learning_rate * grad ))
-
+  assignments.append(param.assign( param - learning_rate * grad ))
 
 init = tf.global_variables_initializer()
 
 batch_size = 20
 with tf.Session() as sess:
+  sess.run(init)
   for i in range(min(dataset_size, 100000) // batch_size ):
       lr = 0.5 * (.1 ** ( max(i - 100 , 0) // 1000))
       sample = X[batch_size*i:batch_size*(i+1)]
       target = labels[batch_size*i:batch_size*(i+1)]
-      sess.run(init)
-      outputs = sess.run([loss] + assignments, feed_dict={x:sample, t:target, learning_rate:lr})
-      print("cost {} - learning rate {}".format(outputs[0], lr))
-      print(outputs[1][0,0])
-
-
-accuracy = 0
-with tf.Session() as sess:
+      outputs = sess.run( assignments + [loss] , feed_dict={x:sample, t:target, learning_rate:lr})
+      print("cost {} - learning rate {}".format(outputs[-1], lr))
+  accuracy = 0
   for i in range(1000):
     print(i)
     sample = X[batch_size*i:batch_size*(i+1)]
     target = labels[batch_size*i:batch_size*(i+1)]
     outputs = sess.run([tf.argmax(forward(x), axis=1)], feed_dict={x:sample})
     accuracy += np.sum(outputs[0] == np.argmax(target, axis=1))
-
-print("Accuracy", accuracy / 1000. /batch_size)
-# accuracy 99.44
+  print("Accuracy", accuracy / 1000. /batch_size)
+# accuracy 99.25

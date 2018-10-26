@@ -51,7 +51,7 @@ for i in range(min(dataset_size, 100000) // batch_size ):
     target = labels[batch_size*i:batch_size*(i+1)]
     outputs = f([sample, target])
     for param,grad in zip(params, outputs[1:]):
-        param -= grad * lr
+        K.set_value(param, K.eval(param) - grad * lr)
     print("cost {} - learning rate {}".format(outputs[0], lr))
 
 
@@ -64,4 +64,4 @@ for i in range(1000):
     accuracy += np.sum(tt == np.argmax(target, axis=1))
 
 print("Accuracy", accuracy / 1000. /batch_size)
-# accuracy 99.36
+# accuracy 99.44

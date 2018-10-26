@@ -51,3 +51,16 @@ with tf.Session() as sess:
       init.run()
       outputs = sess.run([loss] + assignments, feed_dict={x:sample, t:target, learning_rate:lr})
       print("cost {} - learning rate {}".format(outputs[0], lr))
+
+
+accuracy = 0
+with tf.Session() as sess:
+  for i in range(1000):
+    print(i)
+    sample = X[batch_size*i:batch_size*(i+1)]
+    target = labels[batch_size*i:batch_size*(i+1)]
+    outputs = sess.run([tf.argmax(forward(x), axis=1)], feed_dict={x:sample})
+    accuracy += np.sum(outputs[0] == np.argmax(target, axis=1))
+
+print("Accuracy", accuracy / 1000. /batch_size)
+# accuracy 99.44

@@ -53,7 +53,7 @@ COPY . /root/
 Then, I'm writing a small Python script `docker.py` to run Docker commands
 - `docker build . -t distributed` to build the Docker image under the name "distributed"
 - `docker run -d -rm distributed /bin/bash -c /etc/init.d/ssh start && while [ ! -f /root/ips.txt ]; do sleep 1s; done && ls -l && cat ips.txt && sleep 60m` to run multiple instances with this image and let them wait for the script to get their IPs
-- `docker inspect --format {{ .NetworkSettings.IPAddress }} DOCKER_ID` on each container ID to get their IPs  
+- `docker inspect --format { { .NetworkSettings.IPAddress }} DOCKER_ID` on each container ID to get their IPs  
 
 The list of IPs is written to `ips.txt` file. From now on, we can use this file, containing the list of hostnames or IPs, to build a generic code that will work wether the cluster is virtual (as here with Docker) or a real cluster of different physical instances.
 

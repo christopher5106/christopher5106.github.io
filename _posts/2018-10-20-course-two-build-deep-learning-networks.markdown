@@ -375,17 +375,18 @@ ShuffleNet goes one step further:
 
 <img src="{{ site.url }}/img/deeplearningcourse/DL61.png">
 
-While (a) is the bottleneck unit from Xception, grouping the features in the first pointwise convolution requires to shuffle the data to the next (b). When the module is asked to reduce the featuremap size, the depthwise convolution has a stride 2, an average pooling of stride 2 is applied to the shortcut connection and the output channels of both paths are concatenate rather than added, in order to augment the channel dimension (c). 
+While (a) is the bottleneck unit from Xception, grouping the features in the first pointwise convolution requires to shuffle the data to the next (b). When the module is asked to reduce the featuremap size, the depthwise convolution has a stride 2, an average pooling of stride 2 is applied to the shortcut connection and the output channels of both paths are concatenate rather than added, in order to augment the channel dimension (c).
 
 <img src="{{ site.url }}/img/deeplearningcourse/DL57.png">
 
+Group convolutions reduces the budget so featuremaps can be extended with more channels, bringing a better accuracy in smaller models.
 
 **Exercise**: use a Pytorch model to predict the class of an image.
 
 
 # Object detection
 
-For object detection, the first layers of the Image classification networks serve as a basis as "features", on top of which new neural network parts are learned, using different techniques. Indeed, the layers of Image classification networks have learned a "representation" of the data on high volume of images. Below is a diagram presenting differente object detection techniques (Faster-RCNN, R-FCN, SSD, ...) with different features. When the feature network is more efficient for image classification, results in object detection are also better.
+For object detection, the first layers of the Image classification networks serve as a basis as "features", on top of which new neural network parts are learned, using different techniques: Faster-RCNN, R-FCN, SSD, .... The pretrained layers of Image classification networks have learned a "representation" of the data on high volume of images that helps train object detection neural architectures on specialized datasets. Below is a diagram presenting differente object detection techniques with different features. When the feature network is more efficient for image classification, results in object detection are also better.
 
 <img src="{{ site.url }}/img/deeplearningcourse/DL58.png">
 

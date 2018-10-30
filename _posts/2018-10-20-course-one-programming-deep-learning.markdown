@@ -741,7 +741,7 @@ optimizer = torch.optim.Adadelta(net.parameters())
 and confirm that Adadelta achieves best accuracy: 99.62%.
 
 
-**Exercise**: replace your functions with package functions in Keras, Tensorflow, CNTK  
+**Exercise**: replace your functions with package functions in MXNet, Keras, Tensorflow, CNTK  
 
 **Well done!**
 

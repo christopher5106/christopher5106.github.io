@@ -121,7 +121,7 @@ Another type of normalization layers are **dropout** layers that drops some valu
 
 # Image classification
 
-I'll present some architectures of neural networks for computer vision.
+I'll present some architectures of neural networks for computer vision. The primary trend was to build deeper networks with convolutional and maxpooling layers. Then, began the search for new efficient structures or modules to stack, rather than single layers. While the number of parameters and operations grew, another trend emerged to search for light-weight architectures for mobile devices and embedded applications.
 
 #### AlexNet (2012)
 
@@ -161,9 +161,9 @@ Main Points
 
 - Interesting to notice that the number of filters doubles after each maxpool layer. This reinforces the idea of shrinking spatial dimensions, but growing depth.
 
-####	GoogLeNet and the Inception (2015)
+####	GoogLeNet / Inception (2015)
 
-GoogLeNet was one of the first models that introduced the idea that CNN layers didn’t always have to be stacked up sequentially and creating smaller networks or "modules" :
+GoogLeNet increases the depth of networks with much lower complexity: it is one of the first models that introduced the idea that CNN layers didn’t always have to be stacked up sequentially and creating smaller networks or "modules" :
 
 <img src="{{ site.url }}/img/deeplearningcourse/DL45.png">
 
@@ -185,9 +185,11 @@ Main Points
 
 - There are updated versions of the Inception module.
 
+**This work was a first step towards the development of grouped convolutions in the future**.
+
 ####	ResNet (2015)
 
-The central idea of Residual Nets is to reformulate the layers as learning residual functions with reference to the layer inputs, instead of learning unreferenced functions :
+ResNet utilizes efficient bottleneck structures and learns them as residual functions with reference to the layer inputs, instead of learning unreferenced functions :
 
 $$ x \rightarrow x + R(x) $$
 
@@ -267,7 +269,7 @@ The neural network architecture ResNeXt is based upon 2 strategies :
 
 - the “split-transform-merge” strategy that is derived from the Inception models and all its variations (split the input, transform it, merge the transformed signal with the original input).
 
-That design exposes a new dimension, called "cardinality" (the size of the set of parallel transformations), as an essential factor in addition to the dimensions of depth and width.
+That design introduces group convolutions and exposes a new dimension, called "cardinality" (the size of the set of parallel transformations), as an essential factor in addition to the dimensions of depth and width.
 
 <img src="{{ site.url }}/img/deeplearningcourse/DL51.png">
 
@@ -282,6 +284,12 @@ ResNeXt finished at the second place in the classification task at 2016 ILSVRC.
 <img src="{{ site.url }}/img/deeplearningcourse/DL50.png">
 
 
+
+#### Xception (2016)
+
+Xception introduces depthwise separable convolutions that generalize the concept of separable convolutions in Inception.
+
+<img src="{{ site.url }}/img/deeplearningcourse/DL50.jpeg">
 
 ####	DPN (2017)
 
@@ -347,7 +355,7 @@ The adaptative recalibration is done as follows :
 
 The winner of the classification task of ILSVRC 2017 is a modified ResNeXt integrating SE blocks.
 
-#### MobileNet v1/v2
+#### MobileNets and Mobilenetv2
 
 There has been also recently some effort to adapt neural networks to less powerful architecture such as mobile devices, leading to the creation of a class of networks named MobileNet, with a new module optimized for mobility:
 
@@ -359,17 +367,26 @@ The diagram below illustrates that accepting a (slightly) lower accuracy than th
 
 #### ShuffleNet
 
-ShuffleNet goes one step further
+ShuffleNet goes one step further:
+
+- by replacing the pointwise group convolutions that become the main cost, with pointwise group convolutions
+
+- shuffling the output of group convolutions so that information can flow from each to group to each group of the next group convolution:
+
+<img src="{{ site.url }}/img/deeplearningcourse/DL61.png">
+
+While (a) is the bottleneck unit from Xception, grouping the features in the first pointwise convolution requires to shuffle the data to the next (b). When the module is asked to reduce the featuremap size, the depthwise convolution has a stride 2, an average pooling of stride 2 is applied to the shortcut connection and the output channels of both paths are concatenate rather than added, in order to augment the channel dimension (c).
 
 <img src="{{ site.url }}/img/deeplearningcourse/DL57.png">
 
+Group convolutions reduces the budget so featuremaps can be extended with more channels, bringing a better accuracy in smaller models.
 
 **Exercise**: use a Pytorch model to predict the class of an image.
 
 
 # Object detection
 
-For object detection, the first layers of the Image classification networks serve as a basis as "features", on top of which new neural network parts are learned, using different techniques. Indeed, the layers of Image classification networks have learned a "representation" of the data on high volume of images. Below is a diagram presenting differente object detection techniques (Faster-RCNN, R-FCN, SSD, ...) with different features. When the feature network is more efficient for image classification, results in object detection are also better.
+For object detection, the first layers of the Image classification networks serve as a basis as "features", on top of which new neural network parts are learned, using different techniques: Faster-RCNN, R-FCN, SSD, .... The pretrained layers of Image classification networks have learned a "representation" of the data on high volume of images that helps train object detection neural architectures on specialized datasets. Below is a diagram presenting differente object detection techniques with different features. When the feature network is more efficient for image classification, results in object detection are also better.
 
 <img src="{{ site.url }}/img/deeplearningcourse/DL58.png">
 

@@ -94,6 +94,9 @@ print(c.shape)
 
 returns a tensor of shape (9, 8, 7, 4, 5).
 
+
+$$ c_{a,b,c,i,j} = \sum_r a_{a,b,c,i,r} b_{a,b,c, r, j} $$
+
 So, here the multiplication has been performed considering (9,8,7) as the batch size or equivalent. That could be a position in the image (B,H,W) and for each position we'd like to multiply two matrices.
 
 **Well done!**

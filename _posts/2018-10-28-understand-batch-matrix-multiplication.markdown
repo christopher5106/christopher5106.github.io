@@ -199,4 +199,6 @@ It is the operator `tf.sparse_tensor_dense_matmul` when the first matrix is a `t
 
 Note that `a_is_sparse=True` or `b_is_sparse=True` arguments are also available in `tf.matmul` function.
 
+This is particularly useful for Embeddings in NLP.
+
 **Well done!**

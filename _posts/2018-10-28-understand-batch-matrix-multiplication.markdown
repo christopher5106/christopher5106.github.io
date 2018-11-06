@@ -71,7 +71,7 @@ The matrix multiplication is performed along the 4 values of :
 
 ```python
 from keras import backend as K
-a = K.ones((1, 2 , 3 , 4))
+a = K.ones((1, 2, 3 , 4))
 b = K.ones((8, 7, 4, 5))
 c = K.dot(a, b)
 print(c.shape)
@@ -105,7 +105,7 @@ c = K.dot(a, b)
 print(c.shape)
 ```
 
-returns a tensor of shape (1, 2, 8, 7, 5) while
+returns a tensor of shape (1, 2, 8, 7, 5).
 
 
 ### Batch Matrix Multiplication : tf.matmul or K.batch_dot

@@ -99,4 +99,19 @@ $$ c_{a,b,c,i,j} = \sum_r a_{a,b,c,i,r} b_{a,b,c, r, j} $$
 
 So, here the multiplication has been performed considering (9,8,7) as the batch size or equivalent. That could be a position in the image (B,H,W) and for each position we'd like to multiply two matrices.
 
+In CNTK, batch matrix multiplication does not exist as an operator, but you can combine different operators to perform the same:
+
+```python
+def cntk_batch_dot(a, b):
+    a_shape = K.int_shape(a)
+    a = C.reshape(C.unpack_batch(a), [-1] + list(a_shape[-2:]))
+    a = C.to_batch(a)
+    b_shape = K.int_shape(b)
+    b = C.reshape(C.unpack_batch(b), [-1] + list(b_shape[-2:]))
+    b = C.to_batch(b)
+    res = C.times(a, b)
+    res = C.reshape(C.unpack_batch(res), [-1] + list(a_shape[1:-1]) + [b_shape[-1]])
+    return C.to_batch(res)
+```
+
 **Well done!**

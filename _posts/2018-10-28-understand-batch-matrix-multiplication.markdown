@@ -24,7 +24,7 @@ It looks like $$ 60 = 3 \times 4 \times 5 $$ and $$ 70 = 5 \times 3 \times 7 $$.
 What's happening ?
 
 
-### Matrix multiplication
+### Matrix multiplication when tensors are matrices
 
 The matrix multiplication is performed with `tf.matmul` in Tensorflow or `K.dot` in Keras :
 
@@ -36,14 +36,27 @@ c = K.dot(a, b)
 print(c.shape)
 ```
 
-returns a tensor of shape (3,5).
+or
+
+```python
+import tensorflow as tf
+a = tf.ones((3,4))
+b = tf.ones((4,5))
+c = tf.matmul(a, b)
+print(c.shape)
+```
+
+returns a tensor of shape (3,5) in both cases. Simple.
+
+
+### Keras dot
 
 If I add a dimension:
 
 ```python
 from keras import backend as K
-a = K.ones((2, 3,4))
-b = K.ones((7, 4,5))
+a = K.ones((2,3,4))
+b = K.ones((7,4,5))
 c = K.dot(a, b)
 print(c.shape)
 ```
@@ -58,7 +71,7 @@ The matrix multiplication is performed along the 4 values of :
 
 ```python
 from keras import backend as K
-a = K.ones((1, 2 ,3 , 4))
+a = K.ones((1, 2, 3 , 4))
 b = K.ones((8, 7, 4, 5))
 c = K.dot(a, b)
 print(c.shape)
@@ -80,9 +93,24 @@ $$ c_{a,b,c,i,j,k} = \sum_r a_{a,b,c,r} b_{i,j, r, k} $$
 
 Not very easy to visualize when ranks of tensors are above 2 :).
 
-### Batch Matrix Multiplication
+**Note that this behavior is specific to Keras dot**. It is a reproduction of Theano behavior.
 
-There is another operator, `K.batch_dot` that looks
+In particular, it enables to perform a kind of dot product:
+
+```python
+from keras import backend as K
+a = K.ones((1, 2, 4))
+b = K.ones((8, 7, 4, 5))
+c = K.dot(a, b)
+print(c.shape)
+```
+
+returns a tensor of shape (1, 2, 8, 7, 5).
+
+
+### Batch Matrix Multiplication : tf.matmul or K.batch_dot
+
+There is another operator, `K.batch_dot` that works the same as `tf.matmul`
 
 ```python
 from keras import backend as K
@@ -92,7 +120,17 @@ c = K.batch_dot(a, b)
 print(c.shape)
 ```
 
-returns a tensor of shape (9, 8, 7, 4, 5).
+or
+
+```python
+import tensorflow as tf
+a = tf.ones((9, 8, 7, 4, 2))
+b = tf.ones((9, 8, 7, 2, 5))
+c = tf.matmul(a, b)
+print(c.shape)
+```
+
+returns a tensor of shape (9, 8, 7, 4, 5) in both cases.
 
 
 $$ c_{a,b,c,i,j} = \sum_r a_{a,b,c,i,r} b_{a,b,c, r, j} $$

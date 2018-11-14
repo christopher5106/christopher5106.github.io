@@ -46,6 +46,7 @@ The TensorShape has 2 public attributes, dims and ndims:
 ```python
 print(a.shape.dims) # [Dimension(None), Dimension(None), Dimension(10)]
 print(a.shape.ndims) # 3
+print(K.ndim(a)) # 3
 ```
 
 ## Dynamic Shapes
@@ -65,6 +66,9 @@ print(f( [np.random.random((3,11)) ]))
 
 returns `[array([ 3, 11], dtype=int32)]`. 3 is the batch size, and 11 the value for the unknown data dimension at graph definition.
 
+The equivalent of `a.get_shape().as_list()` for static shapes is `tf.unstack(tf.shape(a))`.
+
+The number of dimensions is returned by `tf.rank()` which returns a tensor of rank zero (scalar) and for that reason is very different from `K.ndim` or `ndims` methods with integer return.
 
 ## Shape setting for Operators
 

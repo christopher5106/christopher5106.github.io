@@ -22,6 +22,8 @@ There are two challenges to overcome :
 
 Texts are sequences of characters or words, depending if we word at character level or word level. It is possible to work at both levels and concatenate the representations. There exists a third case of encoding for natural language, the Byte-Pair-Encoding (BPE).
 
+In translation, better results are achieved by joint BPE, encoding both the target and source languages with the same dictionary of encoding. For languages using a different alphabets, characters are transliterated from one alphabet to the other. This helps in particular to copy Named Entities which do not belong to a dictionary.
+
 
 
 # Metrics

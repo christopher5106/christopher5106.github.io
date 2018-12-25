@@ -91,9 +91,9 @@ In order to summarize the quality of the model into one value instead of a preci
 
 - either the **Area Under Curve (AUC)**,
 
-- or the F1-score, which is $$ 2 \times \frac{\txt{precision} \times \txt{recall}}{ \txt{precision} + \txt{recall} } $$
+- or the F1-score, which is $$ 2 \times \frac{\text{precision} \times \text{recall}}{ \text{precision} + \text{recall} } $$
 
-- or more generally the $$ F_\ßeta = (1+\beta^2) \times \frac{\txt{precision} \times \txt{recall}}{ \beta^2 \times \txt{precision} + \txt{recall} } $$
+- or more generally the $$ F_\beta = (1+\beta^2) \times \frac{\text{precision} \times \text{recall}}{ \beta^2 \times \text{precision} + \text{recall} } $$
 
 <img src="{{ site.url }}/img/deeplearningcourse/DL11.png">
 

@@ -64,7 +64,7 @@ There exists metrics on words (called unigrams) also, such as
 
 - WER (Word Error Rate), the Levenstein distance at word level.
 
-- METEOR, the ChrF3 equivalent at word level, reweighted by an non-alignment penalty.
+- METEOR, the ChrF3 equivalent at word level, reweighted by a non-alignment penalty.
 
 
 # Under construction

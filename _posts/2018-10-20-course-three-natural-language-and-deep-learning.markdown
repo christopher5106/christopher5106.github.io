@@ -30,14 +30,18 @@ The advantage of BPE is to be capable of **open-vocabulary** through a fixed-siz
 
 In translation, better results are achieved by joint BPE, encoding both the target and source languages with the same dictionary of encoding. For languages using a different alphabets, characters are transliterated from one alphabet to the other. This helps in particular to copy Named Entities which do not belong to a dictionary.
 
-Last, it is possible to relax the greedy and deterministic symbol replacement of BPE, by using a **unigram language model** that assumes that each symbol occurs independently in the sequence and given this assumption, the probability of a sequence of symbols $$ (x_1, ..., x_M) $$ is given by :
+Last, it is possible to relax the greedy and deterministic symbol replacement of BPE, by using a **unigram language model** that assumes that each symbol is an unobserved latent variable of the sequence and occurs independently in the sequence. Given this assumption, the probability of a sequence of symbols $$ (x_1, ..., x_M) $$ is given by :
 
 $$ P(x_1, ..., x_M) = \prod_{i=1}^M p(x_i) $$
 
-So it is possible to compute the vocabulary of the desired size that maximizes the likelihood by an iterative algorithm. Also, multiple decodings into a sequence of symbols are possible for a text and the model gives each of them a probability. At training time, it is possible to sample a decoding of the input given the symbol distribution. At inference, it is possible to compute the predictions using multiple decodings, and choose the most confident prediction. Such a technique, called **subword regularization**, improves the results in all natural language tasks.
+and the probability of a sentence or text S to occur is given by the sum of probabilities of each encodings:
+
+$$ P(S) = \sum_{(x_1, ..., x_M)==S} P(x_1, ..., x_M) $$
+
+So it is possible to compute a dictionary of the desired size that maximizes (locally) the likelihood by an iterative algorithm starting from a huge dictionary of most frequent substring, estimating the expectation as in the EM algorithm, and removing the subwords with less impact on the likelihood. Also, multiple decodings into a sequence of symbols are possible for a text and the model gives each of them a probability. At training time, it is possible to sample a decoding of the input given the symbol distribution. At inference, it is possible to compute the predictions using multiple decodings, and choose the most confident prediction. Such a technique, called **subword regularization**, improves the results in all natural language tasks.
 
 
-# Building the distributed representations of the symbols
+# Building the distributed representations for the symbols of the dictionary
 
 
 
@@ -50,7 +54,7 @@ So it is possible to compute the vocabulary of the desired size that maximizes t
 ChrF3 has recall
 
 BLUE score has a precision bias
-
+case sensitive
 
 # Under construction
 

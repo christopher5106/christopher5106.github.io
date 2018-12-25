@@ -18,7 +18,7 @@ There are two challenges to overcome :
 - transforming variable-length sequences into a fixed-length representations
 
 
-# Building the dictionary
+# The dictionary
 
 Texts are sequences of characters or words, depending if we word at character level or word level. It is possible to work at both levels and concatenate the representations at higher level in the neural network. The **dictionary** is a fixed-size list of symbols found in the input data: at character level, we call it an alphabet, while at word level it is usually called a vocabulary. While the words incorporate a semantic meaning, the vocabulary has to be limited to a few tens thousands entries, so many out-of-vocabulary tokens cannot be represented.  
 
@@ -42,20 +42,30 @@ So it is possible to compute a dictionary of the desired size that maximizes (lo
 
 Have a look at [SentencePiece](https://github.com/google/sentencepiece). Note that 'space' character is treated as a symbol and pretokenization of the sequences is not necessary.  
 
-# Building the distributed representations for the symbols of the dictionary
+# Distributed representations for the symbols of the dictionary
 
 
 
 
-# Building the distributed representations of the sentences, paragraphs or documents
+# Distributed representations of the sentences, paragraphs or documents
 
 
-# Metrics
+# Metrics for translation
 
-ChrF3 has recall
+Models are trained to maximize the log likelihood, but this does not give any idea of the final quality of the model. Since human evaluations is costly and long, metrics have been developped that correlates well with human judgments, on a given set of possible translations (reference translations) for the task of translation for example.
 
-BLUE score has a precision bias
-case sensitive
+The ChrF3 is one of them, the most simple one, is the [F3-score](http://christopher5106.github.io/deep/learning/2018/10/20/course-one-programming-deep-learning.html#training-curves-and-metrics) for the character n-grams. The best correlations are obtained with $$ n=6 $$. The ChrF3 has a recall bias.
+
+Another metric, BLUE, has a precision bias. It is the precision for the character n-grams, where the count for each n-gram matches is clipped not to be bigger than the number of n-gram in the reference translation, in order to avoid systems to generate the same words. The metric can be case-sensitive, in order to take into account the Named Entities for example.
+
+ROUGE-n is the recall equivalent metric.
+
+There exists metrics on words (called unigrams) also, such as
+
+- WER (Word Error Rate), the Levenstein distance at word level.
+
+- METEOR, the ChrF3 equivalent at word level, reweighted by an non-alignment penalty.
+
 
 # Under construction
 

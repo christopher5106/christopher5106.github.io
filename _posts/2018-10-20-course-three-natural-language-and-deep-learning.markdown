@@ -20,7 +20,11 @@ There are two challenges to overcome :
 
 # Discrete input representations
 
-Texts are sequences of characters or words, depending if we word at character level or word level. It is possible to work at both levels and concatenate the representations. There exists a third case of encoding for natural language, the Byte-Pair-Encoding (BPE).
+Texts are sequences of characters or words, depending if we word at character level or word level. It is possible to work at both levels and concatenate the representations. There exists a third case of encoding for natural language, the **Byte-Pair-Encoding (BPE)**, a compression algorithm that iteratively replaces the most frequent pairs of symbols in sequences by a new symbol: initially, the symbol vocabulary is composed of all characters plus the 'space' or 'end-of-word' symbol, then recursively count each pair of symbols (without crossing word boundaries) and replace the most frequent pair by a new symbol.
+
+For example, if ('T', 'H') is the most frequent pair of symbols, we replace all instances of the pair by the new symbol 'TH'. Later on, if ('TH', 'E') is most frequent pair, we create a new symbol 'THE'. The process stops when the desired target size for the vocabulary has been achieved. At the end, the symbols composing the vocabulary are essentially characters, bigrams, trigrams, as well as most common words or word parts.  
+
+The advantage of BPE is to be capable of open-vocabulary through a fixed-size vocabulary, while still working at a coarser level than characters. In particular, names, compounds, loanwords which do not belong to a language word vocabulary can still be represented by BPE.
 
 In translation, better results are achieved by joint BPE, encoding both the target and source languages with the same dictionary of encoding. For languages using a different alphabets, characters are transliterated from one alphabet to the other. This helps in particular to copy Named Entities which do not belong to a dictionary.
 
@@ -28,8 +32,9 @@ In translation, better results are achieved by joint BPE, encoding both the targ
 
 # Metrics
 
-ChrF3
-BLUE score
+ChrF3 has recall
+
+BLUE score has a precision bias
 
 
 # Under construction

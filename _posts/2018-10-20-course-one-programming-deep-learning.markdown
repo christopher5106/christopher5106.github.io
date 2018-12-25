@@ -91,7 +91,7 @@ In order to summarize the quality of the model into one value, one can compute :
 
 - either the **Area Under the Curve (AUC)** instead of the full precision/recall curve,
 
-- or the F1-score, which is $$ 2 \times \frac{\text{precision} \times \text{recall}}{ \text{precision} + \text{recall} } $$
+- or the **F1-score**, which is $$ 2 \times \frac{\text{precision} \times \text{recall}}{ \text{precision} + \text{recall} } $$
 
 - or more generally the $$ F_\beta = (1+\beta^2) \times \frac{\text{precision} \times \text{recall}}{ \beta^2 \times \text{precision} + \text{recall} } $$
 

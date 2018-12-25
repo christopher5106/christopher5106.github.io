@@ -7,9 +7,9 @@ categories: deep learning
 
 Here is my course of deep learning in 5 days only! You might first check [Course 0: deep learning!](http://christopher5106.github.io/deep/learning/2018/10/20/course-zero-deep-learning.html), [Course 1: program deep learning!](http://christopher5106.github.io/deep/learning/2018/10/20/course-one-programming-deep-learning.html) and [course 2: build deep learning networks!](http://christopher5106.github.io/deep/learning/2018/10/20/course-two-build-deep-learning-networks.html) if you have not read them.
 
-In this article, I develop techniques for natural language.
+In this article, I develop techniques for natural language. Tasks include text classification (finding the sentiment, positive or negative, the language, ...), segmentation (POS taging, Named Entities extraction ,...), translation, ... as in computer vision.
 
-While computer vision deals with **continuous** (pixel values) and **fixed-length** inputs (images, usually resized or cropped to a fixed dimension), natural language consists of **variable-length** sequences (words, sentences, paragraphs, documents) of **discrete** inputs, either characters or words, belonging to a fixed size dictionary (the alphabet or the vocabulary respectively), depending if we work at character level or word level.
+But, while computer vision deals with **continuous** (pixel values) and **fixed-length** inputs (images, usually resized or cropped to a fixed dimension), natural language consists of **variable-length** sequences (words, sentences, paragraphs, documents) of **discrete** inputs, either characters or words, belonging to a fixed size dictionary (the alphabet or the vocabulary respectively), depending if we work at character level or word level.
 
 There are two challenges to overcome :
 
@@ -30,13 +30,11 @@ The advantage of BPE is to be capable of **open-vocabulary** through a fixed-siz
 
 In translation, better results are achieved by joint BPE, encoding both the target and source languages with the same dictionary of encoding. For languages using a different alphabets, characters are transliterated from one alphabet to the other. This helps in particular to copy Named Entities which do not belong to a dictionary.
 
-Last, it is possible to relax the greedy and deterministic symbol replacement of BPE, by using a **unigram language model** that assumes that each symbol occurs independently in the sequence and given this assumption, compute the vocabulary of the desired size that maximizes the likelihood by an iterative algorithm. Multiple decodings are possible for a text into a sequence of symbols. The probability of a decoding into the sequence of symbols $$ (x_1, ..., x_M) $$ is given by :
+Last, it is possible to relax the greedy and deterministic symbol replacement of BPE, by using a **unigram language model** that assumes that each symbol occurs independently in the sequence and given this assumption, the probability of a sequence of symbols $$ (x_1, ..., x_M) $$ is given by :
 
 $$ P(x_1, ..., x_M) = \prod_{i=1}^M p(x_i) $$
 
-
-
-
+So it is possible to compute the vocabulary of the desired size that maximizes the likelihood by an iterative algorithm. Also, multiple decodings into a sequence of symbols are possible for a text and the model gives each of them a probability. At training time, it is possible to sample a decoding of the input given the symbol distribution. At inference, it is possible to compute the predictions using multiple decodings, and choose the most confident prediction. Such a technique, called **subword regularization**, improves the results in all natural language tasks.
 
 
 # Building the distributed representations of the symbols

@@ -38,9 +38,9 @@ and the probability of a sentence or text S to occur is given by the sum of prob
 
 $$ P(S) = \sum_{(x_1, ..., x_M)==S} P(x_1, ..., x_M) $$
 
-So it is possible to compute a dictionary of the desired size that maximizes (locally) the likelihood by an iterative algorithm starting from a huge dictionary of most frequent substring, estimating the expectation as in the EM algorithm, and removing the subwords with less impact on the likelihood. Also, multiple decodings into a sequence of symbols are possible for a text and the model gives each of them a probability. At training time, it is possible to sample a decoding of the input given the symbol distribution. At inference, it is possible to compute the predictions using multiple decodings, and choose the most confident prediction. Such a technique, called **subword regularization**, improves the results in all natural language tasks.
+So it is possible to compute a dictionary of the desired size that maximizes (locally) the likelihood by an iterative algorithm starting from a huge dictionary of most frequent substring, estimating the expectation as in the EM algorithm, and removing the subwords with less impact on the likelihood. Also, multiple decodings into a sequence of symbols are possible for a text and the model gives each of them a probability. At training time, it is possible to sample a decoding of the input given the symbol distribution. At inference, it is possible to compute the predictions using multiple decodings, and choose the most confident prediction. Such a technique, called **subword regularization**, augments the training data stochastically and improves accuracy and robustness in natural language tasks.
 
-Have a look at [SentencePiece](https://github.com/google/sentencepiece).
+Have a look at [SentencePiece](https://github.com/google/sentencepiece). Note that 'space' character is treated as a symbol and pretokenization of the sequences is not necessary.  
 
 # Building the distributed representations for the symbols of the dictionary
 

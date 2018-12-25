@@ -56,7 +56,7 @@ Models are trained to maximize the log likelihood, but this does not give any id
 
 The ChrF3 is one of them, the most simple one, is the [F3-score](http://christopher5106.github.io/deep/learning/2018/10/20/course-one-programming-deep-learning.html#training-curves-and-metrics) for the character n-grams. The best correlations are obtained with $$ n=6 $$. The ChrF3 has a recall bias.
 
-Another metric, BLUE, has a precision bias. It is the precision for the character n-grams, where the count for each n-gram matches is clipped, not to be bigger than the number of n-grams in the reference translation, in order to penalize systems that generate a same word multiple times. The metric can be case-sensitive, in order to take into account the Named Entities for example.
+Another metric, BLUE, has a precision bias. It is the precision for the character n-grams, where the count for each n-gram matches is clipped, not to be bigger than the number of n-grams in the reference translation, in order to penalize translation systems that generate a same word multiple times. The metric can be case-sensitive, in order to take into account the Named Entities for example.
 
 ROUGE-n is the recall equivalent metric.
 

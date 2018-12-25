@@ -87,9 +87,9 @@ On top of the loss, it is possible to monitor other metrics, such as for example
 
 We also usually compute the **precision/recall curve**: precision defines the number of true positive in the examples predicted as positive by the model (true positives + false positives) while the recall is the number of true positives of the total number of positives (true positives + false negatives). While for some applications, such as document retrieval, we prefer to have higher recall, for some other applications, such as automatic document classification, we prefer to have a high precision for automatically classified documents, and leave ambiguities to human operators.
 
-In order to summarize the quality of the model into one value instead of a precision/recall curve, one can compute :
+In order to summarize the quality of the model into one value, one can compute :
 
-- either the **Area Under Curve (AUC)**,
+- either the **Area Under the Curve (AUC)** instead of the full precision/recall curve,
 
 - or the F1-score, which is $$ 2 \times \frac{\text{precision} \times \text{recall}}{ \text{precision} + \text{recall} } $$
 

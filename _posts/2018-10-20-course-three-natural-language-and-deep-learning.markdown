@@ -44,7 +44,27 @@ Have a look at [SentencePiece](https://github.com/google/sentencepiece). Note th
 
 # Distributed representations for the symbols of the dictionary
 
+Now we have a dictionary, each text block can be represented by a sequence of token ids. Such a representation is discrete and does not encode the semantic meaning of the token. In order to do so, we associate each token with a vector of dimension d to be learned. All tokens are represented by an embedding matrix
 
+$$ W \in \mathbb{R}^{V \times d}
+
+when V is the size of the dictionary.
+
+Two architectures were proposed :
+
+- the **Continuous Bag-of-Words (CBOW)** to predict the current word based on the context, and
+
+- the **Continuous Skip-gram** to predict the context words based on the current word,
+
+with a simple feedforward model :
+
+\text{Softmax}( (\hat{W} \times X') \cdot (W \times X))
+
+where X and X' $$\in \mathbb{R}^V $$ are the one-hot encoding vector of the input and output words (with 1 if the word occur in the input and output respectively), W and $$\hat{W} $$ are the input and output embedding matrices.
+
+<img src="{{ site.url }}/img/Learning-architecture-of-the-CBOW-and-Skip-gram-models-of-Word2vec-Mikolov-et-al.png" />
+
+One of the difficulty is due to the size of the output, equal to the size of the dictionary. Some solutions have been proposed: hierarchical softmax with Huffman binary trees, avoiding normalization during training, or stochastic negative mining (Noise Contrastive Estimation and Negative Sampling).
 
 
 # Distributed representations of the sentences, paragraphs or documents

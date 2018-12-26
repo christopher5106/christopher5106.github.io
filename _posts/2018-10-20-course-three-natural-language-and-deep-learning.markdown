@@ -58,7 +58,7 @@ Two architectures were proposed :
 
 with a simple feedforward model :
 
-\text{Softmax}( (\hat{W} \times X') \cdot (W \times X))
+$$ \text{Softmax}( (\hat{W} \times X') \cdot (W \times X)) $$
 
 where X and X' $$\in \mathbb{R}^V $$ are the one-hot encoding vector of the input and output words (with 1 if the word occur in the input and output respectively), W and $$\hat{W} $$ are the input and output embedding matrices.
 

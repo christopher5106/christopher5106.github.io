@@ -68,10 +68,11 @@ One of the difficulty is due to the size of the output, equal to the size of the
 
 Once trained, such weights W can be refined on high level tasks such as similarity prediction, translation, etc. They can be found under the names **word2vec**, [GloVe](https://nlp.stanford.edu/projects/glove/), Paragram-SL999, ..., and used to initialize the first layer of neural networks. In any application, they can be either fixed or trained further.
 
+The next step is to address representations for blocks of text, ie sentences, paragraphs or documents. Before that, I first present new layers initially designed for natural language.
 
-# Recurrent models
+# Recurrent neural networks (RNN)
 
-A recurrent network (RNN) can be defined as a feedforward (non recurrent) network with two inputs, the input at time step t and previous hidden state $$ h_{t-1} $$, to produce a new state at time t, $$ h_t $$.
+A recurrent network can be defined as a feedforward (non recurrent) network with two inputs, the input at time step t and previous hidden state $$ h_{t-1} $$, to produce a new state at time t, $$ h_t $$.
 
 <img src="{{ site.url }}/img/deeplearningcourse/DL21.png">
 
@@ -86,22 +87,23 @@ Under construction.
 
 Normalize attention by $$ \frac{1}{\sqrt{d}} $$
 
-# Text blocks: sentences, paragraphs or documents
+Translation example
 
-average
-weighted average by IDF
+# Sentences, paragraphs or documents
 
-paragraph vectors
+There is a long history of attempts to represent block of texts.
 
+The first idea, the simplest one, was to compute the average of the word representations. First results were convincing, and improved by the introduction of a weighted average, reweighting each word vector by the *smooth inverse frequency* $$ \frac{a}{a+IDF}, so that very frequent words, stop words, are less important than rare words.
 
-Elmo
+Other techniques include the computation of a *paragraph vector* which can be considered as a special embedding, as if one special word has been added to each sentence to supplement the word embeddings and account for the semantic information in the paragraph. While initial idea required lot's of gradient descents during inference, new techniques, such as [CoVe](https://arxiv.org/abs/1708.00107), are computed directly by a forward pass of a two-layer BiLSTM on the sentence. The output of the trained BiLSTM at the word position is concatenated with the classical word representations (GloVe for example).
 
-[CoVe](https://arxiv.org/abs/1708.00107)
+While CoVe biLSTM is trained on a translation task, [Elmo](https://arxiv.org/abs/1802.05365)'s stack of BiLSTM is trained on monolingual language model (LM) task, and the output of each BiLSTM layer is taken into the concatenation with the GloVe word representations.
 
-Bert
+The current state of the art for deep contextualized representation is [BERT](https://arxiv.org/abs/1810.04805). Instead of BiLSTM, it uses state-of-art Transformer, and masks the words to predict at the output. This way, Transformers use all other words to perform the predictions, while LSTM could only use the previous ones (or the next ones for the reverse order). In the meantime, BERT is trained on two sentences, either consecutive in the text or randomly chosen, to predict also if sentence B follows sentence A. Last, a [multilingual BERT model](https://github.com/google-research/bert/blob/master/multilingual.md) trained on 104 languages is just less 3% off the single-language model.
 
-cross lingual
+<img src="{{ site.url }}/img/bert-Arch-2-300x271.png" />
 
+By simply adding a linear layer on top of BERT's output, state-of-the-art has been achieved on Squad Question Answering dataset, SWAG dataset, and GLUE datasets, demonstrating that these embeddings capture well the semantics of blocks of text.
 
 # Metrics for translation
 
@@ -118,5 +120,6 @@ There exists metrics on words (called unigrams) also, such as
 - WER (Word Error Rate), the Levenstein distance at word level.
 
 - METEOR, the ChrF3 equivalent at word level, reweighted by a non-alignment penalty.
+
 
 **Well done!**

@@ -18,7 +18,7 @@ There are two challenges to overcome :
 - transforming variable-length sequences into a fixed-length representations
 
 
-# The dictionary
+# The dictionary of symbols
 
 Texts are sequences of characters or words, depending if we word at character level or word level. It is possible to work at both levels and concatenate the representations at higher level in the neural network. The **dictionary** is a fixed-size list of symbols found in the input data: at character level, we call it an alphabet, while at word level it is usually called a vocabulary. While the words incorporate a semantic meaning, the vocabulary has to be limited to a few tens thousands entries, so many out-of-vocabulary tokens cannot be represented.  
 
@@ -42,7 +42,7 @@ So it is possible to compute a dictionary of the desired size that maximizes (lo
 
 Have a look at [SentencePiece](https://github.com/google/sentencepiece). Note that 'space' character is treated as a symbol and pretokenization of the sequences is not necessary.  
 
-# Distributed representations for the symbols of the dictionary
+# Distributed representations of the symbols
 
 Now we have a dictionary, each text block can be represented by a sequence of token ids. Such a representation is discrete and does not encode the semantic meaning of the token. In order to do so, we associate each token with a vector of dimension d to be learned. All tokens are represented by an embedding matrix
 
@@ -64,10 +64,26 @@ where X and X' $$\in \mathbb{R}^V $$ are the one-hot encoding vector of the inpu
 
 <img src="{{ site.url }}/img/Learning-architecture-of-the-CBOW-and-Skip-gram-models-of-Word2vec-Mikolov-et-al.png" />
 
-One of the difficulty is due to the size of the output, equal to the size of the dictionary. Some solutions have been proposed: hierarchical softmax with Huffman binary trees, avoiding normalization during training, or stochastic negative mining (Noise Contrastive Estimation and Negative Sampling).
+One of the difficulty is due to the size of the output, equal to the size of the dictionary. Some solutions have been proposed: hierarchical softmax with Huffman binary trees, avoiding normalization during training, or stochastic negative mining (Noise Contrastive Estimation and Negative Sampling with a sampling distribution avoiding frequent words).
+
+Once trained, such weights W can be refined on high level tasks such as similarity prediction, translation, etc. They can be found under the names **word2vec**, [GloVe](https://nlp.stanford.edu/projects/glove/), Paragram-SL999, ..., and used to initialize the first layer of neural networks. In any application, they can be either fixed or trained further.
 
 
-# Distributed representations of the sentences, paragraphs or documents
+# Recurrent models
+
+A recurrent network can be defined as a feedforward (non recurrent) network with two inputs, the input at time step t and previous hidden state $$ h_{t-1} $$, to produce a new state at time t, $$ h_t $$.
+
+<img src="{{ site.url }}/img/deeplearningcourse/DL21.png">
+
+
+# Attention, self-attention and Transformer
+
+Under construction.
+
+Normalize attention by $$ \frac{1}{\sqrt{d}} $$
+
+# Text blocks: sentences, paragraphs or documents
+
 
 
 # Metrics for translation
@@ -86,14 +102,4 @@ There exists metrics on words (called unigrams) also, such as
 
 - METEOR, the ChrF3 equivalent at word level, reweighted by a non-alignment penalty.
 
-
-# Under construction
-
-a recurrent network is a feedforward network with two inputs
-hidden information
-<img src="{{ site.url }}/img/deeplearningcourse/DL21.png">
-
-
-Normalize attention by $$ \frac{1}{\sqrt{d}} $$
-
-unsupervised nmt
+**Well done!**

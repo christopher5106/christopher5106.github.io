@@ -46,7 +46,7 @@ Have a look at [SentencePiece](https://github.com/google/sentencepiece). Note th
 
 Now we have a dictionary, each text block can be represented by a sequence of token ids. Such a representation is discrete and does not encode the semantic meaning of the token. In order to do so, we associate each token with a vector of dimension d to be learned. All tokens are represented by an embedding matrix
 
-$$ W \in \mathbb{R}^{V \times d}
+$$ W \in \mathbb{R}^{V \times d} $$
 
 when V is the size of the dictionary.
 

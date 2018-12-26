@@ -75,6 +75,8 @@ A recurrent network can be defined as a feedforward (non recurrent) network with
 
 <img src="{{ site.url }}/img/deeplearningcourse/DL21.png">
 
+Recurrent models have been used in the past to transform a sequence of vectors (the learned word representations seen in previous section) into one vector, reducing variable-length representation into a fixed-length representation. Now they are outdated and been replaced by transformers.
+
 
 # Attention, self-attention and Transformer
 

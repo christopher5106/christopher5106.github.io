@@ -71,11 +71,13 @@ Once trained, such weights W can be refined on high level tasks such as similari
 
 # Recurrent models
 
-A recurrent network can be defined as a feedforward (non recurrent) network with two inputs, the input at time step t and previous hidden state $$ h_{t-1} $$, to produce a new state at time t, $$ h_t $$.
+A recurrent network (RNN) can be defined as a feedforward (non recurrent) network with two inputs, the input at time step t and previous hidden state $$ h_{t-1} $$, to produce a new state at time t, $$ h_t $$.
 
 <img src="{{ site.url }}/img/deeplearningcourse/DL21.png">
 
 Recurrent models have been used in the past to transform a sequence of vectors (the learned word representations seen in previous section) into one vector, reducing variable-length representation into a fixed-length representation. Now they are outdated and been replaced by transformers.
+
+It is very frequent to find some BiLSTM, where LSTM is a type of RNN applied two times to the sequence, in natural and reverse orders, both outputs being concatenated.
 
 
 # Attention, self-attention and Transformer
@@ -86,6 +88,19 @@ Normalize attention by $$ \frac{1}{\sqrt{d}} $$
 
 # Text blocks: sentences, paragraphs or documents
 
+average
+weighted average by IDF
+
+paragraph vectors
+
+
+Elmo
+
+[CoVe](https://arxiv.org/abs/1708.00107)
+
+Bert
+
+cross lingual
 
 
 # Metrics for translation

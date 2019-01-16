@@ -137,19 +137,28 @@ $$ c_{a,b,c,i,j} = \sum_r a_{a,b,c,i,r} b_{a,b,c, r, j} $$
 
 So, here the multiplication has been performed considering (9,8,7) as the batch size or equivalent. That could be a position in the image (B,H,W) and for each position we'd like to multiply two matrices.
 
-In CNTK, batch matrix multiplication does not exist as an operator, but you can combine different operators to perform the same:
+In CNTK, the same operations will produce an array of dimensions (9, 8, 7, 4, 9, 8, 7, 5) which might not be desired. Here is the trick: in CNTK all operators can be batched, as soon as you declare the first dimension is the batch dimension (dynamic axis) with `C.to_batch()` and batch multiplication could be written this way:
 
 ```python
+from keras import backend as K
+import cntk as C
+
 def cntk_batch_dot(a, b):
     a_shape = K.int_shape(a)
-    a = C.reshape(C.unpack_batch(a), [-1] + list(a_shape[-2:]))
-    a = C.to_batch(a)
+    a = K.reshape(a, [-1] + list(a_shape[-2:]))
+
     b_shape = K.int_shape(b)
-    b = C.reshape(C.unpack_batch(b), [-1] + list(b_shape[-2:]))
-    b = C.to_batch(b)
+    b = K.reshape(b, [-1] + list(b_shape[-2:]))
+
     res = C.times(a, b)
-    res = C.reshape(C.unpack_batch(res), [-1] + list(a_shape[1:-1]) + [b_shape[-1]])
-    return C.to_batch(res)
+    return K.reshape(res, [-1] + list(a_shape[1:4]) + list(b_shape[-1:]))
+
+a = K.ones((9, 8, 7, 4, 2))
+b = K.ones((9, 8, 7, 2, 5))
+a = C.to_batch(a)
+b = C.to_batch(b)
+c = cntk_batch_dot(a, b)
+print(c.shape)
 ```
 
 **Well done!**

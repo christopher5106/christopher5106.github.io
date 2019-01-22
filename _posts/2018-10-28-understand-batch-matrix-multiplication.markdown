@@ -151,7 +151,7 @@ def cntk_batch_dot(a, b):
     b = K.reshape(b, [-1] + list(b_shape[-2:]))
 
     res = C.times(a, b)
-    return K.reshape(res, [-1] + list(a_shape[1:4]) + list(b_shape[-1:]))
+    return K.reshape(res, [-1] + list(a_shape[1:-1]) + [b_shape[-1]])
 
 a = K.ones((9, 8, 7, 4, 2))
 b = K.ones((9, 8, 7, 2, 5))

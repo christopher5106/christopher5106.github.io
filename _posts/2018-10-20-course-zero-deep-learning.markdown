@@ -53,7 +53,7 @@ $$ \nabla f = \Big[ \frac{\partial f}{\partial I_{a,b,c,d}} \Big]_{a,b,c,d} $$
 
 In **conclusion** of this section, the goal of machine learning is to have a function fit with the real world; and to have this function fit well, we use a loss function to measure how to reduce this distance.
 
-**Exercise**: discover many more loss functions with my [full article about loss functions](http://christopher5106.github.io/deep/learning/2016/09/16/about-loss-functions-multinomial-logistic-logarithm-cross-entropy-square-errors-euclidian-absolute-frobenius-hinge.html).
+**Exercise**: discover many more loss functions with my [full article about loss functions](//christopher5106.github.io/deep/learning/2016/09/16/about-loss-functions-multinomial-logistic-logarithm-cross-entropy-square-errors-euclidian-absolute-frobenius-hinge.html).
 
 
 # Cross entropy in practice

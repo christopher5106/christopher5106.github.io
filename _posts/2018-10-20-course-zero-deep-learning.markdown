@@ -401,15 +401,11 @@ $$ R = \sum_{a_0, a_1, ..., a_T} \big( \prod_{t=0}^T p(a_t | a_0, x_0, ... x_T) 
 
 $$ = \mathbb{E}_{a_0 \sim p(\cdot |x_0)} \mathbb{E}_{a_1 \sim p(\cdot | a_0, x_0, x_1)} ... \mathbb{E}_{a_T \sim p(\cdot | a_0, x_0, ... x_T)}  \sum_{t=0}^T r_t $$
 
-When my actions are parametrized by a model $$ p = f_\theta $$, the whole problem becomes parametrized by $$ \theta $$
-
-<img src="{{ site.url }}/img/deeplearningcourse/DL36.png">
-
-and it is possible to find the $$\theta$$ that maximizes the reward by following the gradient of the expected reward:
+When my actions are parametrized by a model $$ p = f_\theta $$, the whole problem becomes parametrized by $$ \theta $$ and it is possible to find the $$\theta$$ that maximizes the reward by following the gradient of the expected reward:
 
 $$ R(\theta) = \mathbb{E}_{\text{seq} \sim p_\theta}  \sum_{t=0}^T r_t = \sum_{\text{seq}} p_\theta(\text{seq}) \sum_{t=0}^T r_t  $$
 
-and in order to maximize the expected reward $$ J(\theta) $$, we compute the derivative
+In order to maximize the expected reward $$ J(\theta) $$, we compute the derivative:
 
 $$ \nabla_\theta R = \sum_{\text{seq}} \frac{\partial p_\theta(\text{seq})}{\partial \theta} (\sum_{t=0}^T r_t)
 

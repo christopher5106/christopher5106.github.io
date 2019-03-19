@@ -407,11 +407,11 @@ When my actions are parametrized by a model $$ p = f_\theta $$, the whole proble
 
 and it is possible to find the $$\theta$$ that maximizes the reward by following the gradient of the expected reward:
 
-$$ J(\theta) = \mathbb{E}_{\text{seq} \sim p_\theta}  \sum_{t=0}^T r_t = \sum_{\text{seq}} p_\theta(\text{seq}) \sum_{t=0}^T r_t  $$
+$$ R(\theta) = \mathbb{E}_{\text{seq} \sim p_\theta}  \sum_{t=0}^T r_t = \sum_{\text{seq}} p_\theta(\text{seq}) \sum_{t=0}^T r_t  $$
 
 and in order to maximize the expected reward $$ J(\theta) $$, we compute the derivative
 
-$$ \nabla_\theta J = \sum_{\text{seq}} \frac{\partial p_\theta(\text{seq})}{\partial \theta} (\sum_{t=0}^T r_t)
+$$ \nabla_\theta R = \sum_{\text{seq}} \frac{\partial p_\theta(\text{seq})}{\partial \theta} (\sum_{t=0}^T r_t)
 
 = \sum_{\text{seq}} p_\theta(\text{seq}) \frac{\partial \log p_\theta(\text{seq})}{\partial \theta} (\sum_{t=0}^T r_t)
 
@@ -434,7 +434,7 @@ $$ = \sum_{t=0}^T \log p_\theta (a_t| a_0, x_0, ... x_t) $$
 
 $$ \frac{\partial \log p_\theta(\text{seq}) }{ \partial \theta } = \sum_{t=0}^T \frac{\log p_\theta (a_t| a_0, x_0, ... x_t)}{\theta} $$
 
-$$ \nabla_\theta J = \mathbb{E}_{\text{seq}} ( \sum_{t=0}^T \frac{\partial \log p_\theta (a_t| a_0, x_0, ... x_t)}{\partial \theta} ) \times ( \sum_{t=0}^T r_t ) $$
+$$ \nabla_\theta R = \mathbb{E}_{\text{seq}} ( \sum_{t=0}^T \frac{\partial \log p_\theta (a_t| a_0, x_0, ... x_t)}{\partial \theta} ) \times ( \sum_{t=0}^T r_t ) $$
 
 In **conclusion**, in place of the 1 and 0 of the classification case, reinforcement learning proposes to use the global reward R as target label for each timestep that led to this reward, considering each time step as individual samples.
 

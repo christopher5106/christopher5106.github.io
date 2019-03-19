@@ -436,7 +436,6 @@ $$ \frac{\partial \log p_\theta(\text{seq}) }{ \partial \theta } = \sum_{t=0}^T 
 
 $$ \nabla_\theta J = \mathbb{E}_{\text{seq}} ( \sum_{t=0}^T \frac{\partial \log p_\theta (a_t| a_0, x_0, ... x_t)}{\partial \theta} ) \times ( \sum_{t=0}^T r_t ) $$
 
-
 In **conclusion**, in place of the 1 and 0 of the classification case, reinforcement learning proposes to use the global reward R as target label for each timestep that led to this reward, considering each time step as individual samples.
 
 <img src="{{ site.url }}/img/deeplearningcourse/DL40.png">

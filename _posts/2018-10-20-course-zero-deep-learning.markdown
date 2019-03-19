@@ -407,13 +407,39 @@ When my actions are parametrized by a model $$ p = f_\theta $$, the whole proble
 
 and it is possible to find the $$\theta$$ that maximizes the reward by following the gradient of the expected reward:
 
+$$ J(\theta) = \mathbb{E}_{\text{seq} \sim \p_\theta}(\sum_{t=0}^T r_t) = \sum_{\text{seq}} p_\theta(\text{seq}) (\sum_{t=0}^T r_t) $$
+
+and in order to find the maximum of $$ J(\theta) $$, we compute the derivative
+
+$$ \nabla_\theta J = \sum_{\text{seq}} \frac{\partial p_\theta(\text{seq})}{\partial \theta} (\sum_{t=0}^T r_t)
+
+= \sum_{\text{seq}} p_\theta(\text{seq}) \frac{\partial \log(p_\theta(\text{seq}))}{\partial \theta} (\sum_{t=0}^T r_t)
+
+= \mathbb{E}_{\text{seq}} \frac{\partial \log(p_\theta(\text{seq}))}{\partial \theta} (\sum_{t=0}^T r_t)
+$$
+
+because $$ \frac{\partial f}{\partial \theta} = f \times \frac{1}{f} \frac{\partial f}{\partial \theta} = f \times \frac{\partial \log(f)}{\partial \theta} $$
+
 <img src="{{ site.url }}/img/deeplearningcourse/DL37.png">
 
 which looks exactly the same as the derivative of the cross entropy:
 
+
+$$ \text{CE} = \sum_c \log(p_c) \tilde{p_c} $$
+
+$$ \frac{\partial \text{CE}}{\partial \theta} = \sum_c \frac{\partial \log(p_c)}{\partial \theta} \tilde{p_c} $$
+
 <img src="{{ site.url }}/img/deeplearningcourse/DL38.png">
 
 except that you replace the expected reward in place of the true label probability:
+
+$$ \log p_\theta(\text{seq}) = \log \prod_{t=0}^T p_\theta(a_T | a_0, x_0, ... x_T) $$
+
+$$ = \sum_{t=0}^T \log p_\theta (a_T| a_0, x_0, ... x_T) $$
+
+$$ \frac{\log p_\theta(\text{seq}) }{ \theta } = \sum_{t=0}^T \frac{\log p_\theta (a_T| a_0, x_0, ... x_T)}{\theta} $$
+
+$$ \nabla_\theta J = \mathbb{E}_{\text{seq}} \( \sum_{t=0}^T \frac{\log p_\theta (a_T| a_0, x_0, ... x_T)}{\theta} \) \times \( \sum_{t=0}^T r_t \) $$
 
 <img src="{{ site.url }}/img/deeplearningcourse/DL39.png">
 

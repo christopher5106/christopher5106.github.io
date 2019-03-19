@@ -432,7 +432,7 @@ $$ \log p_\theta(\text{seq}) = \log \prod_{t=0}^T p_\theta(a_t | a_0, x_0, ... x
 
 $$ = \sum_{t=0}^T \log p_\theta (a_t| a_0, x_0, ... x_t) $$
 
-$$ \frac{\partial \log p_\theta(\text{seq}) }{ \partial \theta } = \sum_{t=0}^T \frac{\log p_\theta (a_t| a_0, x_0, ... x_t)}{\theta} $$
+$$ \frac{\partial \log p_\theta(\text{seq}) }{ \partial \theta } = \sum_{t=0}^T \frac{\partial \log p_\theta (a_t| a_0, x_0, ... x_t)}{\partial \theta} $$
 
 $$ \nabla_\theta R = \mathbb{E}_{\text{seq}} ( \sum_{t=0}^T \frac{\partial \log p_\theta (a_t| a_0, x_0, ... x_t)}{\partial \theta} ) \times ( \sum_{t=0}^T r_t ) $$
 

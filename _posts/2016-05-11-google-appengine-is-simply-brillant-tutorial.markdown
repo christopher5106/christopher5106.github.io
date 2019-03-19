@@ -15,7 +15,7 @@ Google Cloud provides also the option to go for more customization : it is the p
 
 If Google Container Engine could be limitating in some ways also, keep in mind that Google Container Engine is based
 
-- on an opensource technology (K8s or **Kubernetes**) that can be installed anywhere, in particular on local or on-premise servers that can become the providers of the same interface for your Docker as the Google Container Engine does ([tutorial](http://christopher5106.github.io/continous/deployment/2016/05/02/deploy-instantly-from-your-host-to-AWS-EC2-and-Google-Cloud-with-kubernetes.html)).
+- on an opensource technology (K8s or **Kubernetes**) that can be installed anywhere, in particular on local or on-premise servers that can become the providers of the same interface for your Docker as the Google Container Engine does ([tutorial](//christopher5106.github.io/continous/deployment/2016/05/02/deploy-instantly-from-your-host-to-AWS-EC2-and-Google-Cloud-with-kubernetes.html)).
 
 - on **Google Compute Engine**, the naked VM, that can be useful in a big project where the install of very specific technologies can be common.
 

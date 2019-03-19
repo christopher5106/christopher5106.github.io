@@ -5,7 +5,7 @@ date:   2016-03-06 23:00:51
 categories: big data
 ---
 
-I gave a short presentation about [Google Tensorflow](http://christopher5106.github.io/deep/learning/2015/11/11/tensorflow-google-deeplearning-library.html) previously, with install instructions. For Theano, it is as simple as a `pip install theano`.
+I gave a short presentation about [Google Tensorflow](//christopher5106.github.io/deep/learning/2015/11/11/tensorflow-google-deeplearning-library.html) previously, with install instructions. For Theano, it is as simple as a `pip install theano`.
 
 Let's put things in order to have a great tutorial with mixed code and explanations and learn **twice faster** with mixed Theano and Tensorflow examples in one tutorial :) You'll discover how close the two libraries are. You can also use this tutorial to make your choice between the two libraries.
 
@@ -134,9 +134,9 @@ sess.run(my_addition, feed_dict={a: 10, b: 32})
 
 # Share the variables in a first example of network
 
-Let's go a bit further and define in symbolic computing (as I did in my [Caffe tutorial](http://christopher5106.github.io/deep/learning/2015/09/04/Deep-learning-tutorial-on-Caffe-Technology.html)) a first layer of 3 neurons acting on MNIST images (size `28x28=784`, 1 channel) with zero padding, stride 1 and weights initialized with a normal distribution.
+Let's go a bit further and define in symbolic computing (as I did in my [Caffe tutorial](//christopher5106.github.io/deep/learning/2015/09/04/Deep-learning-tutorial-on-Caffe-Technology.html)) a first layer of 3 neurons acting on MNIST images (size `28x28=784`, 1 channel) with zero padding, stride 1 and weights initialized with a normal distribution.
 
-![](http://christopher5106.github.io/img/simple_network.png)
+![](//christopher5106.github.io/img/simple_network.png)
 
 In symbolic computation, tensors are abstraction objects of the operations and objets in the memory of the CPU or the GPU, simplifying manipulation, but how can we access their values outside from the result values of a session run ?
 
@@ -180,7 +180,7 @@ With this simple introduction to symbolic programming, you're now ready to go fu
 
 A very nice library that is built on top of Theano and simplifies the use of Theano is [Lasagne](http://lasagne.readthedocs.org/en/latest/).
 
-Concepts such as tensors are very close to the Numpy arrays or [BIDMach matrices, a very nice CPU/GPU abstraction for Scala](http://christopher5106.github.io/big/data/2016/02/04/bidmach-tutorial.html).
+Concepts such as tensors are very close to the Numpy arrays or [BIDMach matrices, a very nice CPU/GPU abstraction for Scala](//christopher5106.github.io/big/data/2016/02/04/bidmach-tutorial.html).
 
 Spark programming is also symbolic, with a graph of operations that will be compiled and executed in a session on the cluster of instances when an output is demanded.
 

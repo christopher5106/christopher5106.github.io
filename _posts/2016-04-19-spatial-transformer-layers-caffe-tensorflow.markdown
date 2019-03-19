@@ -129,7 +129,7 @@ I updated [Caffe with Carey Mo implementation](https://github.com/christopher510
 
     git clone https://github.com/christopher5106/last_caffe_with_stn.git
 
-Compile it as you compile Caffe usually (following my tutorial on [Mac OS](http://christopher5106.github.io/big/data/2015/07/16/deep-learning-install-caffe-cudnn-cuda-for-digits-python-on-mac-osx.html) or [Ubuntu](http://christopher5106.github.io/big/data/2015/07/16/deep-learning-install-caffe-cudnn-cuda-for-digits-python-on-ubuntu-14-04.html) ).
+Compile it as you compile Caffe usually (following my tutorial on [Mac OS](//christopher5106.github.io/big/data/2015/07/16/deep-learning-install-caffe-cudnn-cuda-for-digits-python-on-mac-osx.html) or [Ubuntu](//christopher5106.github.io/big/data/2015/07/16/deep-learning-install-caffe-cudnn-cuda-for-digits-python-on-ubuntu-14-04.html) ).
 
 # Play with the theta parameters
 
@@ -237,7 +237,7 @@ Once trained, let's have a look at our predictions :
 
 # Unsupervised learning of the spatial transformation to center the character during reading
 
-Let's add our SPN in front of our [MNIST neural net for which we had a 98% success rate on plate letter identification](http://christopher5106.github.io/computer/vision/2015/09/14/comparing-tesseract-and-deep-learning-for-ocr-optical-character-recognition.html) and train it on a more difficult database of digits, with clutter and noise in translation, on which I only have 95% of good detection.
+Let's add our SPN in front of our [MNIST neural net for which we had a 98% success rate on plate letter identification](//christopher5106.github.io/computer/vision/2015/09/14/comparing-tesseract-and-deep-learning-for-ocr-optical-character-recognition.html) and train it on a more difficult database of digits, with clutter and noise in translation, on which I only have 95% of good detection.
 
 I just need to change the last innerproduct layer to predict the 6 coordinates of $$ \theta $$ :
 

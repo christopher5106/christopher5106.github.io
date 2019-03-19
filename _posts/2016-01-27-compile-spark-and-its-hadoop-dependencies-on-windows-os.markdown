@@ -5,7 +5,7 @@ date:   2016-01-27 23:00:51
 categories: big data
 ---
 
-Spark has become the main big data tool, very easy to use as well as very powerful. Built on top of some Hadoop classes, Spark offers the use of the distributed memory (RDD) as if you were working on a single machine, and 3 REPL shells `spark-shell`, `pyspark` and `sparkR` for their respective Scala, Python and R languages. It is possible to submit a script with `spark-submit` command and to develop or test locally with `--master local[1]` option, before launching on a [cluster of hundred of instances such as EMR](http://christopher5106.github.io/big/data/2016/01/19/computation-power-as-you-need-with-EMR-auto-termination-cluster-example-random-forest-python.html).
+Spark has become the main big data tool, very easy to use as well as very powerful. Built on top of some Hadoop classes, Spark offers the use of the distributed memory (RDD) as if you were working on a single machine, and 3 REPL shells `spark-shell`, `pyspark` and `sparkR` for their respective Scala, Python and R languages. It is possible to submit a script with `spark-submit` command and to develop or test locally with `--master local[1]` option, before launching on a [cluster of hundred of instances such as EMR](//christopher5106.github.io/big/data/2016/01/19/computation-power-as-you-need-with-EMR-auto-termination-cluster-example-random-forest-python.html).
 
 Here I recompile Spark on Windows since it avoids problems one could encounter with Windows binaries, such as software version mismatches. Loading and compiling all the required dependencies on a slow network and with standard hardware may require a day or so. The steps are the following :
 

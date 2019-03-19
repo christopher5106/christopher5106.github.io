@@ -5,7 +5,7 @@ date:   2016-01-27 23:00:51
 categories: big data
 ---
 
-In this tutorial, I will create four AMI for AWS G2 instances (GPU-enabled), the first one for any use of NVIDIA technologies, the second with Caffe and CUDNN, the third one for the use of [scala fast GPU library BIDMach](http://christopher5106.github.io/big/data/2016/02/04/bidmach-tutorial.html) and the fourth one for the creation of a cluster of GPU instances with BIDMach:
+In this tutorial, I will create four AMI for AWS G2 instances (GPU-enabled), the first one for any use of NVIDIA technologies, the second with Caffe and CUDNN, the third one for the use of [scala fast GPU library BIDMach](//christopher5106.github.io/big/data/2016/02/04/bidmach-tutorial.html) and the fourth one for the creation of a cluster of GPU instances with BIDMach:
 
 - **ami-0ef6407d** : NVIDIA driver + Cuda 7.5
 This first AMI is *Spark-ec2 compatible*, it can be launched with *spark-ec2* command.
@@ -31,7 +31,7 @@ Placing many of these instances in a cluster make the fastest cluster at minimal
 
 - EC2 G2 instances, with a [NVIDIA GRID K520](http://www.nvidia.com/object/cloud-gaming-gpu-boards.html), made of 2 GPU offering 1536 cores each, hence **3072 cores on a single instance**, the maximal power on a single cloud instance currently available so easily
 
-- [BIDMach library](http://christopher5106.github.io/parallel/computing/2016/01/26/gpu-computing-with-bidmach-library-simply-amazing.html) that unleashes the speed of GPU computing algorithms to **compute on a single instance at the speed of a cluster** of 8 to 30 instances, depending on the type of machine learning task [[benchmarks](https://github.com/BIDData/BIDMach/wiki/Benchmarks)].
+- [BIDMach library](//christopher5106.github.io/parallel/computing/2016/01/26/gpu-computing-with-bidmach-library-simply-amazing.html) that unleashes the speed of GPU computing algorithms to **compute on a single instance at the speed of a cluster** of 8 to 30 instances, depending on the type of machine learning task [[benchmarks](https://github.com/BIDData/BIDMach/wiki/Benchmarks)].
 
 - Spark to launch many of these instances and **parallelize the computing along hyperparemeter tuning**. Hyperparameter tuning consists in repeating the exact same machine learning task but with different parameters for the model (the *hyperparemeters*). It is a kind of best practice to distribute machine learning computing along hyperparemeter tuning (each instance does the training for a set of hyperparameters), instead of distributing the training task itself (see also [Databricks example for Tensorflow](https://databricks.com/blog/2016/01/25/deep-learning-with-spark-and-tensorflow.html)), because it splits the computation in jobs (training) that do not need to communicate and avoids this way the ineffective data shuffling between instances.
 
@@ -389,4 +389,4 @@ sudo ./bin/spark-shell \
 --conf "spark.executor.extraLibraryPath=/home/ec2-user/BIDMach/lib"
 ```
 
-**Our cluster of GPU is ready!** Go on with a [data preparation and a Random forest computation on the cluster](http://christopher5106.github.io/big/data/2016/02/04/bidmach-tutorial.html).
+**Our cluster of GPU is ready!** Go on with a [data preparation and a Random forest computation on the cluster](//christopher5106.github.io/big/data/2016/02/04/bidmach-tutorial.html).

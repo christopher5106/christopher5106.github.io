@@ -7,7 +7,7 @@ categories: deep learning
 
 In machine learning many different losses exist.
 
-A loss is a "penalty" score to reduce when training an algorithm on data. It is usually called the **objective function** to optimize. For an introduction to machine learning and loss functions, you might read [Course 0: deep learning!](http://christopher5106.github.io/deep/learning/2018/10/20/course-zero-deep-learning.html) first.
+A loss is a "penalty" score to reduce when training an algorithm on data. It is usually called the **objective function** to optimize. For an introduction to machine learning and loss functions, you might read [Course 0: deep learning!](//christopher5106.github.io/deep/learning/2018/10/20/course-zero-deep-learning.html) first.
 
 Here we'll list more losses for the different cases. Knowing each of them will help the datascientists choose the right one for his problem.
 

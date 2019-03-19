@@ -5,11 +5,11 @@ date:   2015-09-15 23:00:51
 categories: computer vision
 ---
 
-Let's re-use our classifier net of [license plate letters](http://christopher5106.github.io/computer/vision/2015/09/14/comparing-tesseract-and-deep-learning-for-ocr-optical-character-recognition.html) to see how it behaves as a *feature map* of images including more than one letter. Replacing the innerproduct layers with convolution layers with the same parameters will enable to create a *feature map* as on the left picture :
+Let's re-use our classifier net of [license plate letters](//christopher5106.github.io/computer/vision/2015/09/14/comparing-tesseract-and-deep-learning-for-ocr-optical-character-recognition.html) to see how it behaves as a *feature map* of images including more than one letter. Replacing the innerproduct layers with convolution layers with the same parameters will enable to create a *feature map* as on the left picture :
 
 ![png]({{ site.url }}/img/feature_map/Example_20_1.png)
 
-I'll use [Caffe's python interface](http://christopher5106.github.io/deep/learning/2015/09/04/Deep-learning-tutorial-on-Caffe-Technology.html).
+I'll use [Caffe's python interface](//christopher5106.github.io/deep/learning/2015/09/04/Deep-learning-tutorial-on-Caffe-Technology.html).
 
 {% highlight python %}
 import numpy as np

@@ -470,7 +470,7 @@ Then you can import the required libraries :
 import BIDMach.models.RandomForest
 ```
 
-- as **cluster of GPU**, for example 2 g2.2xlarge executor instances with our [NVIDIA+CUDA+BIDMACH AMI for Spark](http://christopher5106.github.io/big/data/2016/01/27/two-AMI-to-create-the-fastest-cluster-with-gpu-at-the-minimal-engineering-cost-with-EC2-NVIDIA-Spark-and-BIDMach.html#cluster_of_gpu):
+- as **cluster of GPU**, for example 2 g2.2xlarge executor instances with our [NVIDIA+CUDA+BIDMACH AMI for Spark](//christopher5106.github.io/big/data/2016/01/27/two-AMI-to-create-the-fastest-cluster-with-gpu-at-the-minimal-engineering-cost-with-EC2-NVIDIA-Spark-and-BIDMach.html#cluster_of_gpu):
 
 Launch the Spark Shell and be sure to have only 1 core per GPU on each executor :
 

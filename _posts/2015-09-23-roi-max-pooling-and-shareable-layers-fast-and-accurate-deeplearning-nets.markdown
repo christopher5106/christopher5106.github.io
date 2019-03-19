@@ -6,7 +6,7 @@ categories: computer vision
 ---
 
 
-As seen in [previous post](http://christopher5106.github.io/computer/vision/2015/09/14/comparing-tesseract-and-deep-learning-for-ocr-optical-character-recognition.html), deep nets read the correct letter with a correctness of 99%.
+As seen in [previous post](//christopher5106.github.io/computer/vision/2015/09/14/comparing-tesseract-and-deep-learning-for-ocr-optical-character-recognition.html), deep nets read the correct letter with a correctness of 99%.
 
 Now let's go further to get precise position information about the license plate and its letters, as explained in [Faster RCNN publication](https://github.com/ShaoqingRen/faster_rcnn) from Microsoft Research two weeks ago.
 
@@ -120,7 +120,7 @@ Let's train with the previously learned parameters the new model :
 
     ~/technologies/caffe/build/tools/caffe train --solver=lenet_train_test_position.prototxt -weights=lenet_iter_2000.caffemodel -gpu 0
 
-Once trained, I convert the innerproduct layers into the convolution layers to get a feature map, as seen in [previous post](http://christopher5106.github.io/computer/vision/2015/09/15/deep-learning-net-surgery-to-create-a-feature-map.html).
+Once trained, I convert the innerproduct layers into the convolution layers to get a feature map, as seen in [previous post](//christopher5106.github.io/computer/vision/2015/09/15/deep-learning-net-surgery-to-create-a-feature-map.html).
 
 ![Feature map]({{ site.url }}/img/caffe_immat_feature_map.png)
 

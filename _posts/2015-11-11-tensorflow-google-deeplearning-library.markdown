@@ -7,7 +7,7 @@ categories: deep learning
 
 TensorFlow comes as a library such as other deep learning libraries, [Caffe](http://caffe.berkeleyvision.org/), [Theano](http://deeplearning.net/software/theano/), or [Torch](http://torch.ch/). I've already written a lot on Caffe before.
 
-This article is a global overview. To learn in detail symbolic computing, have a look at my [new tutorial to understand Tensorflow and Theano symbolic computing](http://christopher5106.github.io/big/data/2016/03/06/symbolic-computing-and-deep-learning-tutorial-on-theano-and-google-tensorflow.html).
+This article is a global overview. To learn in detail symbolic computing, have a look at my [new tutorial to understand Tensorflow and Theano symbolic computing](//christopher5106.github.io/big/data/2016/03/06/symbolic-computing-and-deep-learning-tutorial-on-theano-and-google-tensorflow.html).
 
 # The main advantage of Tensorflow
 
@@ -19,11 +19,11 @@ Tensorflow enables GPU computation which is also a very useful feature when it c
 
 Lastly, when the model has been learned, it has to be deployed in production apps, and usually, speed and optimizations become more important : the C++ API is the expected first choice for this purpose.
 
-Tensorflow comes with [Tensorboard](http://tensorflow.org/how_tos/summaries_and_tensorboard/index.md), which looks like the DIGITS interface from NVIDIA (see my tutorial [on Mac](http://christopher5106.github.io/big/data/2015/07/16/deep-learning-install-caffe-cudnn-cuda-for-digits-python-on-mac-osx.html) or [on Ubuntu](http://christopher5106.github.io/big/data/2015/07/16/deep-learning-install-caffe-cudnn-cuda-for-digits-python-on-ubuntu-14-04.html)), but with much more flexibility on the *events* to display in the reports :
+Tensorflow comes with [Tensorboard](http://tensorflow.org/how_tos/summaries_and_tensorboard/index.md), which looks like the DIGITS interface from NVIDIA (see my tutorial [on Mac](//christopher5106.github.io/big/data/2015/07/16/deep-learning-install-caffe-cudnn-cuda-for-digits-python-on-mac-osx.html) or [on Ubuntu](//christopher5106.github.io/big/data/2015/07/16/deep-learning-install-caffe-cudnn-cuda-for-digits-python-on-ubuntu-14-04.html)), but with much more flexibility on the *events* to display in the reports :
 
 ![Tensorboard]({{ site.url }}/img/mnist_tensorboard.png)
 
-and a graph visualization tool, that works like our `python python/draw_net.py` command in Caffe, but with different informations ([see tutorial](http://christopher5106.github.io/deep/learning/2015/09/04/Deep-learning-tutorial-on-Caffe-Technology.html))
+and a graph visualization tool, that works like our `python python/draw_net.py` command in Caffe, but with different informations ([see tutorial](//christopher5106.github.io/deep/learning/2015/09/04/Deep-learning-tutorial-on-Caffe-Technology.html))
 
 ![Tensorboard graph]({{ site.url }}/img/colorby_structure.png)
 
@@ -227,6 +227,6 @@ And in Tensorboard (at *http://localhost:6006/*)
 
 ![png]({{ site.url }}/img/tensorboard_graph.png)
 
-Have a look at my [tutorial about symbolic programming in Tensorflow or Theano](http://christopher5106.github.io/big/data/2016/03/06/symbolic-computing-and-deep-learning-tutorial-on-theano-and-google-tensorflow.html).
+Have a look at my [tutorial about symbolic programming in Tensorflow or Theano](//christopher5106.github.io/big/data/2016/03/06/symbolic-computing-and-deep-learning-tutorial-on-theano-and-google-tensorflow.html).
 
 **Well done!**

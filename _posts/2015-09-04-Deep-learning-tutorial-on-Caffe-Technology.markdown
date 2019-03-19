@@ -419,14 +419,14 @@ print("Accuracy: {:.3f}".format(accuracy))
 
 ### Recurrent neural nets in Caffe
 
-Have a look at my [tutorial about recurrent neural nets in Caffe](http://christopher5106.github.io/deep/learning/2016/06/07/recurrent-neural-net-with-Caffe.html).
+Have a look at my [tutorial about recurrent neural nets in Caffe](//christopher5106.github.io/deep/learning/2016/06/07/recurrent-neural-net-with-Caffe.html).
 
 
 ### Spatial transformer layers
 
 [![]({{ site.url }}/img/spatial_transformer_networks.png)]({{ site.url }}/big/data/2016/04/18/spatial-transformer-layers-caffe-tensorflow.html)
 
-[my tutorial about improving classification with spatial transformer layers](http://christopher5106.github.io/big/data/2016/04/18/spatial-transformer-layers-caffe-tensorflow.html)
+[my tutorial about improving classification with spatial transformer layers](//christopher5106.github.io/big/data/2016/04/18/spatial-transformer-layers-caffe-tensorflow.html)
 
 # Caffe in Python
 

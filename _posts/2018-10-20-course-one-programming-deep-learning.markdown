@@ -7,7 +7,7 @@ categories: deep learning
 
 Here is my course of deep learning in 5 days only!
 
-You might first check [Course 0: deep learning!](http://christopher5106.github.io/deep/learning/2018/10/20/course-zero-deep-learning.html) if you have not read it. A great article about cross-entropy and its generalization.
+You might first check [Course 0: deep learning!](//christopher5106.github.io/deep/learning/2018/10/20/course-zero-deep-learning.html) if you have not read it. A great article about cross-entropy and its generalization.
 
 In this article, I'll go for the introduction to deep learning and programming, coding few functions under deep learning technologies: Pytorch, Keras, Tensorflow, MXNet, CNTK.
 
@@ -55,7 +55,7 @@ jupyter notebook
 
 Jupyter UI proposes to choose the Conda environment inside the notebook.
 
-It is possible to combine CUDA and OpenGL for [graphical applications requiring deep learning predictions: the image data is fully processed on GPU](http://www.nvidia.com/content/gtc/documents/1055_gtc09.pdf).
+It is possible to combine CUDA and OpenGL for [graphical applications requiring deep learning predictions: the image data is fully processed on GPU](//www.nvidia.com/content/gtc/documents/1055_gtc09.pdf).
 
 # The batch
 
@@ -75,7 +75,7 @@ To distribute the training on multiple GPU or instances, the easiest way is to s
 
 # Training curves and metrics
 
-As we have seen on [Course 0](http://christopher5106.github.io/deep/learning/2018/10/20/course-zero-deep-learning.html), we use a *cost function* to fit the model to the goal.
+As we have seen on [Course 0](//christopher5106.github.io/deep/learning/2018/10/20/course-zero-deep-learning.html), we use a *cost function* to fit the model to the goal.
 
 So, during training of a model, we usually plot the **training loss**, and if there is no bug, it is not surprising to see it decreasing as the number of training steps or iterations grows.
 
@@ -271,7 +271,7 @@ It is also possible to apply the `backward()` method on something else than a co
 
 $$ \nabla_{\theta_t} \text{cost} =  \nabla_{\theta_t} \Big[ ( \text{cost} \circ S \circ ... \circ L_{t+1}  ) \circ L_t \Big]   = \Big( \nabla_{I_{t+1}} \text{cost} \Big) \times \nabla_{\theta_t} L_t  $$
 
-as given by the chaining rule seen in [Course 0](http://christopher5106.github.io/deep/learning/2018/10/20/course-zero-deep-learning.html).
+as given by the chaining rule seen in [Course 0](//christopher5106.github.io/deep/learning/2018/10/20/course-zero-deep-learning.html).
 
 ```python
 x = Variable(torch.ones(2), requires_grad=True)
@@ -308,7 +308,7 @@ Note that gradients are computed by retropropagation until a Variable has no `gr
 
 # Training loop
 
-Let's take back our [Course 0](http://christopher5106.github.io/deep/learning/2018/10/20/course-zero-deep-learning.html)'s perceptron and implement its training directly with Pytorch tensors and operators, without other packages.
+Let's take back our [Course 0](//christopher5106.github.io/deep/learning/2018/10/20/course-zero-deep-learning.html)'s perceptron and implement its training directly with Pytorch tensors and operators, without other packages.
 Let's consider the input is 20 dimensional, and the number of outputs for each dense layer is 32.
 
 <img src="{{ site.url }}/img/deeplearningcourse/DL15.png">
@@ -383,7 +383,7 @@ In a classification task,
 
 - the loss is the cross-entropy
 
-as we have seen in [Course 0](http://christopher5106.github.io/deep/learning/2018/10/20/course-zero-deep-learning.html).
+as we have seen in [Course 0](//christopher5106.github.io/deep/learning/2018/10/20/course-zero-deep-learning.html).
 
 Let us consider a toy data, in which the label of a sample depends on its position in 2D, with 3 labels corresponding to 3 zones:
 
@@ -753,4 +753,4 @@ and confirm that Adadelta achieves best accuracy: 99.62%.
 
 **Well done!**
 
-Now let's go to next course: [Course 2: building deep learning networks!](http://christopher5106.github.io/deep/learning/2018/10/20/course-two-build-deep-learning-networks.html)
+Now let's go to next course: [Course 2: building deep learning networks!](//christopher5106.github.io/deep/learning/2018/10/20/course-two-build-deep-learning-networks.html)

@@ -31,7 +31,7 @@ XMLHttpRequest enables to send a HTTP Request to server in Javascript and is use
 {% highlight html %}
 <script type="text/javascript">
 var xhr = new XMLHttpRequest();
-xhr.open("GET", "http://christopher5106.github.io/img/mac_digits.png?" + new Date().getTime());
+xhr.open("GET", "//christopher5106.github.io/img/mac_digits.png?" + new Date().getTime());
 xhr.onprogress = function (e) {
     if (e.lengthComputable) {
         console.log(e.loaded+  " / " + e.total)
@@ -143,7 +143,7 @@ var formData = new FormData();
 formData.append("username", "Groucho");
 formData.append("accountnum", 123456);
 var request = new XMLHttpRequest();
-request.open("POST", "http://foo.com/submitform.php");
+request.open("POST", "//foo.com/submitform.php");
 request.send(formData);
 {% endhighlight %}
 
@@ -172,7 +172,7 @@ $.ajax({
 Let's use [PutsReq service](http://putsreq.com/) that is a free file bin to debug our POST requests and send it a file :
 
 {% highlight html %}
-<input name="imagefile[]" type="file" id="takePictureField" accept="image/*" onchange="uploadPhotos('http://putsreq.com/jX2tGa272jPmLH4KtR2n')" />
+<input name="imagefile[]" type="file" id="takePictureField" accept="image/*" onchange="uploadPhotos('//putsreq.com/jX2tGa272jPmLH4KtR2n')" />
 <script type="text/javascript">
 window.uploadPhotos = function(url){
   var formData = new FormData();
@@ -205,7 +205,7 @@ The File interface is based on Blob, inheriting blob functionality and expanding
 Taken from [here](http://stackoverflow.com/questions/23945494/use-html5-to-resize-an-image-before-upload), here is a full upload with a resize :
 
 {% highlight html %}
-<input name="imagefile[]" type="file" id="takePictureField" accept="image/*" onchange="uploadPhotos('http://putsreq.com/jX2tGa272jPmLH4KtR2n')" />
+<input name="imagefile[]" type="file" id="takePictureField" accept="image/*" onchange="uploadPhotos('//putsreq.com/jX2tGa272jPmLH4KtR2n')" />
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 <script type="text/javascript">

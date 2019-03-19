@@ -407,7 +407,7 @@ When my actions are parametrized by a model $$ p = f_\theta $$, the whole proble
 
 and it is possible to find the $$\theta$$ that maximizes the reward by following the gradient of the expected reward:
 
-$$ J(\theta) = \mathbb{E}_{\text{seq} \sim \p_\theta}(\sum_{t=0}^T r_t) = \sum_{\text{seq}} p_\theta(\text{seq}) (\sum_{t=0}^T r_t) $$
+$$ J(\theta) = \mathbb{E}_{\text{seq} \sim p_\theta} \left( \sum_{t=0}^T r_t \right) = \sum_{\text{seq}} p_\theta(\text{seq}) \left( \sum_{t=0}^T r_t \right) $$
 
 and in order to find the maximum of $$ J(\theta) $$, we compute the derivative
 

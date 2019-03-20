@@ -373,7 +373,7 @@ for i in range(1000):
     bias2.grad.zero_()
 ```
 
-**Exercise**: check that the norm of the parameters converges to zero.
+**Exercise**: check that the norm of the parameters does not converge to zero.
 
 In a classification task,
 
@@ -450,7 +450,7 @@ for i in range(min(dataset_size, 100000) // batch_size ):
     z = forward(Variable(batch, requires_grad=False))
     z = softmax(z)
     loss = crossentropy(z, Variable(Y[batch_size*i:batch_size*(i+1)]))
-    print("iter {} - cost {} - learning rate {}".format(i, loss.data[0], lr))
+    print("iter {} - cost {} - learning rate {}".format(i, loss.data.item(), lr))
 
     # compute the gradients
     loss.backward()

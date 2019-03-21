@@ -373,7 +373,7 @@ for i in range(1000):
     bias2.grad.zero_()
 ```
 
-**Exercise**: check that the norm of the parameters does not converge to zero.
+**Exercise**: check the norm of the parameters at every iteration.
 
 In a classification task,
 
@@ -672,6 +672,7 @@ print("accuracy {}%".format(round(accuracy / min(dataset_size, nb) * 100, 2)))
 
 **Exercise**: program the training loop with packages in Keras, Tensorflow, CNTK, MXNet
 
+**Solution**: [cntk training](https://github.com/christopher5106/exercices/blob/master/cntk-ex_with_packages.py), [keras training](https://github.com/christopher5106/exercices/blob/master/keras-ex_with_packages-step2.py), ...
 
 # Packages
 

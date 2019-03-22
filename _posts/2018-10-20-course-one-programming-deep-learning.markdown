@@ -672,7 +672,7 @@ print("accuracy {}%".format(round(accuracy / min(dataset_size, nb) * 100, 2)))
 
 **Exercise**: program the training loop with packages in Keras, Tensorflow, CNTK, MXNet
 
-**Solution**: [cntk training](https://github.com/christopher5106/exercices/blob/master/cntk-ex_with_packages.py), [cntk training, further packaging](https://github.com/christopher5106/exercices/blob/master/cntk-ex_with_packages-step2.py), [keras training](https://github.com/christopher5106/exercices/blob/master/keras-ex_with_packages.py), [keras training, further packaging](https://github.com/christopher5106/exercices/blob/master/keras-ex_with_packages-step2.py) ...
+**Solution**: [cntk training](https://github.com/christopher5106/exercices/blob/master/cntk-ex_with_packages.py), [cntk further packaging](https://github.com/christopher5106/exercices/blob/master/cntk-ex_with_packages-step2.py), [keras training](https://github.com/christopher5106/exercices/blob/master/keras-ex_with_packages.py), [keras further packaging](https://github.com/christopher5106/exercices/blob/master/keras-ex_with_packages-step2.py) ...
 
 # Packages
 

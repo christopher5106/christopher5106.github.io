@@ -72,6 +72,9 @@ This format is very common and is called *channel last*. Some deep learning fram
 
 To distribute the training on multiple GPU or instances, the easiest way is to split along the batch dimension, which we call *data parallellism*, and dispatch the different splits to their respective instance/GPU. The parameter update step requires to synchronize more or less the gradient computations. NVIDIA provides fast multi-gpu collectives in its library NCCL, and fast hardware connections between GPUs with NVLINK2.0.
 
+At the basis of the training is the sample (the example, the datapoint). The batch or minibatch is the training of multiple samples in one iteration or step. An epoch is usually seen as the number of iteration to see the whole training dataset, although in some training programs, for very huge dataset, the epoch is defined as a number of iterations after which the model is evaluated to monitor the training and follow metrics. A shuffle operation of the dataset is required at each epoch.
+<img src="{{ site.url }}/img/epochs.png" >
+
 
 # Training curves and metrics
 

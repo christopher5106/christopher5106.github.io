@@ -83,11 +83,27 @@ It is very frequent to find some BiLSTM, where LSTM is a type of RNN applied two
 
 # Attention, self-attention and Transformer
 
-Under construction.
+The **attention mechanism** takes as input a query, keys and values. It consists in finding the relevant entries in the input sequence, given a *query* represented by a (512,) vector in the following example :
+<img src="{{ site.url }}/img/attention.png" />
+The query is compared with *keys*, a matrix of dimension (T, 512) or (B, T, 512), and the dot product is used for this comparison. The result is passed through a softmax layer in order to get a probability for each of the T positions in the sequence.
+The *values*, another matrix of dimension (T, 512) or (B, T, 512), is used to computed the final result, of dimension (512,).
 
-Normalize attention by $$ \frac{1}{\sqrt{d}} $$
+**Self-attention** is when each word of the input is used a query. The output has the same length as the input, T.
+<img src="{{ site.url }}/img/selfattention.png" />
+Such a mechanism enables to take into account each word of the context to compute the representation of a word. Architecture using convolutions and self attention are called **Transformer**.
 
-Translation example
+For classification tasks, such as *sentiment analysis*, the output at the start token (or first token) is taken to represent the sequence and be further processed by a simple classifier. For segmentation tasks, such as question answering (QA) or named entity recognition (NER), all other outputs are used as input to the classifier:
+<img src="{{ site.url }}/img/nlptasks.png" />
+
+Be careful to normalize attention by $$ \frac{1}{\sqrt{d}} $$, where d is the dimensionality of the data.
+
+In translation, both encoder and decoder incorporate a Transformer:
+<img src="{{ site.url }}/img/translationtransformer.png" />
+<img src="{{ site.url }}/img/translationtransformer2.png" />
+
+
+The self-attention enables computation efficiency and reduces the depth that accounts in the vanishing gradient problem:
+<img src="{{ site.url }}/img/transformerefficiency.png" />
 
 # Sentences, paragraphs or documents
 
@@ -104,6 +120,17 @@ The current state of the art for deep contextualized representation is [BERT](ht
 <img src="{{ site.url }}/img/bert-Arch-2-300x271.png" />
 
 By simply adding a linear layer on top of BERT's output, state-of-the-art has been achieved on Squad Question Answering dataset, SWAG dataset, and GLUE datasets, demonstrating that these embeddings capture well the semantics of blocks of text.
+
+BERT has a [cross-lingual version](https://github.com/facebookresearch/XLM), trained with translation parallel data to build representations independent of language:
+<img src="{{ site.url }}/img/bertxlm.png" />
+
+The training of BERT and XLM embedding is performed with one of the following losses:
+- the causal language model (CLM): predicting the next word in the sentence
+- the masked language model (MLM): predicting the randomly masked or replaced words.
+- the translation language model (TLM) : it is like a CLM but for a sequence consisting of 2 sentences in 2 different languages, translation of each other, with reset position embeddings so that the model can use either both sentences indifferently to predict the masked or replaced words, leading to aligned representations for different languages.
+
+<img src="{{ site.url }}/img/embeddingtraining.png" />
+
 
 # Metrics for translation
 

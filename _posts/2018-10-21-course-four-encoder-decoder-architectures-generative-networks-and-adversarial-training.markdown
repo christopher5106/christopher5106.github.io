@@ -14,3 +14,6 @@ Encoder decoder architectures:
 
 The example of unsupervised translation:
 <img src="{{ site.url }}/img/unsupervisedtranslation.png" >
+
+The discriminator works as a trained loss:
+<img src="{{ site.url }}/img/trainedloss.png" >

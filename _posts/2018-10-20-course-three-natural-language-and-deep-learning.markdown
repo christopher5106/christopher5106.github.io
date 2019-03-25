@@ -148,5 +148,5 @@ There exists metrics on words (called unigrams) also, such as
 
 - METEOR, the ChrF3 equivalent at word level, reweighted by a non-alignment penalty.
 
-
+[Next course ! encoder decoder architectures, generative networks, and adversarial training !](//christopher5106.github.io/deep/learning/2018/10/21/course-four-encoder-decoder-architectures-generative-networks-and-adversarial-training.html)
 **Well done!**

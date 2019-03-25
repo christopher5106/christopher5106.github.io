@@ -83,19 +83,24 @@ It is very frequent to find some BiLSTM, where LSTM is a type of RNN applied two
 
 # Attention, self-attention and Transformer
 
-The **attention mechanism** takes as input a query, keys and values. It consists in finding the relevant entries in the input sequence, given a *query* represented by a (512,) vector in the following example :
+The **attention mechanism** takes as input a query, an input sequence transformed into keys and values . It consists in finding the relevant entries in the input sequence, given a *query* represented by a (512,) vector as presented in the following figure:
 <img src="{{ site.url }}/img/attention.png" />
-The query is compared with *keys*, a matrix of dimension (T, 512) or (B, T, 512), and the dot product is used for this comparison. The result is passed through a softmax layer in order to get a probability for each of the T positions in the sequence.
-The *values*, another matrix of dimension (T, 512) or (B, T, 512), is used to computed the final result, of dimension (512,).
 
-**Self-attention** is when each word of the input is used a query. The output has the same length as the input, T.
+The query is compared with *keys*, a matrix of dimension (T, 512) for 1 sample, or (B, T, 512) for a batch of samples, and the dot product is used as comparison operator. Be careful to normalize output of the scalar product by $$ \frac{1}{\sqrt{d}} $$, where d is the dimensionality of the data, in order to keep variance 1.
+
+The result is passed through a softmax layer in order to get a probability $$p_t$$ for each of the T positions in the sequence.
+The *values*, another matrix of dimension (T, 512) or (B, T, 512), is used to computed the final result, of dimension (512,):
+
+$$ r = \sum_{t=0}^T p_t v_t $$
+
+**Self-attention** is when each position of the input sequence is used a query. The output is of shape (T, 512), the same length as the input, T.
 <img src="{{ site.url }}/img/selfattention.png" />
-Such a mechanism enables to take into account each word of the context to compute the representation of a word. Architecture using convolutions and self attention are called **Transformer**.
+Such a mechanism enables to take into account each word of the context to compute the representation of a word.
+
+The **Transformer** is an architecture using convolutions and self attention, described [here](https://arxiv.org/abs/1706.03762).
 
 For classification tasks, such as *sentiment analysis*, the output at the start token (or first token) is taken to represent the sequence and be further processed by a simple classifier. For segmentation tasks, such as question answering (QA) or named entity recognition (NER), all other outputs are used as input to the classifier:
 <img src="{{ site.url }}/img/nlptasks.png" />
-
-Be careful to normalize attention by $$ \frac{1}{\sqrt{d}} $$, where d is the dimensionality of the data.
 
 In translation, both encoder and decoder incorporate a Transformer:
 <img src="{{ site.url }}/img/translationtransformer.png" />
@@ -149,4 +154,5 @@ There exists metrics on words (called unigrams) also, such as
 - METEOR, the ChrF3 equivalent at word level, reweighted by a non-alignment penalty.
 
 [Next course ! encoder decoder architectures, generative networks, and adversarial training !](//christopher5106.github.io/deep/learning/2018/10/21/course-four-encoder-decoder-architectures-generative-networks-and-adversarial-training.html)
+
 **Well done!**

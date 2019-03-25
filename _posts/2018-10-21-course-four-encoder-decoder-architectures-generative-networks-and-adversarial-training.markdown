@@ -10,6 +10,7 @@ Under construction:
 Encoder decoder architectures:
 <img src="{{ site.url }}/img/encoderdecoder.png" >
 
+Adversarial training:
 <img src="{{ site.url }}/img/advtraining.png" >
 
 The example of unsupervised translation:

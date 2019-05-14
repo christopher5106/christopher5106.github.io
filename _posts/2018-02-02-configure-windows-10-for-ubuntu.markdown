@@ -56,7 +56,7 @@ and edit the **ssh_config** file, uncommenting or adding the following lines:
         Port 22
         Protocol 2
         GSSAPIDelegateCredentials no
-        XauthLocaion /usr/bin/xauth
+        XauthLocation /usr/bin/xauth
 
 Now, setting the display, you can access your Ubuntu remote server through the Ubuntu server X on your Windows Ubuntu computer:
 

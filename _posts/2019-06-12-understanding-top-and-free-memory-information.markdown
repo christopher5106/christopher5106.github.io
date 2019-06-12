@@ -21,7 +21,7 @@ $$ 1166060 + 57391012 + 73387784 = 131944856 \leftarrow 13194485+ $$
 
 where + is hidding one char, and
 
-- on the *Swap* line, the total corresponds to part of the data that has been saved to Disk as well as remaning disk space (Disk partition size) :
+- on the *Swap* line, the used value corresponds to part of the data that has been saved to Disk, as well as remaining disk space under 'free' while total is simply the Disk partition size :
 
 $$ \text{total} = \text{free} + \text{used} $$
 

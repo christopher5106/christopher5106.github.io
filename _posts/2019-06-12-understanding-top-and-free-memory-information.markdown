@@ -21,13 +21,13 @@ $$ 1166060 + 57391012 + 73387784 = 131944856 \leftarrow 13194485+ $$
 
 where + is hidding one char, and
 
-- on the *Swap* line, the used value corresponds to part of the data that has been saved to Disk, as well as remaining disk space under 'free' while total is simply the Disk partition size :
+- on the *Swap* line, the 'used' value corresponds to part of the data that is not in the RAM any more and has been saved to Disk, as well as the remaining disk space under 'free' value, while 'total' is simply the Disk partition size :
 
 $$ \text{total} = \text{free} + \text{used} $$
 
 $$ 2097148 = 2097148 + 0 $$
 
-When running `free -m` command a few second later:
+When running `free -m` command a few seconds later:
 
 <img src="{{ site.url }}/img/free.png" >
 

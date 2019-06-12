@@ -25,7 +25,7 @@ where + is hidding one char, and
 
 $$ \text{total} = \text{free} + \text{used} $$
 
-$$ 2097148 = 2097148 + 0 $$
+$$ 2097148 = 0 + 2097148  $$
 
 When running `free -m` command a few seconds later:
 

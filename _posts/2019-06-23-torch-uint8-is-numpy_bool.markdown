@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "PyTorch Uint8 is Numpy Bool"
+title:  "PyTorch Uint8 might be equivalent to Numpy Bool, but not always Numpy Uint8"
 date:   2019-06-23 05:00:00
 categories: torch
 ---

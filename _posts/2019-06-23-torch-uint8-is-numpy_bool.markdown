@@ -95,6 +95,6 @@ tensor([[[5, 6, 7, 8, 9],
          [0, 1, 2, 3, 4]]])
 ```
 
-The funny thing in deep learning frameworks is that they are only partly based on Numpy convention... with lot's of subtle differences. One might say we do not speak of arrays, but tensors...
+The funny thing in deep learning frameworks is that they are only partly based on Numpy convention... with lot's of subtle differences. The philosopher might say we do not speak of arrays, but tensors...
 
 **Sad news**

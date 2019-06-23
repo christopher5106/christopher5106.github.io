@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "PyTorch Uint8 is Numpy Bool"
-date:   2018-06-23 05:00:00
+date:   2019-06-23 05:00:00
 categories: torch
 ---
 

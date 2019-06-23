@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Understanding memory information from top or free linux commands"
-date:   2018-06-12 05:00:00
+date:   2019-06-12 05:00:00
 categories: linux
 ---
 

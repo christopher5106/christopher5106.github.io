@@ -64,6 +64,7 @@ In Torch, behavior is very different:
 tensor([[0, 1, 2, 3, 4],
         [5, 6, 7, 8, 9]])
 
+>>> b = a < 8
 >>> b
 tensor([[1, 1, 1, 1, 1],
         [1, 1, 1, 0, 0]], dtype=torch.uint8)

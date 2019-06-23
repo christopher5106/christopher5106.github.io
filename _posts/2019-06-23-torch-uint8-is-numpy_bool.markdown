@@ -74,7 +74,7 @@ The result is in the uint8 type (which replaces boolean in Numpy).
 
 ```python
 >>> a[b]
-tensor([0, 1, 2, 3, 4, 5, 6, 7]
+tensor([0, 1, 2, 3, 4, 5, 6, 7])
 ```
 
 Torch requires to use long type for array index:
@@ -95,6 +95,6 @@ tensor([[[5, 6, 7, 8, 9],
          [0, 1, 2, 3, 4]]])
 ```
 
-The funny thing in deep learning frameworks is that there are only partly based on Numpy convention... with lot's of subtle differences. One might say we do not speak of arrays, but tensors...
+The funny thing in deep learning frameworks is that they are only partly based on Numpy convention... with lot's of subtle differences. One might say we do not speak of arrays, but tensors...
 
 **Sad news**

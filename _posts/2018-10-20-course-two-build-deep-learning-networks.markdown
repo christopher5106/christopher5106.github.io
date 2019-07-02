@@ -388,7 +388,9 @@ Since then, increasing width (more filters per layer) or depth (more layers) of 
 
 <img src="{{ site.url }}/img/compoundscaling.png" />
 
-Their method relies now on the efficiency of the baseline network, that they can search at lower computational cost. They released the EfficientNet architecture, found with the neural architecture search method:
+Their method relies now on the efficiency of the baseline network, that they can search at lower computational cost or at a target computational cost T. They released the EfficientNet architecture, found with the neural architecture search method on an objective trading accuracy with FLOPS:
+
+$$ ACC(m) \times [FLOPS(m)/T]**w $$
 
 <img src="{{ site.url }}/img/efficientnet.png" />
 

@@ -392,6 +392,8 @@ Their method relies now on the efficiency of the baseline network, that they can
 
 $$ ACC(m) \times [FLOPS(m)/T]**w $$
 
+The mobile inverted bottleneck MBConv (Sandler et al., 2018; Tan et al., 2019) is the main building block:
+
 <img src="{{ site.url }}/img/efficientnet.png" />
 
 The resulting accuracy :

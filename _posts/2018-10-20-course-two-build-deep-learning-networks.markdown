@@ -377,9 +377,25 @@ ShuffleNet goes one step further:
 
 While (a) is the bottleneck unit from Xception, grouping the features in the first pointwise convolution requires to shuffle the data to the next (b). When the module is asked to reduce the featuremap size, the depthwise convolution has a stride 2, an average pooling of stride 2 is applied to the shortcut connection and the output channels of both paths are concatenate rather than added, in order to augment the channel dimension (c).
 
-<img src="{{ site.url }}/img/deeplearningcourse/DL57.png">
+<img src="{{ site.url }}/img/deeplearningcourse/DL57.png" />
 
 Group convolutions reduces the budget so featuremaps can be extended with more channels, bringing a better accuracy in smaller models.
+
+
+#### EfficientNet and Compound scaling
+
+Since then, increasing width (more filters per layer) or depth (more layers) of a neural network increased its capacity, and its accuracy, up to a certain size. Working with inputs of higher resolution was also a way to improve accuracy, despite a strong increase in computation cost. Then, it has been noticed that increasing these three dimensions (depth, width and resolution) together rather than separately lead to better accuracy. They propose a method to scale architectures : given a baseline network, you search (with grid search) for hyperparameters $$ \alpha ** \phi $$, $$ \beta ** \phi $$ and $$ \gamma ** \phi $$ to scale depth, width and resolution so that they double the number of parameters in the network ** \alpha \cdot \beta**2 \cdot \gamma**2 = 2$$ and lead to the best accuracy. Then, you simply increase $$ \phi $$ to scale the network. With this method, they successfully increased the size of baselines ResNet-50, MobileNetv1 and MobileNetv2 to achieve better accuracy.
+
+<img src="{{ site.url }}/img/compoundscaling.png" />
+
+Their method relies now on the efficiency of the baseline network, that they can search at lower computational cost. They released the EfficientNet architecture, found with the neural architecture search method:
+
+<img src="{{ site.url }}/img/efficientnet.png" />
+
+The resulting accuracy :
+
+<img src="{{ site.url }}/img/efficientnetaccuracy.png" />
+
 
 **Exercise**: use a Pytorch model to predict the class of an image.
 

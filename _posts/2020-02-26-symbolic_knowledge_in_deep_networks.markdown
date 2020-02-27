@@ -17,6 +17,8 @@ In particular:
 
 The idea of the paper is to use Graph Convolutional Networks (GCN) to embed logical formulas. There exists multiple languages into which a formula can be compiled, with some appealing or simplifying characteristics (satisfiability, determinism, decomposability, polytime satisfiabily, polytime counting...).
 
+# Forms
+
 Logical formulas are compiled into different graph forms:
 
 - **Conjunctive Normal Form** (CNF) form which is a conjunction (AND) of clauses, where a clause is a disjunction (OR) of literals and a literal is propositional variable / predicate symbol, possibly preceded by a negation (NOT).
@@ -28,3 +30,13 @@ In the case of the synthetic dataset, the conversion of arbitrary formulas is pe
 The result is saved into [DIMACS format](http://www.satcompetition.org/2009/format-benchmarks2009.html).
 
 - Conversion from CNF form in DIMACS format to decision-Deterministic Decomposable Negation Normal Form (d-DNNF) is performed with `c2d_linux` command (in `model.Misc.Formula.dimacs_to_cnf`) of the [C2D compiler from UCLA](http://reasoning.cs.ucla.edu/c2d/).
+
+
+# Assignments
+
+Assignments (propositions that make the formula True) are found with the Solver from the PySat package when the formula is of type `pysat.formula.CNF`.
+
+Synthetic get_clauses
+
+VRD RelevantFormulatContainer
+clauses and assumptions

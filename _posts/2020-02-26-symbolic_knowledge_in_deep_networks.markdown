@@ -40,3 +40,43 @@ Synthetic get_clauses
 
 VRD RelevantFormulatContainer
 clauses and assumptions
+
+
+# Graph data format
+
+
+load data
+node features
+idx, features, labels
+
+features ???
+labels ???
+
+edges
+converted into an adjacency matrix A
+
+normalized
+$$ D^{-1} A $$
+
+contrary to paper
+$$ D^{-1/2} A D^{-1/2} $$
+
+the fact A is symetric $$ a_{i,j} = a_{j,i} $$ (undirected graph) does not mean nodes i and j have symetric roles
+
+The original ID are remapped to 0...N in the order the features are saved.
+
+- adj: the NxN adjacency matrix in torch sparse float tensor,
+- features: a dense float tensor with the features NxD,
+- labels: a Nx1 dense long tensor,
+- idx_train, idx_val, idx_test: NOT USED (simple range(0,N)),
+- and_children, or_children: JSON load from file
+??? idx are remapped ??
+
+MyDataset is implemented for the interface of torch.utils.data.DataLoader
+each batch is composed of 5 items
+each item is a triplet of 3 elements (A, P, N) anchor positive, negative
+each element is  
+
+the adjacency matrix in torch dense tensor
+the features
+labels

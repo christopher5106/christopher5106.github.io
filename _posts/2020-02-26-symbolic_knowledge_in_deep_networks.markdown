@@ -17,6 +17,15 @@ In particular:
 
 The idea of the paper is to use Graph Convolutional Networks (GCN) to embed logical formulas. There exists multiple languages into which a formula can be compiled, with some appealing or simplifying characteristics (satisfiability, determinism, decomposability, polytime satisfiabily, polytime counting...).
 
+The evaluation is performed against 2 datasets:
+
+- a synthetic dataset of logical formulas
+
+?? where do formula strings come from
+??? where do these features come from
+
+- the VRD dataset with added logical formulas for each possible relations
+
 # Forms
 
 Logical formulas are compiled into different graph forms:
@@ -29,7 +38,7 @@ The CNF is a conjunction (AND) of clauses, where a clause is a disjunction (OR) 
 
 ??? id of a relation
 
-- In the case of the synthetic dataset, the conversion of arbitrary formulas is performed with `sympy.logic.to_cnf` function from the Sympy package.
+- In the case of the synthetic dataset, the conversion of arbitrary formulas is performed with `sympy.logic.to_cnf` function from the Sympy package. Then a `get_clauses()` method parses the CNF clause list to return a list to map index to symbols (`atom_mapping`, for example `[None, 'e', 'f']` for a formula with None, e and f symbols) and a list of clauses in the format of lists as well: [-i] for a Not node, [i] for a symbol, and [(-)i, (-)j, (-)k, ...] where i, j, k are symbol indexes, (-) the Not operator.
 
 The result is saved into [DIMACS format](http://www.satcompetition.org/2009/format-benchmarks2009.html).
 
@@ -48,7 +57,9 @@ Conversion from CNF form in DIMACS format to d-DNNF is performed with `c2d_linux
 
 5 positive assignments (propositions that make the formula True) are found with the Solver from the PySat package when the formula is of type `pysat.formula.CNF`. 5 negative assignments are easier to find by random tests.
 
-Synthetic get_clauses
+
+
+Synthetic
 
 VRD RelevantFormulatContainer
 clauses and assumptions
@@ -58,7 +69,7 @@ clauses and assumptions
 
 
 
-# Features of the nodes
+# Features of the formula graph nodes
 
 In the case of the synthetic dataset, node features come from `model/pygcn/pygcn/features.pk` file containing
 
@@ -68,8 +79,8 @@ In the case of the synthetic dataset, node features come from `model/pygcn/pygcn
 
 - a `features` dictionary containing a feature for each type and symbol `Global, Symbol, Or, And, Not, a, b, c, d, e, f, g, h, i, j, k, l`. The feature is a numpy array of dimension (50,).
 
-??? where do these features come from
-?? where do formula strings come from
+
+
 
 # Training data
 

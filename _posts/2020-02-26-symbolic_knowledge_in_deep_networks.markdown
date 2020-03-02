@@ -108,7 +108,7 @@ clauses and assumptions
 
 In the case of the synthetic dataset, node features come from `model/pygcn/pygcn/features.pk` file containing
 
-- a list `digit_to_sym` to map index to symbol `[None, 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l']`
+- a list `digit_to_sym` to map index to symbol `[None, 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l']` (None to have all symbol indexes greater than 0)
 
 - a `type_map` dictionary to map type to index: `{'Global': 0, 'Symbol': 1, 'Or': 2, 'And': 3, 'Not': 4}`
 
@@ -116,7 +116,15 @@ In the case of the synthetic dataset, node features come from `model/pygcn/pygcn
 
 In the case of CNF, d-DNNF or assignments, negative literals '-i' are assigned the negative vector of the feature of the literal `-feature(i)`.
 
-In the case of the VRD datasets, for each subject-object pair, a crop of the union of both bounding boxes is resized to 224x224, normalized, processed by the CV network to produce visual features from before last layer of ResNet 18. `word_embed.json` contains word embeddings (dimension 300) for all object names from Word2Vec. A feature vector is created by concatenating the image feature with both word embeddings for subject and object labels. The annotation key is given by
+In the case of the VRD datasets, for each subject-object pair, a feature vector is created by concatenating
+
+- the image feature: a crop of the union of both bounding boxes is resized to 224x224, normalized, processed by the CV network to produce visual features from before last layer of ResNet 18.
+
+- word embeddings for both subject and object labels. `word_embed.json` contains word embeddings (dimension 300) for all object names from Word2Vec.
+
+- relative position coordinates of subject and object in the crop union of both bounding boxes.
+
+The annotation key is given by
 
 str((subject_category, subject_boundingbox),(object_category, object_boundingbox))
 
@@ -126,7 +134,7 @@ The dataset is scanned to search for all position relations possible for each re
 ```
 '_out', '_in', '_o_left', '_o_right', '_o_up', '_o_down', '_n_left','_n_right', '_n_up', '_n_down'
 ```
-and build the imply clause $$ \text{predicate} \rightarrow \lor \( \lor \{position} ) $$ for each predicate.
+and build the imply clause $$ \text{predicate} \rightarrow \lor \( \lor \text{position} ) $$ for each predicate.
 
 On top of that, for each subject-object pairs, the equivalent reverse position relation clause is added:
 
@@ -136,8 +144,16 @@ On top of that, for each subject-object pairs, the equivalent reverse position r
 
 $$ \text{S in O} \rightarrow \text{O out of S}$$
 
+Now that the logic of relations (predicate and relative position) is computed, only clauses that apply to two objects available in image are kept.
 
+??? for CNF conversion : And IDs of relation variables are remapped to a range of values from 1 to N.
 
+For nodes AND, OR, Global, features are reused from synthetic dataset. For other leaf nodes, the features is the average of Glove vectors for all words in the predicate, subjet and object names.
+
+??? different dimensions between 50 and 300
+?? problem in averaging
+
+???
 ```
 '_exists'
 '_unique'
@@ -195,3 +211,9 @@ The regularization loss takes the 100-dimension embedding $$ q_i $$ of each chil
 A second network, a MLP, is trained to discriminate the embeddings $$ (Q_A, Q_P) $$ and $$ (Q_A, Q_N) $$ with cross entropy loss on top of that.
 
 ??? number of node can be different
+
+??? if relation == 100
+
+# Relation prediction
+
+For the VRD experiment, a two-layer MLP is trained to predict the relation. The input consists of the image features concatenated with Glove vectors for subject/object labels and relative position coordinates in the image crop.

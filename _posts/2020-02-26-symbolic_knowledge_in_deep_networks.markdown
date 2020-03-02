@@ -21,17 +21,17 @@ The idea of the paper is to use Graph Convolutional Networks (GCN) to embed logi
 
 Logical formulas are compiled into different graph forms:
 
-## Conjunctive Normal Form (CNF)
+### Conjunctive Normal Form (CNF)
 
 The CNF is a conjunction (AND) of clauses, where a clause is a disjunction (OR) of literals. A literal is a propositional variable / predicate symbol, possibly preceded by a negation (NOT).
 
-- In the case of the VRD dataset, a clause is an imply statement: "Person X wears glasses" implies "glasses are IN Person X". An imply statement $$ P \rightarrow Q $$ can be written in the form of a disjunction $$ \neg P \lor Q $$. Since the clauses are quite simple, each clause can be expressed in the code with a list of `[-rel_id, pos_id]` where `rel_id` is the ID of a relation and `pos_id` is the ID of a spatial property.
+- In the case of the VRD dataset, a clause is an imply statement: "Person X wears glasses" implies "glasses are IN Person X". An imply statement $$ P \rightarrow Q $$ can be written in the form of a disjunction $$ \neg P \lor Q $$. Since the clauses are quite simple, each clause can be expressed in the code with a couple `[-rel_id, pos_id]` where `rel_id` is the ID of a relation and `pos_id` is the ID of a spatial property.
 
 - In the case of the synthetic dataset, the conversion of arbitrary formulas is performed with `sympy.logic.to_cnf` function from the Sympy package.
 
 The result is saved into [DIMACS format](http://www.satcompetition.org/2009/format-benchmarks2009.html).
 
-## decision-Deterministic Decomposable Negation Normal Form (d-DNNF)
+### decision-Deterministic Decomposable Negation Normal Form (d-DNNF)
 
 The d-DNNF satisfies two properties:
 

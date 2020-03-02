@@ -29,7 +29,7 @@ In the case of the synthetic dataset, the conversion of arbitrary formulas is pe
 
 The result is saved into [DIMACS format](http://www.satcompetition.org/2009/format-benchmarks2009.html).
 
-- Conversion from CNF form in DIMACS format to decision-Deterministic Decomposable Negation Normal Form (d-DNNF) is performed with `c2d_linux` command (in `model.Misc.Formula.dimacs_to_cnf`) of the [C2D compiler from UCLA](http://reasoning.cs.ucla.edu/c2d/).
+- **decision-Deterministic Decomposable Negation Normal Form** (d-DNNF) where conversion is performed from CNF form in DIMACS format with `c2d_linux` command (in `model.Misc.Formula.dimacs_to_cnf`) of the [C2D compiler from UCLA](http://reasoning.cs.ucla.edu/c2d/).
 
 
 # Assignments

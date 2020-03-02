@@ -21,7 +21,7 @@ The idea of the paper is to use Graph Convolutional Networks (GCN) to embed logi
 
 Logical formulas are compiled into different graph forms:
 
-### Conjunctive Normal Form (CNF)
+#### Conjunctive Normal Form (CNF)
 
 The CNF is a conjunction (AND) of clauses, where a clause is a disjunction (OR) of literals. A literal is a propositional variable / predicate symbol, possibly preceded by a negation (NOT).
 
@@ -31,7 +31,7 @@ The CNF is a conjunction (AND) of clauses, where a clause is a disjunction (OR) 
 
 The result is saved into [DIMACS format](http://www.satcompetition.org/2009/format-benchmarks2009.html).
 
-### decision-Deterministic Decomposable Negation Normal Form (d-DNNF)
+#### decision-Deterministic Decomposable Negation Normal Form (d-DNNF)
 
 The d-DNNF satisfies two properties:
 

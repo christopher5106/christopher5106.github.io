@@ -103,4 +103,4 @@ The regularization loss takes the 100-dimension embedding $$ q_i $$ of each chil
 
 A second network, a MLP, is trained to discriminate the embeddings $$ (Q_A, Q_P) $$ and $$ (Q_A, Q_N) $$ with cross entropy loss on top of that.
 
-??? number of node can be different ???
+??? number of node can be different

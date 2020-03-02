@@ -34,11 +34,9 @@ Logical formulas are compiled into different graph forms:
 
 The CNF is a conjunction (AND) of clauses, where a clause is a disjunction (OR) of literals. A literal is a propositional variable / predicate symbol, possibly preceded by a negation (NOT).
 
-- In the case of the VRD dataset, a clause is an imply statement: "Person X wears glasses" implies "glasses are IN Person X". An imply statement $$ P \rightarrow Q $$ can be written in the form of a disjunction $$ \neg P \lor Q $$. Since the clauses are quite simple, each clause can be expressed in the code with a couple `[-rel_id, pos_id]` where `rel_id` is the ID of a relation and `pos_id` is the ID of a spatial property.
+- In the case of the VRD dataset, formula can be directly written in the CNF form. A clause is an imply statement: "Person X wears glasses" implies "glasses are IN Person X" and an imply statement $$ P \rightarrow Q $$ can be written in the form of a disjunction $$ \neg P \lor Q $$.
 
-??? id of a relation
-
-- In the case of the synthetic dataset, the conversion of arbitrary formulas is performed with `sympy.logic.to_cnf` function from the Sympy package. Then a `get_clauses()` method parses the CNF clause list to return a list to map index to symbols (`atom_mapping`, for example `[None, 'e', 'f']` for a formula with None, e and f symbols) and a list of clauses in the format of lists as well: [-i] for a Not node, [i] for a symbol, and [(-)i, (-)j, (-)k, ...] where i, j, k are symbol indexes, (-) the Not operator.
+- In the case of the synthetic dataset, the conversion of arbitrary formulas is performed with `sympy.logic.to_cnf` function from the Sympy package.
 
 The result is saved into [DIMACS format](http://www.satcompetition.org/2009/format-benchmarks2009.html).
 
@@ -53,9 +51,28 @@ The d-DNNF satisfies two properties:
 Conversion from CNF form in DIMACS format to d-DNNF is performed with `c2d_linux` command (in `model.Misc.Formula.dimacs_to_cnf`) of the [C2D compiler from UCLA](http://reasoning.cs.ucla.edu/c2d/).
 
 
-# Assignments
+# Graph format
+
+A global node is added to all graphs, with type global and symbol `None`, and linked to all other nodes in the graph to help the embedder.
+
+All formula graphs is saved into 2 files:
+- a '.var' file, listing all nodes
+- an '.rel' file, listing all edges between nodes
+
+
+# Satisfying assignments
+
+Positive assignments (propositions that make the formula True) are easier to search from the CNF format with the Solver from the PySat package. Clauses of CNF format are quite simple to express:
+
+- in the VRD dataset, each clause can be expressed in the code with a couple `[-rel_id, pos_id]` where `rel_id` is the ID of a relation and `pos_id` is the ID of a spatial property.
+
+??? id of a relation
+
+- In the case of the synthetic dataset, a `get_clauses()` method parses the CNF clause list to return a list to map index to symbols (`atom_mapping`, for example `[None, 'e', 'f']` for a formula with None, e and f symbols) and a list of clauses in the format of lists as well: [-i] for a Not node, [i] for a symbol, and [(-)i, (-)j, (-)k, ...] where i, j, k are symbol indexes, (-) the Not operator.
 
 5 positive assignments (propositions that make the formula True) are found with the Solver from the PySat package when the formula is of type `pysat.formula.CNF`. 5 negative assignments are easier to find by random tests.
+
+Assignments are considered also as graphs, with one AND node and literals 'i' or '-i'.
 
 
 
@@ -79,7 +96,7 @@ In the case of the synthetic dataset, node features come from `model/pygcn/pygcn
 
 - a `features` dictionary containing a feature for each type and symbol `Global, Symbol, Or, And, Not, a, b, c, d, e, f, g, h, i, j, k, l`. The feature is a numpy array of dimension (50,).
 
-
+In the case of CNF, d-DNNF or assignments, negative literals '-i' are assigned the negative vector of the feature of the literal `-feature(i)`.
 
 
 # Training data

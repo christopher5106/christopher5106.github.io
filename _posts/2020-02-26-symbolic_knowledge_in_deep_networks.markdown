@@ -44,6 +44,10 @@ clauses and assumptions
 
 # Graph data format
 
+MyDataset is implemented for the interface of torch.utils.data.DataLoader
+each batch is composed of 5 items
+each item is a triplet of 3 elements (A, P, N) anchor positive, negative
+each element is loaded with load_data
 
 load data
 node features
@@ -72,11 +76,16 @@ The original ID are remapped to 0...N in the order the features are saved.
 - and_children, or_children: JSON load from file
 ??? idx are remapped ??
 
-MyDataset is implemented for the interface of torch.utils.data.DataLoader
-each batch is composed of 5 items
-each item is a triplet of 3 elements (A, P, N) anchor positive, negative
-each element is  
+For each element, an embedding Q of dimension Nx100 is computed with the model, a stack of 4 Graph Convolutions $$A\cdotX\cdotW + B$$ where W are specialized depending on the type of node.
 
-the adjacency matrix in torch dense tensor
-the features
-labels
+The embedding is trained with triplet margin loss with euclidian distance, plus a regularization loss.
+
+The regularization loss takes the 100-dimension embedding $$ q_i $$ of each children nodes of a AND or OR node and applies:
+
+...
+
+??? difference from paper
+
+A second network, a MLP, is trained to discriminate the embeddings $$ (Q_A, Q_P) $$ and $$ (Q_A, Q_N) $$ with cross entropy loss on top of that.
+
+??? number of node can be different ???

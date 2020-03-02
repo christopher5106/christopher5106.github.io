@@ -91,7 +91,7 @@ The return of the function composed of :
 
 ??? and_children idx are remapped
 
-Each element is in a graph whose embedding Q of dimension Nx100 (N number of nodes in the graph) is computed with the model, a stack of 4 Graph Convolutions $$A \dot X \dot W + B$$ where W are specialized depending on the type of node.
+Each element is in a graph whose embedding Q of dimension Nx100 (N number of nodes in the graph) is computed with the model, a stack of 4 Graph Convolutions $$A \cdot X \cdot W + B$$ where W are specialized depending on the type of node.
 
 The embedding is trained with triplet margin loss with euclidian distance, plus a regularization loss.
 

@@ -25,7 +25,7 @@ Logical formulas are compiled into different graph forms:
 
 The CNF is a conjunction (AND) of clauses, where a clause is a disjunction (OR) of literals. A literal is a propositional variable / predicate symbol, possibly preceded by a negation (NOT).
 
-- In the case of the VRD dataset, a clause is an imply statement: "X wears glasses" implies "glasses are IN X". An imply statement $$ P \rightarrow Q $$ can be written in the form of a disjunction $$ \neg P \lor Q $$. Since the formula are quite simple, in the code, each clause can be expressed as a list `[-rel_id, pos_id]` where `rel_id` is the ID of a relation and `pos_id` is the ID of a spatial property.
+- In the case of the VRD dataset, a clause is an imply statement: "Person X wears glasses" implies "glasses are IN Person X". An imply statement $$ P \rightarrow Q $$ can be written in the form of a disjunction $$ \neg P \lor Q $$. Since the formula are quite simple, in the code, each clause can be expressed as a list `[-rel_id, pos_id]` where `rel_id` is the ID of a relation and `pos_id` is the ID of a spatial property.
 
 - In the case of the synthetic dataset, the conversion of arbitrary formulas is performed with `sympy.logic.to_cnf` function from the Sympy package.
 

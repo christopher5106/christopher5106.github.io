@@ -46,7 +46,7 @@ Conversion from CNF form in DIMACS format to d-DNNF is performed with `c2d_linux
 
 # Assignments
 
-Assignments (propositions that make the formula True) are found with the Solver from the PySat package when the formula is of type `pysat.formula.CNF`.
+5 positive assignments (propositions that make the formula True) are found with the Solver from the PySat package when the formula is of type `pysat.formula.CNF`. 5 negative assignments are easier to find by random tests.
 
 Synthetic get_clauses
 
@@ -54,41 +54,44 @@ VRD RelevantFormulatContainer
 clauses and assumptions
 
 
+??? save assignments, positive, and negatives. Each element a graph
+
+
 # Graph data format
 
-MyDataset is implemented for the interface of `torch.utils.data.DataLoader`
-each batch is composed of 5 items
-each item is a triplet of 3 elements (A, P, N) anchor positive, negative
-each element is loaded with load_data
+An object `MyDataset` is implemented for the interface of `torch.utils.data.DataLoader` to deliver batches.
 
-load data
-node features
-idx, features, labels
+Each batch is composed of 5 items, where each item is a triplet of 3 elements (A, P, N): the anchor (the formula), the positive (or satisfying) assignment, a negative assignment. The three elements are used in the triplet margin loss: the positive assignment has to be closer to the formula than the negative assignment in the embedding space.
 
-features ???
-labels ???
+Each elements are loaded from file with `load_data` function. It loads:
 
-edges
-converted into an adjacency matrix A
+- node features (each line contains the id, features, label for each node)
 
-normalized
+??? features
+??? labels
+
+- edges, converted into an adjacency matrix A, normalized with
+
 $$ D^{-1} A $$
 
-contrary to paper
+contrary to paper explanation:
+
 $$ D^{-1/2} A D^{-1/2} $$
 
-the fact A is symetric $$ a_{i,j} = a_{j,i} $$ (undirected graph) does not mean nodes i and j have symetric roles
+The fact A is symetric $$ a_{i,j} = a_{j,i} $$ (undirected graph) does not mean nodes i and j have symetric roles.
 
 The original ID are remapped to 0...N in the order the features are saved.
 
+The return of the function composed of :
 - adj: the NxN adjacency matrix in torch sparse float tensor,
 - features: a dense float tensor with the features NxD,
 - labels: a Nx1 dense long tensor,
 - idx_train, idx_val, idx_test: NOT USED (simple range(0,N)),
 - and_children, or_children: JSON load from file
-??? idx are remapped ??
 
-For each element, an embedding Q of dimension Nx100 is computed with the model, a stack of 4 Graph Convolutions $$A\cdotX\cdotW + B$$ where W are specialized depending on the type of node.
+??? and_children idx are remapped
+
+Each element is in a graph whose embedding Q of dimension Nx100 (N number of nodes in the graph) is computed with the model, a stack of 4 Graph Convolutions $$A\cdotX\cdotW + B$$ where W are specialized depending on the type of node.
 
 The embedding is trained with triplet margin loss with euclidian distance, plus a regularization loss.
 

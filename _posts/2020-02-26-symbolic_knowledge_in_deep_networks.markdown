@@ -60,16 +60,16 @@ clauses and assumptions
 
 # Features of the nodes
 
-In the case of the synthetic dataset comes from `model/pygcn/pygcn/features.pk` file containing
+In the case of the synthetic dataset, node features come from `model/pygcn/pygcn/features.pk` file containing
 
 - a list `digit_to_sym` to map index to symbol `[None, 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l']`
 
-- a `type_map` dictionary `{'Global': 0, 'Symbol': 1, 'Or': 2, 'And': 3, 'Not': 4}`
+- a `type_map` dictionary to map type to index: `{'Global': 0, 'Symbol': 1, 'Or': 2, 'And': 3, 'Not': 4}`
 
-- a `features` dictionary containing a feature for each type 'Global, Symbol, Or, And, Not' and each symbol 'a, b, c, d, e, f, g, h, i, j, k, l'. The feature is a numpy array of dimension (50,).
+- a `features` dictionary containing a feature for each type and symbol `Global, Symbol, Or, And, Not, a, b, c, d, e, f, g, h, i, j, k, l`. The feature is a numpy array of dimension (50,).
 
 ??? where do these features come from
-
+?? where do formula strings come from
 
 # Training data
 

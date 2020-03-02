@@ -57,11 +57,30 @@ clauses and assumptions
 ??? save assignments, positive, and negatives. Each element a graph
 
 
-# Graph data format
+
+# Features of the nodes
+
+In the case of the synthetic dataset comes from `model/pygcn/pygcn/features.pk` file containing
+
+- a list `digit_to_sym` to map index to symbol `[None, 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l']`
+
+- a `type_map` dictionary `{'Global': 0, 'Symbol': 1, 'Or': 2, 'And': 3, 'Not': 4}`
+
+- a `features` dictionary containing a feature for each type 'Global, Symbol, Or, And, Not' and each symbol 'a, b, c, d, e, f, g, h, i, j, k, l'. The feature is a numpy array of dimension (50,).
+
+??? where do these features come from
+
+
+# Training data
+
+#### Batches of 5 triplets
 
 An object `MyDataset` is implemented for the interface of `torch.utils.data.DataLoader` to deliver batches.
 
 Each batch is composed of 5 items, where each item is a triplet of 3 elements (A, P, N): the anchor (the formula), the positive (or satisfying) assignment, a negative assignment. The three elements are used in the triplet margin loss: the positive assignment has to be closer to the formula than the negative assignment in the embedding space.
+
+
+### Element loading
 
 Each elements are loaded from file with `load_data` function. It loads:
 

@@ -54,7 +54,7 @@ clauses and assumptions
 
 # Graph data format
 
-MyDataset is implemented for the interface of torch.utils.data.DataLoader
+MyDataset is implemented for the interface of `torch.utils.data.DataLoader`
 each batch is composed of 5 items
 each item is a triplet of 3 elements (A, P, N) anchor positive, negative
 each element is loaded with load_data

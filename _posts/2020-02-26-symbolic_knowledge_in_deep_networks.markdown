@@ -27,6 +27,8 @@ The CNF is a conjunction (AND) of clauses, where a clause is a disjunction (OR) 
 
 - In the case of the VRD dataset, a clause is an imply statement: "Person X wears glasses" implies "glasses are IN Person X". An imply statement $$ P \rightarrow Q $$ can be written in the form of a disjunction $$ \neg P \lor Q $$. Since the clauses are quite simple, each clause can be expressed in the code with a couple `[-rel_id, pos_id]` where `rel_id` is the ID of a relation and `pos_id` is the ID of a spatial property.
 
+??? id of a relation
+
 - In the case of the synthetic dataset, the conversion of arbitrary formulas is performed with `sympy.logic.to_cnf` function from the Sympy package.
 
 The result is saved into [DIMACS format](http://www.satcompetition.org/2009/format-benchmarks2009.html).

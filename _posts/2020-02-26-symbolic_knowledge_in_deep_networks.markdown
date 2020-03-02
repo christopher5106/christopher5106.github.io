@@ -24,7 +24,27 @@ The evaluation is performed against 2 datasets:
 ?? where do formula strings come from
 ??? where do these features come from
 
-- the VRD dataset with added logical formulas for each possible relations
+- the VRD dataset with added logical formulas for each possible relations. The dataset is composed of 100 object classes (`objects.json`):
+
+```
+'person', 'sky', 'building', 'truck', 'bus', 'table', 'shirt', 'chair', 'car', 'train', 'glasses', 'tree', 'boat', 'hat', 'trees', 'grass', 'pants', 'road', 'motorcycle', 'jacket', 'monitor', 'wheel', 'umbrella', 'plate', 'bike', 'clock', 'bag', 'shoe', 'laptop', 'desk', 'cabinet', 'counter', 'bench', 'shoes', 'tower', 'bottle', 'helmet', 'stove', 'lamp', 'coat', 'bed', 'dog', 'mountain', 'horse', 'plane', 'roof', 'skateboard', 'traffic light', 'bush', 'phone', 'airplane', 'sofa', 'cup', 'sink', 'shelf', 'box', 'van', 'hand', 'shorts', 'post', 'jeans', 'cat', 'sunglasses', 'bowl', 'computer', 'pillow', 'pizza', 'basket', 'elephant', 'kite', 'sand', 'keyboard', 'plant', 'can', 'vase', 'refrigerator', 'cart', 'skis', 'pot', 'surfboard', 'paper', 'mouse', 'trash can', 'cone', 'camera', 'ball', 'bear', 'giraffe', 'tie', 'luggage', 'faucet', 'hydrant', 'snowboard', 'oven', 'engine', 'watch', 'face', 'street', 'ramp', 'suitcase'
+```
+
+70 predicates (`predicates.json`)
+
+```
+'on', 'wear', 'has', 'next to', 'sleep next to', 'sit next to', 'stand next to', 'park next', 'walk next to', 'above', 'behind', 'stand behind', 'sit behind', 'park behind', 'in the front of', 'under', 'stand under', 'sit under', 'near', 'walk to', 'walk', 'walk past', 'in', 'below', 'beside', 'walk beside', 'over', 'hold', 'by', 'beneath', 'with', 'on the top of', 'on the left of', 'on the right of', 'sit on', 'ride', 'carry', 'look', 'stand on', 'use', 'at', 'attach to', 'cover', 'touch', 'watch', 'against', 'inside', 'adjacent to', 'across', 'contain', 'drive', 'drive on', 'taller than', 'eat', 'park on', 'lying on', 'pull', 'talk', 'lean on', 'fly', 'face', 'play with', 'sleep on', 'outside of', 'rest on', 'follow', 'hit', 'feed', 'kick', 'skate on'
+```
+
+and the files `annotations_train.json` and `annotations_test.json`, dictionaries containing for each file a list of annotations inthe JSON format
+
+```
+{
+  'predicate': 0,
+  'object': {'category': 0, 'bbox': [318, 1019, 316, 767]},
+  'subject': {'category': 13, 'bbox': [330, 473, 501, 724]}
+}
+```
 
 # Forms
 
@@ -53,7 +73,7 @@ Conversion from CNF form in DIMACS format to d-DNNF is performed with `c2d_linux
 
 # Graph format
 
-A global node is added to all graphs, with type global and symbol `None`, and linked to all other nodes in the graph to help the embedder.
+A global node is added to all graphs, with type global, and linked to all other nodes in the graph to help the embedder.
 
 All formula graphs is saved into 2 files:
 - a '.var' file, listing all nodes
@@ -64,11 +84,9 @@ All formula graphs is saved into 2 files:
 
 Positive assignments (propositions that make the formula True) are easier to search from the CNF format with the Solver from the PySat package. Clauses of CNF format are quite simple to express:
 
-- in the VRD dataset, each clause can be expressed in the code with a couple `[-rel_id, pos_id]` where `rel_id` is the ID of a relation and `pos_id` is the ID of a spatial property.
+- in the VRD dataset, each clause can be expressed in the code with a couple `[-rel_id, pos_id]` where `rel_id` is the ID of a relation `[relation predicate, subject, object]` and `pos_id` is the ID of a spatial property `[position relation, subject, object]`. Variable ID are provided by variable ID manager `pysat.formula.IDPool`, always starting from 1.
 
-??? id of a relation
-
-- In the case of the synthetic dataset, a `get_clauses()` method parses the CNF clause list to return a list to map index to symbols (`atom_mapping`, for example `[None, 'e', 'f']` for a formula with None, e and f symbols) and a list of clauses in the format of lists as well: [-i] for a Not node, [i] for a symbol, and [(-)i, (-)j, (-)k, ...] where i, j, k are symbol indexes, (-) the Not operator.
+- In the case of the synthetic dataset, a `get_clauses()` method parses the CNF clause list to return a list to map index to symbols (`atom_mapping`, for example `['e', 'f']` for a formula with e and f symbols) and a list of clauses in the format of lists as well: [-i] for a Not node, [i] for a symbol, and [(-)i, (-)j, (-)k, ...] where i, j, k are symbol indexes, (-) the Not operator.
 
 5 positive assignments (propositions that make the formula True) are found with the Solver from the PySat package when the formula is of type `pysat.formula.CNF`. 5 negative assignments are easier to find by random tests.
 
@@ -98,6 +116,32 @@ In the case of the synthetic dataset, node features come from `model/pygcn/pygcn
 
 In the case of CNF, d-DNNF or assignments, negative literals '-i' are assigned the negative vector of the feature of the literal `-feature(i)`.
 
+In the case of the VRD datasets, for each subject-object pair, a crop of the union of both bounding boxes is resized to 224x224, normalized, processed by the CV network to produce visual features from before last layer of ResNet 18. `word_embed.json` contains word embeddings (dimension 300) for all object names from Word2Vec. A feature vector is created by concatenating the image feature with both word embeddings for subject and object labels. The annotation key is given by
+
+str((subject_category, subject_boundingbox),(object_category, object_boundingbox))
+
+The concepts of subject and object are exchangeable, and a "no-predicate" label is added to all void relations.
+
+The dataset is scanned to search for all position relations possible for each relation `[predicate, subject, object]`, among one of 10 possible exclusive names:
+```
+'_out', '_in', '_o_left', '_o_right', '_o_up', '_o_down', '_n_left','_n_right', '_n_up', '_n_down'
+```
+and build the imply clause $$ \text{predicate} \rightarrow \lor \( \lor \{position} ) $$ for each predicate.
+
+On top of that, for each subject-object pairs, the equivalent reverse position relation clause is added:
+
+```
+[['_out', '_in'], ['_o_left', '_o_right'], ['_o_up', '_o_down'],['_n_left', '_n_right'], ['_n_up', '_n_down']]
+```
+
+$$ \text{S in O} \rightarrow \text{O out of S}$$
+
+
+
+```
+'_exists'
+'_unique'
+```
 
 # Training data
 

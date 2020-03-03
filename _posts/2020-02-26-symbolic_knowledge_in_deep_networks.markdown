@@ -105,7 +105,7 @@ Positive assignments (propositions that make the formula True) can also be easil
 
 corresponding to
 
-$$ \land_{\text{var} \in \text{Variables}} \( \text{var} \)$$
+$$ \underset{\land}{\text{var} \in \text{Variables}} \( \text{var} \)$$
 
 where each clause is composed of only one variable.
 

@@ -152,7 +152,7 @@ $$ \| \text{embedding}(\text{formula}) - \text{embedding}(\text{assignment}) \|$
 
 In the case of the synthetic dataset, node features come from `model/pygcn/pygcn/features.pk` file containing
 
-- a list `digit_to_sym` to map index to symbol `[None, 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l']` (None to have all symbol indexes greater than 0)
+- a list `digit_to_sym` to map index to symbol `[None, 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l']` (None to have all symbol indexes greater or equal to 1)
 
 - a `type_map` dictionary to map type to index: `{'Global': 0, 'Symbol': 1, 'Or': 2, 'And': 3, 'Not': 4}`
 
@@ -164,49 +164,38 @@ In the case of the VRD datasets,
 
 - for nodes AND, OR, Global, features are reused from synthetic dataset.
 
-- for Symbol leaf nodes, the features is the average of Glove vectors for all words in the predicate, subjet and object names.
+- for Symbol leaf nodes, the features is the average of Glove vectors for all words in the relation (predicate or position), subject and object names.
 
-<span style="color:red">Q4: </span>
-<span style="color:red">Q5: </span>
+<span style="color:red">Q4: full position names (POS_REL_NAMES_FULL) can be composed of multiple words, and embeddings are summed, not averaged in [relcnf2data](https://github.com/ZiweiXU/LENSR/blob/master/tools/relcnf2data.py#L41) and [relddnf2data](https://github.com/ZiweiXU/LENSR/blob/master/tools/relddnnf2data.py#L41) and in [train](https://github.com/ZiweiXU/LENSR/blob/master/model/relation_prediction/train.py#L264). Would it be better to normalize by the number of words ?</span>
+
+<span style="color:red">Q5: are [artificial predicates](https://github.com/ZiweiXU/LENSR/blob/0cb723537b792238adf71cfcf31457919eeb370a/tools/find_rels.py#L23) 'exists' and 'unique' defined in code use somewhere ?</span>
+
 <span style="color:red">Q6: </span>
-<span style="color:red">Q7: </span>
+
 
 ??? different dimensions between 50 and 300
-?? problem in averaging
 
-???
-```
-'_exists'
-'_unique'
-```
 
 #### Training the embedder
-
-Batches of 5 triplets
 
 An object `MyDataset` is implemented for the interface of `torch.utils.data.DataLoader` to deliver batches.
 
 Each batch is composed of 5 items, where each item is a triplet of 3 elements (A, P, N): the anchor (the formula), the positive (or satisfying) assignment, a negative assignment. The three elements are used in the triplet margin loss: the positive assignment has to be closer to the formula than the negative assignment in the embedding space.
 
-
-Element loading
-
-Each elements are loaded from file with `load_data` function. It loads:
+Each element are loaded from file with `load_data` function. It loads:
 
 - node features (each line contains the id, features, label for each node)
-
-??? features
-??? labels
 
 - edges, converted into an adjacency matrix A, normalized with
 
 $$ D^{-1} A $$
 
-contrary to paper explanation:
+<span style="color:red">Q7: it looks contrary to paper definition:
 
 $$ D^{-1/2} A D^{-1/2} $$
 
 The fact A is symetric $$ a_{i,j} = a_{j,i} $$ (undirected graph) does not mean nodes i and j have symetric roles.
+</span>
 
 The original ID are remapped to 0...N in the order the features are saved.
 
@@ -269,5 +258,7 @@ Optimizer applies gradients on the MLP model only, contraining only the MLP weig
 batch size of batch == nb relations + some negative subsampling
 
 the feature used for the symbol is an average of prob * feature of the relation name  and embeddings
+
+??? already normalized
 
 <img src="{{ site.url }}/img/Assignment_vrd.jpg">

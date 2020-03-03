@@ -25,7 +25,7 @@ The idea of the paper is to use Graph Convolutional Networks (GCN) to represent 
 
 There exists multiple languages into which a logical formula can be expressed or compiled, with some of them with appealing or simplifying characteristics (satisfiability, determinism, decomposability, polytime satisfiabily, polytime counting...).
 
-The evaluation of the models are performed on 2 datasets:
+The evaluation of the representations are performed on 2 datasets:
 
 - a synthetic dataset of logical formulas
 
@@ -33,7 +33,7 @@ The evaluation of the models are performed on 2 datasets:
 
 <span style="color:red">Q2: where do features of symbols and logic operands come from ?</span>
 
-- the VRD dataset with added logical formulas for each possible relations. The dataset is composed of 100 object classes (`objects.json`):
+- the [Visual Relationship Detection (VRD)](https://cs.stanford.edu/people/ranjaykrishna/vrd/) dataset with added logical formulas for each possible relations. The dataset is composed of 100 object classes (`objects.json`):
 
 ```
 'person', 'sky', 'building', 'truck', 'bus', 'table', 'shirt', 'chair', 'car', 'train', 'glasses', 'tree', 'boat', 'hat', 'trees', 'grass', 'pants', 'road', 'motorcycle', 'jacket', 'monitor', 'wheel', 'umbrella', 'plate', 'bike', 'clock', 'bag', 'shoe', 'laptop', 'desk', 'cabinet', 'counter', 'bench', 'shoes', 'tower', 'bottle', 'helmet', 'stove', 'lamp', 'coat', 'bed', 'dog', 'mountain', 'horse', 'plane', 'roof', 'skateboard', 'traffic light', 'bush', 'phone', 'airplane', 'sofa', 'cup', 'sink', 'shelf', 'box', 'van', 'hand', 'shorts', 'post', 'jeans', 'cat', 'sunglasses', 'bowl', 'computer', 'pillow', 'pizza', 'basket', 'elephant', 'kite', 'sand', 'keyboard', 'plant', 'can', 'vase', 'refrigerator', 'cart', 'skis', 'pot', 'surfboard', 'paper', 'mouse', 'trash can', 'cone', 'camera', 'ball', 'bear', 'giraffe', 'tie', 'luggage', 'faucet', 'hydrant', 'snowboard', 'oven', 'engine', 'watch', 'face', 'street', 'ramp', 'suitcase'

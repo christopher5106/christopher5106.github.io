@@ -105,7 +105,7 @@ Positive assignments (propositions that make the formula True) can also be easil
 
 corresponding to
 
-$$ \land \( \lor varaibles \)$$
+$$ \land_{\text{var} \in \text{Variables}} \( \text{var} \)$$
 
 are easier to search from the CNF format with the Solver from the PySat package. Clauses of CNF format are quite simple to express:
 

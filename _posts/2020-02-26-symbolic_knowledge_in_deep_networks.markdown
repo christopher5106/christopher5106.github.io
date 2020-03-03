@@ -5,6 +5,8 @@ date:   2020-02-26 05:00:00
 categories: deep learning
 ---
 
+**Writing in progress. Delivery tonight**
+
 In this post, I'll give some explanations about [Embedding Symbolic Knowledge into Deep Networks](https://arxiv.org/abs/1909.01161) paper with [code](https://github.com/ZiweiXU/LENSR).
 
 In particular:
@@ -222,4 +224,4 @@ First, a Softmax+Crossentropy loss trains the network to predict the relation. S
 
 
 ??? torch.load require grad
-??? no eval mode 
+??? no eval mode

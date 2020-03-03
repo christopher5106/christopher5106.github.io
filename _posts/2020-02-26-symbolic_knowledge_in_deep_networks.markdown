@@ -75,7 +75,7 @@ Conversion from CNF form in DIMACS format to d-DNNF is performed with `c2d_linux
 
 # Graph format
 
-A global node is added to all graphs, with type global, and linked to all other nodes in the graph to help the embedder.
+To have a global representation of a graph, a global node is added to the graph, with type global, and linked to all other nodes in the graph, and the embedding of this node will be taken as the **graph embedding**.
 
 All formula graphs is saved into 2 files:
 - a '.var' file, listing all nodes
@@ -220,8 +220,8 @@ A second network, a MLP, is trained to discriminate the embeddings $$ (Q_A, Q_P)
 
 For the VRD experiment, a two-layer MLP is trained to predict the relation. The input of the MLP consists of the image features concatenated with Glove vectors for subject/object labels and relative position coordinates in the image crop. The output is a logit of dimension 71.
 
-First, a Softmax+Crossentropy loss trains the network to predict the relation. Second, thanks to a trained GCN for the formula and positive assignment,
+First, a Softmax+Crossentropy loss trains the network to predict the relation. Second, thanks to a trained GCN to produce embeddings for the formula and positive assignment to be close, the GCN embedding for the softmax of the logits is constrained to be close to the formula's embedding as well.
 
+Optimizer applies gradients on the MLP model only, contraining only the MLP weights for the ouput to follow the embedder loss.
 
-??? torch.load require grad
-??? no eval mode
+<img src="{{ site.url }}/img/VRD_clause.jpg"> 

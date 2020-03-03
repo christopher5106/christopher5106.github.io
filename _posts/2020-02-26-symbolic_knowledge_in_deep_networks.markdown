@@ -61,7 +61,7 @@ The dataset is scanned to search for all position relations possible for each re
 ```
 '_out', '_in', '_o_left', '_o_right', '_o_up', '_o_down', '_n_left','_n_right', '_n_up', '_n_down'
 ```
-and build the imply clause $$ \text{predicate} \rightarrow \lor \( \lor \text{position} ) $$ for each predicate.
+and build the imply clause $$ \text{predicate} \rightarrow \lor \left( \lor \text{position} \right) $$ for each predicate.
 
 On top of that, for each subject-object pairs, the equivalent reverse position relation clause is added:
 

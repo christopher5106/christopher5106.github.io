@@ -57,6 +57,28 @@ and the files `annotations_train.json` and `annotations_test.json`, dictionaries
 
 From the dataset, logical formulas are computed to constrain each relation predicate with all possible relation position between objects. The goal here is to have a neural network prediction of a relation between objects to satisfy the constrains given by the position relation of object bounding boxes.
 
+The dataset is scanned to search for all position relations possible for each relation `[predicate, subject, object]`, among one of 10 possible exclusive names:
+```
+'_out', '_in', '_o_left', '_o_right', '_o_up', '_o_down', '_n_left','_n_right', '_n_up', '_n_down'
+```
+and build the imply clause $$ \text{predicate} \rightarrow \lor \( \lor \text{position} ) $$ for each predicate.
+
+On top of that, for each subject-object pairs, the equivalent reverse position relation clause is added:
+
+```
+[['_out', '_in'], ['_o_left', '_o_right'], ['_o_up', '_o_down'],['_n_left', '_n_right'], ['_n_up', '_n_down']]
+```
+
+$$ \text{S in O} \rightarrow \text{O out of S}$$
+
+When a sample (image, subject, object) is processed:
+
+- only clauses that apply to two objects available in image are kept,
+
+- the assumption, i.e. the position relation that hold in the current sample, is added as a clause composed of one position variable
+
+<span style="color:red">Q3: for CNF conversion, IDs of relation variables that are kept are remapped to a range of values from 1 to N, is that a requirement from PySat package ?</span>
+
 
 # Logical Graph Forms
 
@@ -113,7 +135,7 @@ where each clause is composed of only one variable.
 It is then possible to use the **graph embedder** to compute an embedding representation for all assignments and compare them with the formula.
 
 
-#### Satisfying assignments search
+#### Satisfying assignment search
 
 Positive assignments (propositions that make the formula True) are easier to search from the CNF format with the Solver from the PySat package. Clauses of CNF format are quite simple to express:
 
@@ -128,11 +150,6 @@ During training, embedding of positive assignments are pushed to be closer to em
 $$ \| \text{embedding}(\text{formula}) - \text{embedding}(\text{assignment}) \|$$
 
 
-VRD RelevantFormulatContainer
-clauses and assumptions
-
-
-
 #### Features of the formula graph nodes
 
 In the case of the synthetic dataset, node features come from `model/pygcn/pygcn/features.pk` file containing
@@ -141,43 +158,18 @@ In the case of the synthetic dataset, node features come from `model/pygcn/pygcn
 
 - a `type_map` dictionary to map type to index: `{'Global': 0, 'Symbol': 1, 'Or': 2, 'And': 3, 'Not': 4}`
 
-- a `features` dictionary containing a feature for each type and symbol `Global, Symbol, Or, And, Not, a, b, c, d, e, f, g, h, i, j, k, l`. The feature is a numpy array of dimension (50,).
+- a `features` dictionary containing a feature for each type and symbol `Global, Symbol, Or, And, Not, a, b, c, d, e, f, g, h, i, j, k, l`. Each feature is a **numpy array of dimension (50,)**.
 
+In the case of the VRD datasets,
 
+- for nodes AND, OR, Global, features are reused from synthetic dataset.
 
-In the case of the VRD datasets, for each subject-object pair, a feature vector is created by concatenating
+- for Symbol leaf nodes, the features is the average of Glove vectors for all words in the predicate, subjet and object names.
 
-- the image feature: a crop of the union of both bounding boxes is resized to 224x224, normalized, processed by the CV network to produce visual features from before last layer of ResNet 18.
-
-- word embeddings for both subject and object labels. `word_embed.json` contains word embeddings (dimension 300) for all object names from Word2Vec.
-
-- relative position coordinates of subject and object in the crop union of both bounding boxes.
-
-The annotation key is given by
-
-str((subject_category, subject_boundingbox),(object_category, object_boundingbox))
-
-The concepts of subject and object are exchangeable, and a "no-predicate" label is added to all void relations.
-
-The dataset is scanned to search for all position relations possible for each relation `[predicate, subject, object]`, among one of 10 possible exclusive names:
-```
-'_out', '_in', '_o_left', '_o_right', '_o_up', '_o_down', '_n_left','_n_right', '_n_up', '_n_down'
-```
-and build the imply clause $$ \text{predicate} \rightarrow \lor \( \lor \text{position} ) $$ for each predicate.
-
-On top of that, for each subject-object pairs, the equivalent reverse position relation clause is added:
-
-```
-[['_out', '_in'], ['_o_left', '_o_right'], ['_o_up', '_o_down'],['_n_left', '_n_right'], ['_n_up', '_n_down']]
-```
-
-$$ \text{S in O} \rightarrow \text{O out of S}$$
-
-Now that the logic of relations (predicate and relative position) is computed, only clauses that apply to two objects available in image are kept.
-
-??? for CNF conversion : And IDs of relation variables are remapped to a range of values from 1 to N.
-
-For nodes AND, OR, Global, features are reused from synthetic dataset. For other leaf nodes, the features is the average of Glove vectors for all words in the predicate, subjet and object names.
+<span style="color:red">Q4: </span>
+<span style="color:red">Q5: </span>
+<span style="color:red">Q6: </span>
+<span style="color:red">Q7: </span>
 
 ??? different dimensions between 50 and 300
 ?? problem in averaging
@@ -246,6 +238,26 @@ A second network, a MLP, is trained to discriminate the embeddings $$ (Q_A, Q_P)
 # Relation prediction
 
 For the VRD experiment, a two-layer MLP is trained to predict the relation. The input of the MLP consists of the image features concatenated with Glove vectors for subject/object labels and relative position coordinates in the image crop. The output is a logit of dimension 71.
+
+#### Input
+
+For each subject-object pair, a feature vector is created by concatenating
+
+- the image feature: a crop of the union of both bounding boxes is resized to 224x224, normalized, processed by the CV network to produce visual features from before last layer of ResNet 18.
+
+- word embeddings for both subject and object labels. `word_embed.json` contains word embeddings (dimension 300) for all object names from Word2Vec.
+
+- relative position coordinates of subject and object in the crop union of both bounding boxes.
+
+The annotation key is given by
+
+str((subject_category, subject_boundingbox),(object_category, object_boundingbox))
+
+The concepts of subject and object are exchangeable, and a "no-predicate" label is added to all void relations.
+
+??? neg subsampling
+
+#### Training loss
 
 First, a Softmax+Crossentropy loss trains the network to predict the relation. Second, thanks to a trained GCN to produce embeddings for the formula and positive assignment to be close, the GCN embedding for the softmax of the logits is constrained to be close to the formula's embedding as well.
 

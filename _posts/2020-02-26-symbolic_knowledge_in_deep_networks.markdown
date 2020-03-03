@@ -236,9 +236,10 @@ str((subject_category, subject_boundingbox),(object_category, object_boundingbox
 
 The concepts of subject and object are exchangeable, and a "no-predicate" label is added to all void relations.
 
+<span style="color:red">Q9:
 ??? neg subsampling
 ??? if relation == 100
-<span style="color:red">Q9: </span>
+</span>
 
 #### Training loss
 

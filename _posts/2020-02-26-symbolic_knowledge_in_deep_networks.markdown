@@ -164,16 +164,11 @@ In the case of the VRD datasets,
 
 - for nodes AND, OR, Global, features are reused from synthetic dataset.
 
-- for Symbol leaf nodes, the features is the average of Glove vectors for all words in the relation (predicate or position), subject and object names.
+- for Symbol leaf nodes, the features is the average of 50-dimensional Glove vectors for all words in the relation (predicate or position), subject and object names.
 
 <span style="color:red">Q4: full position names (POS_REL_NAMES_FULL) can be composed of multiple words, and embeddings are summed, not averaged in [relcnf2data](https://github.com/ZiweiXU/LENSR/blob/master/tools/relcnf2data.py#L41) and [relddnf2data](https://github.com/ZiweiXU/LENSR/blob/master/tools/relddnnf2data.py#L41) and in [train](https://github.com/ZiweiXU/LENSR/blob/master/model/relation_prediction/train.py#L264). Would it be better to normalize by the number of words ?</span>
 
 <span style="color:red">Q5: are ['exists' and 'unique' predicates](https://github.com/ZiweiXU/LENSR/blob/0cb723537b792238adf71cfcf31457919eeb370a/tools/find_rels.py#L23)  defined in code use somewhere ? It is replaced by filtering clauses.</span>
-
-<span style="color:red">Q6: </span>
-
-
-??? different dimensions between 50 and 300
 
 
 #### Training the embedder
@@ -228,9 +223,11 @@ For the VRD experiment, a two-layer MLP is trained to predict the relation. The 
 
 For each subject-object pair, a feature vector is created by concatenating
 
-- the image feature: a crop of the union of both bounding boxes is resized to 224x224, normalized, processed by the CV network to produce visual features from before last layer of ResNet 18.
+- the image feature: a crop of the union of both bounding boxes is resized to 224x224, normalized, processed by the CV network to produce visual features from before last layer of ResNet 18 of dimension 512.
 
 - word embeddings for both subject and object labels. `word_embed.json` contains word embeddings (dimension 300) for all object names from Word2Vec.
+
+<span style="color:red">Q: where does 300-dim word embedding for object labels come from ?</span>
 
 - relative position coordinates of subject and object in the crop union of both bounding boxes.
 

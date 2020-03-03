@@ -204,11 +204,10 @@ The embedding is trained with triplet margin loss with euclidian distance, plus 
 
 The regularization loss takes the 100-dimension embedding $$ q_i $$ of each children nodes of a AND or OR node and applies:
 
-$$ \displaystyle \sum_{\text{OR}} (\| \sum_{j \in \text{children}} q(v_j) \|_2 -1)^2 + \sum_{\text{AND}} \| V_k^T V_k - diag(V_k^T V_k)  \|_2^2 $$
+$$ \displaystyle \sum_{\text{OR}} (\| \sum_{j \in \text{children}} q(v_j) \|_2 -1)^2 + \sum_{\text{AND}} \sum \text{abs}(V_k^T V_k - diag(V_k^T V_k))   $$
 
-<span style="color:red">Q7: In the paper, $$ \displaystyle \sum_{\text{OR}} \| \sum_{j \in \text{children}} q(v_j) -1 \|_2^2 + \sum_{\text{AND}} \| V_k^T V_k - diag(V_k^T V_k)  \|_2^2 $$
+<span style="color:red">Q7: In the paper, the formula differs from [code](https://github.com/ZiweiXU/LENSR/blob/0cb723537b792238adf71cfcf31457919eeb370a/model/pygcn/pygcn/train.py#L101) $$ \displaystyle \sum_{\text{OR}} \| \sum_{j \in \text{children}} q(v_j) -1 \|_2^2 + \sum_{\text{AND}} \| V_k^T V_k - diag(V_k^T V_k)  \|_2^2 $$
 </span>
-
 
 
 # Relation prediction

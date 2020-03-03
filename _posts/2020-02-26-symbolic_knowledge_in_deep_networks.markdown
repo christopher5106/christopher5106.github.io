@@ -21,9 +21,7 @@ Un-answered questions or bugs are left in red.
 
 # The paper
 
-The idea of the paper is to use Graph Convolutional Networks (GCN) to represent logical formulas with an embedding vector.
-
-There exists multiple languages into which a logical formula can be expressed or compiled, with some of them with appealing or simplifying characteristics (satisfiability, determinism, decomposability, polytime satisfiabily, polytime counting...).
+The idea of the paper is to use Graph Convolutional Networks (GCN) to represent logical formulas with an embedding vector, and to use these representations as a new logical loss, either to predict if an assignment will satisfy a logic, or to train a neural network's outputs to satisfy a logic.
 
 The evaluation of the representations are performed on 2 datasets:
 
@@ -62,9 +60,9 @@ From the dataset, logical formulas are computed to link each relation predicate 
 
 # Forms
 
-Logical formulas are in the general form when arbitrary, but some can be compiled into other simplified graph forms:
+Logical formulas are in the general form when arbitrary, but some can be compiled into other simplified graph forms, with some of them with appealing or simplifying characteristics (satisfiability, determinism, decomposability, polytime satisfiabily, polytime counting...).
 
-#### Conjunctive Normal Form (CNF)
+#### The Conjunctive Normal Form (CNF)
 
 The CNF is a conjunction (AND) of clauses, where a clause is a disjunction (OR) of literals. A literal is a propositional variable / predicate symbol, possibly preceded by a negation (NOT).
 
@@ -74,7 +72,7 @@ The CNF is a conjunction (AND) of clauses, where a clause is a disjunction (OR) 
 
 The result is saved into [DIMACS format](http://www.satcompetition.org/2009/format-benchmarks2009.html).
 
-#### decision-Deterministic Decomposable Negation Normal Form (d-DNNF)
+#### The decision-Deterministic Decomposable Negation Normal Form (d-DNNF)
 
 The d-DNNF satisfies two properties:
 

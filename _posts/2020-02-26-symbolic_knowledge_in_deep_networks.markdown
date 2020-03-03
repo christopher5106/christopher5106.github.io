@@ -168,7 +168,7 @@ In the case of the VRD datasets,
 
 <span style="color:red">Q4: full position names (POS_REL_NAMES_FULL) can be composed of multiple words, and embeddings are summed, not averaged in [relcnf2data](https://github.com/ZiweiXU/LENSR/blob/master/tools/relcnf2data.py#L41) and [relddnf2data](https://github.com/ZiweiXU/LENSR/blob/master/tools/relddnnf2data.py#L41) and in [train](https://github.com/ZiweiXU/LENSR/blob/master/model/relation_prediction/train.py#L264). Would it be better to normalize by the number of words ?</span>
 
-<span style="color:red">Q5: are [artificial predicates](https://github.com/ZiweiXU/LENSR/blob/0cb723537b792238adf71cfcf31457919eeb370a/tools/find_rels.py#L23) 'exists' and 'unique' defined in code use somewhere ?</span>
+<span style="color:red">Q5: are ['exists' and 'unique' predicates](https://github.com/ZiweiXU/LENSR/blob/0cb723537b792238adf71cfcf31457919eeb370a/tools/find_rels.py#L23)  defined in code use somewhere ? It is replaced by filtering clauses.</span>
 
 <span style="color:red">Q6: </span>
 

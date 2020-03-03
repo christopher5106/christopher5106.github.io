@@ -95,6 +95,7 @@ The graph definition, input to GCN, is defined by 2 text files:
 - a '.var' file, listing all nodes with their ID, features and label
 - an '.rel' file, listing all edges between nodes
 
+In the case of CNF, d-DNNF or assignments, the features for a negated literal '-i' is assigned with the negative vector of the feature of the literal `-feature(i)`.
 
 #### Satisfying assignments
 
@@ -104,7 +105,7 @@ Positive assignments (propositions that make the formula True) can also be easil
 
 corresponding to
 
-$$ \lor varaibles
+$$ \land \( \lor varaibles \)$$
 
 are easier to search from the CNF format with the Solver from the PySat package. Clauses of CNF format are quite simple to express:
 
@@ -138,7 +139,7 @@ In the case of the synthetic dataset, node features come from `model/pygcn/pygcn
 
 - a `features` dictionary containing a feature for each type and symbol `Global, Symbol, Or, And, Not, a, b, c, d, e, f, g, h, i, j, k, l`. The feature is a numpy array of dimension (50,).
 
-In the case of CNF, d-DNNF or assignments, negative literals '-i' are assigned the negative vector of the feature of the literal `-feature(i)`.
+
 
 In the case of the VRD datasets, for each subject-object pair, a feature vector is created by concatenating
 

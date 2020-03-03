@@ -29,8 +29,6 @@ The evaluation of the representations are performed on 2 datasets:
 
 <span style="color:red">Q1: how are [logical formula strings](https://github.com/ZiweiXU/LENSR/blob/master/dataset/Synthetic/formula_strings_0606.pk) created ?</span>
 
-<span style="color:red">Q2: where do [features of symbols and logic operands](https://github.com/ZiweiXU/LENSR/blob/master/model/pygcn/pygcn/features.pk) come from ?</span>
-
 - the [Visual Relationship Detection (VRD)](https://cs.stanford.edu/people/ranjaykrishna/vrd/) dataset with its original images from [Scene Graph dataset](https://cs.stanford.edu/people/jcjohns/cvpr15_supp/).
 
 The dataset is composed of 100 object classes (`objects.json`):
@@ -77,7 +75,7 @@ When a sample (image, subject, object) is processed:
 
 - the assumption, i.e. the position relation that hold in the current sample, is added as a clause composed of one position variable
 
-<span style="color:red">Q3: for CNF conversion, IDs of relation variables that are kept are remapped to a range of values from 1 to N, is that a requirement from PySat package ?</span>
+<span style="color:red">Q2: for CNF conversion, IDs of relation variables that are kept are remapped to a range of values from 1 to N, is that a requirement from PySat package ?</span>
 
 
 # Logical Graph Forms
@@ -159,6 +157,8 @@ In the case of the synthetic dataset, node features come from `model/pygcn/pygcn
 - a `type_map` dictionary to map type to index: `{'Global': 0, 'Symbol': 1, 'Or': 2, 'And': 3, 'Not': 4}`
 
 - a `features` dictionary containing a feature for each type and symbol `Global, Symbol, Or, And, Not, a, b, c, d, e, f, g, h, i, j, k, l`. Each feature is a **numpy array of dimension (50,)**.
+
+<span style="color:red">Q3: where do [features of symbols and logic operands](https://github.com/ZiweiXU/LENSR/blob/master/model/pygcn/pygcn/features.pk) come from ? Why this choice ?</span>
 
 In the case of the VRD datasets,
 

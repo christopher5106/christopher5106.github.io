@@ -216,4 +216,10 @@ A second network, a MLP, is trained to discriminate the embeddings $$ (Q_A, Q_P)
 
 # Relation prediction
 
-For the VRD experiment, a two-layer MLP is trained to predict the relation. The input consists of the image features concatenated with Glove vectors for subject/object labels and relative position coordinates in the image crop.
+For the VRD experiment, a two-layer MLP is trained to predict the relation. The input of the MLP consists of the image features concatenated with Glove vectors for subject/object labels and relative position coordinates in the image crop. The output is a logit of dimension 71.
+
+First, a Softmax+Crossentropy loss trains the network to predict the relation. Second, thanks to a trained GCN for the formula and positive assignment,
+
+
+??? torch.load require grad
+??? no eval mode 

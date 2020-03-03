@@ -83,16 +83,20 @@ The d-DNNF satisfies two properties:
 Conversion from CNF form in DIMACS format to d-DNNF is performed with `c2d_linux` command (in `model.Misc.Formula.dimacs_to_cnf`) of the [C2D compiler from UCLA](http://reasoning.cs.ucla.edu/c2d/).
 
 
-# Graph format
+# Graph embedding
 
-To have a global representation of a graph, a global node is added to the graph, with type global, and linked to all other nodes in the graph, and the embedding of this node will be taken as the **graph embedding**.
+#### Graph Convolution Networks
 
-All formula graphs is saved into 2 files:
-- a '.var' file, listing all nodes
+A Graph Convolution Network (GCN) is used to compute an embedding for a graph of any form.
+
+In order to have a global representation of a graph, a global node is added to the graph, with type global, and linked to all other nodes in the graph, and the embedding of this node will be taken as the **graph embedding**.
+
+The graph definition, input to GCN, is defined by 2 text files:
+- a '.var' file, listing all nodes with their ID, features and label
 - an '.rel' file, listing all edges between nodes
 
 
-# Satisfying assignments
+#### Satisfying assignments
 
 Positive assignments (propositions that make the formula True) are easier to search from the CNF format with the Solver from the PySat package. Clauses of CNF format are quite simple to express:
 
@@ -116,7 +120,7 @@ clauses and assumptions
 
 
 
-# Features of the formula graph nodes
+#### Features of the formula graph nodes
 
 In the case of the synthetic dataset, node features come from `model/pygcn/pygcn/features.pk` file containing
 
@@ -171,7 +175,7 @@ For nodes AND, OR, Global, features are reused from synthetic dataset. For other
 '_unique'
 ```
 
-# Training data
+#### Training data
 
 #### Batches of 5 triplets
 

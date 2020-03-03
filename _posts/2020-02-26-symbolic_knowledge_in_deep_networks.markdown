@@ -107,7 +107,7 @@ Conversion from CNF form in DIMACS format to d-DNNF is performed with `c2d_linux
 
 #### Graph Convolution Networks
 
-A stack of multiple Graph Convolution Networks (GCN) is applied to all nodes of a graph of any form. The output of the stack is NxD, where N is the number of graph nodes, and D the dimension of the last layer.
+A stack of multiple Graph Convolution Networks (GCN) is applied to all nodes of a graph of any form. The output of the stack is NxD, where N is the number of graph nodes, and D=100 the dimension of the last layer.
 
 In order to output a global representation of a graph of dimension (D,), a global node is added to the graph, with type global, and linked to all other nodes in the graph: the embedding of this node of dimension D is taken as the **graph embedding**.
 
@@ -117,6 +117,7 @@ The graph definition, input to GCN, is defined by 2 text files:
 
 In the case of CNF, d-DNNF or assignments, the features for a negated literal '-i' is assigned with the negative vector of the feature of the literal `-feature(i)`.
 
+In each Graph Convolution Network, $$A \cdot X \cdot W + B$$, the weights W are specialized depending on the type of node.
 
 #### Assignments
 
@@ -148,7 +149,9 @@ During training, embedding of positive assignments are pushed to be closer to em
 $$ \| \text{embedding}(\text{formula}) - \text{embedding}(\text{assignment}) \|$$
 
 
-#### Features of the formula graph nodes
+#### Features X of the formula graph nodes
+
+The shape of input features X is (N, 50).
 
 In the case of the synthetic dataset, node features come from `model/pygcn/pygcn/features.pk` file containing
 
@@ -171,7 +174,7 @@ In the case of the VRD datasets,
 <span style="color:red">Q5: are ['exists' and 'unique' predicates](https://github.com/ZiweiXU/LENSR/blob/0cb723537b792238adf71cfcf31457919eeb370a/tools/find_rels.py#L23)  defined in code use somewhere ? It is replaced by filtering clauses.</span>
 
 
-#### Training the embedder
+#### Training the logical embedder
 
 An object `MyDataset` is implemented for the interface of `torch.utils.data.DataLoader` to deliver batches.
 
@@ -185,7 +188,7 @@ Each element are loaded from file with `load_data` function. It loads:
 
 $$ D^{-1} A $$
 
-<span style="color:red">Q7: it looks contrary to paper definition: $$ D^{-1/2} A D^{-1/2} $$. The fact A is symetric $$ a_{i,j} = a_{j,i} $$ (undirected graph) does not mean nodes i and j have symetric roles.
+<span style="color:red">Q6: it looks contrary to paper definition: $$ D^{-1/2} A D^{-1/2} $$. The fact A is symetric $$ a_{i,j} = a_{j,i} $$ (undirected graph) does not mean nodes i and j have symetric roles.
 </span>
 
 The original ID are remapped to 0...N in the order the features are saved.
@@ -197,27 +200,23 @@ The return of the function composed of :
 - idx_train, idx_val, idx_test: NOT USED (simple range(0,N)),
 - and_children, or_children: JSON load from file
 
-??? and_children idx are remapped
-
-Each element is in a graph whose embedding Q of dimension Nx100 (N number of nodes in the graph) is computed with the model, a stack of 4 Graph Convolutions $$A \cdot X \cdot W + B$$ where W are specialized depending on the type of node.
-
 The embedding is trained with triplet margin loss with euclidian distance, plus a regularization loss.
 
 The regularization loss takes the 100-dimension embedding $$ q_i $$ of each children nodes of a AND or OR node and applies:
 
+<span style="color:red">Q7:
 ...
 
 ??? difference from paper
+</span>
 
-A second network, a MLP, is trained to discriminate the embeddings $$ (Q_A, Q_P) $$ and $$ (Q_A, Q_N) $$ with cross entropy loss on top of that.
 
-??? number of node can be different
-
-??? if relation == 100
 
 # Relation prediction
 
-For the VRD experiment, a two-layer MLP is trained to predict the relation. The input of the MLP consists of the image features concatenated with Glove vectors for subject/object labels and relative position coordinates in the image crop. The output is a logit of dimension 71.
+For the VRD experiment, a second network, a two-layer MLP, is trained to predict the relation.
+
+The input of the MLP consists of the image features concatenated with Glove vectors for subject/object labels and relative position coordinates in the image crop. The output is a logit of dimension 71.
 
 #### Input
 
@@ -227,7 +226,7 @@ For each subject-object pair, a feature vector is created by concatenating
 
 - word embeddings for both subject and object labels. `word_embed.json` contains word embeddings (dimension 300) for all object names from Word2Vec.
 
-<span style="color:red">Q: where does 300-dim word embedding for object labels come from ?</span>
+<span style="color:red">Q8: where does 300-dim word embedding for object labels come from ?</span>
 
 - relative position coordinates of subject and object in the crop union of both bounding boxes.
 
@@ -238,6 +237,8 @@ str((subject_category, subject_boundingbox),(object_category, object_boundingbox
 The concepts of subject and object are exchangeable, and a "no-predicate" label is added to all void relations.
 
 ??? neg subsampling
+??? if relation == 100
+<span style="color:red">Q9: </span>
 
 #### Training loss
 
@@ -251,7 +252,8 @@ Optimizer applies gradients on the MLP model only, contraining only the MLP weig
 batch size of batch == nb relations + some negative subsampling
 
 the feature used for the symbol is an average of prob * feature of the relation name  and embeddings
-
+<span style="color:red">Q10:
 ??? already normalized
+</span>
 
 <img src="{{ site.url }}/img/Assignment_vrd.jpg">

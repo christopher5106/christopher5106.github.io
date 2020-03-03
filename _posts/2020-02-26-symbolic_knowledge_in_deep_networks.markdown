@@ -29,11 +29,13 @@ The evaluation of the representations are performed on 2 datasets:
 
 - a synthetic dataset of logical formulas
 
-<span style="color:red">Q1: how are logical formula string created ?</span>
+<span style="color:red">Q1: how are [logical formula strings](https://github.com/ZiweiXU/LENSR/blob/master/dataset/Synthetic/formula_strings_0606.pk) created ?</span>
 
-<span style="color:red">Q2: where do features of symbols and logic operands come from ?</span>
+<span style="color:red">Q2: where do [features of symbols and logic operands](https://github.com/ZiweiXU/LENSR/blob/master/model/pygcn/pygcn/features.pk) come from ?</span>
 
-- the [Visual Relationship Detection (VRD)](https://cs.stanford.edu/people/ranjaykrishna/vrd/) dataset with added logical formulas for each possible relations. The dataset is composed of 100 object classes (`objects.json`):
+- the [Visual Relationship Detection (VRD)](https://cs.stanford.edu/people/ranjaykrishna/vrd/) dataset as well as the original images from [Scene Graph dataset](https://cs.stanford.edu/people/jcjohns/cvpr15_supp/).
+
+The dataset is composed of 100 object classes (`objects.json`):
 
 ```
 'person', 'sky', 'building', 'truck', 'bus', 'table', 'shirt', 'chair', 'car', 'train', 'glasses', 'tree', 'boat', 'hat', 'trees', 'grass', 'pants', 'road', 'motorcycle', 'jacket', 'monitor', 'wheel', 'umbrella', 'plate', 'bike', 'clock', 'bag', 'shoe', 'laptop', 'desk', 'cabinet', 'counter', 'bench', 'shoes', 'tower', 'bottle', 'helmet', 'stove', 'lamp', 'coat', 'bed', 'dog', 'mountain', 'horse', 'plane', 'roof', 'skateboard', 'traffic light', 'bush', 'phone', 'airplane', 'sofa', 'cup', 'sink', 'shelf', 'box', 'van', 'hand', 'shorts', 'post', 'jeans', 'cat', 'sunglasses', 'bowl', 'computer', 'pillow', 'pizza', 'basket', 'elephant', 'kite', 'sand', 'keyboard', 'plant', 'can', 'vase', 'refrigerator', 'cart', 'skis', 'pot', 'surfboard', 'paper', 'mouse', 'trash can', 'cone', 'camera', 'ball', 'bear', 'giraffe', 'tie', 'luggage', 'faucet', 'hydrant', 'snowboard', 'oven', 'engine', 'watch', 'face', 'street', 'ramp', 'suitcase'
@@ -55,9 +57,12 @@ and the files `annotations_train.json` and `annotations_test.json`, dictionaries
 }
 ```
 
+From the dataset, logical formulas are computed to link each relation predicate with some possible relation position between objects.
+
+
 # Forms
 
-Logical formulas are compiled into different graph forms:
+Logical formulas are in the general form when arbitrary, but some can be compiled into other simplified graph forms:
 
 #### Conjunctive Normal Form (CNF)
 

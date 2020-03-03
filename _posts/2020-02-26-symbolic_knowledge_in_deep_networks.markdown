@@ -169,6 +169,8 @@ In the case of the VRD datasets,
 
 - for Symbol leaf nodes, the features is the average of 50-dimensional Glove vectors for all words in the relation (predicate or position), subject and object names.
 
+<img src="{{ site.url }}/img/VRD_clause.jpg">
+
 <span style="color:red">Q4: full position names (POS_REL_NAMES_FULL) can be composed of multiple words, and embeddings are summed, not averaged in [relcnf2data](https://github.com/ZiweiXU/LENSR/blob/master/tools/relcnf2data.py#L41) and [relddnf2data](https://github.com/ZiweiXU/LENSR/blob/master/tools/relddnnf2data.py#L41) and in [train](https://github.com/ZiweiXU/LENSR/blob/master/model/relation_prediction/train.py#L264). Would it be better to normalize by the number of words ?</span>
 
 <span style="color:red">Q5: are ['exists' and 'unique' predicates](https://github.com/ZiweiXU/LENSR/blob/0cb723537b792238adf71cfcf31457919eeb370a/tools/find_rels.py#L23)  defined in code use somewhere ? It is replaced by filtering clauses.</span>
@@ -234,18 +236,16 @@ str((subject_category, subject_boundingbox),(object_category, object_boundingbox
 
 The concepts of subject and object are exchangeable, and a "no-predicate" label is added to all void relations.
 
+Each batch deals with one image only and the batch size is equal to the number of relations, negative relations subsampled.
+
 <span style="color:red">Q9: the subsampling for negatives (absence of relation set to [70](https://github.com/ZiweiXU/LENSR/blob/0cb723537b792238adf71cfcf31457919eeb370a/tools/preprocess_image.py#L100)) might never happen in [if relation == 100](https://github.com/ZiweiXU/LENSR/blob/0cb723537b792238adf71cfcf31457919eeb370a/model/relation_prediction/mydataloader.py#L28)</span>
+
 
 #### Training loss
 
-First, a Softmax+Crossentropy loss trains the network to predict the relation. Second, thanks to a trained GCN to produce embeddings for the formula and positive assignment to be close, the GCN embedding for the softmax of the logits is constrained to be close to the formula's embedding as well.
+First, a Softmax+Crossentropy loss trains the network to predict the relation.
 
-Optimizer applies gradients on the MLP model only, constraining only the MLP weights for the ouput to follow the embedder loss.
-
-<img src="{{ site.url }}/img/VRD_clause.jpg">
-
-1 image per batch
-batch size of batch == nb relations + some negative subsampling
+Second, thanks to a trained logical embedder that produces close embeddings for the formula and positive assignments, a logical loss can be applied to constrain the softmax of the logits to be close to the formula's embeddings as well.
 
 the feature used for the symbol is an average of prob * feature of the relation name  and embeddings
 <span style="color:red">Q10:
@@ -253,3 +253,7 @@ the feature used for the symbol is an average of prob * feature of the relation 
 </span>
 
 <img src="{{ site.url }}/img/Assignment_vrd.jpg">
+
+Optimizer applies gradients on the MLP model only, constraining only the MLP weights for the ouput to follow the embedder loss.
+
+**Well done!**

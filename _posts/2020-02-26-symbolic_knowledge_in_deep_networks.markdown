@@ -190,11 +190,7 @@ Each element are loaded from file with `load_data` function. It loads:
 
 $$ D^{-1} A $$
 
-<span style="color:red">Q7: it looks contrary to paper definition:</span>
-
-$$ D^{-1/2} A D^{-1/2} $$
-
-<span style="color:red"> The fact A is symetric $$ a_{i,j} = a_{j,i} $$ (undirected graph) does not mean nodes i and j have symetric roles.
+<span style="color:red">Q7: it looks contrary to paper definition: $$ D^{-1/2} A D^{-1/2} $$. The fact A is symetric $$ a_{i,j} = a_{j,i} $$ (undirected graph) does not mean nodes i and j have symetric roles.
 </span>
 
 The original ID are remapped to 0...N in the order the features are saved.

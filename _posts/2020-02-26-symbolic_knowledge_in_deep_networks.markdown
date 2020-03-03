@@ -17,15 +17,19 @@ In particular, I'll answer the following questions:
 
 3/ How do we link formula satisfaction and model predictions during training ?
 
+Un-answered questions or bugs are left in red.
+
 # The paper
 
-The idea of the paper is to use Graph Convolutional Networks (GCN) to embed logical formulas. There exists multiple languages into which a formula can be compiled, with some appealing or simplifying characteristics (satisfiability, determinism, decomposability, polytime satisfiabily, polytime counting...).
+The idea of the paper is to use Graph Convolutional Networks (GCN) to represent logical formulas with an embedding vector.
 
-The evaluation is performed against 2 datasets:
+There exists multiple languages into which a logical formula can be expressed or compiled, with some of them with appealing or simplifying characteristics (satisfiability, determinism, decomposability, polytime satisfiabily, polytime counting...).
+
+The evaluation of the models are performed on 2 datasets:
 
 - a synthetic dataset of logical formulas
 
-?? where do formula strings come from
+<span color=red> Q1: how are logical formula string created ?</span>
 ??? where do these features come from
 
 - the VRD dataset with added logical formulas for each possible relations. The dataset is composed of 100 object classes (`objects.json`):

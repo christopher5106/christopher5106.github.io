@@ -29,8 +29,9 @@ The evaluation of the models are performed on 2 datasets:
 
 - a synthetic dataset of logical formulas
 
-<span color=red> Q1: how are logical formula string created ?</span>
-??? where do these features come from
+<span style="color:red">Q1: how are logical formula string created ?</span>
+
+<span style="color:red">Q2: where do features of symbols and logic operands come from ?</span>
 
 - the VRD dataset with added logical formulas for each possible relations. The dataset is composed of 100 object classes (`objects.json`):
 

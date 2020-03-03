@@ -111,7 +111,7 @@ where each clause is composed of only one variable.
 
 It is then possible to use the **graph embedder** to compute an embedding representation for all assignments and compare them with the formula. During training, embedding of positive assignments are pushed to be closer to embedding of the formula than negative assignments are, thanks to a margin triplet loss based on the euclidian distance:
 
-$$ \| \text{embedding}(\text{formula}) - \text{embedding}(\text{assignment}) \| $$
+$$ \| \text{embedding}(\text{formula}) - \text{embedding}(\text{assignment}) \|_2^2 $$
 
 are easier to search from the CNF format with the Solver from the PySat package. Clauses of CNF format are quite simple to express:
 

@@ -5,8 +5,6 @@ date:   2020-02-26 05:00:00
 categories: deep learning
 ---
 
-**Writing in progress. Delivery tonight**
-
 In this post, I'll give some explanations about [Embedding Symbolic Knowledge into Deep Networks](https://arxiv.org/abs/1909.01161) paper and their [code](https://github.com/ZiweiXU/LENSR) for someone interested in the deep understanding of the implementation, not a global overview.
 
 In particular, I'll answer the following questions:

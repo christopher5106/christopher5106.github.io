@@ -106,14 +106,14 @@ Assignments of variables can also be easily represented by a graph directly in t
 
 corresponding to
 
-$$ \underset{\text{var} \in \text{Variables}}{\land} \right( \text{var} \left)$$
+$$ \underset{\text{var} \in \text{Variables}}{\land} \left( \text{var} \right)$$
 
 where each clause is composed of only one variable.
 
 It is then possible to use the **graph embedder** to compute an embedding representation for all assignments and compare them with the formula.
 
 
-#### Satisfying assignments
+#### Satisfying assignments search
 
 Positive assignments (propositions that make the formula True) are easier to search from the CNF format with the Solver from the PySat package. Clauses of CNF format are quite simple to express:
 

@@ -7,15 +7,17 @@ categories: deep learning
 
 **Writing in progress. Delivery tonight**
 
-In this post, I'll give some explanations about [Embedding Symbolic Knowledge into Deep Networks](https://arxiv.org/abs/1909.01161) paper with [code](https://github.com/ZiweiXU/LENSR).
+In this post, I'll give some explanations about [Embedding Symbolic Knowledge into Deep Networks](https://arxiv.org/abs/1909.01161) paper and their [code](https://github.com/ZiweiXU/LENSR) for someone interested in the deep understanding of the implementation, not a global overview.
 
-In particular:
+In particular, I'll answer the following questions:
 
 1/ what are the features X of leaf nodes in the symbolic knowledge embedder ?
 
 2/ How is computed the embedding of the formula ?
 
 3/ How do we link formula satisfaction and model predictions during training ?
+
+# The paper
 
 The idea of the paper is to use Graph Convolutional Networks (GCN) to embed logical formulas. There exists multiple languages into which a formula can be compiled, with some appealing or simplifying characteristics (satisfiability, determinism, decomposability, polytime satisfiabily, polytime counting...).
 

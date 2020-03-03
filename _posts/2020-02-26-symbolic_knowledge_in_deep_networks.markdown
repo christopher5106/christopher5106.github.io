@@ -247,12 +247,11 @@ First, a Softmax+Crossentropy loss trains the network to predict the relation.
 
 Second, thanks to a trained logical embedder that produces close embeddings for the formula and positive assignments, a logical loss can be applied to constrain the softmax of the logits to be close to the formula's embeddings as well.
 
-the feature used for the symbol is an average of prob * feature of the relation name  and embeddings
-<span style="color:red">Q10:
-??? already normalized
-</span>
+Since the softmax of the logits is not a boolean but a vector of probabilities for the 71 predicate variables, the feature of the symbol nodes in the assignment graph is replaced by an average of the word embeddings for predicate names weighted by the probabilities.
 
 <img src="{{ site.url }}/img/Assignment_vrd.jpg">
+
+<span style="color:red">Q10: the prop vector is already normalized so is a need for [division by 70](https://github.com/ZiweiXU/LENSR/blob/0cb723537b792238adf71cfcf31457919eeb370a/model/relation_prediction/train.py#L276) ?</span>
 
 Optimizer applies gradients on the MLP model only, constraining only the MLP weights for the ouput to follow the embedder loss.
 

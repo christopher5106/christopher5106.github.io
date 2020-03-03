@@ -234,16 +234,13 @@ str((subject_category, subject_boundingbox),(object_category, object_boundingbox
 
 The concepts of subject and object are exchangeable, and a "no-predicate" label is added to all void relations.
 
-<span style="color:red">Q9:
-??? neg subsampling
-??? if relation == 100
-</span>
+<span style="color:red">Q9: the subsampling for negatives (absence of relation set to [70](https://github.com/ZiweiXU/LENSR/blob/0cb723537b792238adf71cfcf31457919eeb370a/tools/preprocess_image.py#L100)) might never happen in [if relation == 100](https://github.com/ZiweiXU/LENSR/blob/0cb723537b792238adf71cfcf31457919eeb370a/model/relation_prediction/mydataloader.py#L28)</span>
 
 #### Training loss
 
 First, a Softmax+Crossentropy loss trains the network to predict the relation. Second, thanks to a trained GCN to produce embeddings for the formula and positive assignment to be close, the GCN embedding for the softmax of the logits is constrained to be close to the formula's embedding as well.
 
-Optimizer applies gradients on the MLP model only, contraining only the MLP weights for the ouput to follow the embedder loss.
+Optimizer applies gradients on the MLP model only, constraining only the MLP weights for the ouput to follow the embedder loss.
 
 <img src="{{ site.url }}/img/VRD_clause.jpg">
 

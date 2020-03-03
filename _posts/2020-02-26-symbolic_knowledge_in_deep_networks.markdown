@@ -17,9 +17,9 @@ In particular, I'll answer the following questions:
 
 3/ How do we link formula satisfaction and model predictions during training ?
 
-Un-answered questions or bugs are left in red.
+<span style="color:red">Un-answered questions or bugs are left in red.</span>
 
-# The paper
+# The goal and datasets
 
 The idea of the paper is to use Graph Convolutional Networks (GCN) to represent logical formulas with an embedding vector, and to use these representations as a new logical loss, either to predict if an assignment of variables will satisfy a logic, or to train a neural network's outputs to satisfy a logic.
 
@@ -58,7 +58,7 @@ and the files `annotations_train.json` and `annotations_test.json`, dictionaries
 From the dataset, logical formulas are computed to constrain each relation predicate with all possible relation position between objects. The goal here is to have a neural network prediction of a relation between objects to satisfy the constrains given by the position relation of object bounding boxes.
 
 
-# Forms
+# Logical Graph Forms
 
 Logical formulas are in the general form when arbitrary, but some can be compiled into other simplified graph forms, with some of them with appealing or simplifying characteristics (satisfiability, determinism, decomposability, polytime satisfiabily, polytime counting...).
 

@@ -104,7 +104,7 @@ Assignments of variables can also be easily represented by a graph directly in t
 
 <img src="{{ site.url }}/img/Assignment.jpg">
 
-corresponding to
+corresponding to one AND node and literals 'i' or '-i':
 
 $$ \underset{\text{var} \in \text{Variables}}{\land} \left( \text{var} \right)$$
 
@@ -117,28 +117,20 @@ It is then possible to use the **graph embedder** to compute an embedding repres
 
 Positive assignments (propositions that make the formula True) are easier to search from the CNF format with the Solver from the PySat package. Clauses of CNF format are quite simple to express:
 
-- in the VRD dataset, each clause can be expressed in the code with a couple `[-rel_id, pos_id]` where `rel_id` is the ID of a relation `[relation predicate, subject, object]` and `pos_id` is the ID of a spatial property `[position relation, subject, object]`. Variable ID are provided by variable ID manager `pysat.formula.IDPool`, always starting from 1.
+- in the case of the VRD dataset, each clause can be expressed in the code with a couple `[-rel_id, pos_id]` where `rel_id` is the ID of a relation predicate variable `[relation predicate, subject, object]` and `pos_id` is the ID of a spatial property variable `[position relation, subject, object]`. Variable ID are provided by variable ID manager `pysat.formula.IDPool`, always starting from 1.
 
-- In the case of the synthetic dataset, a `get_clauses()` method parses the CNF clause list to return a list to map index to symbols (`atom_mapping`, for example `['e', 'f']` for a formula with e and f symbols) and a list of clauses in the format of lists as well: [-i] for a Not node, [i] for a symbol, and [(-)i, (-)j, (-)k, ...] where i, j, k are symbol indexes, (-) the Not operator.
+- in the case of the synthetic dataset, a `get_clauses()` method parses the CNF clause list to return a list to map index to symbols (`atom_mapping`, for example `['e', 'f']` for a formula with e and f symbols) and a list of clauses in the format of lists as well: [-i] for a Not node, [i] for a symbol, and [(-)i, (-)j, (-)k, ...] of an OR node where i, j, k are symbol indexes and (-) the Not operator.
 
 5 positive assignments (propositions that make the formula True) are found with the Solver from the PySat package when the formula is of type `pysat.formula.CNF`. 5 negative assignments are easier to find by random tests.
-
-Assignments are considered also as graphs, with one AND node and literals 'i' or '-i'.
-
-
-
-Synthetic
-
-VRD RelevantFormulatContainer
-clauses and assumptions
-
-
-??? save assignments, positive, and negatives. Each element a graph
-
 
 During training, embedding of positive assignments are pushed to be closer to embedding of the formula than negative assignments are, thanks to a margin triplet loss based on the euclidian distance:
 
 $$ \| \text{embedding}(\text{formula}) - \text{embedding}(\text{assignment}) \|$$
+
+
+VRD RelevantFormulatContainer
+clauses and assumptions
+
 
 
 #### Features of the formula graph nodes
@@ -196,16 +188,16 @@ For nodes AND, OR, Global, features are reused from synthetic dataset. For other
 '_unique'
 ```
 
-#### Training data
+#### Training the embedder
 
-#### Batches of 5 triplets
+Batches of 5 triplets
 
 An object `MyDataset` is implemented for the interface of `torch.utils.data.DataLoader` to deliver batches.
 
 Each batch is composed of 5 items, where each item is a triplet of 3 elements (A, P, N): the anchor (the formula), the positive (or satisfying) assignment, a negative assignment. The three elements are used in the triplet margin loss: the positive assignment has to be closer to the formula than the negative assignment in the embedding space.
 
 
-### Element loading
+Element loading
 
 Each elements are loaded from file with `load_data` function. It loads:
 

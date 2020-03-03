@@ -105,7 +105,7 @@ Assignment can also be easily represented by a graph directly in the CNF format:
 
 corresponding to
 
-$$ \underset{\text{var} \in \text{Variables}}{\land} \( \text{var} \)$$
+$$ \underset{\text{var} \in \text{Variables}}{\land} \right( \text{var} \left)$$
 
 where each clause is composed of only one variable.
 

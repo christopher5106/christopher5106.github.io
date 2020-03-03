@@ -224,4 +224,11 @@ First, a Softmax+Crossentropy loss trains the network to predict the relation. S
 
 Optimizer applies gradients on the MLP model only, contraining only the MLP weights for the ouput to follow the embedder loss.
 
-<img src="{{ site.url }}/img/VRD_clause.jpg"> 
+<img src="{{ site.url }}/img/VRD_clause.jpg">
+
+1 image per batch
+batch size of batch == nb relations + some negative subsampling
+
+the feature used for the symbol is an average of prob * feature of the relation name  and embeddings
+
+<img src="{{ site.url }}/img/Assignment_vrd.jpg">

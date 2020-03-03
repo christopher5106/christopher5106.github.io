@@ -107,6 +107,12 @@ corresponding to
 
 $$ \land_{\text{var} \in \text{Variables}} \( \text{var} \)$$
 
+where each clause is composed of only one variable.
+
+It is then possible to use the **graph embedder** to compute an embedding representation for all assignments and compare them with the formula. During training, embedding of positive assignments are pushed to be closer to embedding of the formula than negative assignments are, thanks to a margin triplet loss based on the euclidian distance:
+
+$$ \| \text{embedding}(\text{formula}) - \text{embedding}(\text{assignment}) \| $$
+
 are easier to search from the CNF format with the Solver from the PySat package. Clauses of CNF format are quite simple to express:
 
 - in the VRD dataset, each clause can be expressed in the code with a couple `[-rel_id, pos_id]` where `rel_id` is the ID of a relation `[relation predicate, subject, object]` and `pos_id` is the ID of a spatial property `[position relation, subject, object]`. Variable ID are provided by variable ID manager `pysat.formula.IDPool`, always starting from 1.

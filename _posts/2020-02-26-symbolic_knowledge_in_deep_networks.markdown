@@ -87,9 +87,9 @@ Conversion from CNF form in DIMACS format to d-DNNF is performed with `c2d_linux
 
 #### Graph Convolution Networks
 
-A Graph Convolution Network (GCN) is used to compute an embedding for a graph of any form.
+A stack of multiple Graph Convolution Networks (GCN) is applied to all nodes of a graph of any form. The output of the stack is NxD, where N is the number of graph nodes, and D the dimension of the last layer.
 
-In order to have a global representation of a graph, a global node is added to the graph, with type global, and linked to all other nodes in the graph, and the embedding of this node will be taken as the **graph embedding**.
+In order to output a global representation of a graph of dimension (D,), a global node is added to the graph, with type global, and linked to all other nodes in the graph: the embedding of this node of dimension D is taken as the **graph embedding**.
 
 The graph definition, input to GCN, is defined by 2 text files:
 - a '.var' file, listing all nodes with their ID, features and label
@@ -98,7 +98,15 @@ The graph definition, input to GCN, is defined by 2 text files:
 
 #### Satisfying assignments
 
-Positive assignments (propositions that make the formula True) are easier to search from the CNF format with the Solver from the PySat package. Clauses of CNF format are quite simple to express:
+Positive assignments (propositions that make the formula True) can also be easily represented by a graph directly in the CNF format:
+
+<img src="{{ site.url }}/img/Assignment.jpg">
+
+corresponding to
+
+$$ \lor varaibles
+
+are easier to search from the CNF format with the Solver from the PySat package. Clauses of CNF format are quite simple to express:
 
 - in the VRD dataset, each clause can be expressed in the code with a couple `[-rel_id, pos_id]` where `rel_id` is the ID of a relation `[relation predicate, subject, object]` and `pos_id` is the ID of a spatial property `[position relation, subject, object]`. Variable ID are provided by variable ID manager `pysat.formula.IDPool`, always starting from 1.
 

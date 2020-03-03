@@ -97,22 +97,24 @@ The graph definition, input to GCN, is defined by 2 text files:
 
 In the case of CNF, d-DNNF or assignments, the features for a negated literal '-i' is assigned with the negative vector of the feature of the literal `-feature(i)`.
 
-#### Satisfying assignments
+#### Assignments
 
-Positive assignments (propositions that make the formula True) can also be easily represented by a graph directly in the CNF format:
+Assignment can also be easily represented by a graph directly in the CNF format:
 
 <img src="{{ site.url }}/img/Assignment.jpg">
 
 corresponding to
 
-$$ \underset{\land}{\text{var} \in \text{Variables}} \( \text{var} \)$$
+$$ \underset{\text{var} \in \text{Variables}}{\land} \( \text{var} \)$$
 
 where each clause is composed of only one variable.
 
-It is then possible to use the **graph embedder** to compute an embedding representation for all assignments and compare them with the formula. During training, embedding of positive assignments are pushed to be closer to embedding of the formula than negative assignments are, thanks to a margin triplet loss based on the euclidian distance:
+It is then possible to use the **graph embedder** to compute an embedding representation for all assignments and compare them with the formula.
 
-$$ \| \text{embedding}(\text{formula}) - \text{embedding}(\text{assignment}) \|_2^2 $$
+#### Satisfying assignments
 
+
+Positive assignments (propositions that make the formula True)
 are easier to search from the CNF format with the Solver from the PySat package. Clauses of CNF format are quite simple to express:
 
 - in the VRD dataset, each clause can be expressed in the code with a couple `[-rel_id, pos_id]` where `rel_id` is the ID of a relation `[relation predicate, subject, object]` and `pos_id` is the ID of a spatial property `[position relation, subject, object]`. Variable ID are provided by variable ID manager `pysat.formula.IDPool`, always starting from 1.
@@ -133,6 +135,10 @@ clauses and assumptions
 
 ??? save assignments, positive, and negatives. Each element a graph
 
+
+During training, embedding of positive assignments are pushed to be closer to embedding of the formula than negative assignments are, thanks to a margin triplet loss based on the euclidian distance:
+
+$$ \| \text{embedding}(\text{formula}) - \text{embedding}(\text{assignment}) \|$$
 
 
 #### Features of the formula graph nodes

@@ -21,17 +21,17 @@ Un-answered questions or bugs are left in red.
 
 # The paper
 
-The idea of the paper is to use Graph Convolutional Networks (GCN) to represent logical formulas with an embedding vector, and to use these representations as a new logical loss, either to predict if an assignment will satisfy a logic, or to train a neural network's outputs to satisfy a logic.
+The idea of the paper is to use Graph Convolutional Networks (GCN) to represent logical formulas with an embedding vector, and to use these representations as a new logical loss, either to predict if an assignment of variables will satisfy a logic, or to train a neural network's outputs to satisfy a logic.
 
 The evaluation of the representations are performed on 2 datasets:
 
-- a synthetic dataset of logical formulas
+- a synthetic dataset of logical formulas, to predict if an assignment will satisfy the formulas
 
 <span style="color:red">Q1: how are [logical formula strings](https://github.com/ZiweiXU/LENSR/blob/master/dataset/Synthetic/formula_strings_0606.pk) created ?</span>
 
 <span style="color:red">Q2: where do [features of symbols and logic operands](https://github.com/ZiweiXU/LENSR/blob/master/model/pygcn/pygcn/features.pk) come from ?</span>
 
-- the [Visual Relationship Detection (VRD)](https://cs.stanford.edu/people/ranjaykrishna/vrd/) dataset as well as the original images from [Scene Graph dataset](https://cs.stanford.edu/people/jcjohns/cvpr15_supp/).
+- the [Visual Relationship Detection (VRD)](https://cs.stanford.edu/people/ranjaykrishna/vrd/) dataset with its original images from [Scene Graph dataset](https://cs.stanford.edu/people/jcjohns/cvpr15_supp/).
 
 The dataset is composed of 100 object classes (`objects.json`):
 
@@ -55,7 +55,7 @@ and the files `annotations_train.json` and `annotations_test.json`, dictionaries
 }
 ```
 
-From the dataset, logical formulas are computed to link each relation predicate with some possible relation position between objects.
+From the dataset, logical formulas are computed to constrain each relation predicate with all possible relation position between objects. The goal here is to have a neural network prediction of a relation between objects to satisfy the constrains given by the position relation of object bounding boxes.
 
 
 # Forms

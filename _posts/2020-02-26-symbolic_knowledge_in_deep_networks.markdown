@@ -15,15 +15,17 @@ In particular, I'll answer the following questions:
 
 3/ How do we link formula satisfaction and model predictions during training ?
 
-<span style="color:red">Un-answered questions or bugs are left in red.</span>
+<span style="color:red">Open questions, difference with paper, or bugs are in red.</span>
 
 # The goal and datasets
+
+The goal is to use *logical rules* based on *prior knowledge* in the training of neural networks.
 
 The idea of the paper is to use Graph Convolutional Networks (GCN) to represent logical formulas with an embedding vector, and to use these representations as a new logical loss, either to predict if an assignment of variables will satisfy a logic, or to train a neural network's outputs to satisfy a logic.
 
 The evaluation of the representations are performed on 2 datasets:
 
-- a synthetic dataset of logical formulas, to predict if an assignment will satisfy the formulas
+- a synthetic dataset of logical formulas, to predict if an assignment will satisfy the formulas. Complexity of the formulas depends on the number of variables and the depth.
 
 <span style="color:red">Q1: how are [logical formula strings](https://github.com/ZiweiXU/LENSR/blob/master/dataset/Synthetic/formula_strings_0606.pk) created ?</span>
 
@@ -115,7 +117,7 @@ The graph definition, input to GCN, is defined by 2 text files:
 
 In the case of CNF, d-DNNF or assignments, the features for a negated literal '-i' is assigned with the negative vector of the feature of the literal `-feature(i)`.
 
-In each Graph Convolution Network, $$A \cdot X \cdot W + B$$, the weights W are specialized depending on the type of node.
+In each Graph Convolution Network, $$A \cdot X \cdot W + B$$, the weights W are specialized depending on the type of node (**node heterogeneity**).
 
 #### Assignments
 
@@ -161,11 +163,13 @@ In the case of the synthetic dataset, node features come from `model/pygcn/pygcn
 
 <span style="color:red">Q3: where do [features of symbols and logic operands](https://github.com/ZiweiXU/LENSR/blob/master/model/pygcn/pygcn/features.pk) come from ? Why this choice ?</span>
 
+These features may be randomly drawn from a uniform distribution on a given manifold, and the exchangeability of the variables 'a, b, c, d, e, f, g, h, i, j, k, l' will produce a network operating well on that manifold.
+
 In the case of the VRD datasets,
 
 - for nodes AND, OR, Global, features are reused from synthetic dataset.
 
-- for Symbol leaf nodes, the features is the average of 50-dimensional Glove vectors for all words in the relation (predicate or position), subject and object names.
+- for Symbol leaf nodes which represent relation variables (relation, subject, object), the features have to be representative of the relation. They are taken as the average of 50-dimensional Glove vectors for all words in the relation (predicate or position), subject and object names.
 
 <img src="{{ site.url }}/img/VRD_clause.jpg">
 
@@ -200,19 +204,24 @@ The return of the function composed of :
 - idx_train, idx_val, idx_test: NOT USED (simple range(0,N)),
 - and_children, or_children: JSON load from file
 
-The embedding is trained with triplet margin loss with euclidian distance, plus a regularization loss.
-
-The regularization loss takes the 100-dimension embedding $$ q_i $$ of each children nodes of a AND or OR node and applies:
+The embedding is trained with triplet margin loss with euclidian distance, plus a **semantic regularization loss** that takes the 100-dimension embedding $$ q_i $$ of each children nodes of a AND or OR node and applies:
 
 $$ \displaystyle \sum_{\text{OR}} \left(\| \sum_{j \in \text{children}} q(v_j) \|_2 -1 \right)^2 + \sum_{\text{AND}} \sum \text{abs}(V_k^T V_k - diag(V_k^T V_k))   $$
 
 <span style="color:red">Q7: In the paper, the formula differs from [code](https://github.com/ZiweiXU/LENSR/blob/0cb723537b792238adf71cfcf31457919eeb370a/model/pygcn/pygcn/train.py#L101) $$ \displaystyle \sum_{\text{OR}} \| \sum_{j \in \text{children}} q(v_j) -1 \|_2^2 + \sum_{\text{AND}} \| V_k^T V_k - diag(V_k^T V_k)  \|_2^2 $$
 </span>
 
+The regularization loss is consistent with d-DNNF properties for AND and OR nodes, and is applied for d-DNNF only. Also, the paper shows it performs better when combined with heterogeneous node weights (different weights for AND and OR nodes).
+
+
+#### Satifying assignments
+
+A second network, a 2-layer MLP, is trained on top of embeddings $$ (E_f, E_P, E_N) $$ to discriminate the satisfying assignment $$ (E_f, E_P) $$ from the negative $$ (E_f, E_N) $$ for the formula f.
+
 
 # Relation prediction
 
-For the VRD experiment, a second network, a two-layer MLP, is trained to predict the relation.
+For the VRD experiment, a third network, a two-layer MLP, is trained to predict the relation.
 
 The input of the MLP consists of the image features concatenated with Glove vectors for subject/object labels and relative position coordinates in the image crop. The output is a logit of dimension 71.
 
@@ -232,7 +241,7 @@ The annotation key is given by
 
 str((subject_category, subject_boundingbox),(object_category, object_boundingbox))
 
-The concepts of subject and object are exchangeable, and a "no-relation" label is added to all void relations.
+The concepts of subject and object are exchangeable, and a "no-relation-predicate" label is added to all void relations.
 
 Each batch deals with one image only and the batch size is equal to the number of relations, negative relations subsampled.
 

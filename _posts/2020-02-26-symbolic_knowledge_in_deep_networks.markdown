@@ -233,7 +233,7 @@ For each subject-object pair, a feature vector is created by concatenating
 
 - word embeddings for both subject and object labels. `word_embed.json` contains word embeddings (dimension 300) for all object names.
 
-<span style="color:red">Q8: where does 300-dim word embedding for object labels come from ? from Word2Vec ?</span>
+<span style="color:red">Q8: where does 300-dim word embedding for object labels word_embed.json come from ? from Word2Vec ?</span>
 
 - relative position coordinates of subject and object in the crop union of both bounding boxes.
 

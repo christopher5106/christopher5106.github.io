@@ -5,7 +5,7 @@ date:   2020-02-26 05:00:00
 categories: deep learning
 ---
 
-In this post, I'll give some explanations about [Embedding Symbolic Knowledge into Deep Networks](https://arxiv.org/abs/1909.01161) paper and their [code](https://github.com/ZiweiXU/LENSR) for someone interested in the deep understanding of the implementation, not a global overview.
+In this post, I'll give some explanations about [Embedding Symbolic Knowledge into Deep Networks](https://arxiv.org/abs/1909.01161) paper (LENSR) and their [code](https://github.com/ZiweiXU/LENSR) for someone interested in the deep understanding of the implementation, not a global overview.
 
 In particular, I'll answer the following questions:
 
@@ -232,7 +232,7 @@ The annotation key is given by
 
 str((subject_category, subject_boundingbox),(object_category, object_boundingbox))
 
-The concepts of subject and object are exchangeable, and a "no-predicate" label is added to all void relations.
+The concepts of subject and object are exchangeable, and a "no-relation" label is added to all void relations.
 
 Each batch deals with one image only and the batch size is equal to the number of relations, negative relations subsampled.
 

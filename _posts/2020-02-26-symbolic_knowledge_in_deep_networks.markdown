@@ -245,7 +245,7 @@ The concepts of subject and object are exchangeable, and a "no-relation-predicat
 
 Each batch deals with one image only and the batch size is equal to the number of relations, negative relations subsampled.
 
-<span style="color:red">Q9: the subsampling for negatives (absence of relation set to [70](https://github.com/ZiweiXU/LENSR/blob/0cb723537b792238adf71cfcf31457919eeb370a/tools/preprocess_image.py#L100)) might never happen in [if relation == 100](https://github.com/ZiweiXU/LENSR/blob/0cb723537b792238adf71cfcf31457919eeb370a/model/relation_prediction/mydataloader.py#L28)</span>
+<span style="color:red">Q9: the subsampling for negatives (absence of relation set to [70](https://github.com/ZiweiXU/LENSR/blob/0cb723537b792238adf71cfcf31457919eeb370a/tools/preprocess_image.py#L100)) might never happen in [if relation == 100](https://github.com/ZiweiXU/LENSR/blob/0cb723537b792238adf71cfcf31457919eeb370a/model/relation_prediction/mydataloader.py#L28) which is never satisfied.</span>
 
 
 #### Training loss

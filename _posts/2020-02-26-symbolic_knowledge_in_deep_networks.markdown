@@ -231,9 +231,9 @@ For each subject-object pair, a feature vector is created by concatenating
 
 - the image feature: a crop of the union of both bounding boxes is resized to 224x224, normalized, processed by the CV network to produce visual features from before last layer of ResNet 18 of dimension 512.
 
-- word embeddings for both subject and object labels. `word_embed.json` contains word embeddings (dimension 300) for all object names from Word2Vec.
+- word embeddings for both subject and object labels. `word_embed.json` contains word embeddings (dimension 300) for all object names.
 
-<span style="color:red">Q8: where does 300-dim word embedding for object labels come from ?</span>
+<span style="color:red">Q8: where does 300-dim word embedding for object labels come from ? from Word2Vec ?</span>
 
 - relative position coordinates of subject and object in the crop union of both bounding boxes.
 

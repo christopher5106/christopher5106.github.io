@@ -15,7 +15,7 @@ In particular, I'll answer the following questions:
 
 3/ How do we link formula satisfaction and model predictions during training ?
 
-<span style="color:red">Open questions, difference with paper, or bugs are in red.</span>
+And many more frequenlty asked questions.
 
 # The goal and datasets
 
@@ -25,9 +25,7 @@ The idea of the paper is to use Graph Convolutional Networks (GCN) to represent 
 
 The evaluation of the representations are performed on 2 datasets:
 
-- a synthetic dataset of logical formulas, to predict if an assignment will satisfy the formulas. Complexity of the formulas depends on the number of variables and the depth.
-
-<span style="color:red">Q1: how are [logical formula strings](https://github.com/ZiweiXU/LENSR/blob/master/dataset/Synthetic/formula_strings_0606.pk) created ?</span>
+- a synthetic dataset of logical formulas, to predict if an assignment will satisfy the formulas. Complexity of the formulas depends on the number of variables and the depth. Logic formulas are randomly generated (uniformly sampled propositions and operators) for the synthetic experiments.
 
 - the [Visual Relationship Detection (VRD)](https://cs.stanford.edu/people/ranjaykrishna/vrd/) dataset with its original images from [Scene Graph dataset](https://cs.stanford.edu/people/jcjohns/cvpr15_supp/).
 
@@ -53,7 +51,7 @@ and the files `annotations_train.json` and `annotations_test.json`, dictionaries
 }
 ```
 
-From the dataset, logical formulas are computed to constrain each relation predicate with all possible relation position between objects. The goal here is to have a neural network prediction of a relation between objects to satisfy the constrains given by the position relation of object bounding boxes.
+From this training dataset, logical formulas are extracted via rule learning to constrain each relation predicate with all possible relation position between objects. The goal here is to have a neural network prediction of a relation between objects to satisfy the constrains given by the position relation of object bounding boxes.
 
 The dataset is scanned to search for all position relations possible for each relation `[predicate, subject, object]`, among one of 10 possible exclusive names:
 ```
@@ -75,7 +73,7 @@ When a sample (image, subject, object) is processed:
 
 - the assumption, i.e. the position relation that hold in the current sample, is added as a clause composed of one position variable
 
-<span style="color:red">Q2: for CNF conversion, IDs of relation variables that are kept are remapped to a range of values from 1 to N, is that a requirement from PySat package ?</span>
+For CNF conversion, IDs of relation variables that are kept are remapped to a range of values from 1 to N, a requirement from PySat package.
 
 
 # Logical Graph Forms
@@ -161,21 +159,17 @@ In the case of the synthetic dataset, node features come from `model/pygcn/pygcn
 
 - a `features` dictionary containing a feature for each type and symbol `Global, Symbol, Or, And, Not, a, b, c, d, e, f, g, h, i, j, k, l`. Each feature is a **numpy array of dimension (50,)**.
 
-<span style="color:red">Q3: where do [features of symbols and logic operands](https://github.com/ZiweiXU/LENSR/blob/master/model/pygcn/pygcn/features.pk) come from ? Why this choice ?</span>
-
-These features may be randomly drawn from a uniform distribution on a given manifold, and the exchangeability of the variables 'a, b, c, d, e, f, g, h, i, j, k, l' will produce a network operating well on that manifold.
+These features are randomly vectors, and the exchangeability of the variables 'a, b, c, d, e, f, g, h, i, j, k, l' will produce a network operating well on that manifold.
 
 In the case of the VRD datasets,
 
 - for nodes AND, OR, Global, features are reused from synthetic dataset.
 
-- for Symbol leaf nodes which represent relation variables (relation, subject, object), the features have to be representative of the relation. They are taken as the average of 50-dimensional Glove vectors for all words in the relation (predicate or position), subject and object names.
+- for Symbol leaf nodes which represent relation variables (relation, subject, object), GloVe vectors are used since **they are semantic representations and may generalize to unseen propositions**. Features are taken as the average of 50-dimensional Glove vectors for all words in the relation (predicate or position), subject and object names.
 
 <img src="{{ site.url }}/img/VRD_clause.jpg">
 
-<span style="color:red">Q4: full position names (POS_REL_NAMES_FULL) can be composed of multiple words, and embeddings are summed, not averaged in [relcnf2data](https://github.com/ZiweiXU/LENSR/blob/master/tools/relcnf2data.py#L41) and [relddnf2data](https://github.com/ZiweiXU/LENSR/blob/master/tools/relddnnf2data.py#L41) and in [train](https://github.com/ZiweiXU/LENSR/blob/master/model/relation_prediction/train.py#L264). Would it be better to normalize by the number of words ?</span>
-
-<span style="color:red">Q5: are ['exists' and 'unique' predicates](https://github.com/ZiweiXU/LENSR/blob/0cb723537b792238adf71cfcf31457919eeb370a/tools/find_rels.py#L23)  defined in code use somewhere ? It is replaced by filtering clauses.</span>
+ Most of objects and relations consisted of a single word. Potentially, the model could be improved via normalization, but it was experimented with that setting.
 
 
 #### Training the logical embedder
@@ -191,9 +185,6 @@ Each element are loaded from file with `load_data` function. It loads:
 - edges, converted into an adjacency matrix A, normalized with
 
 $$ D^{-1} A $$
-
-<span style="color:red">Q6: it looks contrary to paper definition: $$ D^{-1/2} A D^{-1/2} $$. The fact A is symetric $$ a_{i,j} = a_{j,i} $$ (undirected graph) does not mean nodes i and j have symetric roles.
-</span>
 
 The original ID are remapped to 0...N in the order the features are saved.
 
@@ -231,9 +222,7 @@ For each subject-object pair, a feature vector is created by concatenating
 
 - the image feature: a crop of the union of both bounding boxes is resized to 224x224, normalized, processed by the CV network to produce visual features from before last layer of ResNet 18 of dimension 512.
 
-- word embeddings for both subject and object labels. `word_embed.json` contains word embeddings (dimension 300) for all object names.
-
-<span style="color:red">Q8: where does 300-dim word embedding for object labels word_embed.json come from ? from Word2Vec ?</span>
+- word embeddings for both subject and object labels. `word_embed.json` contains GloVe word embeddings (dimension 300) for all object names.
 
 - relative position coordinates of subject and object in the crop union of both bounding boxes.
 
@@ -245,8 +234,6 @@ The concepts of subject and object are exchangeable, and a "no-relation-predicat
 
 Each batch deals with one image only and the batch size is equal to the number of relations, negative relations subsampled.
 
-<span style="color:red">Q9: the subsampling for negatives (absence of relation set to [70](https://github.com/ZiweiXU/LENSR/blob/0cb723537b792238adf71cfcf31457919eeb370a/tools/preprocess_image.py#L100)) might never happen in [if relation == 100](https://github.com/ZiweiXU/LENSR/blob/0cb723537b792238adf71cfcf31457919eeb370a/model/relation_prediction/mydataloader.py#L28) which is never satisfied.</span>
-
 
 #### Training loss
 
@@ -257,8 +244,6 @@ Second, thanks to a trained logical embedder that produces close embeddings for 
 Since the softmax of the logits is not a boolean but a vector of probabilities for the 71 predicate variables, the feature of the symbol nodes in the assignment graph is replaced by an average of the word embeddings for predicate names weighted by the probabilities.
 
 <img src="{{ site.url }}/img/Assignment_vrd.jpg">
-
-<span style="color:red">Q10: the prop vector is already normalized so is a need for [division by 70](https://github.com/ZiweiXU/LENSR/blob/0cb723537b792238adf71cfcf31457919eeb370a/model/relation_prediction/train.py#L276) ?</span>
 
 Optimizer applies gradients on the MLP model only, constraining only the MLP weights for the ouput to follow the embedder loss.
 

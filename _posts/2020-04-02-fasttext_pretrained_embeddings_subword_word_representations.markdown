@@ -158,7 +158,7 @@ def get_word_vector(word, vocabulary, embeddings):
   return np.mean([embeddings[s] for s in subwords[1]], axis=0)
 ```
 
-<span style="color:red">Q1: It looks different from the [paper, section 2.4](https://arxiv.org/pdf/1712.09405.pdf):
+<span style="color:red">Q1: The code implementation is different from the [paper, section 2.4](https://arxiv.org/pdf/1712.09405.pdf):
 $$ v_w + \frac{1}{\| N \|} \sum_{n \in N} x_n $$
 </span>
 

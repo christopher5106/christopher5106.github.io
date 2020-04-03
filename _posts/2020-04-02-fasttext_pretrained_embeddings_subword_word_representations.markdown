@@ -224,7 +224,7 @@ get_sentence_vector("It's a good example.")
 
 Let's check if reverse engineering has worked and compare our Python implementation with the Python-bindings of the C code:
 
-```
+```python
 >>> ft = fasttext.load_model('/sharedfiles/fasttext/cc.en.300.bin')
 
 >>> ft.words == vocabulary

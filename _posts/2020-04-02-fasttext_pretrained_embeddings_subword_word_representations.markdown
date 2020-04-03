@@ -5,7 +5,7 @@ date:   2020-04-02 05:00:00
 categories: deep learning
 ---
 
-FastText is a state-of-the art when speaking about **non-contextual word embeddings**. For that result, account many optimizations, such as subword information and phrases, but for which no documentation is available on how to reuse pretrained embeddings in our projects.
+FastText is a state-of-the art when speaking about **non-contextual word embeddings**. For that result, account many optimizations, such as subword information and phrases, but for which no documentation is available on how to reuse pretrained embeddings in our projects. The `gensim` package does not show neither how to get the subword information.
 
 Let's see how to get a representation in Python.
 
@@ -93,7 +93,8 @@ for lang in ["en", "fr"]:
 ```
 
 
-# Getting a word representation
+
+# Loading the embeddings
 
 
 Now, you should be able to load full embeddings and get a word representation directly in Python:
@@ -104,86 +105,73 @@ def load_embeddings(output_dir):
   words = []
   with open(os.path.join(output_dir, "vocabulary.txt"), "r", encoding='utf-8') as f:
     for line in f.readlines():
-      words.append(line)
+      words.append(line.rstrip())
   return words, input_matrix
 
 vocabulary, embeddings = load_embeddings('/sharedfiles/fasttext/cc.en.300')
-
 ```
 
+# Getting a word representation with subword information
 
 
-In Python, let's import the libraries and use the function they offer us to load vectors:
-
-```
-dim=300
-
-def load_vectors(fname):
-    fin = io.open(fname, 'r', encoding='utf-8', newline='\n', errors='ignore')
-    n, d = map(int, fin.readline().split())
-    data = {}
-    for line in fin:
-        tokens = line.rstrip().split(' ')
-        data[tokens[0]] = map(float, tokens[1:])
-    return data
-```
-
-Now on, we are left... to ourselves. It is hard to find any example on how to tokenize into words, compute subword information, and find phrases in Python. And even to be sure of the hyperparameters used in their embedding pretraining... such as `maxn`, `minn` or `wordNgrams` which are not specified in the model name or the documentation. The `gensim` package does not show neither how to get the subword information.
-
-# Reverse engineering
-
-There is no much possible available to reverse engineer. The idea is to get a groundtruth representation that we could reproduce by ourselves. One solution is to instantiate a supervised training of **0 epoch** for which it is possible to load the embeddings in the `.vec` format (word2vec format). For this, we need to provide it with a txt file 'cooking.train' to be read:
-
-
-
-# Subword information
-
-Let's reproduce this in Python, removing dependency from model. First, let's modify the provided function to get indices as well:
+The current subwords have been computed from words for 5-grams:
 
 ```python
-import numpy as np
-
-def load_vectors(fname):
-    fin = io.open(fname, 'r', encoding='utf-8', newline='\n', errors='ignore')
-    n, d = map(int, fin.readline().split())
-    data = []
-    indices = {}
-    for line in fin:
-        tokens = line.rstrip().split(' ')
-        indices[tokens[0]] = len(data)
-        data.append(list(map(float, tokens[1:])))
-    return indices, np.stack(data)
-
-indices, pretrained = load_vectors("/sharedfiles/fasttext/wiki-news-300d-1M-subword.vec")
-
-minn=3
-maxn=6
-
-def get_subwords(word, indices, minn, maxn):
+def get_subwords(word, vocabulary, minn=5, maxn=5):
   _word = "<" + word + ">"
   _subwords = []
-  if word in indices:
+  if word in vocabulary:
     _subwords.append(word)
   for ngram_start in range(0, len(_word)):
     for ngram_length in range(minn, maxn+1):
       if ngram_start+ngram_length <= len(_word):
         _candidate_subword = _word[ngram_start:ngram_start+ngram_length]
         if _candidate_subword not in _subwords:
-          _subwords.append(_candidate_subword.replace(">", "").replace("<", ""))
+          _subwords.append(_candidate_subword)
   return _subwords
 
-subwords = get_subwords("airplane", indices, minn, maxn)
+subwords = get_subwords("airplane", vocabulary)
 print(subwords)
 
-def get_representation(subwords, indices, pretrained):
-  vector = 0
-  for subword in subwords:
-    if subword in indices:
-      vector += pretrained[indices[subword]]
-  return vector
-
-print(get_representation(subwords, indices, pretrained))
+for word in ["airplane", "see", "qklsmjf", "qZmEmzqm"]:
+  print(get_subwords(word, vocabulary) == ft.get_subwords(word)[0])
 ```
+
+
+
+```python
+def get_representation(subword_indices, embeddings):
+  return np.mean([embeddings[s] for s in subword_indices], axis=0)
+
+print(get_representation(subword_indices, embeddings))
+```
+
+<span style="color:red">It looks different from the [paper](https://arxiv.org/pdf/1712.09405.pdf), section 2.4</a>:
+$$ v_w + \frac{1}{\| N \|} \sum_{n \in N} x_n $$
+</span>
+
+In the [code](https://github.com/facebookresearch/fastText/blob/02c61efaa6d60d6bb17e6341b790fa199dfb8c83/src/fasttext.cc#L103), the word representation is given by:
+
+$$ \frac{1}{\| N \|} * (v_w +  \sum_{n \in N} x_n ) $$
+
+
+# Check
+
+Let's check if reverse engineering has worked:
+
+```
+ft = fasttext.load_model('/sharedfiles/fasttext/cc.en.300.bin')
+
+>>> ft.words == vocabulary
+True
+
+>>> np.allclose(ft.get_input_matrix(), embeddings)
+True
+
+>>> np.allclose(get_representation(subword_indices, embeddings), ft.get_word_vector("airplane"))
+
+```
+
 
 # Tokenization into words
 

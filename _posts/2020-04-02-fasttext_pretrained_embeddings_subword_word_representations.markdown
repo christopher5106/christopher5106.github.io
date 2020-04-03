@@ -266,7 +266,7 @@ Everything is correct.
 
 Looking at the vocabulary, it looks like "-" is used for phrases (i.e. word N-grams) and it won't harm to consider so. Setting `wordNgrams=4` is largely sufficient, because above 5, the phrases in the vocabulary do not look very relevant:
 
-```
+```python
 >>> for w in ft.get_words():
 ...     if w.count("-") == 5:
 ...             print(w)

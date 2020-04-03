@@ -244,7 +244,7 @@ two-and-a-half-year-old
 f-----
 ```
 
-<span style="color:red">Q2: what is the hyperparameter used for wordNgrams in the released models ?</span>
+<span style="color:red">Q2: what was the hyperparameter used for wordNgrams in the released models ?</span>
 
 Let's extract word Ngrams from a text:
 

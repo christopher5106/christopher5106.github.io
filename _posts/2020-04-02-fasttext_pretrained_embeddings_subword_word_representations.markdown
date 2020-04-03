@@ -96,6 +96,21 @@ for lang in ["en", "fr"]:
 # Getting a word representation
 
 
+Now, you should be able to load full embeddings and get a word representation directly in Python:
+
+```python
+def load_embeddings(output_dir):
+  input_matrix = np.load(os.path.join(output_dir, "embeddings.npy"))
+  words = []
+  with open(os.path.join(output_dir, "vocabulary.txt"), "r", encoding='utf-8') as f:
+    for line in f.readlines():
+      words.append(line)
+  return words, input_matrix
+
+vocabulary, embeddings = load_embeddings('/sharedfiles/fasttext/cc.en.300')
+
+```
+
 
 
 In Python, let's import the libraries and use the function they offer us to load vectors:

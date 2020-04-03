@@ -18,7 +18,7 @@ pip install fasttext
 # Pretrained embeddings
 
 
-Let's download the [pretrained embeddings](https://fasttext.cc/docs/en/english-vectors.html), all of dimension 300:
+Let's download the [pretrained unsupervised models](https://fasttext.cc/docs/en/english-vectors.html), all of dimension 300:
 
 ```
 mkdir /sharedfiles/fasttext

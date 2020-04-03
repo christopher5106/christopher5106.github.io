@@ -15,7 +15,7 @@ First let's install FastText:
 pip install fasttext
 ```
 
-# Pretrained embeddings
+## Pretrained embeddings
 
 
 Let's download the [pretrained unsupervised models](https://fasttext.cc/docs/en/english-vectors.html), all producing a representation of dimension 300:
@@ -51,7 +51,7 @@ And load one of them for example, the english one:
 (4000000, 300)
 ```
 
-The input matrix contains an embedding reprentation for 4 million word and subwords. The number of words in the vocabulary is 2 million.
+The input matrix contains an embedding reprentation for 4 million words and subwords, among which, 2 million words from the vocabulary.
 
 First thing you might notice, subword embeddings are not available in  the released `.vec` text dumps in `word2vec` format:
 
@@ -64,14 +64,14 @@ $ head -1 /sharedfiles/fasttext/cc.en.300.vec
 2000000 300
 ```
 
-The first line in the file specifies 2 m words and 300 dimension embeddings, and the remaining 2 million lines is a dump of the embeddings.
+The first line in the file specifies 2 m words and 300 dimension embeddings, and the remaining 2 million lines is a dump of the word embeddings. Where are my subwords?
 
 In this document, I'll explain how to dump the full embeddings and use them in a project.
 
 
-# Dump the full embeddings from .bin file
+## Dump the full embeddings from .bin file
 
-As seen in previous section, you need to load the model first from the `.bin` file:
+As seen in previous section, you need to load the model first from the `.bin` file and convert it to a vocabulary and an embedding matrix:
 
 ```python
 import os
@@ -94,7 +94,7 @@ for lang in ["en", "fr"]:
 
 
 
-# Loading the embeddings
+## Loading the embeddings
 
 
 Now, you should be able to load full embeddings and get a word representation directly in Python:
@@ -111,7 +111,7 @@ def load_embeddings(output_dir):
 vocabulary, embeddings = load_embeddings('/sharedfiles/fasttext/cc.en.300')
 ```
 
-# Getting a word representation with subword information
+## Getting a word representation with subword information
 
 
 The first function required is a hashing function to get row indice in the matrix for a given subword:
@@ -172,7 +172,7 @@ print(get_word_vector("airplane", vocabulary, embeddings).shape)
 
 returns `(['airplane', '<airp', 'airpl', 'irpla', 'rplan', 'plane', 'lane>'], array([  11788, 3452223, 2457451, 2252317, 2860994, 3855957, 2848579]))` and an embedding representation for the word of dimension `(300,)`.
 
-# Check
+## Check
 
 Let's check if reverse engineering has worked and compare our Python implementation with the Python-bindings of the C code:
 
@@ -206,7 +206,7 @@ Representations: True
 
 Everything is correct.
 
-# Tokenization into words
+## Tokenization into words
 
 
 assumes to be given a single line of text. We split words on
@@ -220,7 +220,7 @@ def tokenize(sentence):
 ```
 TODO
 
-# Phrases
+## Phrases
 
 Looking at the vocabulary, it looks like "-" is used for phrases (i.e. word N-grams) and it won't harm to consider so. Setting `wordNgrams=4` is largely sufficient, because above 5, the phrases in the vocabulary do not look very relevant:
 

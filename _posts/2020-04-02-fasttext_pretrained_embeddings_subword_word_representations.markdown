@@ -114,7 +114,19 @@ vocabulary, embeddings = load_embeddings('/sharedfiles/fasttext/cc.en.300')
 # Getting a word representation with subword information
 
 
-The current subwords have been computed from words for 5-grams. My implementation might differ a bit from [original](https://github.com/facebookresearch/fastText/blob/7842495a4d64c7a3bb4339d45d6e64321d002ed8/src/dictionary.cc#L172) for special characters:
+The first function required is a hashing function to get row indice in the matrix for a given subword:
+
+```python
+def get_hash(subword, bucket=2000000, nb_words=2000000):
+  h = 2166136261
+  for c in subword:
+    c = ord(c) % 2**8
+    h = (h ^ c) % 2**32
+    h = (h * 16777619) % 2**32
+  return h % bucket + nb_words
+```
+
+In the model loaded, subwords have been computed from 5-grams of words. My implementation might differ a bit from [original](https://github.com/facebookresearch/fastText/blob/7842495a4d64c7a3bb4339d45d6e64321d002ed8/src/dictionary.cc#L172) for special characters:
 
 ```python
 def get_subwords(word, vocabulary, minn=5, maxn=5):
@@ -130,32 +142,34 @@ def get_subwords(word, vocabulary, minn=5, maxn=5):
         _candidate_subword = _word[ngram_start:ngram_start+ngram_length]
         if _candidate_subword not in _subwords:
           _subwords.append(_candidate_subword)
-  return _subwords, _subword_ids
-
-subwords = get_subwords("airplane", vocabulary)
-print(subwords)
-
-for word in ["airplane", "see", "qklsmjf", "qZmEmzqm"]:
-  print(get_subwords(word, vocabulary) == ft.get_subwords(word)[0])
+          _subword_ids.append(get_hash(_candidate_subword))
+  return _subwords, np.array(_subword_ids)
 ```
 
+Now it is time to compute the vector representation, following the [code](https://github.com/facebookresearch/fastText/blob/02c61efaa6d60d6bb17e6341b790fa199dfb8c83/src/fasttext.cc#L103), the word representation is given by:
+
+$$ \frac{1}{\| N \|} * (v_w +  \sum_{n \in N} x_n ) $$
 
 
 ```python
-def get_representation(subword_indices, embeddings):
-  return np.mean([embeddings[s] for s in subword_indices], axis=0)
-
-print(get_representation(subword_indices, embeddings))
+def get_word_vector(word, vocabulary, embeddings):
+  subwords = get_subwords(word, vocabulary)
+  return np.mean([embeddings[s] for s in subwords[1]], axis=0)
 ```
 
 <span style="color:red">It looks different from the [paper](https://arxiv.org/pdf/1712.09405.pdf), section 2.4</a>:
 $$ v_w + \frac{1}{\| N \|} \sum_{n \in N} x_n $$
 </span>
 
-In the [code](https://github.com/facebookresearch/fastText/blob/02c61efaa6d60d6bb17e6341b790fa199dfb8c83/src/fasttext.cc#L103), the word representation is given by:
+Let's test everything now:
 
-$$ \frac{1}{\| N \|} * (v_w +  \sum_{n \in N} x_n ) $$
+```python
+subwords = get_subwords("airplane", vocabulary)
+print(subwords)
+print(get_word_vector("airplane", vocabulary, embeddings).shape)
+```
 
+returns `(['airplane', '<airp', 'airpl', 'irpla', 'rplan', 'plane', 'lane>'], array([  11788, 3452223, 2457451, 2252317, 2860994, 3855957, 2848579]))` and an embedding representation for the word of dimension `(300,)`.
 
 # Check
 
@@ -170,8 +184,23 @@ True
 >>> np.allclose(ft.get_input_matrix(), embeddings)
 True
 
->>> np.allclose(get_representation(subword_indices, embeddings), ft.get_word_vector("airplane"))
+>>> for word in ["airplane", "see", "qklsmjf", "qZmEmzqm"]:
+  print("Subwords:", get_subwords(word, vocabulary)[0] == ft.get_subwords(word)[0])
+  print("Subword_ids:", np.allclose(get_subwords(word, vocabulary)[1], ft.get_subwords(word)[1]))
+  print("Representations:", np.allclose(get_word_vector(word, vocabulary, embeddings), ft.get_word_vector(word)))
 
+Subwords: True
+Subword_ids: True
+Representations: True
+Subwords: True
+Subword_ids: True
+Representations: True
+Subwords: True
+Subword_ids: True
+Representations: True
+Subwords: True
+Subword_ids: True
+Representations: True
 ```
 
 

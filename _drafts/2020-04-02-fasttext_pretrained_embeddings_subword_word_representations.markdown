@@ -36,9 +36,57 @@ mv gunzip cc.en.300.vec /sharedfiles/fasttext/
 mv gunzip cc.en.300.bin /sharedfiles/fasttext/
 ```
 
+
+void FastText::getWordVector(Vector& vec, const std::string& word) const {
+  const std::vector<int32_t>& ngrams = dict_->getSubwords(word);
+  vec.zero();
+  for (int i = 0; i < ngrams.size(); i++) {
+    addInputVector(vec, ngrams[i]);
+  }
+  if (ngrams.size() > 0) {
+    vec.mul(1.0 / ngrams.size());
+  }
+}
+
+
+
+
+void Dictionary::computeSubwords(
+    const std::string& word,
+    std::vector<int32_t>& ngrams,
+    std::vector<std::string>* substrings) const {
+  for (size_t i = 0; i < word.size(); i++) {
+    std::string ngram;
+    if ((word[i] & 0xC0) == 0x80) {
+      continue;
+    }
+    for (size_t j = i, n = 1; j < word.size() && n <= args_->maxn; n++) {
+      ngram.push_back(word[j++]);
+      while (j < word.size() && (word[j] & 0xC0) == 0x80) {
+        ngram.push_back(word[j++]);
+      }
+      if (n >= args_->minn && !(n == 1 && (i == 0 || j == word.size()))) {
+        int32_t h = hash(ngram) % args_->bucket;
+        pushHash(ngrams, h);
+        if (substrings) {
+          substrings->push_back(ngram);
+        }
+      }
+    }
+  }
+}
+
+
+
+
+
+
 import fasttext
 ft = fasttext.load_model('/sharedfiles/fasttext/cc.en.300.bin')
 model = fasttext.train_supervised('cooking.train', pretrainedVectors="/sharedfiles/fasttext/cc.en.300.vec", dim=300, epoch=0, maxn=5, minn=5)
+
+
+
 
 
 In Python, let's import the libraries and use the function they offer us to load vectors:

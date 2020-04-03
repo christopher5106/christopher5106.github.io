@@ -114,7 +114,7 @@ vocabulary, embeddings = load_embeddings('/sharedfiles/fasttext/cc.en.300')
 ## Getting a word representation with subword information
 
 
-The first function required is a hashing function to get row indice in the matrix for a given subword:
+The first function required is a hashing function to get row indice in the matrix for a given subword (converted from [C code](https://github.com/facebookresearch/fastText/blob/7842495a4d64c7a3bb4339d45d6e64321d002ed8/src/dictionary.cc#L163)):
 
 ```python
 def get_hash(subword, bucket=2000000, nb_words=2000000):

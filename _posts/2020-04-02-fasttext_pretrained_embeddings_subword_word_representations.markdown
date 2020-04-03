@@ -158,7 +158,7 @@ def get_word_vector(word, vocabulary, embeddings):
   return np.mean([embeddings[s] for s in subwords[1]], axis=0)
 ```
 
-<span style="color:red">It looks different from the [paper, section 2.4](https://arxiv.org/pdf/1712.09405.pdf):
+<span style="color:red">Q1: It looks different from the [paper, section 2.4](https://arxiv.org/pdf/1712.09405.pdf):
 $$ v_w + \frac{1}{\| N \|} \sum_{n \in N} x_n $$
 </span>
 
@@ -174,7 +174,7 @@ returns `(['airplane', '<airp', 'airpl', 'irpla', 'rplan', 'plane', 'lane>'], ar
 
 # Check
 
-Let's check if reverse engineering has worked:
+Let's check if reverse engineering has worked and compare our Python implementation with the Python-bindings of the C code:
 
 ```
 >>> ft = fasttext.load_model('/sharedfiles/fasttext/cc.en.300.bin')
@@ -204,18 +204,28 @@ Subword_ids: True
 Representations: True
 ```
 
+Everything is correct.
 
 # Tokenization into words
 
 
 assumes to be given a single line of text. We split words on
-                           # whitespace (space, newline, tab, vertical tab) and the control
-                           # characters carriage return, formfeed and the null character.
+whitespace (space, newline, tab, vertical tab) and the control
+characters carriage return, formfeed and the null character.
+
+```python
+def tokenize(sentence):
+  pass
+
+```
+TODO
 
 # Phrases
 
+Looking at the vocabulary, it looks like "-" is used for phrases (i.e. word N-grams) and it won't harm to consider so. Setting `wordNgrams=4` is largely sufficient, because above 5, the phrases in the vocabulary do not look very relevant:
+
 ```
->>> for w in model.get_words():
+>>> for w in ft.get_words():
 ...     if w.count("-") == 5:
 ...             print(w)
 ...
@@ -234,28 +244,22 @@ two-and-a-half-year-old
 f-----
 ```
 
+<span style="color:red">Q2: what is the hyperparameter used for wordNgrams in the released models ?</span>
+
+Let's extract word Ngrams from a text:
+
+```python
+def extract_wordNgrams(sentence):
+  pass
 ```
-wordNgrams=4
+TODO
+
+<span style="color:red">Q3: How is the phrase embedding integrated in the final representation ? Is it a simple addition ?</span>
+
+<span style="color:red">Q4: I'm wondering if the words "--Sir" and "--My" I find in the vocabulary have a special meaning. In the meantime, when looking at words with more than 6 characters "-", it looks very strange. I'm wondering if this could not have been removed from the vocabulary:
+</span>
+
 ```
-
-
-
-
-
---Sir
---My
-
-
-
-
-
-
-
-"--------------------------------------------" in model.get_words()
-
-
-
-
 -----------
 -------------
 ---------
@@ -290,9 +294,8 @@ B----
 --WFC--
 ----moreno
 three-and-a-half-year
+```
 
-
-
-
+You can test it by asking: `"--------------------------------------------" in ft.get_words()`. The answer is `True`.
 
 **Well done!**

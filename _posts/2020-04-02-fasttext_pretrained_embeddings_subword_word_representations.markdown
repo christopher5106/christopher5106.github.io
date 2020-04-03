@@ -148,8 +148,9 @@ def get_subwords(word, vocabulary, minn=5, maxn=5):
 
 Now it is time to compute the vector representation, following the [code](https://github.com/facebookresearch/fastText/blob/02c61efaa6d60d6bb17e6341b790fa199dfb8c83/src/fasttext.cc#L103), the word representation is given by:
 
-$$ \frac{1}{\| N \|} * (v_w +  \sum_{n \in N} x_n ) $$
+$$ \frac{1}{\| N \|   + 1 } * (v_w +  \sum_{n \in N} x_n ) $$
 
+where N is the set of n-grams for the word, $$x_n$$ their embeddings, and $$v_n$$ the word embedding if the word belongs to the vocabulary.
 
 ```python
 def get_word_vector(word, vocabulary, embeddings):
@@ -157,7 +158,7 @@ def get_word_vector(word, vocabulary, embeddings):
   return np.mean([embeddings[s] for s in subwords[1]], axis=0)
 ```
 
-<span style="color:red">It looks different from the [paper](https://arxiv.org/pdf/1712.09405.pdf), section 2.4</a>:
+<span style="color:red">It looks different from the [paper, section 2.4](https://arxiv.org/pdf/1712.09405.pdf):
 $$ v_w + \frac{1}{\| N \|} \sum_{n \in N} x_n $$
 </span>
 

@@ -114,21 +114,23 @@ vocabulary, embeddings = load_embeddings('/sharedfiles/fasttext/cc.en.300')
 # Getting a word representation with subword information
 
 
-The current subwords have been computed from words for 5-grams:
+The current subwords have been computed from words for 5-grams. My implementation might differ a bit from [original](https://github.com/facebookresearch/fastText/blob/7842495a4d64c7a3bb4339d45d6e64321d002ed8/src/dictionary.cc#L172) for special characters:
 
 ```python
 def get_subwords(word, vocabulary, minn=5, maxn=5):
   _word = "<" + word + ">"
   _subwords = []
+  _subword_ids = []
   if word in vocabulary:
     _subwords.append(word)
+    _subword_ids.append(vocabulary.index(word))
   for ngram_start in range(0, len(_word)):
     for ngram_length in range(minn, maxn+1):
       if ngram_start+ngram_length <= len(_word):
         _candidate_subword = _word[ngram_start:ngram_start+ngram_length]
         if _candidate_subword not in _subwords:
           _subwords.append(_candidate_subword)
-  return _subwords
+  return _subwords, _subword_ids
 
 subwords = get_subwords("airplane", vocabulary)
 print(subwords)
@@ -160,7 +162,7 @@ $$ \frac{1}{\| N \|} * (v_w +  \sum_{n \in N} x_n ) $$
 Let's check if reverse engineering has worked:
 
 ```
-ft = fasttext.load_model('/sharedfiles/fasttext/cc.en.300.bin')
+>>> ft = fasttext.load_model('/sharedfiles/fasttext/cc.en.300.bin')
 
 >>> ft.words == vocabulary
 True

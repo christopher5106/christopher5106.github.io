@@ -220,7 +220,7 @@ def get_sentence_vector(line):
 get_sentence_vector("It's a good example.")
 ```
 
-## Check
+## Implementation Check
 
 Let's check if reverse engineering has worked and compare our Python implementation with the Python-bindings of the C code:
 

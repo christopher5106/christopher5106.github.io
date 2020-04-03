@@ -136,6 +136,8 @@ def get_subwords(word, vocabulary, minn=5, maxn=5):
   if word in vocabulary:
     _subwords.append(word)
     _subword_ids.append(vocabulary.index(word))
+    if word == "</s>":
+      return _subwords, np.array(_subword_ids)
   for ngram_start in range(0, len(_word)):
     for ngram_length in range(minn, maxn+1):
       if ngram_start+ngram_length <= len(_word):
@@ -172,6 +174,52 @@ print(get_word_vector("airplane", vocabulary, embeddings).shape)
 
 returns `(['airplane', '<airp', 'airpl', 'irpla', 'rplan', 'plane', 'lane>'], array([  11788, 3452223, 2457451, 2252317, 2860994, 3855957, 2848579]))` and an embedding representation for the word of dimension `(300,)`.
 
+
+## Tokenization into words
+
+The Python tokenizer is defined by the [readWord](https://github.com/facebookresearch/fastText/blob/5a5b1e641050c0932858677695e7823d79989291/python/fasttext_module/fasttext/pybind/fasttext_pybind.cc#L264) method in the C code.
+
+assumes to be given a single line of text. We split words on
+whitespace (space, newline, tab, vertical tab) and the control
+characters carriage return, formfeed and the null character.
+
+```python
+def tokenize(sentence):
+  tokens = []
+  word = ""
+  for c in sentence:
+    if c in [' ', '\n', '\r', '\t', '\v', '\f', '\0']:
+      if word:
+        tokens.append(word)
+        word = ""
+      if c == '\n':
+        tokens.append("</s>")
+    else:
+      word += c
+  if word:
+    tokens.append(word)
+  return tokens
+
+print(tokenize("It's a good example.\n Oh yes!"))
+```
+
+A bit different from original implementation that only considers the text until a new line, my implementation requires a line as input:
+
+```python
+def get_sentence_vector(line):
+  tokens = tokenize(line)
+  vectors = []
+  for t in tokens:
+    vec = get_word_vector(t, vocabulary, embeddings)
+    norm = np.linalg.norm(vec)
+    if norm > 0:
+      vec /= norm
+    vectors.append(vec)
+  return np.mean(vectors, axis=0)
+
+get_sentence_vector("It's a good example.")
+```
+
 ## Check
 
 Let's check if reverse engineering has worked and compare our Python implementation with the Python-bindings of the C code:
@@ -186,6 +234,7 @@ True
 True
 
 >>> for word in ["airplane", "see", "qklsmjf", "qZmEmzqm"]:
+  print("Word:", word)
   print("Subwords:", get_subwords(word, vocabulary)[0] == ft.get_subwords(word)[0])
   print("Subword_ids:", np.allclose(get_subwords(word, vocabulary)[1], ft.get_subwords(word)[1]))
   print("Representations:", np.allclose(get_word_vector(word, vocabulary, embeddings), ft.get_word_vector(word)))
@@ -202,23 +251,16 @@ Representations: True
 Subwords: True
 Subword_ids: True
 Representations: True
+
+>>> tokenize("It's a good example.\n Oh yes!") == fasttext.tokenize("It's a good example.\n Oh yes!")
+True
+
+>>> np.allclose(get_sentence_vector("It's a good example."),ft.get_sentence_vector("It's a good example."))
+True
 ```
 
 Everything is correct.
 
-## Tokenization into words
-
-
-assumes to be given a single line of text. We split words on
-whitespace (space, newline, tab, vertical tab) and the control
-characters carriage return, formfeed and the null character.
-
-```python
-def tokenize(sentence):
-  pass
-
-```
-TODO
 
 ## Phrases
 
@@ -246,13 +288,7 @@ f-----
 
 <span style="color:red">Q2: what was the hyperparameter used for wordNgrams in the released models ?</span>
 
-Let's extract word Ngrams from a text:
-
-```python
-def extract_wordNgrams(sentence):
-  pass
-```
-TODO
+I leave you as exercise the extraction of word Ngrams from a text ;)
 
 <span style="color:red">Q3: How is the phrase embedding integrated in the final representation ? Is it a simple addition ?</span>
 

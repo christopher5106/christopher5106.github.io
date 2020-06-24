@@ -27,7 +27,7 @@ driver.quit()
 
 It returns me the URL of the PDF: `http://ecm.chicago.gov/eSMARTContracts/service/DPSWebDocumentViewer?id={24F173CB-74D4-4859-9DA9-179076E85E1D}&osName=eContentContracts&el=0&image=image`.
 
-In order to avoid downloading too big files, I first get the file size with a lightweight HTTP header request (half of a second):
+In order to avoid downloading too big files, I first get the file size with a lightweight HTTP header request, not depending of the file size (half of a second):
 
 ```python
 import requests
@@ -40,7 +40,7 @@ size = int(response.headers.get('content-length', 0)) / float(1 << 20) # number 
 print('{:<40}: {:.2f} MB'.format('FILE SIZE', size))
 ```
 
-If below a file size limit I set in MB, I download it (8 seconds):
+If below a file size limit I set in MB, I download it in a time that depends of the file size (8 seconds):
 
 ```python
 MAX_FILE_SIZE=10

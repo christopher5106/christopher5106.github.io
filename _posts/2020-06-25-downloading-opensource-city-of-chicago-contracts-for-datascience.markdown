@@ -30,7 +30,6 @@ It returns me the URL of the PDF: `http://ecm.chicago.gov/eSMARTContracts/servic
 In order to avoid downloading too big files, I first check the file size with a HTTP header request:
 
 ```python
-MAX_FILE_SIZE=10
 import requests
 import time
 start = time.time()
@@ -41,9 +40,10 @@ size = int(response.headers.get('content-length', 0)) / float(1 << 20) # number 
 print('{:<40}: {:.2f} MB'.format('FILE SIZE', size))
 ```
 
-If yes, I download it:
+If below a file size limit I set in MB, I download it:
 
 ```python
+MAX_FILE_SIZE=10
 if "application/pdf" == response.headers['Content-Type'] and size < MAX_FILE_SIZE:
     start = time.time()
     response = requests.get(pdf_url)

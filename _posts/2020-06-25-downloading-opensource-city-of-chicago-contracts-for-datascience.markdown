@@ -27,7 +27,7 @@ driver.quit()
 
 It returns me the URL of the PDF: `http://ecm.chicago.gov/eSMARTContracts/service/DPSWebDocumentViewer?id={24F173CB-74D4-4859-9DA9-179076E85E1D}&osName=eContentContracts&el=0&image=image`.
 
-In order to avoid downloading too big files, I first check the file size with a HTTP header request:
+In order to avoid downloading too big files, I first get the file size with a lightweight HTTP header request:
 
 ```python
 import requests

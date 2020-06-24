@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Downloading City of Chicago for DataScience"
+title:  "Downloading City of Chicago Open Source dataset of procurement contracts for DataScience"
 date:   2020-06-23 05:00:00
 categories: datascience
 ---

@@ -128,6 +128,15 @@ cell1.String = "Hello world"
 # other example with a value
 cell2 = active_sheet.getCellRangeByName("E6")
 cell2.Value = cell2.Value + 1
+
+# get actually used rectangle of the spreadsheet
+cursor = active_sheet.createCursor()
+cursor.gotoEndOfUsedArea(False)
+cursor.gotoStartOfUsedArea(True)
+
+# print text of every leftmost cell inside every row
+for row in cursor.Rows:
+    print(row.getCellByPosition(0, 0).String)
 ```
 
 If you open a text document and access it with a new document writer, you can try the following interactions :
@@ -546,7 +555,7 @@ You can also have a look at number formats, dates, ...
 ```python
 import os
 if os.name == "nt":
-    directory = os.path.dirname(unohelper.fileUrlToSystemPath(model.URL)) 
+    directory = os.path.dirname(unohelper.fileUrlToSystemPath(model.URL))
 else:
     directory = os.path.dirname(model.URL)[7:]
 ```
@@ -924,7 +933,7 @@ oButton = controlContainer.getControl("myButtonName")
 oBox.addItem('d',4)
 
 # create a peer
-toolkit = smgr.createInstanceWithContext( "com.sun.star.awt.ExtToolkit", ctx)  
+toolkit = smgr.createInstanceWithContext( "com.sun.star.awt.ExtToolkit", ctx)
 
 controlContainer.setVisible(False)
 controlContainer.createPeer(toolkit, None)
